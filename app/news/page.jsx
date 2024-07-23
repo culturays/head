@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 
 const page = () => {
   return (
