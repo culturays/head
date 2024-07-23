@@ -1,0 +1,131 @@
+:root {
+    --culturaysblue: #020730;
+    --culturayswhite:#faebd7;
+  }
+
+$culturays-primary-color: #272727;
+$culturays-text-color: #faebd7;
+$culturays-accent-color: #272727; 
+$culturays-secondary-color:#d52709;
+$culturays-font-before:#06df32; 
+$culturays-standard-color: #afb6c2;
+$culturays-grey-color: #eef0f5; 
+$original-color-wiki: #41414f;
+$odd-color-wiki:#282c94;
+$even-color-wiki: #1b1b32; 
+$normal-color:#283c5f; 
+$off-color: #505358;;
+$social-event-normal:#1c3941;
+$social-odd:#1d172c;
+$amdb-primary:#183535;
+$amdb-off: #1a463f;
+$amdb-even:#0f3d36;
+$culturays-regular: #fff;
+$culturays-ordinary:#000;
+$culturays-blue:#020730;
+$culturays-regular-font:"Big Shoulders Display" sans-serif;
+$culturays-a-hover:rgb(205, 78, 176);
+$culturays-normal-font:'Anek Devanagari', sans-serif;;
+$wikiafrica-regular:#3e5164;
+$wikiafrica-off:#9da6af;
+$wikiafrica-off-bg:#afb6c2;
+$wiki-top-items:rgb(65, 65, 79);
+$amdb-primary:#183535;
+$amdb-odd: #a6a6b6; 
+$amdb-top-color:#2e3b3b;
+$amdb-light:#00B4CC;
+$amdb-bright:#4d756f;
+$amdb-grad-bg1:#021e13;
+$amdb-grad-bg2:#1f5641;
+$amdb-grad-bg3:#22513d;
+$socialevents-grad-bg1:rgba(0, 0, 0,1);
+$socialevents-grad-bg2:#1c3941;
+$socialevents-grad-bg3:#acafb0;
+$socialevents-lighter:#e6e8e9;
+$consent-bg:#052749;
+$amdb-bg3:#f2f2f8; 
+$wp-table:#002954;
+$odd-box-office: rgb(215, 224, 224);
+$culturays-lighter: rgb(249, 249, 249);
+$culturays-font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+ $font-weight:(
+"regular": 400,
+"medium": 500, 
+"bold":700
+);
+$culturays-font-size:(
+    "big":28px,
+    "bigger":25px,
+    "regular":22px,
+    "normal":20px,
+    "norm":1.4em,
+   "midsize":1.05rem,
+    "medium":18px,
+    "middle":1.2em,
+    "small":15px,
+    "smaller":13px,
+    "smallest":0.85em, 
+     "flexsize":1.5em,
+      
+    );
+ 
+@mixin easy-transition{
+    transition: all 5s ease-in-out;
+}
+@mixin minimum-media{
+    @media screen and (min-width:481px){
+        @content;
+    }
+ 
+}
+@mixin max-medium-media {
+@media screen and (max-width: 700px) {
+   @content;
+}
+}
+
+
+@mixin min-medium-media{
+    @media screen and (min-width:600px){
+        @content;
+    }
+ 
+}
+@mixin medium-media{
+    @media screen and (min-width:768px){
+        @content;
+    }
+ 
+}
+@mixin large-media-xx{
+    @media screen and (min-width:900px){
+        @content;
+    }
+ 
+}
+@mixin large-media{
+    @media screen and (min-width:1024px){
+        @content;
+    }
+ 
+}
+@mixin x-large-media{
+    @media screen and (min-width:1200px){
+        @content;
+    }
+ 
+}
+@mixin x-x-large-media{
+    @media screen and (min-width:1400px){
+        @content;
+    }
+ 
+}
+@mixin xlarge-media{
+    @media screen and (min-width:1600px){
+        @content;
+    }
+ 
+}
+ 

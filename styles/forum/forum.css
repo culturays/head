@@ -1,0 +1,113 @@
+.items_search{  
+  box-shadow: 0 4px 5px rgba(4, 4, 4, 0.6);
+  
+  /* background-color:$culturays-regular; */
+  //height: 150px;
+  /* p{
+    opacity: 0.9;
+    cursor:pointer
+  } */
+ }
+ .search{
+  border: none !important;
+ }
+ .search:focus{
+  outline:none  !important;
+
+ }
+ .search_all{
+  background-color: rgb(249, 249, 249); 
+ }
+ .items__search .tag-search {
+  display: flex;
+  flex-wrap: wrap;
+  height: 40px;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.search-title{
+  overflow:hidden;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.head-forum-span {
+  box-shadow: 0 3px 30px rgb(0, 0, 0);
+
+}
+
+ .thoughts-text{ 
+  font-family: "Grenze", serif;;
+  font-weight: 400;
+  font-style: normal;
+ }
+.social-forum p{
+  box-shadow: 0 4px 10px 5px rgb(242, 242, 242);
+
+}
+.main-forum{
+  background-color:#0f0f1a
+}
+.create-input{
+  box-shadow: 0 0 20px 16px #272727;
+  background-color: inherit; 
+}
+.main-bg{
+   /* background-color:#0f0f1a */
+}
+ 
+ 
+.rxn-form {
+  color:#afb6c2;
+ 
+}
+.rxn-form textarea{
+  color:#afb6c2;
+  border: none;
+    border-bottom: 1px solid #afb6c2;
+    border-radius: 5px;
+   
+}
+.rxn-form textarea:focus{
+ outline:none;
+  background-color: rgba(0, 0, 0, 0.05); 
+ 
+}
+.rxn-form textarea:hover{
+ background-color: #3e5164;
+ 
+}
+
+.rxn-form button{
+  cursor: pointer;
+  margin: 11px 2px;
+  font-size: 20px;
+  border: none;
+  border-radius: 100%;
+  padding: 12px;
+  background-color: #052749;
+  color: #afb6c2;
+ 
+}
+
+.pple-card img{
+  box-shadow: 0 3px 10px rgb(0, 0, 0);
+  width:10em;
+ height:10em;
+}
+
+ 
+@media (min-width: 375px){
+  /* .pple-card img{
+    box-shadow: 0 3px 10px rgb(0, 0, 0);
+    width:30vw;
+   height:20vw
+  } */
+}
+ 
