@@ -2,6 +2,7 @@
 import React from 'react'
  import { createClient } from "@/utils/supabase/client"
 import { useRouter, useSearchParams } from 'next/navigation'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ResetPage = () => {
   const [errors, setErrors] = useState({});
