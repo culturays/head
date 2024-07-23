@@ -45,12 +45,12 @@ const router = useRouter()
      
       } 
 const updateData=async(formData)=>{
-"use server"; 
+ 
 const supabase = createClient();
 const email = formData.get("email");
 const password = formData.get("password") ;
 const full_name = formData.get("full_name")  
-const origin = headers().get("origin");
+//const origin = headers().get("origin");
 const { data, error } = await supabase.auth.updateUser({
 email,
 password ,
