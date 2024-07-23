@@ -1,14 +1,18 @@
+"use client"
 import React from 'react'
  import { createClient } from "@/utils/supabase/server"
-import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
-const resetPage = ({searchParams}) => {   
+import { useRouter, useSearchParams } from 'next/navigation'; 
+
+const ResetPage = () => {
+  const [errors, setErrors] = useState({});
+  const [passType, setPassType] = useState('password');
+  const [icon, setIcon] = useState(faEyeSlash);
+  const searchParams=useSearchParams()  
+const router = useRouter()
   const password_pattern=new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,20}$`)
   const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$`)
   const name_pattern=new RegExp(`^[A-Za-z0-9]{3,10}$`) 
-  const [passType, setPassType] = useState('password');
-  const [icon, setIcon] = useState(faEyeSlash);
+ 
   
   const handleToggle = (textPass) => {
   if (passType===textPass){
@@ -19,7 +23,7 @@ const resetPage = ({searchParams}) => {
     setPassType(textPass)
   }
   }
-  const [errors, setErrors] = useState({});
+ 
     const validateForm = (data) => {
       const errors = {}; 
       if (data.name === 'full_name'&&!name_pattern.test(data.value.trim())) {
@@ -53,10 +57,10 @@ password ,
 data: { full_name }
 }) 
 if(error){
-redirect(`/forgotten-password?message=${error}`);
+router.push(`/forgotten-password?message=${error}`);
 }
-revalidatePath('/', 'layout')     
-return redirect( `/` );
+router.refresh()     
+return router.push( `/` );
 }
 
 
@@ -122,4 +126,4 @@ onBlur={(e) =>handleFocus(e )}
   )
 }
 
-export default resetPage
+export default ResetPage

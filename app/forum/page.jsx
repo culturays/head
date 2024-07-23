@@ -1,5 +1,4 @@
 import Link from "next/link"
-import Feed from "../../components/forum/Feed"  
 import { createClient } from ".././../utils/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath, revalidateTag } from "next/cache"; 
