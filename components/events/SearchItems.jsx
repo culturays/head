@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link" 
 import { useForm } from "react-hook-form"
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react"
 const SearchItems = ({searchVal, itemSearches }) => { 
 const pathname = usePathname(); 
 const router = useRouter();
@@ -17,6 +18,7 @@ function onInputBlur(event) {
 }
  
 return (
+  <Suspense> 
 <div>
  <div className="">  
 <input  
@@ -46,7 +48,7 @@ itemSearches?.slice(0,4).map((it, index)=>
 </div>  
 
 </div>
-)
+</Suspense> )
 }
 
 export default SearchItems

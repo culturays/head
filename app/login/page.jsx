@@ -1,4 +1,3 @@
-import { getServerSession } from "next-auth"
 import LoginForm from "./form"
 import { redirect } from "next/navigation"
 import { headers } from "next/headers";
@@ -20,8 +19,6 @@ const Login =async ({searchParams} ) => {
     return url
   }
   
-
-
 
 const signIn = async (formData ) => {
   "use server"; 

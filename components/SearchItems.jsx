@@ -3,6 +3,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 import { useDebouncedCallback } from "use-debounce"
 
 const SearchItems = ({ searchVal, itemSearches }) => {
@@ -22,6 +23,8 @@ const handleSearch = useDebouncedCallback((term) => {
 
  
 return (
+<Suspense> 
+
 <div> 
 <div className="">  
 <input  
@@ -56,7 +59,7 @@ itemSearches?.slice(0,4).map((it, index)=>
 </div> 
 
 </div>
-)
+</Suspense> )
 }
 
 export default SearchItems

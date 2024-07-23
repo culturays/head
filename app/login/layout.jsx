@@ -15,10 +15,10 @@ const Layout = ({children}) => {
   return (
     <Suspense>
     <div> 
-
       {children} 
     </div>
-    </Suspense> )
+    </Suspense> 
+    )
 }
 
 export default Layout
