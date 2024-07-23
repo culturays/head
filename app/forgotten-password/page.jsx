@@ -1,7 +1,7 @@
-
+ 
 import { createClient } from "@/utils/supabase/server" 
 import { redirect } from "next/navigation";
-import { useState } from "react";
+ 
  
 const ForgottenPassword = ({searchParams}) => {
  // const [errors, setErrors] = useState({});
