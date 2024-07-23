@@ -1,8 +1,7 @@
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
- 
 import { compare } from 'bcrypt'
-import supabase from '@/utils/db'
+
 export const options = {
     session:{
         strategy:'jwt'
@@ -49,24 +48,24 @@ export const options = {
 
                 try{
 
-                    const { data:existingUser, error } = await supabase
-                    .from('profile')
-                    .select()
-                    .eq('email', credentials.email, "password",credentials.password )
-                    .single() 
+            //         const { data:existingUser, error } = await supabase
+            //         .from('profile')
+            //         .select()
+            //         .eq('email', credentials.email, "password",credentials.password )
+            //         .single() 
 
-                  if(existingUser){
-                const matchPass = await compare(
-                    credentials.password, existingUser.password
-                )
-               // const { data, error } = await supabase.auth.linkIdentity({ provider: 'google' })
+            //       if(existingUser){
+            //     const matchPass = await compare(
+            //         credentials.password, existingUser.password
+            //     )
+            //    // const { data, error } = await supabase.auth.linkIdentity({ provider: 'google' })
 
-                if(matchPass){
-                  return {
-                    email:existingUser.email 
-                  }
-                }
-                  }
+            //     if(matchPass){
+            //       return {
+            //         email:existingUser.email 
+            //       }
+            //     }
+            //       }
                   
                 }catch(error){
                    console.log(error)
