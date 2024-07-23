@@ -1,19 +1,18 @@
 "use client"
-import React from 'react'
+import React, { Suspense } from 'react'
  import { createClient } from "@/utils/supabase/client"
 import { useRouter, useSearchParams } from 'next/navigation'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ResetPage = () => {
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState();
   const [passType, setPassType] = useState('password');
   const [icon, setIcon] = useState(faEyeSlash);
   const searchParams=useSearchParams()  
-const router = useRouter()
+  const router = useRouter()
   const password_pattern=new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,20}$`)
   const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$`)
   const name_pattern=new RegExp(`^[A-Za-z0-9]{3,10}$`) 
- 
   
   const handleToggle = (textPass) => {
   if (passType===textPass){
@@ -66,12 +65,13 @@ return router.push( `/` );
 
 
   return (
-    <div className="m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center"> 
-    <form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative">
-    <label className="text-md block text-white text-xl" htmlFor="email">
-    Email
-    </label>
-    <input
+<Suspense>
+<div className="m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center"> 
+<form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative">
+<label className="text-md block text-white text-xl" htmlFor="email">
+Email
+</label>
+<input
 className='login_input border-0 focus:outline-none rounded-b-sm border-solid p-3 bg-gray-300 bg-opacity-60 border-gray-300 text-white tracking-wider'
 name="email"
 type="text"
@@ -81,27 +81,27 @@ required={errors.email}
 onBlur={(e) =>handleFocus(e)}  
 />
 
-    {errors.email &&
-  <span className='text-red-600'>{errors.email}</span>
- }
-      <label className="text-md block text-white text-xl" htmlFor="password">
-     New Password
-    </label>
-    <input
-      className="rounded-b-sm border-solid p-3 bg-gray-300 bg-opacity-60 border-gray-300 text-white"
-      name="password"
-      placeholder="••••••••••••••"
-      type={passType}
+{errors.email &&
+<span className='text-red-600'>{errors.email}</span>
+}
+<label className="text-md block text-white text-xl" htmlFor="password">
+New Password
+</label>
+<input
+className="rounded-b-sm border-solid p-3 bg-gray-300 bg-opacity-60 border-gray-300 text-white"
+name="password"
+placeholder="••••••••••••••"
+type={passType}
 pattern={password_pattern}
 required={errors.password}
 onBlur={(e) =>handleFocus(e )} 
- data-focused={focused } 
-    />
+data-focused={focused } 
+/>
 {errors.password &&
 <span className="text-red-600">
 {errors.password}
 </span>
-}
+} 
 {errors.password&&
 <ul className="text-white m-4">
 <li className="list-disc p-1">At least two uppercase letters.</li>
@@ -114,17 +114,18 @@ onBlur={(e) =>handleFocus(e )}
 <span className="absolute top-40 mt-2 left-3/4 cursor-pointer" onClick={()=>handleToggle("password")}>
 <FontAwesomeIcon className="mr-10 text-gray-600" icon={icon} width={25}/>
 </span> 
- 
-    <button formAction={updateData} type="submit" className="text-white">Submit</button>
-    </form>
-    {searchParams?.message && (
-  <p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
-    {searchParams.message}
-  </p>
+
+<button formAction={updateData} type="submit" className="text-white">Submit</button>
+</form>
+{searchParams?.message && (
+<p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
+{searchParams.message}
+</p>
 )} 
 
-   </div>  
-  )
+</div>  
+</Suspense>
+)
 }
 
 export default ResetPage

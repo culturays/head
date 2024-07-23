@@ -1,10 +1,11 @@
 
 const page = () => {
-  return ( 
+  return (
+    <Suspense> 
     <div>
       news
     </div>
-  )
+    </Suspense> )
 }
-
+ 
 export default page

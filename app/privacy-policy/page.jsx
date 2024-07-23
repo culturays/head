@@ -8,5 +8,5 @@ const page = () => {
     </Suspense> 
   )
 }
-
+ 
 export default page

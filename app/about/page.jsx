@@ -15,7 +15,7 @@ export const metadata = {
 }; 
 const AboutUs =async ({searchParams}) => { 
   const name = searchParams.name;
-  const postSearch=[]  
+  const postSearch=[]
   return ( 
 <Suspense> 
 <div> 

@@ -9,6 +9,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { headers } from "next/headers"
 import Link from "next/link"
+import { Suspense } from "react"
  
 const Home =async ({searchParams }) => {
 const name = searchParams.name;
@@ -20,7 +21,7 @@ const { data, error } = await supabase
 .from('content')
 .select("*")
 .filter('title', 'ilike', `%${name}%`);
-
+ 
 if (error) {
 console.error('Error fetching posts:', error.message);
 return;
@@ -34,6 +35,7 @@ const headersList = headers();
 const pathname = headersList.get('referer') || "" 
   
 return ( 
+  <Suspense> 
 <div> 
 
   <Header />  
@@ -48,7 +50,7 @@ return (
 </div>  
  <Footer />  
 </div> 
-)
+</Suspense> )
 }
 
 export default Home

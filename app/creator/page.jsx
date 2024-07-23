@@ -16,20 +16,20 @@ export const metadata = {
 }; 
 
 function Culturayscreator({searchParams}) {
-  const name = searchParams.name;
+  const name = searchParams.name; 
   const postSearch=[] 
   return (
-    <Suspense>
- <div> 
+<Suspense>
+<div> 
 <nav className="h-18">
-      <div className=" items-center text-sm">            
-      <Header/> 
-      <AuthButton/>
-      <SearchItems searchVal={name} itemSearches={postSearch}/> 
-      </div>        
+<div className=" items-center text-sm">            
+<Header/> 
+<AuthButton/>
+<SearchItems searchVal={name} itemSearches={postSearch}/> 
+</div>        
 </nav> 
 <Creator /> 
-    <Footer />   
+<Footer />   
 </div> 
  </Suspense>  )
 }

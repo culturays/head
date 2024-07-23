@@ -37,14 +37,14 @@ const ForgottenPassword = ({searchParams}) => {
                    return newErrors
                     }
                     const errors =handleFocus()
-    return( 
-    <Suspense>
-        <div className="m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center"> 
-        <form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative">
-        <label className="text-md block text-white text-xl" htmlFor="email">
-        Email
-        </label>
-        <input
+    return(  
+<Suspense>
+<div className="m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center"> 
+<form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative">
+<label className="text-md block text-white text-xl" htmlFor="email">
+Email
+</label>
+<input
 className='login_input border-0 focus:outline-none rounded-b-sm border-solid p-3 bg-gray-300 bg-opacity-60 border-gray-300 text-white tracking-wider'
 name="email"
 type="text"
@@ -64,8 +64,8 @@ onBlur={(e) =>handleFocus(e)}
 {searchParams.message}
 </p>
 )} 
-   </div> 
-   </Suspense>)
+</div> 
+</Suspense>)
 }
 
 export default ForgottenPassword

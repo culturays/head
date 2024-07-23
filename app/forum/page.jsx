@@ -155,7 +155,7 @@ const {events} =await forumEvents()
 //const ix =await netFlixData() 
 
 return (
-  <Suspense>
+  <Suspense> 
  <div >
   <AuthButton confirmParam={confirmParam} />  
 <div className='thoughts-text bg-culturaysBg text-white p-8 text-center '> 
