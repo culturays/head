@@ -15,25 +15,25 @@ export const metadata = {
 const AboutUs =async ({searchParams}) => { 
   const name = searchParams.name;
   const postSearch=[]  
-  return (
-    <>
-    <div> 
+  return ( 
+<Suspense> 
+<div> 
 <nav className="h-18">
-      <div className=" items-center text-sm">            
-      <Header/> 
-      <AuthButton/>
-      <SearchItems 
-      searchVal={name} 
-      itemSearches={postSearch}
-      /> 
-      </div>        
+<div className=" items-center text-sm">            
+<Header/> 
+<AuthButton/>
+<SearchItems 
+searchVal={name} 
+itemSearches={postSearch}
+/> 
+</div>        
 </nav>    
 <About/> 
-    <Footer />   
+<Footer />   
 </div>
 
-    </> 
-  )
+</Suspense> 
+)
 }
 
 export default AboutUs 

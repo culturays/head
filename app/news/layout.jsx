@@ -1,6 +1,7 @@
 import AuthButton from "@/components/AuthButton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header"; 
+import { Suspense } from "react";
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/news` 
   : "http://localhost:3000/news";
@@ -13,11 +14,12 @@ export const metadata = {
  
 const Layout = ({children}) => {
   return (
- <div>
+<Suspense>
+<div>
 <nav className="h-18">
 <div className=" items-center text-sm">            
 <Header/> 
-</div>        
+</div> 
 </nav>  
 <AuthButton/> 
 <div className='thoughts-text bg-culturaysBg text-white p-8 text-center flex justify-between'> 
@@ -25,7 +27,8 @@ const Layout = ({children}) => {
 </div>
 {children}  
 <Footer/>   
-    </div>
+</div>
+</Suspense>
   )
 }
 

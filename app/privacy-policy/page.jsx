@@ -1,8 +1,11 @@
 import Privacy from "@/components/Privacy" 
+import { Suspense } from "react"
 
 const page = () => {
-  return ( 
+  return (
+    <Suspense>
    <Privacy/>
+    </Suspense> 
   )
 }
 

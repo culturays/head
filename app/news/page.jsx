@@ -1,8 +1,8 @@
 
 const page = () => {
-  return (
+  return ( 
     <div>
-      
+      news
     </div>
   )
 }

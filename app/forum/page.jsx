@@ -15,6 +15,7 @@ import { processImages } from "@/utils/processImages";
 import { replaceSpecialCharacters } from "@/utils/replacechar";
 import { getPosts } from "./actions/loadPosts";
 import Main from "@/components/forum/Main"; 
+import { Suspense } from "react";
  export const revalidate = 3
  const INITIAL_NUMBER_OF_POSTS = 2
 const MONGOKEY = process.env.MONGODB_;
@@ -154,7 +155,8 @@ const {events} =await forumEvents()
 //const ix =await netFlixData() 
 
 return (
-    <div >
+  <Suspense>
+ <div >
   <AuthButton confirmParam={confirmParam} />  
 <div className='thoughts-text bg-culturaysBg text-white p-8 text-center '> 
 <p className="text-2xl">Welcome! Drop your story and get replies from other creatives! </p>  
@@ -177,6 +179,7 @@ peopleItems={peopleItems}
 />  
  </div> 
  </div> 
+ </Suspense> 
   )
 }
 
