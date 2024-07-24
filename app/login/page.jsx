@@ -113,13 +113,13 @@ className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foregrou
 Back 
 </Link>
 </div>
+<Suspense> 
 <LoginForm 
 signUp={signUp} 
 signIn={signIn} 
 searchParams={searchParams}
 handleOauthLogin={handleOauthLogin}
-
-/> 
+ /> </Suspense>
 </div>
 </div>
 
