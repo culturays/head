@@ -59,7 +59,7 @@ onBlur={(e) =>handleFocus(e)}
 }
 <button formAction={updatePass} type="submit" className="text-white">Reset</button>
 </form>
-<Suspense>
+<Suspense fallback={<p>Loading...</p>}>  
 {searchParams?.message && (
 <p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
 {searchParams.message}

@@ -27,7 +27,7 @@ const eventSearch = await searchValues(name)
 const top10Names = top10Naija.map((ex)=> ex.name) 
 return ( 
 <>
-<Suspense> 
+<Suspense fallback={<p>Loading...</p>}> 
 <SearchItems searchVal={name} itemSearches={eventSearch}/> 
 <div className='xxs:flex xxs:flex-col'> 
 <NaijaEvents events={events} top10Naija={top10Naija}/>

@@ -1,12 +1,13 @@
 import { Suspense } from "react"
 
-const page = () => {
+const NewsPage = () => {
   return (
-    <Suspense> 
+    <Suspense fallback={<p>Loading...</p>}> 
     <div>
       news
     </div>
-    </Suspense> )
+  </Suspense>
+  )
 }
  
-export default page
+export default NewsPage

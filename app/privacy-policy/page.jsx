@@ -3,7 +3,7 @@ import { Suspense } from "react"
 
 const PrivacyPage = () => {
   return (
-    <Suspense>
+    <Suspense fallback={<p>Loading...</p>}>  
    <Privacy/>
     </Suspense> 
   )

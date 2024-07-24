@@ -155,7 +155,7 @@ const {events} =await forumEvents()
 //const ix =await netFlixData() 
 
 return (
-  <Suspense> 
+
  <div >
   <AuthButton confirmParam={confirmParam} />  
 <div className='thoughts-text bg-culturaysBg text-white p-8 text-center '> 
@@ -166,9 +166,10 @@ return (
 <div className="w-full border-b border-b-foreground/10">
       
 </div> 
-</div> 
+</div>  
+ <Suspense fallback={<p>Loading...</p>}>  
    <SearchItems searchVal={query} itemSearches={postSearch} />  
-  
+   </Suspense> 
 <Main  
 user={user}
 trends={trends}
@@ -179,7 +180,7 @@ peopleItems={peopleItems}
 />  
  </div> 
  </div> 
- </Suspense> 
+
   )
 }
 

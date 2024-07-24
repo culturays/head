@@ -24,7 +24,7 @@ const content = await searchedContnet()
  
   return (
     <div> 
-      <Suspense>   
+  <Suspense fallback={<p>Loading...</p>}>  
     <Search searchVal={searchVal} content={content}/> 
       </Suspense>
     </div>

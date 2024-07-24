@@ -19,19 +19,21 @@ function Culturayscreator({searchParams}) {
   const name = searchParams.name; 
   const postSearch=[] 
   return (
-<Suspense>
+
 <div> 
 <nav className="h-18">
 <div className=" items-center text-sm">            
 <Header/> 
-<AuthButton/>
+<AuthButton/> 
+<Suspense fallback={<p>Loading...</p>}>  
 <SearchItems searchVal={name} itemSearches={postSearch}/> 
+ </Suspense>
 </div>        
 </nav> 
 <Creator /> 
 <Footer />   
 </div> 
- </Suspense>  )
+  )
 }
 
 export default Culturayscreator

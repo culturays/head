@@ -114,7 +114,7 @@ className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foregrou
 Back 
 </Link>
 </div>
-<Suspense> 
+<Suspense fallback={<p>Loading...</p>}> 
 <LoginForm 
 signUp={signUp} 
 signIn={signIn} 

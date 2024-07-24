@@ -17,7 +17,7 @@ const AboutUs =async ({searchParams}) => {
   const name = searchParams.name;
   const postSearch=[]
   return ( 
-<Suspense> 
+<Suspense fallback={<p>Loading...</p>}>  
 <div> 
 <nav className="h-18">
 <div className=" items-center text-sm">            
@@ -31,8 +31,7 @@ itemSearches={postSearch}
 </nav>    
 <About/> 
 <Footer />   
-</div>
-
+</div> 
 </Suspense> 
 )
 }
