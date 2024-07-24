@@ -6,8 +6,9 @@ import { Suspense } from "react";
 const ForgottenPassword = ({searchParams}) => {
  // const [errors, setErrors] = useState({});
      const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$`)
-      const updatePass=async(formData)=>{  
+      const updatePass=async(e)=>{  
         "use server"
+        const formData = new formData(e.currentTarget)
         const supabase = createClient();
         const email = formData.get("email"); 
         
