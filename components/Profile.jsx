@@ -1,81 +1,81 @@
- 'use client'
-import { useState,useEffect, useRef, useCallback} from "react";  
-import { Open_Sans, Concert_One, Prosto_One, Playfair, Inria_Serif, Roboto, Bellota_Text, Nokora, Merriweather, Courgette, Sacramento , Monoton} from 'next/font/google';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Image from "next/image";
-import Link from "next/link";
-import { useFormStatus } from "react-dom"; 
-import Avatar from "./Avatar";
-import {faDeleteLeft, faPencil, faThumbsUp, faShare,faImage, faComment, faEllipsisVertical,faFilePen, faUser, faHouse, faTrash, faUpload, faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
-import emailjs from "@emailjs/browser"; 
-import {faFacebook, faWhatsapp, faXTwitter} from '@fortawesome/free-brands-svg-icons'
-import CreateForm from "@/app/forum/createpost";
-import { postEdit,createPost, postLike,  createComment, commentEdit, getUserPosts } from "@/app/forum/actions/postsActions";
-import { createClient } from "@/utils/supabase/client";
-import LoginModal from "./forum/LoginModal";
-import { usePagesContext } from "./Pages-Context";
-import ShareButtons from "./ShareButtons";         
-import { deleteProfile, updateProfile } from "@/app/forum/actions/profileActions";
-import { useParams, useRouter } from "next/navigation";
-import { useInView } from "react-intersection-observer";
+//  'use client'
+// import { useState,useEffect, useRef, useCallback} from "react";  
+// import { Open_Sans, Concert_One, Prosto_One, Playfair, Inria_Serif, Roboto, Bellota_Text, Nokora, Merriweather, Courgette, Sacramento , Monoton} from 'next/font/google';
+  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import Image from "next/image";
+// import Link from "next/link";
+// import { useFormStatus } from "react-dom"; 
+  import Avatar from "./Avatar";
+// import {faDeleteLeft, faPencil, faThumbsUp, faShare,faImage, faComment, faEllipsisVertical,faFilePen, faUser, faHouse, faTrash, faUpload, faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+// import emailjs from "@emailjs/browser"; 
+// import {faFacebook, faWhatsapp, faXTwitter} from '@fortawesome/free-brands-svg-icons'
+ import CreateForm from "@/app/forum/createpost";
+// // import { postEdit, createPost, postLike,  createComment, commentEdit, getUserPosts } from "@/app/forum/actions/postsActions";
+// import { createClient } from "@/utils/supabase/client";
+// import LoginModal from "./forum/LoginModal";
+// import { usePagesContext } from "./Pages-Context";
+// import ShareButtons from "./ShareButtons";         
+// import { deleteProfile, updateProfile } from "@/app/forum/actions/profileActions";
+// import { useParams, useRouter } from "next/navigation";
+// import { useInView } from "react-intersection-observer";
 
-const monoton =Monoton({
-  subsets:['latin'], 
-   weight:'400',
-   display: 'swap', 
-   })
-const concert =Concert_One({
-  subsets:['latin'], 
-   weight:'400',
-   display: 'swap', 
-   })
-const prosto =Prosto_One({
-subsets:['latin'], 
-weight:'400',
-display: 'swap', 
-})
+// const monoton =Monoton({
+//   subsets:['latin'], 
+//    weight:'400',
+//    display: 'swap', 
+//    })
+// const concert =Concert_One({
+//   subsets:['latin'], 
+//    weight:'400',
+//    display: 'swap', 
+//    })
+// const prosto =Prosto_One({
+// subsets:['latin'], 
+// weight:'400',
+// display: 'swap', 
+// })
 
-const robo =Roboto({
-subsets:['latin'], 
-weight:'400',
-display: 'swap', 
-})
-const inria =Inria_Serif({
-subsets:['latin'], 
-weight:'700',
-display: 'swap', 
-})
+// const robo =Roboto({
+// subsets:['latin'], 
+// weight:'400',
+// display: 'swap', 
+// })
+// const inria =Inria_Serif({
+// subsets:['latin'], 
+// weight:'700',
+// display: 'swap', 
+// })
 
-const play =Playfair({
-subsets:['latin'], 
-weight:'400',
-display: 'swap', 
-}) 
+// const play =Playfair({
+// subsets:['latin'], 
+// weight:'400',
+// display: 'swap', 
+// }) 
  
- const meri =Merriweather({
-subsets:['latin'], 
- weight:['400'],
- display: 'swap', 
- })
-const curgette =Courgette({
-subsets:['latin'], 
- weight:['400'],
- display: 'swap', 
- })
+//  const meri =Merriweather({
+// subsets:['latin'], 
+//  weight:['400'],
+//  display: 'swap', 
+//  })
+// const curgette =Courgette({
+// subsets:['latin'], 
+//  weight:['400'],
+//  display: 'swap', 
+//  })
 
-const sacramento =Sacramento({
-subsets:['latin'], 
-weight:['400'],
-display: 'swap', 
-}) 
-const bellota =Bellota_Text({
-subsets:['latin'], 
-weight:['300', '400', '700'],
-display: 'swap', 
-})   
-function sortAscending(pb, pa){ 
-  return (pa?.id - pb?.id);
- } 
+// const sacramento =Sacramento({
+// subsets:['latin'], 
+// weight:['400'],
+// display: 'swap', 
+// }) 
+// const bellota =Bellota_Text({
+// subsets:['latin'], 
+// weight:['300', '400', '700'],
+// display: 'swap', 
+// })   
+// function sortAscending(pb, pa){ 
+//   return (pa?.id - pb?.id);
+//  } 
 
 const Profile = ({ 
 setEmail,
@@ -102,267 +102,267 @@ postLike,
 userUpdate,
    
 }) => {
-const [showInput, setShowInput]= useState(false)
-const [imgHandle, setImgHandle]=useState('') 
-const btnRef =useRef(null)
-const [navDropper,setNavDropper]= useState(false)
-const [profileUpdater, setProfileUpdater]=useState(false)
-const emailRef = useRef();
-const nameRef = useRef(); 
-const [post,setPost]= useState({})
-const [showIndex, setShowIndex]= useState(null)
-const supabase = createClient()
-const [uploading, setUploading] = useState(false) 
-const [loading, setLoading] = useState(true)
-const [fullname, setFullname] = useState(null)
-const [username, setUsername] = useState(null)
-const [website, setWebsite] = useState(null)
-const [education, setEducation] = useState(null)
-const [address, setAddress] = useState(null)
-const [avatar_url, setAvatarUrl] = useState(null)
-const [password, setPassword] = useState(null)
-const [onIdx, setOnIdx]=useState(null)
-const [userActions,setUserActions]=useState(false)
-const [activeReply,setActiveReply]=useState(null)
-const [editBtn, setEditBtn]=useState(false)
-const { pending, action } = useFormStatus();
-const [showSuggestion, setShowSuggestion]=useState(false)
-const [deleteBtn,setDeleteBtn]=useState(false) 
-const {id} = useParams()
-const { ref, inView } = useInView()
-const isPending = pending && action 
-const { activeIdx, show,setImgIndex, notify, setImgZoom,
-   setShow, imgZoom, imgIndex, resetImg, imgRef, 
-   postDelete, postTag, setShareOptions, deleteTag, 
-   setActiveIdx, setNotify}=usePagesContext()
-   const [count,setCount]=useState(2) 
-   const [startScroll, setStartScroll]=useState(3)
-   const [scrolledPosts, setScrolledPosts]=useState([])
+// const [showInput, setShowInput]= useState(false)
+// const [imgHandle, setImgHandle]=useState('') 
+// const btnRef =useRef(null)
+// const [navDropper,setNavDropper]= useState(false)
+// const [profileUpdater, setProfileUpdater]=useState(false)
+// const emailRef = useRef();
+// const nameRef = useRef(); 
+// const [post,setPost]= useState({})
+// const [showIndex, setShowIndex]= useState(null)
+// const supabase = createClient()
+// const [uploading, setUploading] = useState(false) 
+// const [loading, setLoading] = useState(true)
+// const [fullname, setFullname] = useState(null)
+// const [username, setUsername] = useState(null)
+// const [website, setWebsite] = useState(null)
+// const [education, setEducation] = useState(null)
+// const [address, setAddress] = useState(null)
+// const [avatar_url, setAvatarUrl] = useState(null)
+// const [password, setPassword] = useState(null)
+// const [onIdx, setOnIdx]=useState(null)
+// const [userActions,setUserActions]=useState(false)
+// const [activeReply,setActiveReply]=useState(null)
+// const [editBtn, setEditBtn]=useState(false)
+// const { pending, action } = useFormStatus();
+// const [showSuggestion, setShowSuggestion]=useState(false)
+// const [deleteBtn,setDeleteBtn]=useState(false) 
+// const {id} = useParams()
+// const { ref, inView } = useInView()
+// const isPending = pending && action 
+// const { activeIdx, show,setImgIndex, notify, setImgZoom,
+//    setShow, imgZoom, imgIndex, resetImg, imgRef, 
+//    postDelete, postTag, setShareOptions, deleteTag, 
+//    setActiveIdx, setNotify}=usePagesContext()
+//    const [count,setCount]=useState(2) 
+//    const [startScroll, setStartScroll]=useState(3)
+//    const [scrolledPosts, setScrolledPosts]=useState([])
     
-useEffect(() => {
-setScrolledPosts(userPosts)
-}, []);  
-const loadMorePosts = async () => {
-const apiP = await getUserPosts(startScroll, startScroll + count - 1, id) 
-if(apiP){
-setScrolledPosts(scrolledPosts?.concat(apiP))
-}else return
+// useEffect(() => {
+// setScrolledPosts(userPosts)
+// }, []);  
+// const loadMorePosts = async () => {
+// const apiP = await getUserPosts(startScroll, startScroll + count - 1, id) 
+// if(apiP){
+// setScrolledPosts(scrolledPosts?.concat(apiP))
+// }else return
 
-//  //setScrolledPosts([...scrolledPosts, ...apiP])
-setStartScroll((prev)=>prev + apiP?.length) 
-setCount((prev)=>prev * apiP?.length) 
+// //  //setScrolledPosts([...scrolledPosts, ...apiP])
+// setStartScroll((prev)=>prev + apiP?.length) 
+// setCount((prev)=>prev * apiP?.length) 
 
-}
-useEffect(() => { 
-//if(inView ) loadMorePosts runs out of posts and produces an error. why?
-if (inView) {
-loadMorePosts()   
-}
+// }
+// useEffect(() => { 
+// //if(inView ) loadMorePosts runs out of posts and produces an error. why?
+// if (inView) {
+// loadMorePosts()   
+// }
 
-}, [inView]) 
-const postsSorted=scrolledPosts?.sort(sortAscending)
-
-
-const getProfile = useCallback(async () => {
-
-try {
-setLoading(true) 
-setFullname(profile.full_name)
-setUsername(profile.full_name) 
-setAvatarUrl(profile.avatar_url)
-setEducation(profile.education)
-setWebsite(profile.website)  
-setAddress(profile.address)
-setPassword(profile.password) 
-} catch (error) {
-console.log('Error loading user data!')
-} finally {
-setLoading(false)
-}
-}, [profile,supabase])
-
-useEffect(() => {
-getProfile()
-}, [profile,getProfile])
+// }, [inView]) 
+// const postsSorted=scrolledPosts?.sort(sortAscending)
 
 
+// const getProfile = useCallback(async () => {
 
-const dropperRef=useRef()
-const uploadRef = useRef()
-const updaterRef=useRef()
-  const runUpdateOpen=()=>{
-    setProfileUpdater(prev => !prev);   
-  setNavDropper(false)
-  }
+// try {
+// setLoading(true) 
+// setFullname(profile.full_name)
+// setUsername(profile.full_name) 
+// setAvatarUrl(profile.avatar_url)
+// setEducation(profile.education)
+// setWebsite(profile.website)  
+// setAddress(profile.address)
+// setPassword(profile.password) 
+// } catch (error) {
+// console.log('Error loading user data!')
+// } finally {
+// setLoading(false)
+// }
+// }, [profile,supabase])
+
+// useEffect(() => {
+// getProfile()
+// }, [profile,getProfile])
+
+
+
+// const dropperRef=useRef()
+// const uploadRef = useRef()
+// const updaterRef=useRef()
+//   const runUpdateOpen=()=>{
+//     setProfileUpdater(prev => !prev);   
+//   setNavDropper(false)
+//   }
   
-  useEffect(() => {
-    const handler = (event) => {
-      if (!dropperRef.current) {           
-        return;
-      }
+//   useEffect(() => {
+//     const handler = (event) => {
+//       if (!dropperRef.current) {           
+//         return;
+//       }
      
-      if (!dropperRef.current.contains(event.target)) {
-        setNavDropper(false);          
+//       if (!dropperRef.current.contains(event.target)) {
+//         setNavDropper(false);          
        
-      } 
+//       } 
     
  
-    };
-      document.addEventListener("click", handler, true);
+//     };
+//       document.addEventListener("click", handler, true);
    
-    return () => {
-      document.removeEventListener("click", handler);
-    };
+//     return () => {
+//       document.removeEventListener("click", handler);
+//     };
    
-  }, [navDropper ]);
+//   }, [navDropper ]);
 
-  useEffect(() => {
-    const handler = (event) => {
-      if (!uploadRef.current) {           
-        return;
-      }
+//   useEffect(() => {
+//     const handler = (event) => {
+//       if (!uploadRef.current) {           
+//         return;
+//       }
      
-      if (!uploadRef.current.contains(event.target)) {
-        setShowInput(false);          
+//       if (!uploadRef.current.contains(event.target)) {
+//         setShowInput(false);          
        
-      } 
+//       } 
     
  
-    };
-      document.addEventListener("click", handler, true);
+//     };
+//       document.addEventListener("click", handler, true);
    
-    return () => {
-      document.removeEventListener("click", handler);
-    };
+//     return () => {
+//       document.removeEventListener("click", handler);
+//     };
    
-  }, [showInput]);
+//   }, [showInput]);
 
 
-  useEffect(() => {
-    const handler = (event) => {
-      if (!updaterRef.current) {           
-        return;
-      }
+//   useEffect(() => {
+//     const handler = (event) => {
+//       if (!updaterRef.current) {           
+//         return;
+//       }
      
-      if (!updaterRef.current.contains(event.target)) {
-        setProfileUpdater(false);          
+//       if (!updaterRef.current.contains(event.target)) {
+//         setProfileUpdater(false);          
        
-      } 
+//       } 
     
  
-    };
-      document.addEventListener("click", handler, true);
+//     };
+//       document.addEventListener("click", handler, true);
    
-    return () => {
-      document.removeEventListener("click", handler);
-    };
+//     return () => {
+//       document.removeEventListener("click", handler);
+//     };
    
-  }, [profileUpdater]);
+//   }, [profileUpdater]);
 
 
-  const handleMailsJS = async (e) => {
-    e.preventDefault();
-    const serviceId = "culturays_12345";
-    const templateId = "template_8rg34lq" 
-    emailjs.init(process.env.EMAILJS_PUBLIC_API) 
-    try {
-       setLoading(true);
-      await emailjs.send(serviceId, templateId, {
-        name:profile.full_name,
-        recipient: profile.email, 
-        user:user?.user_metadata?.full_name
-      });
+//   const handleMailsJS = async (e) => {
+//     e.preventDefault();
+//     const serviceId = "culturays_12345";
+//     const templateId = "template_8rg34lq" 
+//     emailjs.init(process.env.EMAILJS_PUBLIC_API) 
+//     try {
+//        setLoading(true);
+//       await emailjs.send(serviceId, templateId, {
+//         name:profile.full_name,
+//         recipient: profile.email, 
+//         user:user?.user_metadata?.full_name
+//       });
   
-    } catch (error) {
-      console.log(error);
-    } finally {
-        console.log('done')
-          setNotify("Email successfully sent. Check your inbox");
-          setLoading(false);
-    }
-    setTimeout(
-      () =>setNotify(''), 
-      2000 
-    ); 
-  }
+//     } catch (error) {
+//       console.log(error);
+//     } finally {
+//         console.log('done')
+//           setNotify("Email successfully sent. Check your inbox");
+//           setLoading(false);
+//     }
+//     setTimeout(
+//       () =>setNotify(''), 
+//       2000 
+//     ); 
+//   }
  
-  const [chosenFont, setChosenFont]=useState('')
-  const [showFont, setShowFont]=useState(false)
-   const font_x =[play, bellota, concert, meri, curgette, sacramento, monoton]
-   const font_y =[ "play", "bellota", "concert", "meri" , "courgette","sacramento", "monoton"]
+//   const [chosenFont, setChosenFont]=useState('')
+//   const [showFont, setShowFont]=useState(false)
+//    const font_x =[play, bellota, concert, meri, curgette, sacramento, monoton]
+//    const font_y =[ "play", "bellota", "concert", "meri" , "courgette","sacramento", "monoton"]
    
-   const chooseFont =(i)=>{
-  setChosenFont( font_x[i]?.className )
-  localStorage.setItem('font_choice', font_x[i]?.className )
-  setShowFont(false) 
-} 
- useEffect(()=>{
-const font= localStorage.getItem('font_choice')
-setChosenFont(font) 
- }, [])
- const uploadAvatar = async (event) => {
-  try {
-    setUploading(true)
+//    const chooseFont =(i)=>{
+//   setChosenFont( font_x[i]?.className )
+//   localStorage.setItem('font_choice', font_x[i]?.className )
+//   setShowFont(false) 
+// } 
+//  useEffect(()=>{
+// const font= localStorage.getItem('font_choice')
+// setChosenFont(font) 
+//  }, [])
+//  const uploadAvatar = async (event) => {
+//   try {
+//     setUploading(true)
 
-    if (!event.target.files || event.target.files.length === 0) {
-      throw new Error('You must select an image to upload.')
-    }
+//     if (!event.target.files || event.target.files.length === 0) {
+//       throw new Error('You must select an image to upload.')
+//     }
 
-    const file = event.target.files[0]
-    const fileExt = file.name.split('.').pop()
-    const filePath = `${uid}-${Math.random()}.${fileExt}`
+//     const file = event.target.files[0]
+//     const fileExt = file.name.split('.').pop()
+//     const filePath = `${uid}-${Math.random()}.${fileExt}`
 
-     const { error: uploadError } = await supabase.storage.from('profile_avatars').upload(filePath, file)
-    if (uploadError) {
-      console.log(uploadError)
-      throw uploadError
-    } 
-   onUpload(filePath)
+//      const { error: uploadError } = await supabase.storage.from('profile_avatars').upload(filePath, file)
+//     if (uploadError) {
+//       console.log(uploadError)
+//       throw uploadError
+//     } 
+//    onUpload(filePath)
 
-  } catch (error) {
-   console.log('Error uploading avatar!')
-  } finally { 
-    setShowInput(prev=> !prev)
-    setUploading(false)
-  }
-}
-const update_user=async()=>{ 
-  setLoading(true) 
-    try {
-      await updateProfile({
-        user,
-        avatar_url, 
-        email, 
-        education,
-        address,
-        password,
-        website,
-        fullname,
-        username,  
-      })
+//   } catch (error) {
+//    console.log('Error uploading avatar!')
+//   } finally { 
+//     setShowInput(prev=> !prev)
+//     setUploading(false)
+//   }
+// }
+// const update_user=async()=>{ 
+//   setLoading(true) 
+//     try {
+//       await updateProfile({
+//         user,
+//         avatar_url, 
+//         email, 
+//         education,
+//         address,
+//         password,
+//         website,
+//         fullname,
+//         username,  
+//       })
     
-   } catch (error) {
-       console.log('Error updating the data!')
-  } finally {
-    setLoading(false)
-    setProfileUpdater(false)
-  }
-  }
-  const accountDelete =async()=>{
-    await deleteProfile(user.id)
-  }
-  const createRef=useRef()  
-   const editingRef=useRef()
-   const router =useRouter()
-  const editting=(p)=>{ 
-  setPost(p)
+//    } catch (error) {
+//        console.log('Error updating the data!')
+//   } finally {
+//     setLoading(false)
+//     setProfileUpdater(false)
+//   }
+//   }
+//   const accountDelete =async()=>{
+//     await deleteProfile(user.id)
+//   }
+//   const createRef=useRef()  
+//    const editingRef=useRef()
+//    const router =useRouter()
+//   const editting=(p)=>{ 
+//   setPost(p)
   
-  editingRef.current?.scrollIntoView()
-  }
+//   editingRef.current?.scrollIntoView()
+//   }
  
  return (
   <> 
-    <div className="w-24 m-auto "> 
+    {/* <div className="w-24 m-auto "> 
     {notify&&<p className="fixed top-0 bg-green-500 border-2 text-center text-white p-5 text-xl">{notify}</p>}
   </div>
   {showInput&& 
@@ -391,8 +391,8 @@ const update_user=async()=>{
       </div>
     </div> 
     </div>   
- }  
-  {profileUpdater?( 
+ }   */}
+  {/* {profileUpdater?( 
 <div className="relative" ref={updaterRef}>
   <div className="absolute z-20 top-44 px-11 text-white "> 
 <div className="p-2 text-2xl m-2">
@@ -469,22 +469,22 @@ disabled={loading}
   <p className="text-xl p-3">{address}</p>
   <p className="text-xl p-3">{'about'}</p>
   </div>  
-  </div> )}  
+  </div> )}   */}
      
   <div className="relative">  
     <div className="bg-gray-700 z-10 relative h-screen bg-opacity-50"></div> 
    <Avatar
-uid={user?.id}
-url={avatar_url}
-size={150}
-setShowInput={setShowInput}
-uploadRef={uploadRef}
-onUpload={(url) => {
-  setAvatarUrl(url)
- updateProfile({user, fullname, username, website, avatar_url: url })
-}}
+// uid={user?.id}
+// url={avatar_url}
+// size={150}
+// setShowInput={setShowInput}
+// uploadRef={uploadRef}
+// onUpload={(url) => {
+//   setAvatarUrl(url)
+//  updateProfile({user, fullname, username, website, avatar_url: url })
+// }}
 />
- {user.id===id?
+ {/* {user.id===id?
   <div className="cursor-pointer flex justify-end text-2xl relative -top-20 absolute z-10 text-white" onClick={()=>setNavDropper(prev=> !prev)}><FontAwesomeIcon icon={faEllipsisVertical}width={100} /> </div> :null}
    {navDropper?
  (<div className="absolute z-20 block p-4 right-0 mr-8 -mt-16 bg-transparent" ref={dropperRef}>
@@ -502,7 +502,7 @@ onUpload={(url) => {
  :
 null
 }  
- 
+  */}
  <div className="m-auto w-3/12 relative"> 
   <div className="flex absolute -top-20 text-center left-1/4 z-10"> 
 
@@ -520,11 +520,11 @@ null
     <div className='main-forum m-auto xl:m-0 px-6 py-2 m-1.5 max-w-xl md:mt-0' > 
   <h2 className='p-2 text-2xl font-bold text-white'>Explore the Topic</h2>
     <CreateForm 
-    createPost={createPost} 
-    postEdit={postEdit}
-    commentEdit={commentEdit}
-    post={post} 
-    user={user}
+    // createPost={createPost} 
+    // postEdit={postEdit}
+    // commentEdit={commentEdit}
+    // post={post} 
+    // user={user}
     
     />
     {/* {val && 
@@ -533,7 +533,7 @@ null
     </p>} */}
     </div>     
      </div>
-     <main className="bg-main-bg"> 
+     {/* <main className="bg-main-bg"> 
      {userActions &&<LoginModal setUserActions={setUserActions}/>} 
     {postsSorted?.map((xx, i)=> ( 
    
@@ -693,7 +693,7 @@ null
     </div> 
    )
      )}  
-   </main> 
+   </main>  */}
 
  </>
     );

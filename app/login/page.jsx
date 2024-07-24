@@ -9,8 +9,8 @@ import { Suspense } from "react";
 const Login =async ({searchParams} ) => {
   const getURL = () => {
     let url =
-      process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production env.
-      process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
+      process?.env?.NEXT_PUBLIC_SITE_URL ??  
+      process?.env?.NEXT_PUBLIC_VERCEL_URL ?? 
       'http://localhost:3000/'
     // Make sure to include `https://` when not localhost.
     url = url.startsWith('http') ? url : `https://${url}`
@@ -88,10 +88,9 @@ const handleOauthLogin = async () => {
 };
 
 
-  return (
-
+  return ( 
 <div className='m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center'> 
-<div className=''> 
+  <div className=''> 
 <div>
   <Link 
   href='\' 
@@ -113,15 +112,14 @@ className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foregrou
 </svg>{" "}
 Back 
 </Link>
-</div>
-<Suspense fallback={<p>Loading...</p>}> 
+</div> 
 <LoginForm 
 signUp={signUp} 
 signIn={signIn} 
 searchParams={searchParams}
 handleOauthLogin={handleOauthLogin}
- /> </Suspense>
-</div>
+ /> 
+</div>  
 </div>
 
 )

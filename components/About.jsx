@@ -4,8 +4,8 @@ import { Suspense } from "react"
 const About = () => {
      
   return (  
-    < >
-    <Suspense fallback={<p>Loading...</p>}>  
+    <>
+    {/* <Suspense fallback={<p>Loading...</p>}>  
 
 <div className="p-11 bg-gray-600 my-4 text-center text-white">
 <h1 className="text-center p-5 text-4xl dont-bold text-white">About Us</h1>
@@ -34,13 +34,12 @@ alt="christina-ngene"/>
 <p className="text-gray-400">Head of Content</p>
 <p className="leading-relaxed mt-4">I am the originator and I have years of experience programming and creating content. I intend to enable young people like me who may have a challenge getting jobs, are out of jobs or even unemployed learn useful skills that will be beneficial to them through Ngenet Studio. I want to bring everyone with me into this process beginning from here - <Link href='/'><b>Culturays</b></Link>.</p>
 
-
 <a target="_blank" href="https://whatsapp.com/channel/0029VaH6uMMFsn0dN8Vzwr2v"><button className="border-none focus:outline-none p-3 text-white text-center cursor-pointer bg-black w-1/2 my-4 hover:bg-gray-800">Contact</button></a><p></p>
 </div>
 </div>
   </div> 
 </div>
-</Suspense> 
+</Suspense>  */}
     </ >
   )
 }

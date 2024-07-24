@@ -1,10 +1,9 @@
 import Search from "@/components/Search"; 
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import { Suspense } from "react";
+import { redirect } from "next/navigation"; 
  
 const SearchPage = async ({searchParams}) => {
-const {searchVal}= searchParams
+ const {searchVal}= searchParams
  
 const searchedContnet = async () => { 
 const supabase = createClient();  
@@ -16,17 +15,15 @@ const { data, error } = await supabase
 if (error) {
 console.error('Error fetching posts:', error.message);
 return;
-}  
+}   
 return data
 
 }
 const content = await searchedContnet() 
  
   return (
-    <div> 
-  <Suspense fallback={<p>Loading...</p>}>  
-    <Search searchVal={searchVal} content={content}/> 
-      </Suspense>
+    <div>  
+    <Search searchVal={searchVal} content={content}/>  
     </div>
   )
 }

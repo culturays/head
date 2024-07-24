@@ -29,28 +29,24 @@ return;
 return data
 }
 
-
-const postSearch=await searchValues()
-const headersList = headers();
-const pathname = headersList.get('referer') || "" 
+ const postSearch=await searchValues()
+// const headersList = headers();
+// const pathname = headersList.get('referer') || "" 
   
-return ( 
- 
+return (
 <div> 
-
-  <Header />  
-  <AuthButton confirmParam={confirmParam} /> 
+ <Header />   
+ <AuthButton confirmParam={confirmParam} /> 
 <div className='thoughts-text bg-culturaysBg text-white p-8 text-center flex justify-between'> 
 <p>Trending <span></span> <span>&#10141;</span></p>
 <Link href='/search-page'><FontAwesomeIcon icon={faMagnifyingGlass}/></Link>
 </div> 
-<Suspense fallback={<p>Loading...</p>}>  
+ 
  <SearchItems searchVal={name} itemSearches={postSearch}/> 
- </Suspense>
 <div className="flex p-8 lg:px-32"> 
-  <NewsLetter/>  
+<NewsLetter/>  
 </div>  
- <Footer />  
+<Footer />    
 </div> 
  )
 }

@@ -157,7 +157,7 @@ const {events} =await forumEvents()
 return (
 
  <div >
-  <AuthButton confirmParam={confirmParam} />  
+ <AuthButton confirmParam={confirmParam} />  
 <div className='thoughts-text bg-culturaysBg text-white p-8 text-center '> 
 <p className="text-2xl">Welcome! Drop your story and get replies from other creatives! </p>  
 </div>
@@ -167,9 +167,8 @@ return (
       
 </div> 
 </div>  
- <Suspense fallback={<p>Loading...</p>}>  
-   <SearchItems searchVal={query} itemSearches={postSearch} />  
-   </Suspense> 
+    <SearchItems searchVal={query} itemSearches={postSearch} />  
+ 
 <Main  
 user={user}
 trends={trends}

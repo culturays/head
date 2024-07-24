@@ -5,7 +5,7 @@ const Creator = () => {
   return (
    
    <Suspense fallback={<p>Loading...</p>}> 
-<div className="w-full m-auto py-8"> 
+{/* <div className="w-full m-auto py-8"> 
 <div className="w-2/5 m-auto">
 <Image
 src='/assets/images/ngenet.jpg' 
@@ -44,7 +44,7 @@ True fulfillment lies not in personal achievements alone but in the ability to m
 <br/>
 <p>P.S You can ignore all these if it sounds boring to you. But this is how I motivate myself daily. Thank you for reading!!!</p>
     </div> 
-    </div>
+    </div> */}
     </Suspense> )
 }
 

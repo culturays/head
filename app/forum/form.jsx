@@ -3,10 +3,8 @@ import { SubmitButton } from "./submit-button";
 const Form = ({searchParams, create}) => {
  
   return (
-<> 
-
-<form className='relative bg-transparent' > 
- 
+<>  
+<form className='relative bg-transparent' >  
 <textarea
 rows="2"
 cols="50"  
@@ -24,15 +22,14 @@ placeholder="Say what you think!"
     >
       Create
     </SubmitButton>
-    </div>
-
+    </div> 
    
 </form> 
 {searchParams?.message && (
-      <p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
-        {searchParams.message}
-      </p>
-    )}
+<p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
+  {searchParams.message}
+</p>
+)}
  </> 
   )
 }

@@ -15,25 +15,22 @@ export const metadata = {
   description: "Christina is creator and originator of Culturays.",
 }; 
 
-function Culturayscreator({searchParams}) {
-  const name = searchParams.name; 
-  const postSearch=[] 
+function Culturayscreator( {searchParams}) {
+ const name = searchParams.name;
+ const postSearch=[] 
   return (
-
 <div> 
-<nav className="h-18">
+ <nav className="h-18">
 <div className=" items-center text-sm">            
 <Header/> 
 <AuthButton/>  
-<SearchItems searchVal={name} itemSearches={postSearch}/>  
+ <SearchItems searchVal={name} itemSearches={postSearch}/>  
 </div>        
 </nav> 
 <Creator /> 
-<Footer />   
+<Footer /> 
 </div> 
   )
 }
 
 export default Culturayscreator
-
- 

@@ -1,12 +1,9 @@
-import { Suspense } from "react"
-
 const NewsPage = () => {
-  return (
-    <Suspense fallback={<p>Loading...</p>}> 
+  return (  
     <div>
       news
     </div>
-  </Suspense>
+ 
   )
 }
  

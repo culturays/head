@@ -100,8 +100,7 @@ const searched= useSearchParams()
     setCurrentUrl(window.location.href);
   }
   }, []);
-const handleConfirmLogout = () => {
-  console.log(currentUrl,currentUrl.split('/?')[0])
+const handleConfirmLogout = () => { 
   if (typeof currentUrl === 'string') {
     router.push( `${currentUrl.split('/?')[0]}?confirm=yes`, { shallow: true });
   }
@@ -141,9 +140,11 @@ const { data:updateData, error:updateErr } = await supabase
 }
 
  return (
+ 
     <PagesContext.Provider value={{ activeIdx ,setActiveIdx ,shareOptions,setShareOptions, scrolledComments, setScrolledComments,setScrollChild, scrollChild, scrolledPosts, setScrolledPosts, show, setShow,  setIsReplying, isReplying,setCurrentUrl, setImgIndex,setImgZoom, imgZoom, imgIndex, imgRef, resetImg, setNotify, notify, handleConfirmLogout, commentReply, deleteReps,  setNotify }}>     
      {children}  
     </PagesContext.Provider>
+  
   )
 } 
 

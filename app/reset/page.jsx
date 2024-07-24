@@ -1,7 +1,7 @@
 "use client"
 import React, { Suspense } from 'react'
  import { createClient } from "@/utils/supabase/client"
-import { useRouter, useSearchParams } from 'next/navigation'; 
+import { useRouter } from 'next/navigation'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ResetPage = () => {
@@ -55,7 +55,7 @@ const { data, error } = await supabase.auth.updateUser({
 email,
 password ,
 data: { full_name }
-}) 
+})  
 if(error){
 router.push(`/forgotten-password?message=${error}`);
 }
@@ -65,8 +65,8 @@ return router.push( `/` );
 
 
   return (
-<Suspense>
-<div className="m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center"> 
+ <> 
+  <div className="m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center"> 
 <form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative">
 <label className="text-md block text-white text-xl" htmlFor="email">
 Email
@@ -124,7 +124,7 @@ data-focused={focused }
 )} 
 
 </div>  
-</Suspense>
+ </>
 )
 }
 

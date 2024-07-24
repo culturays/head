@@ -5,7 +5,7 @@ import NewsLetter from '@/components/NewsLetter'
 import SearchItems from '@/components/SearchItems' 
 import Top10 from '@/components/Top10El'  
 import { searchValues } from '../lib/searches/search' 
-import { Suspense } from 'react'
+ 
 export const revalidate = 10
 const Events_Naija = async({searchParams}) => { 
 const forumEvents =async ()=>{
@@ -26,8 +26,7 @@ const top10Naija = await getTop10()
 const eventSearch = await searchValues(name) 
 const top10Names = top10Naija.map((ex)=> ex.name) 
 return ( 
-<>
-<Suspense fallback={<p>Loading...</p>}> 
+<> 
 <SearchItems searchVal={name} itemSearches={eventSearch}/> 
 <div className='xxs:flex xxs:flex-col'> 
 <NaijaEvents events={events} top10Naija={top10Naija}/>
@@ -36,7 +35,7 @@ return (
 </div>
 
 </div> 
-</Suspense> 
+  
 </>)
 }
 
