@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { compare, hash } from "bcrypt"
 import { revalidatePath } from "next/cache"; 
+import { Suspense } from "react";
 const Login =async ({searchParams} ) => {
   const getURL = () => {
     let url =
