@@ -9,7 +9,7 @@ import ShareButtons from "../ShareButtons"
 import { useFormStatus } from "react-dom";
 import useSWR from "swr"
 import Link from "next/link"
-import { useMemo, useState, useEffect, useRef } from "react"
+import { useMemo, useState, useEffect, useRef, Suspense } from "react"
 import LoginModal from "./LoginModal"
 import { useInView } from "react-intersection-observer"
 import CreateForm from "@/app/forum/createpost"
@@ -626,6 +626,7 @@ const commentEdit = async(e) => {
   };
   
   return (
+    <Suspense fallback={<p>Loading...</p>}> 
     <div> 
       
     <div className="w-24 m-auto "> 
@@ -824,7 +825,9 @@ const commentEdit = async(e) => {
      )}  
    </main>  
   
-   </div> )
+   </div> 
+   </Suspense> 
+   )
 }
 
 export default Main

@@ -1,13 +1,16 @@
 import Image from "next/image"
+import { Suspense } from "react"
 
 const Creator = () => {
   return (
+   
+   <Suspense fallback={<p>Loading...</p>}> 
 <div className="w-full m-auto py-8"> 
 <div className="w-2/5 m-auto">
 <Image
 src='/assets/images/ngenet.jpg' 
 width={1250}
-height={675}
+height={675} 
 className="shadow-1xl m-2"
 alt="Christina Ngene"
 /> 
@@ -40,8 +43,9 @@ True fulfillment lies not in personal achievements alone but in the ability to m
 <p></p>I am a builder, a dreamer, a compassionate soul committed to making the world a better place, one word, one act of kindness, one dream at a time. I am a beacon of hope and inspiration and I am a woman!
 <br/>
 <p>P.S You can ignore all these if it sounds boring to you. But this is how I motivate myself daily. Thank you for reading!!!</p>
-    </div> </div>
-  )
+    </div> 
+    </div>
+    </Suspense> )
 }
 
 export default Creator

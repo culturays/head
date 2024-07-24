@@ -1,9 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
+import { Suspense } from "react"
 const About = () => {
      
-  return ( 
+  return (  
     < >
+    <Suspense fallback={<p>Loading...</p>}>  
+
 <div className="p-11 bg-gray-600 my-4 text-center text-white">
 <h1 className="text-center p-5 text-4xl dont-bold text-white">About Us</h1>
 <p className="text-center p-5 text-white">Culturays is an independent news outlet operating under Ngenet Studio and focused on events from around the world that affect Nigeria and the rest of Africa. </p>
@@ -37,7 +40,7 @@ alt="christina-ngene"/>
 </div>
   </div> 
 </div>
- 
+</Suspense> 
     </ >
   )
 }

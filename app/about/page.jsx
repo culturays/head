@@ -16,8 +16,7 @@ export const metadata = {
 const AboutUs =async ({searchParams}) => { 
   const name = searchParams.name;
   const postSearch=[]
-  return ( 
-<Suspense fallback={<p>Loading...</p>}>  
+  return (  
 <div> 
 <nav className="h-18">
 <div className=" items-center text-sm">            
@@ -32,7 +31,7 @@ itemSearches={postSearch}
 <About/> 
 <Footer />   
 </div> 
-</Suspense> 
+
 )
 }
 

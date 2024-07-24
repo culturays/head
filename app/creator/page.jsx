@@ -24,10 +24,8 @@ function Culturayscreator({searchParams}) {
 <nav className="h-18">
 <div className=" items-center text-sm">            
 <Header/> 
-<AuthButton/> 
-<Suspense fallback={<p>Loading...</p>}>  
-<SearchItems searchVal={name} itemSearches={postSearch}/> 
- </Suspense>
+<AuthButton/>  
+<SearchItems searchVal={name} itemSearches={postSearch}/>  
 </div>        
 </nav> 
 <Creator /> 
