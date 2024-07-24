@@ -4,9 +4,7 @@ import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";  
 import Link from "next/link";
 import { compare, hash } from "bcrypt"
-import { revalidatePath } from "next/cache";
-import { Suspense } from "react";
-
+import { revalidatePath } from "next/cache"; 
 const Login =async ({searchParams} ) => {
   const getURL = () => {
     let url =
@@ -90,7 +88,7 @@ const handleOauthLogin = async () => {
 
 
   return (
-<Suspense>
+
 <div className='m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center'> 
 <div className=''> 
 <div>
@@ -124,7 +122,7 @@ handleOauthLogin={handleOauthLogin}
 /> 
 </div>
 </div>
-</Suspense>
+
 )
 }
 

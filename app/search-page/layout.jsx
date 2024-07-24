@@ -1,7 +1,6 @@
 import AuthButton from "@/components/AuthButton";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header"; 
-import { Suspense } from "react";
+import Header from "@/components/Header";  
 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/search-page` 
@@ -14,8 +13,7 @@ export const metadata = {
 };
  
 const Layout = ({children}) => {
-  return (
-<Suspense>
+  return ( 
 <div>
 <nav className="h-18">
 <div className=" items-center text-sm">            
@@ -29,7 +27,7 @@ const Layout = ({children}) => {
 {children} 
 <Footer/>   
 </div>
-</Suspense> )
+ )
 }
 
 export default Layout

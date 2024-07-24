@@ -1,6 +1,6 @@
 'use client'
 import { signIn } from "next-auth/react"
-import { useEffect, useRef, useState } from "react"; 
+import { Suspense, useEffect, useRef, useState } from "react"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faEyeSlash, faEye} from '@fortawesome/free-solid-svg-icons'
 import { SubmitButton } from "./submit-button";
@@ -136,14 +136,16 @@ pendingText="Signing Up..."
 Create Account
 </SubmitButton>:null}
 </div>
+<Suspense>
+
 {searchParams?.message && (
 <p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
 {searchParams.message}
 </p>
 )} 
-  
-     <hr />
-     <small className="text-white text-center cursor-pointer text-lg">or </small> 
+</Suspense>
+  <hr />
+  <small className="text-white text-center cursor-pointer text-lg">or </small> 
  <button type="submit" formAction={handleOauthLogin} className="bg-tranparent"><p className="text-white cursor-pointer p-2 text-lg bg-gray-700 p-2"> Sign in with Google</p></button>
  </form>
  

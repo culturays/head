@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/login`
   : "http://localhost:3000/login";
@@ -12,12 +10,11 @@ export const metadata = {
 
 const Layout = ({children}) => {
 
-  return (
-    <Suspense>
+  return ( 
     <div> 
       {children} 
     </div>
-    </Suspense> 
+ 
     )
 }
 
