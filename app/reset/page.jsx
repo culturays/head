@@ -1,11 +1,12 @@
 "use client"
-import React, { Suspense } from 'react'
+import React, { useState } from 'react'
  import { createClient } from "@/utils/supabase/client"
-import { useRouter } from 'next/navigation'; 
+import { useRouter, useSearchParams } from 'next/navigation'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const ResetPage = () => {
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState({});
   const [passType, setPassType] = useState('password');
   const [icon, setIcon] = useState(faEyeSlash);
   const searchParams=useSearchParams()  
@@ -95,7 +96,7 @@ type={passType}
 pattern={password_pattern}
 required={errors.password}
 onBlur={(e) =>handleFocus(e )} 
-data-focused={focused } 
+// data-focused={focused } 
 />
 {errors.password &&
 <span className="text-red-600">

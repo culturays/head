@@ -1,6 +1,3 @@
-import AuthButton from "@/components/AuthButton";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";  
 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/search-page` 
@@ -8,24 +5,18 @@ const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Naija Events",
+  title: "Search",
   description: "",
 };
  
 const Layout = ({children}) => {
   return ( 
-<div>
-<nav className="h-18">
-<div className=" items-center text-sm">            
-<Header/>  
-</div>        
-</nav>  
-<AuthButton/> 
+<div> 
 <div className='thoughts-text bg-culturaysBg text-white p-8 text-center flex justify-between'> 
 <p>Trending <span></span> <span>&#10141;</span></p>
 </div>
 {children} 
-<Footer/>   
+   
 </div>
  )
 }

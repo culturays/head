@@ -1,27 +1,33 @@
 "use client"
-import { getTop10 } from "@/app/filmsdata";
 import { createClient } from "@/utils/supabase/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { createContext, useContext, useEffect, useRef, useState } from "react"; 
+import React, { useEffect, useRef, useState } from "react"; 
  
 import { PagesContext } from "./Pages-Context"; 
-const supabase = createClient()
+import nlp from "compromise/three";
+ 
 export const ContextProvider = ({children}) => {
   let initialVal=""
   const [scrolledPosts,setScrolledPosts]=useState([])
   const [scrolledComments,setScrolledComments]=useState([])
-  const [shareOptions,setShareOptions]=useState(false)
-  const [notify,setNotify]=useState('')
-  const [imgZoom,setImgZoom]=useState({})
-
-  const [show, setShow] = useState(false);
   const [isReplying, setIsReplying] = useState(false)
-  const [imgIndex,setImgIndex]= useState('')  
-  const [activeIdx,setActiveIdx]=useState(null) 
   const [scrollChild,setScrollChild]=useState([])
+  const [user,setUser]=useState({})  
+  const [post,setPost]= useState({})
+  const [showIndex, setShowIndex]= useState(null)
+const [onIdx, setOnIdx]=useState(null) 
+const [editBtn, setEditBtn]=useState(false)
+const [showSuggestion, setShowSuggestion]=useState(false)
+const [deleteBtn,setDeleteBtn]=useState(false) 
+const [activeReply,setActiveReply]=useState(null)
+
   const pathname = usePathname()
   const imgRef= useRef() 
   const router = useRouter()
+  const editingRef=useRef()
+  const searchParams= useSearchParams();
+  const val = searchParams.get('message');
+
   
  const commentReply  = async(comment, user) => { 
   const supabase = createClient(); 
@@ -94,58 +100,40 @@ export const ContextProvider = ({children}) => {
 const searched= useSearchParams()
   const params = new URLSearchParams(searched);
   const prX = params.get('confirm')
-  const [currentUrl, setCurrentUrl] = useState(''); 
-  useEffect(() => { 
-  if (process) { 
-    setCurrentUrl(window.location.href);
-  }
-  }, []);
-const handleConfirmLogout = () => { 
-  if (typeof currentUrl === 'string') {
-    router.push( `${currentUrl.split('/?')[0]}?confirm=yes`, { shallow: true });
-  }
-};
+  // const [currentUrl, setCurrentUrl] = useState(''); 
+  // useEffect(() => { 
+  // if (process) { 
+  //   setCurrentUrl(window.location.href);
+  // }
+  // }, []);
 
-  
-async function resetImg(imgs,img) {
-  // setImgZoom({
-  //   width:'100%',
-  //   height:"160px", 
-  //   transition: "width 0.5s ease"
-  // })
-  
-const updFiles=imgs?.files?.filter((ex)=> ex !==img)
-const { data, error } = await supabase
-.from('posts')
-.update({ files: [...updFiles ] })
-.eq('id', imgs.id)
-.select() 
-const { data:updateData, error:updateErr } = await supabase
-.storage
-.from('posts_imgs')
-.remove(img)
-
-  if(error){
-    console.log(error)
-  }
-  setShow(false)
-  setNotify('Image Deleted')
-  const pt = scrolledPosts.filter((te)=> te.id!== imgs.id) 
-  setScrolledPosts([...pt, ...data ] ) 
-  setTimeout(
-    () =>setNotify(''),  
-    2000 
-  );
-  router.refresh()
-}
-
- return (
  
-    <PagesContext.Provider value={{ activeIdx ,setActiveIdx ,shareOptions,setShareOptions, scrolledComments, setScrolledComments,setScrollChild, scrollChild, scrolledPosts, setScrolledPosts, show, setShow,  setIsReplying, isReplying,setCurrentUrl, setImgIndex,setImgZoom, imgZoom, imgIndex, imgRef, resetImg, setNotify, notify, handleConfirmLogout, commentReply, deleteReps,  setNotify }}>     
-     {children}  
-    </PagesContext.Provider>
+// const handleConfirmLogout = () => { 
+//   // if (typeof currentUrl === 'string') {
+//   //   router.push( `${currentUrl.split('/?')[0]}?confirm=yes`, { shallow: true });
+//   // }
+// };
+
   
-  )
+
+
+
+
+
+
+
+
+//posts functions
+
+ return ( 
+<PagesContext.Provider value={{ 
+  activeIdx ,setActiveIdx ,shareOptions,setShareOptions, scrolledComments, setScrolledComments,setScrollChild, scrollChild, scrolledPosts, setScrolledPosts, show, setShow, setIsReplying, isReplying,  setImgIndex,setImgZoom, imgZoom, imgIndex, imgRef, setNotify, notify,   commentReply, deleteReps, setNotify,  
+ 
+}}>     
+{children}  
+</PagesContext.Provider>
+
+)
 } 
 
 // export function usePagesContext(){

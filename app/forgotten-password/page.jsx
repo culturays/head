@@ -1,39 +1,35 @@
- 
-import { createClient } from "@/utils/supabase/server" 
-import { redirect } from "next/navigation"; 
-const ForgottenPassword = ({searchParams}) => {
- //const [errors, setErrors] = useState({});
+"use client" 
+
+import { createClient } from "@/utils/supabase/client" 
+import { useRouter, useSearchParams } from "next/navigation"; 
+import { useState } from "react";
+const ForgottenPassword = () => {
+ const [errors, setErrors] = useState({});
+ const searchParams = useSearchParams()
+ const router = useRouter()
      const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$`)
       const updatePass=async(e)=>{  
-        "use server"
         const formData = new formData(e.currentTarget)
         const supabase = createClient();
         const email = formData.get("email"); 
         
         const { data, error } = await supabase.auth.resetPasswordForEmail(email)
              if(error){
-              redirect(`/forgotten-password?message=${error}`);
+               router.push(`/forgotten-password?message=${error}`);
              }
-             return redirect("/forgotten-password?message=Check your email to continue!");
+             return router.push("/forgotten-password?message=Check your email to continue!");
               }
               const validateForm = (data) => {
-                const errors = {}; 
-                if (data.name === 'full_name'&&!name_pattern.test(data.value.trim())) {
-                    errors.full_name = 'Username is required';  
-                }
+                const errors = {};  
                 if (data.name === 'email'&&!email_pattern.test(data.value.trim())) {
                   errors.email = 'Please Enter a Correct Email';  
-              }
-              if (data.name === 'password'&&!password_pattern.test(data.value.trim())) {
-                errors.password = 'Password is Incorrect';  
-              }
-               
+              } 
                   return errors;
                   };
-                  let errors ={}
+                  
                   const handleFocus=(e)=>{
                     const newErrors = validateForm(e.currentTarget)
-                    //setErrors(newErrors); 
+                    setErrors(newErrors); 
                    
                    return newErrors
                     }

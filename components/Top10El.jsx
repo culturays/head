@@ -1,5 +1,5 @@
 import Image from "next/image" 
-import { getTop10 } from "@/app/filmsdata";
+import { getTop10 } from "@/app/naija-wiki/filmsdata";
 
 const Top10 =async () => {
 

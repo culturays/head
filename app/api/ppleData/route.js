@@ -1,6 +1,5 @@
-import { MongoClient } from 'mongodb'; 
-import { NextResponse } from 'next/server';
-const MONGOKEY = process.env.MONGODB_;
+import { createClient } from "@/utils/supabase/server"
+import { NextResponse } from "next/server" 
  
 export async function GET(request) {
     await new Promise((resolve)=> {
@@ -8,13 +7,15 @@ export async function GET(request) {
       resolve(true)
         },5000)
        })
-    // const client = await MongoClient.connect(
-    //     `mongodb+srv://teech:${MONGOKEY}@cluster0.pmxgu.mongodb.net/peopledb?retryWrites=true&w=majority` );
-    //     const db = client.db(); 
-    //     const bdaydb = await db.collection('bd').find({} ).toArray();
-        
-    //     client.close(); 
-    
-    // return NextResponse.json({ message: "Done" , error:"Action Failed", bdaydb:bdaydb}, { status: 200 });
-    return NextResponse.json({ message: "Hello World" })
+       const forumBdays =async ()=>{
+        const supabase = createClient()
+        const { data: bday, error } = await supabase
+        .from('bday')
+        .select('*')
+        if(error)throw new Error('An Error has Occured')
+        return bday
+      }
+      
+       const bday =await forumBdays() 
+    return NextResponse.json({bday }, {status:200})
   }

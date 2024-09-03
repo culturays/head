@@ -26,7 +26,7 @@ const form = {name:subNm.name, email:subNm.email , message:subNm.message}
 
 const response =await fetch('/api/contacthandler', {
 method: "POST",
-headers:{
+headers:{ 
 'Accept': 'application/json',
 'Content-Type': 'application/json',
 },

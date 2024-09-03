@@ -12,7 +12,8 @@ const router =useRouter()
 const searchParams = useSearchParams();
 const pathname = usePathname();
  
-const handleSearch = useDebouncedCallback((term) => { 
+const handleSearch = useDebouncedCallback((term) => {
+  console.log(term)
   const params = new URLSearchParams(searchParams);
   if (term) {
     params.set('searchVal', term);
@@ -20,7 +21,7 @@ const handleSearch = useDebouncedCallback((term) => {
     params.delete('searchVal');
   }
   router.replace(`${pathname}?${params.toString()}`);
-}, 300);
+}, 500);
 
 const name = searchParams.get('name') || searchVal;
 const params = new URLSearchParams(searchParams);

@@ -1,12 +1,9 @@
 import Image from "next/image"
-import Link from "next/link"
-import { Suspense } from "react"
+import Link from "next/link" 
 const About = () => {
      
   return (  
-    <>
-    {/* <Suspense fallback={<p>Loading...</p>}>  
-
+    <> 
 <div className="p-11 bg-gray-600 my-4 text-center text-white">
 <h1 className="text-center p-5 text-4xl dont-bold text-white">About Us</h1>
 <p className="text-center p-5 text-white">Culturays is an independent news outlet operating under Ngenet Studio and focused on events from around the world that affect Nigeria and the rest of Africa. </p>
@@ -21,26 +18,24 @@ const About = () => {
  <p className="p-5">We are driven by a vision to create, and that backs our greatest endeavor yet — a journey to build a media company that transcends boundaries and empowers voices throughout Africa.</p> 
 </div>
 <h2 className="text-center p-8 text-4xl">Our Team</h2>
-<div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 m-4">
-<div className="">
-<div className="cardAbout shadow-2xl p-3">
+<div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 m-4"> 
+<div className="shadow-2xl p-3">
 <Image
 width={1200}
 height={675} 
 src="/assets/images/ngenet.jpg"
 alt="christina-ngene"/>
-<div className="m-auto mo-0">
+<div className="">
 <Link href='/creator'><h2 className="font-bold text-2xl pt-4">Christina Ngene</h2></Link>
 <p className="text-gray-400">Head of Content</p>
-<p className="leading-relaxed mt-4">I am the originator and I have years of experience programming and creating content. I intend to enable young people like me who may have a challenge getting jobs, are out of jobs or even unemployed learn useful skills that will be beneficial to them through Ngenet Studio. I want to bring everyone with me into this process beginning from here - <Link href='/'><b>Culturays</b></Link>.</p>
-
-<a target="_blank" href="https://whatsapp.com/channel/0029VaH6uMMFsn0dN8Vzwr2v"><button className="border-none focus:outline-none p-3 text-white text-center cursor-pointer bg-black w-1/2 my-4 hover:bg-gray-800">Contact</button></a><p></p>
+<p className="leading-relaxed mt-4">I am the originator of Culturays and I have years of experience programming and creating content. I intend to enable young people like me who may have a challenge getting jobs, are out of jobs or even unemployed learn useful skills that will be beneficial to them through Ngenet Studio. I want to bring everyone with me into this process beginning from here - <Link href='/'><b>Culturays</b></Link>.</p>
+<div className="w-1/2 m-auto">
+<a target="_blank" href="https://chat.whatsapp.com/Fj7udgVONab515BzVk72zU"><button className="hover:border hover:border-yellow-600 p-4 text-white text-center cursor-pointer bg-black w-full my-4 hover:text-gray-400 font-bold">Contact</button></a> 
+</div> </div>
 </div>
+ 
 </div>
-  </div> 
-</div>
-</Suspense>  */}
-    </ >
+    </>
   )
 }
 

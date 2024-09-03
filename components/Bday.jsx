@@ -4,23 +4,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react'; 
 const Bday = ({data}) => {
-  const todaysBd= new Date() 
-  todaysBd.setDate(todaysBd.getDate());
- 
-  const nig = data?.data?.bdaydb?.map((lx)=> lx.diff).flat()  
-  const bdayObj= nig?.filter((xy,i)=>new Date(xy.bday).toLocaleString().split(',')[0].slice(0,-5)
-  ===
-  todaysBd.toLocaleString().split(',')[0].slice(0,-5))
-  
+  const offset = -8;
+  const todaysBd= new Date( new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" )
+  const bdayObj= data?.filter((xy, i)=>new Date(xy.info).toLocaleString().split(',')[0].slice(0,-5) 
+  === new Date(todaysBd).toLocaleString().split(',')[0].slice(0,-5))
+///today.setHours(0, 0, 0, 0); 
+const today = new Date();
+const todayDay = today.getDate()-1;
+const todayMonth = today.getMonth();
+
+const filteredDates = data.filter(dateStr => {
+    const date = new Date(dateStr.info);
+    const dateDay = date.getDate();  
+    const dateMonth = date.getMonth();
+    return dateMonth === todayMonth&&dateDay === todayDay;
+}); 
   const [activeSlide,setActiveSlide] =useState( 0) 
   const prevSlide=()=> { 
     const slide =activeSlide - 1 < 0
-      ?bdayObj.length - 1
+      ?filteredDates.length - 1
       :activeSlide -1;
       setActiveSlide(slide);
   }
   const nextSlide=()=> {
-    let slide = activeSlide + 1 <  bdayObj.length
+    let slide = activeSlide + 1 <  filteredDates.length
       ? activeSlide + 1
       : 0;
       setActiveSlide(slide);  
@@ -28,10 +35,10 @@ const Bday = ({data}) => {
 
   return (
     <div > 
-<section className="">
+  <section className="">
   <h2 className="border-dotted border-b-2 py-2 text-2xl my-4 font-bold text-center">Naija Birthdays Today <small>{todaysBd.toLocaleString().split(',')[0].slice(0,-5) }</small>
 </h2>  
-{ bdayObj.length >0
+{ filteredDates.length >0
 &&
 <div className="card-data overflow-hidden flex bg-slate-100 p-4 justify-center"> 
   <div className="flex justify-between absolute mt-14 w-10/12"> 
@@ -42,7 +49,7 @@ const Bday = ({data}) => {
  <FontAwesomeIcon icon={faAngleRight}/> </p>
  </div>
 <div className="pple-card-x flex w-max justify-center">
-{bdayObj.map((xx,ix)=> 
+{filteredDates.map((xx,ix)=> 
   ix === activeSlide &&
 <div key={ix} className="w-full">
 <div className="pple-card m-1">
@@ -61,11 +68,11 @@ alt='Naija Birthdays'/>
  </div> 
 
 </div>}
-{bdayObj.length < 1 &&
+{filteredDates.length < 1 &&
 <div className="card-data overflow-hidden flex bg-slate-100 p-4 justify-center">
 <p>No Birthdays Today </p>
 </div>}
- </section> 
+ </section>  
 
     </div>
   );

@@ -3,21 +3,20 @@ import { useEffect, useRef } from "react";
 import { SubmitButton } from "./submit-button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { faFile, faFileImage,faImage } from "@fortawesome/free-regular-svg-icons";
-  
-const CreateForm = ({createPost, postEdit, post, val }) => { 
-  
+ 
+const CreateForm = ({createPost, postEdit,post, val,setPost}) => {  
  const clearRef= useRef() 
  useEffect(() => {
   if(val=== 'Post Created Successfully'||val=== 'Post Updated Successfully' || val=== 'There was an error. Please try again!'){
     clearRef.current.reset();
-  
-  } 
+    setPost('')
+  }  
 
-}, [createPost, postEdit]);
- 
+}, [createPost, postEdit]); 
+
   return (
 <> 
-<form className='relative bg-transparent' ref={clearRef} > 
+<form className='relative bg-transparent' ref={clearRef}> 
 <input  
 type='text' 
 name='title' 
@@ -106,7 +105,7 @@ name="folktale"
 </div>
 <div className='w-1/3 flex justify-center m-auto bg-slate-600 rounded-lg gap-2.5 btn-link'>  
 <SubmitButton     
-formAction={ !post.id?createPost :postEdit }
+formAction={post.id ? postEdit : createPost}
 className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2 "
 pendingText="Sending ..."  
 >

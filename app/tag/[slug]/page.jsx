@@ -1,25 +1,20 @@
-import { tag } from "@/app/api/newshandle";
+import Tag from "@/components/Tag";
+import { contentTag, tag } from "./taghandles"; 
   
-const Tag = async({searchParams}) => { 
- async function taggedItems() {
-    'use server'
-    const response = await tag(searchParams)
-    // const data = await response.json();
-  
-    // Return the fetched data as props
-    return {
-      props: {
-        response,
-      },
-    };
-  }
-
-  await taggedItems()
+const TagPage = async({params}) => { 
+ const slug =params.slug
+const content_tag_response = await contentTag(slug)
+ const tag_response = await tag(slug)
+ 
   return (
     <div>
-      
+      <Tag
+           content_tag_response={content_tag_response} 
+           tag_response={tag_response}
+
+      />
     </div>
   )
 }
 
-export default Tag
+export default TagPage

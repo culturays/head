@@ -4,24 +4,25 @@ import { useRouter, usePathname, useSearchParams} from "next/navigation";
 import { usePagesContext } from "../Pages-Context"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faComment, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
-import { faDeleteLeft, faPencil, faShare, faAngleDown, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faDeleteLeft, faPencil, faShare, faAngleDown, faUser, faAngleUp } from "@fortawesome/free-solid-svg-icons"
 import ShareButtons from "../ShareButtons" 
-import { useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom"; 
 import useSWR from "swr"
 import Link from "next/link"
-import { useMemo, useState, useEffect, useRef, Suspense } from "react"
+import { useState, useEffect, useRef } from "react"
 import LoginModal from "./LoginModal"
 import { useInView } from "react-intersection-observer"
 import CreateForm from "@/app/forum/createpost"
 import nlp from 'compromise/three'
 import Events from "@/components/forum/Events";
-import Trends from "@/components/forum/Trends";
 import { getPosts } from "@/app/forum/actions/loadPosts"; 
 import { createClient } from "@/utils/supabase/client"; 
-function sortAscending(pb, pa){ 
-  return (pa?.id - pb?.id);
+import Bday from "../Bday";
+import Trends from "./Trends"; 
+function sortAscending(pb, pa){  
+  return (pb?.id - pa?.id);
  } 
-const Main = ({ user, trends, events, peopleItems, initialPosts }) => {
+const Main = ({ user, trends, events, bday, initialPosts }) => {
 const router = useRouter()   
 const [onIdx, setOnIdx]=useState(null)
 const [activeReply,setActiveReply]=useState(null)
@@ -35,23 +36,29 @@ const [count,setCount]=useState(2)
 const [startScroll, setStartScroll]=useState(3)
 const [postSearch,setPostsSearched]=useState([]) 
 const [active,setActive]=useState(false)
-const [post,setPost]=useState({})
+const [post,setPost]=useState({}) 
+const [activeIdx, setActiveIdx]=useState(false)
 const [userActions,setUserActions]=useState(false)
-const [scrolledPosts, setScrolledPosts]=useState([]) 
+const [scrolledPosts, setScrolledPosts]=useState([])
+const [notify, setNotify]=useState(false)
+const [ show, setShow]=useState(false)
+const [imgIndex, setImgIndex]=useState(false)
+const [imgZoom,setImgZoom]=useState(false)
+const[shareOptions, setShareOptions]=useState(false) 
+const imgRef = useRef()
 const elRef = useRef();
 const createRef=useRef()  
 const { ref, inView } = useInView()
     const { pending, action } = useFormStatus(); 
     const isPending = pending && action
-    const { activeIdx, show,setImgIndex, notify, setImgZoom, setShow, imgZoom, imgIndex, resetImg, imgRef, postDelete, postTag, setShareOptions, deleteTag, setActiveIdx, setNotify}=usePagesContext()
     
     useEffect(() => {
       setScrolledPosts(initialPosts)
-      }, []); 
+      }, []);  
      
     const loadMorePosts = async () => {
     const apiP = await getPosts(startScroll, startScroll + count - 1) 
-    if(apiP){
+    if(apiP){ 
       setScrolledPosts(scrolledPosts?.concat(apiP))
      }else return 
     //  //setScrolledPosts([...scrolledPosts, ...apiP])
@@ -64,19 +71,15 @@ const { ref, inView } = useInView()
         loadMorePosts()   
       }
     
-    }, [inView])
-    
-   
-    const opTitles=scrolledPosts?.sort(sortAscending)
-
+    }, [inView]) 
+    const opTitles=scrolledPosts?.sort(sortAscending) 
     function enlargeImgs(i, ix) {  
       setImgIndex(scrolledPosts[i]?.files[ix])
      //imgRef.current?.scrollIntoView({ behavior: 'smooth',block: 'center'}) 
       setImgZoom({
       width:'200%',
       height:'auto',  
-      transition: "width 0.5s ease",
-     
+      transition: "width 0.5s ease", 
     }
       )
     
@@ -91,17 +94,7 @@ const { ref, inView } = useInView()
           )
       } 
     }
-    const commentsByParentId = useMemo(() => {
-      const group = {}
-      opTitles.map((ex)=>
-         ex.comments?.forEach(comment=> { 
-        group[comment] ||= []
-        group[comment].push(comment)
-      }) )
-      return group
-      }, [opTitles]) 
-       
-        const handleOpen = (post) => { 
+  const handleOpen = (post) => { 
         setOnIdx(post.id); 
         setShareOptions(false);
         if(!user){
@@ -112,16 +105,15 @@ const { ref, inView } = useInView()
        
       };
       
-  const showAll = (id,i) => {  
-    setActiveIdx(id);
+  const showAll = (id,i) => {
+    setActiveIdx(id); 
     setEditBtn(false)
     setDeleteBtn(false)
     if(!user){
        setUserActions(true) 
     }else{
         setShareOptions(prev => !prev);
-    } 
-  
+    }  
   }
    const openDelete=(id,i)=>{
   setDeleteBtn(prev => !prev)
@@ -148,11 +140,42 @@ const openEdit=(id,i)=>{
  
   
   const editting=(p)=>{ 
-  setPost(p)
-  
+  setPost(p)  
   editingRef.current?.scrollIntoView()
   }
+  async function resetImg(imgs,img) {
+    const supabase= createClient()
+    // setImgZoom({
+    //   width:'100%',
+    //   height:"160px", 
+    //   transition: "width 0.5s ease"
+    // })
  
+  const updFiles=imgs?.files?.filter((ex)=> ex !==img)
+  const { data, error } = await supabase
+  .from('posts')
+  .update({ files: [...updFiles ] })
+  .eq('id', imgs.id)
+  .select() 
+  const { data:updateData, error:updateErr } = await supabase
+  .storage
+  .from('posts_imgs')
+  .remove(img)
+  
+    if(error){
+      console.log(error)
+    }
+    setShow(false)
+    setNotify('Image Deleted')
+    const pt = scrolledPosts.filter((te)=> te.id!== imgs.id) 
+    setScrolledPosts([...pt, ...data ] ) 
+    setTimeout(
+      () =>setNotify(''),  
+      2000 
+    );
+    router.refresh()
+  }
+  
   const createPost = async (formData) => { 
     const supabase = createClient(); 
       //?.index + 2 reflects the length of items in the range in forumPosts. should chang accordingly
@@ -198,23 +221,22 @@ const openEdit=(id,i)=>{
      const allFiles=[]
     
      for (let i = 0; i < files.length; i++) {
-     const file=files[i];
-     const filePath = `${Date.now()}-${file.name}`; 
-    if(file.name=== ''){
-    allFiles.push(null)
-    
-    }else{
-    allFiles.push(filePath)
-    
-    const { error: uploadError } = await supabase.storage.from('posts_imgs').upload(filePath, file,{upsert: true})
-    if (uploadError)
-       {
-      throw uploadError
-      // redirect("/forum?message=Error Loading Image")
-    } 
+      const file=files[i];
+      const filePath = `${Date.now()}-${file.name}`; 
+     if(file.name=== ''||file.name.includes(' ')){ 
+     router.push(pathname+'?message=Please choose a valid file!')
+     }
+     else{
+     allFiles.push(filePath)  
+     const { error: uploadError } = await supabase.storage.from('posts_imgs').upload(filePath?.replace(/ /g,"-"), file,{upsert: true})
+     if (uploadError)
+        {
+       throw new Error('An error has occured') 
+       // redirect("/forum?message=Error Loading Image")
      } 
-    
-     };
+      }
+     
+      };
      if(!user){
       setUserActions(true)
     }else{ 
@@ -242,7 +264,7 @@ const openEdit=(id,i)=>{
      avatar_url: user?.user_metadata.picture,
      user_email:user?.email,
       genre: genreList 
-     },
+     }, 
       
      ])
      .select()   
@@ -258,7 +280,7 @@ const openEdit=(id,i)=>{
     setScrolledPosts([...pt, ...data]) 
   } 
   
-  
+  createRef.current.scrollIntoView()
     } 
   
   
@@ -341,8 +363,8 @@ const openEdit=(id,i)=>{
         const { error: uploadError } = await supabase.storage.from('posts_imgs').upload(filePath, file,{upsert: true})
         if (uploadError)
         {
-        throw uploadError
-        // redirect("/forum?message=Error Loading Image")
+        throw new Error('Upload Error')
+ 
         } 
         } 
         
@@ -358,8 +380,7 @@ const openEdit=(id,i)=>{
         {    
         title, 
         slug,
-        likes:[],
-        replies:[],
+        likes:[], 
         post_id:postId,
         parent_id: parentId ,
         user_id:user.id,
@@ -402,75 +423,6 @@ const openEdit=(id,i)=>{
        } 
         }
       
-useEffect(()=>{
-  const searchValues = async () => {
-    const supabase = createClient();  
-    const { data, error } = await supabase
-      .from('posts')   
-      .select("*")
-      .filter('title', 'ilike', `%${searchVal}%`);
-    
-    if (error) {
-      console.error('Error fetching posts:', error.message);
-      return;
-    }
-   
-    setPostsSearched( data)
-  
-  }
-   searchValues()
-  },[searchVal]) 
-  
-  
-  useEffect(() => { 
-  const handler = (event) => {
-  if ( !elRef.current) {
-  return;
-  } 
-  if (!elRef.current.contains(event.target)) { 
-  setActiveReply(null)
-  }
-  
-  };
-  
-  document.addEventListener("click", handler, true);
-  
-  return () => {
-  document.removeEventListener("click", handler);
-  };
-  
-  }, [setActiveReply]); 
-    
-  const editingRef=useRef() 
- 
-  const fetcher = (...args ) => fetch(...args).then(async (res) => {
-    if (res.ok) {
-      const people_data = await res.json() 
-      return people_data
-    } 
- 
-    return peopleItems
-  })
- 
-  const { data: pepResource, isLoading, error } = useSWR('/api/ppleData', fetcher, {
-    fallbackData: peopleItems,
-  })
-
-
-  const searchParams= useSearchParams();
-  const val = searchParams.get('message');
-  const pathname = usePathname() 
-  useEffect(
-    () => { 
-  if(val=== 'Post Created Successfully'||val=== 'Post Updated Successfully' || val=== 'There was error. Please try again!'){
-   router.push(pathname, {scroll:false})   
-   //window.scrollTo({ top:800, behavior: "smooth" })
-   } 
-   return () => {
-    window.posted=''
-  };
-  
-  },[val, searchParams, router])
   
   const postEdit = async(formData) => { 
     const title = formData.get('title') 
@@ -552,18 +504,13 @@ useEffect(()=>{
     if (error) {
     console.log(error) 
     }
-    formData.set('title', '')
     router.push(pathname+'?message=Post Updated Successfully', {scroll:false})  
     
     //.filter((te)=> te.slug!== slug)
     const pt = scrolledPosts.filter((ex)=> ex.id !== post.id) 
     setScrolledPosts(pt.concat(data)) 
     router.refresh()
-    setTimeout(()=>{
-    setEditId(null)
-    
-    }, 3000)
-    
+    createRef.current.scrollIntoView()
     };
 
 const commentEdit = async(e) => { 
@@ -624,28 +571,193 @@ const commentEdit = async(e) => {
   }, 3000)
   
   };
-  
-  return (
-    <Suspense fallback={<p>Loading...</p>}> 
-    <div> 
+  const postDelete =async (id_) => { 
+    try{
+      const supabase = createClient();  
+      const { data: commentsData, error: commentsError } = await supabase
+      .from('comments')
+      .delete()
+      .eq('post_id', id_);
+    
+    if (commentsError) {
+      throw new Error('Error deleting comments')
+      // console.error('Error deleting comments:', commentsError);
+      // return;
+    }
+    
+    // Then, delete the post
+    const { data , error: postError } = await supabase
+      .from('posts')
+      .delete()
+      .eq('id', id_);
+    
+    if (postError) {
+      throw new Error('Error deleting posts')
+     
+    }
+    
+    }catch(err){
+    console.log(err)
+    } 
+     
+   router.refresh()
+    const pt = scrolledPosts.filter((te)=> te.id!== id_) 
+    setScrolledPosts(pt )
+    //window.location.reload()
+    };
+    const postTag = async (post, tagToDelete ) => {
+      const supabase = createClient(); 
+      const updTags = post?.suggested_tags?.map(tag => tag.split(" ").filter((ex)=> ex!== tagToDelete) ).flat() ; 
+      const { data, error: sugError } = await supabase
+      .from('posts')
+      .update({ suggested_tags: [...updTags]})
+      .eq('id', post.id) 
+      .select()
+      if (sugError) {
+      console.error('Error updating tags:', sugError.message) 
+      } else {
+      console.log('Suggested Tag updated successfully.', data);
+      const pt = scrolledPosts.filter((ex)=> ex.id !== post.id) 
+      setScrolledPosts(pt.concat(data)) 
+      router.refresh()
+      } 
+      // window.location.reload()
+    
+      //////////////////////////////////////////////////////////////////
       
+      const oldTags = post?.tags?.filter(tag => tag !== tagToDelete);
+      console.log( tagToDelete )
+      const {data:updateData, error: updateError } = await supabase 
+      .from('posts')
+      .update({ tags:[ ...oldTags, tagToDelete]})
+      .eq('id', post.id) 
+      .select()
+      if (updateError) {
+      console.error('Error updating tags:', updateError );
+      } else { 
+      console.log('Tag updated successfully.', updateData); 
+      const pt = scrolledPosts.filter((ex)=> ex.id !== post.id)  
+      setScrolledPosts(pt.concat(updateData)) 
+      router.refresh() 
+      }
+     
+      //window.location.reload()
+      };
+      const deleteTag =async (post, tagToDelete)=>{
+      const supabase = createClient(); 
+      const oldTags = post?.tags?.filter(tag => tag !== tagToDelete);  
+      const {data, error: updateError } = await supabase 
+      .from('posts')
+      .update({ tags:[ ...oldTags]})
+      .eq('id', post.id)
+      .select()
+      if (updateError) {
+      console.error('Error deleting tags:', updateError );
+      } else { 
+      console.log('Tag deleted successfully.'); 
+      const pt = scrolledPosts.filter((ex)=> ex.id !== post.id)  
+      setScrolledPosts(pt.concat(data))
+      router.refresh()
+      }
+      //window.location.reload()
+    
+      } 
+ 
+
+      useEffect(()=>{
+        const searchValues = async () => {
+          const supabase = createClient();  
+          const { data, error } = await supabase
+            .from('posts')   
+            .select("*")
+            .filter('title', 'ilike', `%${searchVal}%`);
+          
+          if (error) {
+            console.error('Error fetching posts:', error.message);
+            return;
+          }
+         
+          setPostsSearched( data)
+        
+        }
+         searchValues()
+        },[searchVal]) 
+        
+        
+        useEffect(() => { 
+        const handler = (event) => {
+        if ( !elRef.current) {
+        return;
+        } 
+        if (!elRef.current.contains(event.target)) { 
+        setActiveReply(null)
+        }
+        
+        };
+        
+        document.addEventListener("click", handler, true);
+        
+        return () => {
+        document.removeEventListener("click", handler);
+        };
+        
+        }, [setActiveReply]); 
+          
+        const editingRef=useRef() 
+        const fetcher = (...args ) => fetch(...args).then(async (res) => {
+          if (res.ok) {
+            const people_data = await res.json() 
+            return people_data
+          } 
+       
+          return bday 
+        })
+       
+        const { data: pepResource, isLoading, error } = useSWR('/api/ppleData', fetcher, {
+          fallbackData: bday,
+        })      
+      
+        const searchParams= useSearchParams();
+        const val = searchParams.get('message');
+        const pathname = usePathname() 
+        useEffect(
+          () => { 
+        if(val=== 'Post Created Successfully'||val=== 'Post Updated Successfully' || val=== 'There was error. Please try again! '||'Please choose a valid file!'){
+         router.push(pathname, {scroll:false})   
+         //window.scrollTo({ top:800, behavior: "smooth" })
+         }  
+         return () => {
+          window.posted=''
+        };
+        
+        },[val, searchParams, router])
+
+ 
+  return (
+  
+    <div>  
     <div className="w-24 m-auto "> 
-    {notify&&<p className="fixed top-0 bg-green-500 border-2 text-center text-white p-5 text-xl">{notify}</p>}
+    {notify&&<p className="fixed top-0 text-center text-white p-3 text-lg z-10">{notify}</p>}
   </div>
   <div className={active?'hidden bg-slate-800 opacity-90':''}>
   {isLoading&& !error&&<small className='m-1'>Waiting for data...</small>}
-    {/* {!isLoading&&<Bday data={pepResource} />} */}
+    {!isLoading&&<Bday data={pepResource.bday} />}  
   {error&& <small className='ml-1'>Error loading data...</small>}
    </div>
    <Events
   user={user}
   events={events}
   active={active}
-  setActive={setActive} 
-  />   
-  <div className={ active?'hidden bg-slate-800 opacity-90':' [&_.trendy]:mt-16 [&_.trendy]:m-0 [&_.trendy]:p-0  px-5 sm:px-16 my-2 m-auto xl:flex justify-center '}> 
+  setActive={setActive}  
+  /> 
+  <div className="m-auto lg:flex justify-center">
+  <div className={active?'hidden bg-slate-800 opacity-90':'m-2 [&_.trendy]:mt-16 [&_.trendy]:m-0 [&_.trendy]:p-0 '}> 
     <div className='main-forum relative m-auto xl:m-0 px-6 py-2 m-1.5 max-w-xl md:mt-0' ref={editingRef}> 
-  <h2 className='p-2 text-2xl font-bold text-white'>Explore the Topic</h2>
+  <div className='thoughts-text text-white p-8 text-center '> 
+     <h2 className='p-2 text-2xl font-bold text-white'>Explore the Topic</h2>
+<p className="text-xl">Drop your thought to hear from other people! </p>  
+</div>
+ 
     <CreateForm 
     createPost={createPost} 
     postEdit={postEdit}
@@ -653,22 +765,24 @@ const commentEdit = async(e) => {
     post={post} 
     user={user}
     val={val}
+    setPost={setPost}
     />
-
+ 
     {val && 
    <p className="absolute w-full top-0 left-0 text-center text-white p-3 bg-gray-400">
     {val} 
     </p>}
     </div> 
- 
-    <Trends trends={trends}/>  
-    </div> 
-    <main className="bg-main-bg "> 
+  </div> 
+ <Trends trends={trends}/>  
+
+     </div>
+    <main className="bg-main-bg"> 
      {userActions &&<LoginModal setUserActions={setUserActions}/>} 
     {opTitles?.map((xx, i)=> ( 
    
-    <div key={xx.title +  ' ' + i }className="sm:max-w-lg md:max-w-xl m-auto p-4 border-t-4 border-gray-900 hover:bg-gray-900 cursor-pointer">  
-   <div className="w-full overflow-hidden md:block justify-center" ref={ref}>
+    <div key={xx.title +  ' ' + i }className="sm:max-w-lg md:max-w-xl m-auto p-4 border my-1 border-t-4 border-gray-900 hover:bg-gray-900 cursor-pointer">  
+   <div className="w-full overflow-hidden md:block justify-center" >
    <div onClick={()=>router.push(`/forum/post/${xx.slug}/${xx.id}`)}className="" ref={createRef}> 
    <h3 className="text-white opacity-70 text-2xl cursor-pointer px-4 text-center underline">
    {xx?.title }  
@@ -681,23 +795,24 @@ const commentEdit = async(e) => {
    )} 
    
    </div> 
-   <p className="text-white opacity-70 cursor-pointer p-4 text-center">
-   {xx?.story } <Link href={`/forum/post/${xx.slug}/${xx.id}`}><small className="hover:text-green-400">See full story</small></Link>
-   </p>
-   <div className="flex flex-wrap text-sm "> 
+   <div className=""> 
+   <p style={{lineHeight:'28px'}} className="text-white opacity-70 cursor-pointer p-4 text-center">
+   {xx?.story} <Link href={`/forum/post/${xx.slug}/${xx.id}`}><small className="hover:text-green-400">See full story</small></Link>
+   </p></div>
+   <div className="flex flex-wrap text-sm my-8"> 
    {xx?.tags?.map((xy, vi)=> 
    xy.split(',').map((ex, xi)=> ex&&
-   <div className="flex bg-gray-100 mx-1 my-8" key={xi}>
+   <div className="flex bg-gray-100 m-1 " key={xi}>
    <Link href={`/tag/${ex.replace('#', '')}'`}><p className="p-1 m-1 hover:opacity-70 cursor-pointer" >{'#' + ex.replace('.', '')} </p></Link>
-   <small className="p-2 hover:bg-gray-400" onClick={()=>deleteTag(xx, ex)}>x</small>
+ {xx?.user_id === user?.id &&  <small className="p-2 hover:bg-gray-400" onClick={()=>deleteTag(xx, ex)}>x</small>}
    </div> ))} 
     
    </div>  
    
    <div className="flex flex-wrap w-3/4" > 
-   {user?.id=== xx.user_id && <small className="text-xs text-white opacity-70 cursor-pointer text-center mx-2">Suggested Tags:</small> }
+   {user?.id=== xx?.user_id && <small className="text-xs text-white opacity-70 cursor-pointer text-center mx-2">Suggested Tags:</small> }
     
-    {user?.id=== xx.user_id &&  xx?.suggested_tags?.length !== 0&&
+    {user?.id=== xx?.user_id && xx?.suggested_tags?.length !== 0&&
    xx?.suggested_tags?.filter((e, i, a)=> a.findIndex(item=>item.replace('.', '') === e.replace('.', '')) === i).filter((jx )=> jx!=='').map((ex, xi)=> 
    i===showIndex&&  
    <div className="flex text-sm" key={ex + ' ' + xi}>  
@@ -754,7 +869,7 @@ const commentEdit = async(e) => {
      </p></Link>}     
    </div>
   
-    <div className="text-white flex justify-between mt-4 w-full m-auto flex justify-evenly mt-4">  
+    <div className="text-white flex justify-between mt-4 w-full m-auto flex justify-evenly mt-4" ref={ref}>  
    <button onClick={()=> postLike(xx, user)}className="relative justify-between focus:outline-none left-0 flex m-1 text-lg rounded-none p-1 bg-inherit">
    <FontAwesomeIcon icon={faThumbsUp} width={20}/>
    <p className="px-1 hover:shadow-3xl">{xx?.likes?.length}</p>
@@ -772,13 +887,13 @@ const commentEdit = async(e) => {
    <div className="">
    <button onClick={()=>openEdit(xx.id, i)}className="relative justify-between left-0 flex m-1 text-lg rounded-none p-1 hover:shadow-3xl"><FontAwesomeIcon width={20}icon={faPencil} /></button>
    
-   {editBtn&&activeIdx=== xx.id &&<button onClick={()=>editting(xx)} className="absolute text-white text-center py-3 align-self-center justify-self-center mt-2 text-md rounded-none shadow-4xl p-3 border w-1/4 z-10 bg-slate-900">
+   {editBtn&&activeIdx=== xx.id &&<button onClick={()=>editting(xx)} className="absolute text-white text-center py-3 align-self-center justify-self-center mt-2 text-md rounded-none shadow-4xl p-3 border w-44 z-10 bg-slate-900">
    Edit</button>} 
    </div> 
    <div>
      <button onClick={()=>openDelete(xx.id, i)}className=" flex m-1 text-lg rounded-none p-1 hover:shadow-3xl"><FontAwesomeIcon width={20}icon={faDeleteLeft} rotation={180} /></button>
    
-   {deleteBtn&&activeIdx === xx.id &&<button onClick={()=>postDelete(xx?.id)} className="absolute text-white text-center py-3 align-self-center justify-self-center mt-2 text-md rounded-none shadow-4xl p-3 border w-1/4 z-10 bg-slate-900">
+   {deleteBtn&&activeIdx === xx.id &&<button onClick={()=>postDelete(xx?.id)} className="absolute text-white text-center py-3 align-self-center justify-self-center mt-2 text-md rounded-none shadow-4xl p-3 border w-44 z-10 bg-slate-900">
    Delete
    </button>}
    </div> 
@@ -793,7 +908,7 @@ const commentEdit = async(e) => {
    </div>  
    
    </div>  
-
+ 
      {activeReply && onIdx=== xx.id&&
      <div className="text-center"> 
      <form className='rxn-form animate-in flex justify-center' ref={elRef} onSubmit={(e)=>createComment(e, xx.id, null)} >    
@@ -818,15 +933,19 @@ const commentEdit = async(e) => {
    userActions={userActions} 
     setUserActions={setUserActions} />: 
     <ShareButtons  
-    item={xx} 
+    item={xx}
+    shareOptions={shareOptions}
+    activeIdx={activeIdx}
     />   }
     </div> 
    )
-     )}  
+     )}   
+ 
+  
    </main>  
   
    </div> 
-   </Suspense> 
+ 
    )
 }
 

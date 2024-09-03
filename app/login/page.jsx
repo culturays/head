@@ -8,8 +8,8 @@ import { revalidatePath } from "next/cache";
 import { Suspense } from "react";
 const Login =async ({searchParams} ) => {
   const getURL = () => {
-    let url =
-      process?.env?.NEXT_PUBLIC_SITE_URL ??  
+    let url = 
+      process?.env?.NEXT_PUBLIC_BASE_URL ??  
       process?.env?.NEXT_PUBLIC_VERCEL_URL ?? 
       'http://localhost:3000/'
     // Make sure to include `https://` when not localhost.
@@ -25,19 +25,18 @@ const signIn = async (formData ) => {
 const email = formData.get("email");
 const password = formData.get("password")  
 const supabase = createClient();
-const origin = headers().get("origin");
+  const origin = headers().get("origin"); 
   const { error } = await supabase.auth.signInWithPassword({
     email,
     password ,
   }); 
- 
   if (error) {
+     console.log(error)
     return redirect("/login?message=Could not authenticate user");
   }
-  
-  revalidatePath('/', 'layout') 
-  return redirect( `${origin}` );
- 
+   console.log('successfull')
+ revalidatePath('/') 
+  return redirect( `${origin}` ); 
   // return redirect("/protected"); `${origin}/auth/callback` ,
 };
  
@@ -48,14 +47,11 @@ const signUp = async (formData) => {
   const email = formData.get("email");
   const password = formData.get("password") ;
   const full_name = formData.get("full_name") ;
+ 
   const supabase = createClient();
   const { error } = await supabase.auth.signUp({
     email,
-    password,
-    // options: {
-    //   emailRedirectTo: `${origin}`,
-     
-    // },
+    password, 
     options: {
       emailRedirectTo: `${origin}/auth/callback`,
       data: {
@@ -63,7 +59,8 @@ const signUp = async (formData) => {
       },
     },
   }); 
-  if (error) { 
+  if (error) {
+    console.log(error)
     return redirect(`/login?message="${error}"`);
   }
 
@@ -84,7 +81,7 @@ const handleOauthLogin = async () => {
   if (error) {
     console.log(error)        
  }
-  return redirect(data.url);
+ return redirect(data.url);
 };
 
 
@@ -113,7 +110,7 @@ className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foregrou
 Back 
 </Link>
 </div> 
-<LoginForm 
+<LoginForm  
 signUp={signUp} 
 signIn={signIn} 
 searchParams={searchParams}

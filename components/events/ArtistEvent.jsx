@@ -14,7 +14,7 @@ className="h-40 lg:min-[481px]:h-48"
 src={ux.img_url &&ux.img_url.endsWith('.jpg')||ux.img_url.endsWith('.jpeg')||ux.img_url.endsWith('.png')? `https://peezrwllibppqkolgsto.supabase.co/storage/v1/object/public/event_avatars/${ux.img_url}`: "/assets/images/culturays_events.png"}
 width={500} 
 height={500}
-alt={ux.title}
+alt={ux.title} 
 />  
 
 <Link href={`/naija-events/event/${ux.slug }`}><h1 className="absolute top-11 cursor-pointer text-white hover:opacity-70 px-3 py-5 z-10 font-bold text-xl">{ux.title.split(',')[0]}</h1></Link> 

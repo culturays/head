@@ -1,50 +1,31 @@
+import { getNaijaTrends1 } from '@/app/api/trends/naija'
+import { trends } from '@/app/news/newshandle'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
- import Link from "next/link";  
-import {faFacebookF, faGoogle, faInstagram, faWhatsapp, faXTwitter} from "@fortawesome/free-brands-svg-icons";
+import Link from 'next/link' 
 
-const Nav = () => {
-
- return (
-   <div className="py-2">  
-<div className="flex social-forum">
-<Link target="_blank" href="https://www.facebook.com/CulturaysSpot">
-<p className="m-1 p-2"><FontAwesomeIcon
-width={20}
-height={20}
-icon={faFacebookF}></FontAwesomeIcon></p>
-</Link>
-
-<Link target= "_blank" href= "https://whatsapp.com/channel/0029VaH6uMMFsn0dN8Vzwr2v">
-< p className="m-1 p-2">
-<FontAwesomeIcon
-width={20}
-height={20}
-icon={faWhatsapp}/></p>
-</Link>
-
-<Link target= "_blank" href= "https://twitter.com/culturays">
-<p className="m-1 p-2">
-     <FontAwesomeIcon
-   width={20}
-   height={20}
-  icon={faXTwitter}/></p>
-  </Link>
-  <Link target= "_blank" href= "https://news.google.com/publications/CAAqBwgKMO_gzgswnvzlAw/sections/CAQqEAgAKgcICjDv4M4LMJ785QMwpZvoCA?ceid=US:en&oc=3"> 
-  <p className="m-1 p-2"> <FontAwesomeIcon
-   width={20}
-   height={20}
-  icon={faGoogle}/>
-  </p>
-  </Link >
-  <Link target= "_blank" href= "https://www.instagram.com/culturays_/"> 
-  <p className="m-1 p-2"><FontAwesomeIcon
-   width={20}
-   height={20}
-  icon={faInstagram}/> </p></Link>
-    </div>
-
-    </div>
-    )
-  }
+const Nav =async () => {
+  const trendsData =await trends() 
+ const trending_data = trendsData.slice(0,4) 
+ if(!trending_data )throw new Error('An error has occured.')
+  return (
+    <nav className='flex shadow-detailShadow pt-8 justify-center my-1'> 
+    <div className='text-center'> 
+  <p className='text-2xl text-gray-700 font-bold'>Trending <span></span> <span>&#10141;</span></p> 
+  <p className='text-gray-700 text-right w-screen text-xl hover:text-orange-700'> <Link href='/search-page' ><FontAwesomeIcon icon={faMagnifyingGlass} width={100}/></Link></p>
+<div className='text-md text-gray-700 font-medium flex justify-center flex-col xs:flex-row  ' >
+  {trending_data?.map((ex)=> 
+    <ul key={ex.title}>  
+     <Link href={`/news/${ex.contentTypeName}/${ex.slug}`}><li className='py-2 underline md:px-2 hover:text-orange-700 hover:font-bold text-center mx-1'>{ex.title}</li></Link> 
+    </ul> 
+     )}  
   
-  export default Nav
+     </div>  
+   
+     </div> 
+   
+   </nav>  
+  )
+}
+
+export default Nav

@@ -6,8 +6,7 @@ import { useState,useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp, faComment,  faDeleteLeft, faPencil, faShare,  faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons' 
-import { usePagesContext } from '../Pages-Context'  
+import { faThumbsUp, faComment,  faDeleteLeft, faPencil, faShare,  faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'   
 import ShareButtons from '../ShareButtons' 
 import { dateFormatter } from '@/utils/dateFormat'  
 import LoginModal from './LoginModal'
@@ -16,19 +15,28 @@ post,
 postData,
 user,
 handleLike,  
-editComment,  
+editComment,
 likes, 
-commentId,
-setCommentId, 
+commentObj, 
+setCommentObj, 
 comment,  
 commentLike,
 commentEdit,
 createComment,
 deleteComment, 
 commentsByParentId,
- 
+show,
+setShow ,
+setImgIndex,
+imgIndex,
+activeIdx,
+setActiveIdx,
+shareOptions,
+setShareOptions,  
+setIsEditingComment,
+isEditingComment
 }) => {  
-const [isEditing, setIsEditing] = useState(false) 
+ 
 const [deleteBtn,setDeleteBtn]=useState(false)
 const [editBtn,setEditBtn]=useState(false)  
 const router= useRouter()
@@ -38,19 +46,19 @@ const [replyId,setReplyId]=useState(null)
 const [isChildComment, setIsChildComment]= useState(false)
 const [userActions,setUserActions]=useState(false)
 const [scrolledComments, setScrolledComments]=useState([])
+const [activeCommentReply, setActiveCommentReply]=useState(false)
 function getReplies(parentId){ 
 return (commentsByParentId[parentId]) 
 }
-const childComments = getReplies(comment?.id) 
-const { show, setImgIndex, setShow,imgIndex, activeIdx, setActiveIdx, setShareOptions, isReplying, setIsReplying, setNotify } = usePagesContext() 
- useEffect(() => {
-  if (comment?.id ===commentId ) { 
-   setIsEditing(true)
-   //setCommentText(comment.title)
-   //setComment(comment)
+const childComments = getReplies(comment?.id)
+
+   const editting=()=>{ 
+  setEditBtn(false)
+  setCommentObj(comment)
+   setIsEditingComment(true) 
+ // editingRef.current?.scrollIntoView()
   }
  
-}, [commentId, comment?.id])
 
 const openEdit=(id,i)=>{
   setEditBtn(prev => !prev)
@@ -72,15 +80,13 @@ const openEdit=(id,i)=>{
     setActiveIdx(id);
   } 
  
-  const editting=(p)=>{ 
-  setPost(p)
- // editingRef.current?.scrollIntoView()
-  } 
+
+  
  const commentReplier =()=>{ 
   if(!user){
     setUserActions(true) 
  }else{
-  setIsReplying(prev=> !prev)
+  setActiveCommentReply(prev=> !prev)
  } 
   setReplyId(comment.id)
   setDeleteBtn(false)
@@ -108,10 +114,10 @@ useEffect(() => {
     }
 
  if (!elRef.current.contains(event.target)) {
-  setCommentId(null); 
-  setIsEditing(false) 
+  setCommentObj(null); 
+  setIsEditingComment(false) 
   setReplyId(null)
-  setIsReplying(false)
+  setActiveCommentReply(false)
  }
 
   };
@@ -207,7 +213,7 @@ if (!dropperRef.current) {
  } 
       if (!dropperRef.current.contains(event.target)) {
         setNavDropper(false);  
-        setCommentId(null)
+        setCommentObj(null)
       } 
    
     };
@@ -217,11 +223,11 @@ if (!dropperRef.current) {
       document.removeEventListener("click", handler);
     };
    
-  }, [navDropper,setCommentId]);
+  }, [navDropper,setCommentObj]);
 
  const editAction=()=>{
   setNavDropper(false)
-  setCommentId()
+  setCommentObj()
   
 }   
  
@@ -232,7 +238,7 @@ useEffect(() => {
     }
   
     if (!replyRef.current.contains(event.target)) {
-   setCommentId(null)
+   setCommentObj(null)
 
     } 
   
@@ -243,7 +249,7 @@ useEffect(() => {
     document.removeEventListener("click", handler);
   };
  
-}, [ setCommentId]); 
+}, [ setCommentObj]); 
  
 const pathname = usePathname()
 const urlParam = useSearchParams()
@@ -251,16 +257,15 @@ const params = new URLSearchParams(urlParam);
  
 const pushUrl = ()=>{
 setIsChildComment(false)  
- router.push(`/forum/view/comment/${comment.id}`, {scroll:false})  
- 
- // router.push(`/forum/view/comment/${slug.slug}/${id.id}`, {scroll:false})  
+ router.push(`/forum/comment/${comment.id}`, {scroll:false}) 
+ // router.push(`/forum/comment/${slug.slug}/${id.id}`, {scroll:false})  
  } 
-  
+
  return ( 
  <>
  {userActions &&<LoginModal setUserActions={setUserActions}/>} 
- <div className='max-w-2xl m-auto my-2'>  
-  <div className='border'> 
+ <div className='max-w-2xl px-2 m-auto my-2'>  
+  <div className='border '> 
  <div className='flex '> 
   <div className="max-w-fit w-24">
 {comment.avatar_url&& <Link href={`/profile/${comment?.user_id}`}><Image 
@@ -277,7 +282,7 @@ className='rounded-full p-4 h-24 max-h-24 w-full'
 alt={comment.user_name}/></Link> } 
 </div> 
  <div className='mt-11'> 
-<p className="text-xl w-3/4 font-bold"><Link href={`/profile/${comment.user_id}`}>{comment.user_name||comment.user_email}</Link>  </p>
+<p className="text-xl w-3/4 font-bold my-2"><Link href={`/profile/${comment.user_id}`}>{comment.user_name||comment.user_email}</Link>  </p>
 <p className='text-md leading-relaxed cursor-pointer' onClick={pushUrl}>
  {comment.title} </p>
 <small className="my-3">
@@ -293,12 +298,12 @@ alt={comment.user_name}/></Link> }
  {xy&& <div className="flex justify-center"> 
 {imgMode&&<p onClick={prevSlide} className='flex items-center text-4xl px-4 text-center text-white opacity-70 cursor-pointer'> 
 <FontAwesomeIcon icon={faAngleLeft}/> </p>}
-<div className=' '>
+<div className={!imgMode? 'w-1/2': 'w-full'}>
 <Image 
 onClick={openImg}
 src={`${process.env.SUPABASE_PUBLIC_POST_IMAGE_URL}/${xy}`}  
-width={200} 
-height={200} 
+width={600} 
+height={600} 
 className='animate-in cursor-pointer rounded-lg mx-1 my-2 border-2 border-gray-300'
 alt={comment.title}
 />
@@ -339,14 +344,14 @@ rotation={180}/>
 <>  
 <div className="">
    <button onClick={()=>openEdit(comment.id )}className="flex hover:scale-105 focus:outline-none justify-between my-5 text-xl rounded-none p-1"><FontAwesomeIcon width={30}icon={faPencil} /></button>
-   
-   {editBtn&&activeIdx=== comment.id &&<button onClick={()=>setCommentId(comment?.id)} className="absolute text-white text-center py-3 align-self-center justify-self-center mt-2 text-md rounded-none shadow-4xl p-3 border w-1/5 z-10 bg-slate-900">
+ 
+   {editBtn&&activeIdx=== comment.id &&<button onClick={editting} className="absolute text-white text-center py-3 align-self-center justify-self-center mt-2 text-md rounded-none shadow-4xl p-3 border w-48 z-10 bg-slate-900">
    Edit</button>} 
    </div>
 <div>
      <button onClick={()=>openDelete(comment.id)}className="flex hover:scale-105 focus:outline-none justify-between m-5 text-xl rounded-none p-1"><FontAwesomeIcon width={30}icon={faDeleteLeft} rotation={180} /></button>
    
-     {deleteBtn&&activeIdx=== comment.id && <button onClick={()=>deleteComment(comment)} className="absolute text-white text-center py-3 align-self-center justify-self-center mt-2 text-md rounded-none shadow-4xl p-3 border w-1/5 z-10 bg-slate-900">
+     {deleteBtn&&activeIdx=== comment.id && <button onClick={()=>deleteComment(comment)} className="absolute text-white text-center py-3 align-self-center justify-self-center mt-2 text-md rounded-none shadow-4xl p-3 border w-48 z-10 bg-slate-900">
      Delete
    </button>}
 </div> 
@@ -362,17 +367,18 @@ width={30} />
  
 </div> 
 
-  </div>
+  </div> 
   {userActions?<LoginModal 
    userActions={userActions} 
     setUserActions={setUserActions} />: 
     <ShareButtons  
-    item={comment} 
+    item={comment}
+    shareOptions={shareOptions}
+    activeIdx={activeIdx}  
     /> } 
- 
 <div>  
  
- {isReplying &&replyId=== comment.id&& (
+ {activeCommentReply &&replyId=== comment.id&& (
  <div ref={elRef} className='text-center opacity-90 text-sm rounded-none p-2'> 
   <CommentForm 
   {...comment}
@@ -393,37 +399,50 @@ width={30} />
 <AllComments  
 replyId={replyId}
 setReplyId={setReplyId} 
-commentId={commentId}
-setCommentId={setCommentId} 
+commentObj={commentObj}
+setCommentObj={setCommentObj} 
 createComment={createComment}
 editComment={editComment}    
 comments={childComments}  
 handleLike={handleLike}
 postData={postData}
 user={user}
+commentEdit={commentEdit}
+activeCommentReply={activeCommentReply}
+setActiveCommentReply={setActiveCommentReply}
 childComments={childComments}
 deleteComment={deleteComment}
 isChildComment={isChildComment}
 setIsChildComment={setIsChildComment}
 commentsByParentId={commentsByParentId}
 commentLike={commentLike}
- />
+setShareOptions={setShareOptions}
+activeIdx={activeIdx}  
+setActiveIdx={setActiveIdx}
+setIsEditingComment={setIsEditingComment}
+isEditingComment={isEditingComment}
+ /> 
 
  </> 
 )}
-{isEditing &&(
+ 
+ {isEditingComment &&comment?.id ===commentObj?.id&&(  
+  <> 
 <CommentForm 
 {...comment} 
-commentId={commentId}  
-setIsEditing={setIsEditing}
+commentObj={commentObj} 
+setCommentObj={setCommentObj} 
+setIsEditingComment={setIsEditingComment}
 elRef={elRef}
 editComment={editComment}
 createComment={createComment}
 commentEdit={commentEdit}
 />
-)}
 
-</div>  
+</>
+  )}  
+
+</div>
 </div>
  </> )
 }

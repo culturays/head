@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('@tailwindcss/line-clamp')
 module.exports = {
   content: [
     // "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -39,6 +40,7 @@ module.exports = {
         '3xl': '0 35px 60px 50px rgba(0, 0, 0, 0.3)', 
         '1xl': '3px 3px 20px rgba(0,0,0,0.5)',        
         'bottomShadow':'inset 0 15px 5px -16px #111',
+        "detailShadow": "-50px 20px 50px -5px rgba(0, 0, 0, 0.5)"
       },
    
     },

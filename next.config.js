@@ -11,7 +11,9 @@ const nextConfig = {
         NEXTAUTH_SECRET:process.env.NEXTAUTH_SECRET,
         MAIL_GUN_API_KEY:process.env.MAIL_GUN_API_KEY,
         SUPABASE_SERVICE_ROLE_SECRET:process.env.SUPABASE_SERVICE_ROLE_SECRET,
-        SUPABASE_PUBLIC_POST_IMAGE_URL:process.env.SUPABASE_PUBLIC_POST_IMAGE_URL
+        SUPABASE_PUBLIC_POST_IMAGE_URL:process.env.SUPABASE_PUBLIC_POST_IMAGE_URL,
+        NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+        EMAILJS_PUBLIC_API: process.env.EMAILJS_PUBLIC_API,
     },
     
    images: {
@@ -25,7 +27,7 @@ const nextConfig = {
         },
       ],
       domains: 
-        [ 'peezrwllibppqkolgsto.supabase.co']     
+        [ 'peezrwllibppqkolgsto.supabase.co', 'content.culturays.com, culturays.com']     
    
     },   
     // async redirects() {
@@ -42,6 +44,7 @@ const nextConfig = {
   experimental: {
     taint: true,
   },
+ 
 };
 
 module.exports =nextConfig;

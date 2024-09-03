@@ -1,9 +1,9 @@
-import AuthButton from "@/components/AuthButton";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";  
+import Latests from "@/components/Latests";
+import NewsLetter from "@/components/NewsLetter";
+
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
-  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/news` 
-  : "http://localhost:3000/news";
+  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}` 
+  : "http://localhost:3000";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -13,18 +13,11 @@ export const metadata = {
  
 const Layout = ({children}) => {
   return ( 
-<div>
-<nav className="h-18">
-<div className=" items-center text-sm">            
-<Header/> 
-</div> 
-</nav>  
-<AuthButton/> 
-<div className='thoughts-text bg-culturaysBg text-white p-8 text-center flex justify-between'> 
-<p>Trending <span></span> <span>&#10141;</span></p>
-</div>
-{children}  
-<Footer/>   
+<div> 
+{children}
+ 
+<NewsLetter/>  
+<Latests/> 
 </div>
  
   )

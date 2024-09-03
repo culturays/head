@@ -26,7 +26,7 @@ const sheets= google.sheets({
 })
 
 const response =await sheets.spreadsheets.values.append({
-    spreadsheetId:process.env.SPREADSHEET_ID,
+    spreadsheetId:process.env.SPREADSHEET_NEWSLETTER_ID,
     range:'A1:B1',     
     valueInputOption: 'USER_ENTERED',
     requestBody:{

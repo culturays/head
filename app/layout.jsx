@@ -2,10 +2,18 @@ import { getCookie } from 'cookies-next';
 import '@/styles/globals.css'
 import TagManager from "@/components/TagManager";
 import GoogleAnalytics from '@/components/Analytics';
-import Script from "next/script";  
-import {ContextProvider} from '@/components/ContextProvider'; 
+import Script from "next/script";   
 import { Open_Sans, Nokora } from 'next/font/google';
-import { Suspense } from 'react';
+import { Suspense } from 'react'; 
+import Footer from '@/components/Footer';
+import { headers } from "next/headers";
+import SocialNav from "@/components/SocialNav"
+import Header from '@/components/Header';
+import AuthButton from '@/components/AuthButton';
+import Nav from '@/components/Nav';
+import SearchItems from '@/components/SearchItems'; 
+import TabNav from '@/components/TabNav';
+
 const noko =Nokora({
   subsets:['latin'], 
    weight:['300', '400', '700'],
@@ -124,16 +132,32 @@ height: 600,
  }
   
 
-export default function RootLayout({ children }) { 
+export default function RootLayout({ children  }) { 
  const GTM_ID = process.env.GTM_ID
  const GA_ID= process.env.GA_ID
  const consent = getCookie('localConsent'); 
-  
+//  const headersList = new URL(headers().get('x-url') )
+ const url = new URL(headers().get('pathname')); 
+const { searchParams } = new URL(url);  
+const pathname=url.pathname
+const confirmParam= searchParams?.get("confirm")
+  //console.log(JSON.stringify(Array.from(headersList.entries()), null, 2))
+ 
+  function transformString(inputStr) { 
+    inputStr = inputStr.replace(/^\/|\/$/g, ''); 
+    inputStr = inputStr.replace(/-/g, ' '); 
+    inputStr = inputStr.replace(/\b\w/g, function(match) {
+        return match.toUpperCase();
+    });
+    return inputStr;
+} 
+
+
  return (
     <html lang="en" > 
-     <Script async type="text/javascript"  src="//clickiocmp.com/t/consent_234292.js"/> 
-     <GoogleAnalytics GA_ID={GA_ID}/>  
-    
+     <Script async type="text/javascript" src="//clickiocmp.com/t/consent_234292.js"/> 
+     <GoogleAnalytics GA_ID={GA_ID}/> 
+
    {consent === true && (
 
 <Script
@@ -160,16 +184,23 @@ export default function RootLayout({ children }) {
 </Script> 
 
  )}   
-<body className={noko.className}> 
-<Suspense fallback={<p>Loading...</p>}>
- <ContextProvider>   
-  <main >  
- {children} 
-</main> </ContextProvider> 
+<body className={` ${noko.className}` } > 
+  <main >
+  <Header item={`| ${pathname.split('/')[1]}` }/> 
+ <SocialNav/> 
+ <AuthButton confirmParam={confirmParam} /> 
+ <Nav /> 
+ <SearchItems />
+ <TabNav/>
+ <Suspense fallback={<p>Loading...</p>}>  
+    {children}  
 </Suspense>
-  
+
+</main>
+ <Footer/> 
 </body> 
    <TagManager gtmId={'GTM-W7BMCC9'}/>
+
 </html>
 )
 }

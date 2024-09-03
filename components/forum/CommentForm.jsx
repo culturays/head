@@ -7,10 +7,9 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const CommentForm =({
 id,
-commentId, 
+commentObj, 
 elRef,
 post_id,
-slug,
 title,
 createComment,
 commentEdit
@@ -19,12 +18,12 @@ const { pending, action } = useFormStatus();
 const isPending = pending && action 
 const handleSubmitComment = (e) => {
     e.preventDefault();  
-    if(commentId===id){ 
-        commentEdit(e )
+    if(commentObj?.id===id){ 
+        commentEdit(e)     
     } else{
         createComment(e, post_id, id);
-    }  
-
+    } 
+    //setCommentObj({})
    } 
 
 return (
@@ -35,7 +34,7 @@ rows="2"
 cols="70"  
 type='text'
 name='title'
-defaultValue={commentId===id?title:''}
+defaultValue={commentObj?.id===id?title:''}
 className='w-full resize-none bg-inherit text-sm p-5 leading-normal focus:outline-none border-2 rounded' 
 placeholder="Speak your Mind!"
 />  
@@ -59,7 +58,7 @@ placeholder="Speak your Mind!"
  </div>
  </label>
  <button type="submit" aria-disabled={pending} className="w-1/6 mx-2 cursor-pointer border-0 rounded-full bg-gray-600 text-white block border-none hover:text-pink-900 text-lg p-2" >
- {isPending ? 'Waiting' : 'Reply'}
+ {isPending ? 'Waiting' :commentObj?.id?'Update' :'Reply'}
  </button>  
  </form>
 

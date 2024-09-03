@@ -1,4 +1,6 @@
+"use server"
 import { createClient } from "@/utils/supabase/server";
+import { agent, fetchWithRetry } from "@/utils/fetchwithretry"; 
 export const searchValues = async (name) => { 
     const searches=[] 
     const supabase = createClient()
@@ -23,9 +25,10 @@ export const searchValues = async (name) => {
     throw new Error(eventErr.message)
  
     }
-   
- 
-        const response = await fetch('https://content.culturays.com/graphql', {
+    
+   try{
+    
+        const post_response = await fetchWithRetry('https://content.culturays.com/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -66,13 +69,122 @@ export const searchValues = async (name) => {
               }
             `
           })
-        });
-        const result = await response.json(); 
-        if(result.errors)throw new Error(result.errors[0].message) 
-       const wp_posts= result.data.posts.edges.map((ef)=> ef.node).flat()
-    searches.push(wp_posts)
-    searches.push(posts)
-    searches.push(events)
+          
+        }).then(response => response) 
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+         const post_res = post_response.data.posts.edges.map((xy)=> xy.node)
+
+        const char_response = await fetchWithRetry('https://content.culturays.com/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            query: `
+              {
+                chars(where: { search: "${name}" }) {   
+                  edges {
+                    node {
+                      id
+                      title
+                      content
+                      excerpt
+                      date
+                      author {
+                        node {
+                          name
+                        }
+                      }
+                      charCategories {
+                        edges {
+                          node {
+                            name
+                          }
+                        }
+                      }
+                      contentTags {
+                        edges {
+                          node {
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `
+          })
+        }).then(response =>   response)   
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+        const char_res = char_response.data.chars.edges.map((xy)=> xy.node)
+
+        const vid_response = await fetchWithRetry('https://content.culturays.com/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            query: `
+              {
+                culturaysVideos(where: { search: "${name}" }) {   
+                  edges {
+                    node {
+                      id
+                      title
+                      content
+                      excerpt
+                      date
+                      author {
+                        node {
+                          name
+                        }
+                      }
+                      culturaysVideoCategories {
+                        edges {
+                          node {
+                            name
+                          }
+                        }
+                      }
+                      contentTags {
+                        edges {
+                          node {
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `
+          })
+        }) .then(response =>  response)  
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+         const vid_res = vid_response.data.culturaysVideos.edges.map((xy)=> xy.node)
+//
+// const char_result =await char_response.json(); 
+// if(char_result.errors)throw new Error (char_result.errors[0].message) 
+//   const wp_chars=char_result.data.chars.edges.map((ef)=> ef.node).flat() 
+ 
+searches.push(vid_res )
+searches.push(post_res )
+searches.push(char_res)
+ searches.push(posts)
+ searches.push(events) 
     return searches.flat()
+ 
+  } catch (error) {
+    console.error('Error fetching search values:', error); 
+    if (error.message.includes('SocketError')) {
+      console.error('Socket error: the other side closed the connection');
+    }
+  
+  } 
+    
     }
     

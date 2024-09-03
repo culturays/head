@@ -1,25 +1,9 @@
-import Search from "@/components/Search"; 
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation"; 
+import Search from "@/components/Search";  
+import { searchValues } from "../lib/searches/search";
  
 const SearchPage = async ({searchParams}) => {
- const {searchVal}= searchParams
- 
-const searchedContnet = async () => { 
-const supabase = createClient();  
-const { data, error } = await supabase
-.from('content')   
-.select("*")
-.filter('title', 'ilike', `%${searchVal}%`);
-
-if (error) {
-console.error('Error fetching posts:', error.message);
-return;
-}   
-return data
-
-}
-const content = await searchedContnet() 
+ const {searchVal}= searchParams  
+const content = await searchValues() 
  
   return (
     <div>  

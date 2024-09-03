@@ -6,7 +6,7 @@ export const metadata = {
   metadataBase: new URL(defaultUrl),
  title: "Login", 
   description: "",
-};
+}; 
 
 const Layout = ({children}) => {
 

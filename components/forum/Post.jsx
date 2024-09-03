@@ -15,15 +15,17 @@ import { useInView } from 'react-intersection-observer'
 import LoginModal from './LoginModal'
 import { createClient } from '@/utils/supabase/client'
 import { getComments } from '@/app/forum/actions/loadComments' 
-import Trends from './Trends'  
+ 
 import Relevant from './Relevant' 
-//use trends and related items here
+import { postDelete } from '@/app/forum/actions/postsActions'
+import Trends from './Trends'
+ 
 let initialVal=""  
 function sortAscending(pb, pa){ 
   return (pa?.id - pb?.id);
  }
-function PostX ({
-  initiaComms, 
+function Post ({
+  initiaComms,  
   postData, 
   searchVal, 
   itemSearches, 
@@ -31,21 +33,16 @@ function PostX ({
   commentsX, 
   comments, 
   user,
-  related 
-
+  related , 
 }) {
  
 const router = useRouter()    
 const [navDropper,setNavDropper]= useState(false) 
-const [commentId,setCommentId]=useState(null) 
-const [commentText, setCommentText]=useState(initialVal) 
-const [error, setError] = useState(null)
-const [isLoading, setIsLoading] = useState(false)   
-const [prompt, setPrompt]=useState("")
+const [commentObj,setCommentObj]=useState(null) 
 const [deleteBtn,setDeleteBtn]=useState(false)  
 const [onIdx, setOnIdx]=useState(null)
 const [showIndex, setShowIndex]= useState(null)
-const [activeReply,setActiveReply]=useState(null)
+const [postReply,setPostReply]=useState(null)
 const [showSuggestion, setShowSuggestion]=useState(false)
 const [emoji_, setEmoji] = useState("");
 const [editId,setEditId]=useState(null)
@@ -54,13 +51,19 @@ const [scrolledComments, setScrolledComments]=useState([])
 const [userActions,setUserActions]=useState(false)
 const [count,setCount]=useState(2)
 const [startScroll,setStartScroll]=useState(2)
+const [notify,setNotify]=useState('')
+const [imgIndex,setImgIndex]= useState('')  
+const [imgZoom,setImgZoom]=useState({})
+const [show, setShow] = useState(false);
+const [isEditingComment, setIsEditingComment] = useState(false) 
+const [shareOptions,setShareOptions]=useState(false)
+const [activeIdx,setActiveIdx]=useState(null)
+const  imgRef = useRef()
 const [ post, setPost ]=useState({})
-const { ref, inView } = useInView() 
-const { notify , createPost, imgRef, setImgIndex, imgIndex, setActiveIdx, show, setShow, setShareOptions,setImgZoom, imgZoom, activeIdx, setNotify}=usePagesContext()
+const { ref, inView } = useInView()
 const dropperRef=useRef()
 const replyRef=useRef()
-const elRef=useRef() 
-const observerRef= useRef()
+const elRef=useRef()
 
 useEffect(() => {
   setScrolledComments(initiaComms) 
@@ -106,47 +109,47 @@ const commentsByParentId = useMemo(() => {
   }, [scrolledComments])
  const rootComments =commentsByParentId[null]
  
-useEffect(() => {
-const handler = (event) => {
-if (!dropperRef.current) {           
-return;
-}
-
-if (!dropperRef.current.contains(event.target)) {
-setNavDropper(false); 
-} 
-
-};
-document.addEventListener("click", handler, true);
-
-return () => {
-document.removeEventListener("click", handler);
-};
-
-}, [navDropper, setEditId ]);
-
-
-useEffect(() => {
-const handler = (event) => {
-if (!imgRef.current) {           
-return;
-}
-
-if (!imgRef.current.contains(event.target)) {
-setShow(false);
-setActiveIdx(null)
-setDeleteBtn(null)
-} 
-
-};
-document.addEventListener("click", handler, true);
-
-return () => {
-document.removeEventListener("click", handler);
-};
-
-}, []);
-
+ useEffect(() => {
+  const handler = (event) => {
+  if (!dropperRef.current) {           
+  return;
+  }
+  
+  if (!dropperRef.current.contains(event.target)) {
+  setNavDropper(false); 
+  } 
+  
+  };
+  document.addEventListener("click", handler, true);
+  
+  return () => {
+  document.removeEventListener("click", handler);
+  };
+  
+  }, [navDropper, setEditId]);
+  
+  
+  useEffect(() => {
+  const handler = (event) => {
+  if (!imgRef.current) {           
+  return;
+  }
+  
+  if (!imgRef.current.contains(event.target)) {
+  setShow(false);
+  setActiveIdx(null)
+  setDeleteBtn(null)
+  } 
+  
+  };
+  document.addEventListener("click", handler, true);
+  
+  return () => {
+  document.removeEventListener("click", handler);
+  };
+  
+  }, []);
+  
 useEffect(() => {
 const handler = (event) => {
 if (!replyRef.current) {           
@@ -194,13 +197,13 @@ const changeIndex = (i) => {
  } 
 
 };
- const handleOpen = (post) => { 
+ const handleOpen = (post) => {
    setOnIdx(post.id);  
    setShareOptions(false);
    if(!user){
     setUserActions(true) 
  }else{
-  setActiveReply(true);
+  setPostReply(true);
  } 
  }
 const showAll = (id) => { 
@@ -211,6 +214,7 @@ const showAll = (id) => {
  } 
     setActiveIdx(id); 
    setDeleteBtn(false)
+   setEditBtn(false)
  }
 const searchParams= useSearchParams();
 const val = searchParams.get('message');
@@ -231,7 +235,7 @@ useEffect(() => {
   return;
   } 
   if (!elRef.current.contains(event.target)) { 
-  setActiveReply(null)
+    setPostReply(null)
   }
   
   };
@@ -242,7 +246,7 @@ useEffect(() => {
   document.removeEventListener("click", handler);
   };
   
-  }, [setActiveReply]);
+  }, []);
  
   const [activeSlide,setActiveSlide] =useState(0) 
   const [imgMode, setImgMode]=useState(false)
@@ -297,13 +301,7 @@ const openImgDelete=(i)=>{
   setDeleteBtn(prev => !prev)  
    setActiveIdx(i);
 }
-
-
- const [locateItem, setLocateItem]=useState(false)
-  const searchLocation =()=> {
-setLocateItem(prev => !prev)
-    return 
-  }
+ 
   const searchRef =useRef()
   useEffect(() => {
     const handler = (event) => {
@@ -323,103 +321,102 @@ setLocateItem(prev => !prev)
     };
     
     }, []);
- 
 
-              const postEdit = async(formData) => { 
+    const postEdit = async(formData) => { 
+  
+      const supabase = createClient();
+                  
+                     const title = formData.get('title') 
+                     const story = formData.get('story')  
+                     const slug=title?.trim()?.toLowerCase().replace(/ /g,"-")
+                     const storyX = story.split(' ').filter((ex)=> !ex.includes('#')).join(' ')
+                     const family = formData.get('family')
+                     const work = formData.get('work')
+                     const school = formData.get('school')
+                     const friends = formData.get('friends')
+                     const folktale = formData.get('folktale')
+                     const entertainment = formData.get('entertainment')
+                     const files = formData.getAll("files");
+                     const genre=[{
+                     family,
+                     work,
+                     entertainment,
+                     school,
+                     friends,
+                     folktale
+                     }]
+                     const genreList =[] 
+                     
+                     for (const [key, value] of genre.flat().entries()) { 
+                     for(const [k,v] of Object.entries(value) ){
+                     //console.log(`Key: ${k}, Value: ${v}`); 
+                     if(v){ 
+                     const updGnr= post.genre.filter((tx)=> !tx.includes(k) ).flat()
+                     genreList.push([...updGnr, k] )  
+                     } 
+                     }
+                     }
+                     const gnrItx =genreList.concat(post.genre).flat().filter( function( item, index, inputArray ) {
+                     return inputArray.indexOf(item) === index;
+                     })
+                     
+                     const allFiles=[]
+                   
+                     for (let i = 0; i < files.length; i++) {
+                     const file=files[i];
+                     const filePath = `${Date.now()}-${file.name}`; 
+                     if(!file.name ){ 
+                     allFiles.push(post.files||null)
+                     }else{
+                     allFiles.concat(post.files).push(filePath)
+                     
+                     const { error: uploadError } = await supabase.storage.from('posts_imgs').upload(filePath, file,{upsert: true})
+                     if (uploadError)
+                     {
+                     throw uploadError 
+                     } 
+                     } 
+                     
+                     }; 
+                     const { data, error } = await supabase
+                     .from('posts')
+                     .update([
+                     {    
+                     title,  
+                     story:storyX, 
+                     slug,
+                     is_approved:true,
+                     genre:gnrItx,
+                     user_id:post.user_id, 
+                     comments:post.comments,
+                     likes:post.likes,           
+                     username:post.username,
+                     suggested_tags:post.suggested_tags ,
+                     tags:post.tags, 
+                     files:allFiles.flat() ,
+                     index:post.index,  
+                     avatar_url:post.avatar_url,
+                     user_email:post.user_email, 
+                     },
+                     
+                     ])
+                     .eq('id', post.id)
+                     .select()
+                     if (error) {
+                     console.log(error) 
+                     }
+                     formData.set('title', '')
+                     router.push(pathname+'?message=Post Updated Successfully', {scroll:false})  
+                     
+                     //.filter((te)=> te.slug!== slug)
+                     const pt = scrolledPosts.filter((ex)=> ex.id !== post.id) 
+                     setScrolledPosts(pt.concat(data)) 
+                     router.refresh()
+                     setEditId(null)
+                     
+                     };
  
-                const title = formData.get('title') 
-                const story = formData.get('story')  
-                const slug=title?.trim()?.toLowerCase().replace(/ /g,"-")
-                const storyX = story.split(' ').filter((ex)=> !ex.includes('#')).join(' ')
-                const family = formData.get('family')
-                const work = formData.get('work')
-                const school = formData.get('school')
-                const friends = formData.get('friends')
-                const folktale = formData.get('folktale')
-                const entertainment = formData.get('entertainment')
-                const files = formData.getAll("files");
-                const genre=[{
-                family,
-                work,
-                entertainment,
-                school,
-                friends,
-                folktale
-                }]
-                const genreList =[] 
-                
-                for (const [key, value] of genre.flat().entries()) { 
-                for(const [k,v] of Object.entries(value) ){
-                //console.log(`Key: ${k}, Value: ${v}`); 
-                if(v){ 
-                const updGnr= post.genre.filter((tx)=> !tx.includes(k) ).flat()
-                genreList.push([...updGnr, k] )  
-                } 
-                }
-                }
-                const gnrItx =genreList.concat(post.genre).flat().filter( function( item, index, inputArray ) {
-                return inputArray.indexOf(item) === index;
-                })
-                
-                const allFiles=[]
-                const supabase = createClient();
-                for (let i = 0; i < files.length; i++) {
-                const file=files[i];
-                const filePath = `${Date.now()}-${file.name}`; 
-                if(!file.name ){ 
-                allFiles.push(post.files||null)
-                }else{
-                allFiles.concat(post.files).push(filePath)
-                
-                const { error: uploadError } = await supabase.storage.from('posts_imgs').upload(filePath, file,{upsert: true})
-                if (uploadError)
-                {
-                throw uploadError 
-                } 
-                } 
-                
-                }; 
-                const { data, error } = await supabase
-                .from('posts')
-                .update([
-                {    
-                title,  
-                story:storyX, 
-                slug,
-                is_approved:true,
-                genre:gnrItx,
-                user_id:post.user_id, 
-                comments:post.comments,
-                likes:post.likes,           
-                username:post.username,
-                suggested_tags:post.suggested_tags ,
-                tags:post.tags, 
-                files:allFiles.flat() ,
-                index:post.index,  
-                avatar_url:post.avatar_url,
-                user_email:post.user_email, 
-                },
-                
-                ])
-                .eq('id', post.id)
-                .select()
-                if (error) {
-                console.log(error) 
-                }
-                formData.set('title', '')
-                router.push(pathname+'?message=Post Updated Successfully', {scroll:false})  
-                
-                //.filter((te)=> te.slug!== slug)
-                const pt = scrolledPosts.filter((ex)=> ex.id !== post.id) 
-                setScrolledPosts(pt.concat(data)) 
-                router.refresh()
-                setTimeout(()=>{
-                setEditId(null)
-                
-                }, 3000)
-                
-                };
-              const postLike = async (post ) => { 
+     const postLike = async (post ) => { 
                 if(!user){
                   setUserActions(true)
                 }else{ 
@@ -475,13 +472,46 @@ setLocateItem(prev => !prev)
                 router.refresh()
                }
                 }
-                const createComment =async (e, postId, parentId ) => {
-                  e.preventDefault()
+
+              const postDelete =async (id) => {  
+                  try{
+                    const supabase = createClient();
+                    const { data: commentsData, error: commentsError } = await supabase
+                    .from('comments')
+                    .delete()
+                    .eq('post_id', id);
+                  
+                  if (commentsError) {
+                    throw new Error('Error deleting comments')
+                    // console.error('Error deleting comments:', commentsError);
+                    // return;
+                  }
+                  
+                  // Then, delete the post
+                  const { data , error: postError } = await supabase
+                    .from('posts')
+                    .delete()
+                    .eq('id', id);
+                  
+                  if (postError) {
+                    throw new Error('Error deleting posts')
+                   
+                  }
+                 
+                  }catch(err){
+                  console.log(err)
+                  } 
+                router.push('/forum')
+                  //window.location.reload()
+                  };
+   
+ const createComment =async (e, postId, parentId ) => {
+  e.preventDefault()
+                  if(!user) setUserActions(true)
                   const supabase = createClient()
                   const formData = new FormData(e.target);
                   const title = formData.get('title');
-                  const slug = title?.toLowerCase().replace(/ /g,"-") 
-                  const replies = []
+                  const slug = title?.toLowerCase().replace(/ /g,"-")  
                  
                   // const postId = e.currentTarget.getAttribute('id')
                   //const postComms=post?.comments?.filter((ex)=> ex.slug!==slug )
@@ -490,12 +520,8 @@ setLocateItem(prev => !prev)
                   for (let i = 0; i < files.length; i++) {
                   const file=files[i];
                   const filePath = `${Date.now()}-${file.name}`; 
-                  if(file.name=== ''){
-                  allFiles.push(null)
-                  
-                  }else{
-                  allFiles.push(filePath)
-                  
+                  if(file.name!== ''){               
+                  allFiles.push(filePath)                  
                   const { error: uploadError } = await supabase.storage.from('posts_imgs').upload(filePath, file,{upsert: true})
                   if (uploadError) {
                   throw new Error('Error Loading Image') 
@@ -515,11 +541,10 @@ setLocateItem(prev => !prev)
                   {    
                   title, 
                   slug,
-                  likes:[],
-                  replies:[],
+                  likes:[], 
                   post_id:postId,
                   parent_id: parentId ,
-                  user_id:user.id,
+                  user_id:user?.id,
                   files:allFiles, 
                   avatar_url: user?.user_metadata.picture,
                   user_name:user?.user_metadata.full_name,
@@ -538,23 +563,24 @@ setLocateItem(prev => !prev)
                   }catch(err){
                   console.log(err)
                   }
-                  setActiveReply(null) 
+                  setPostReply(null) 
                 
                  }
                  e.target.reset()
                   }
                
                   const commentLike  = async(comment ) => { 
+                    if(!user) setUserActions(true)
                     const supabase = createClient(); 
-                    const likeidx = comment?.likes?.findIndex((id)=> id === user.id)  
-                    const updLks= comment?.likes?.filter((ex)=> ex !==user.id ) 
+                    const likeidx = comment?.likes?.findIndex((id)=> id === user?.id)  
+                    const updLks= comment?.likes?.filter((ex)=> ex !==user?.id ) 
                     if(!user){
                       setUserActions(true)
                     }else{ 
                     if(likeidx=== -1){ 
                     const {data:comments, error: lkrror } = await supabase
                     .from('comments')
-                    .update({likes: [...comment?.likes, user.id]} )
+                    .update({likes: [...comment?.likes, user?.id]} )
                     .eq('id', comment.id) 
                     .select()
                     
@@ -614,44 +640,40 @@ setLocateItem(prev => !prev)
                     } 
                     
                     }; 
-                    const { data:comment, error } = await supabase
+                    const { data:comment_obj, error } = await supabase
                     .from('comments')
                     .update([
                     {    
                     title,   
                     slug , 
-                    // user_id:comment?.user_id,
-                    // post_id:comment?.post_id,
-                    // parent_id:comment?.parent_id,
-                    // avatar_url:comment?.avatar_url,
-                    // user_name:comment?.user_email,
-                    // likes:[],
-                    // files:comment?.files.concat(allFiles), 
+                    user_id:commentObj?.user_id,
+                    post_id:commentObj?.post_id,
+                    parent_id:commentObj?.parent_id,
+                    avatar_url:commentObj?.avatar_url,
+                    user_name:commentObj?.user_email,
+                    likes:commentObj?.likes,
+                    files:commentObj?.files.concat(allFiles), 
                     },
                     
                     ])
-                    .eq('id', commentId)
+                    .eq('id', commentObj.id)
                     .select()
                     if (error) {
                     console.log(error) 
                     }
-                    formData.set('title', '')
+                 
                     router.push(pathname+'?message=Comment Updated Successfully', {scroll:false})  
-                    const pt = scrolledComments.filter((te)=> te?.id !==commentId) 
-                   setScrolledComments([...pt, ...comment]) 
-                    //.filter((te)=> te.slug!== slug)
+                    const pt = scrolledComments.filter((te)=> te?.id !==commentObj.id) 
+                   setScrolledComments([...pt, ...comment_obj])  
                     // const pt = scrolledPosts.filter((ex)=> ex.id !== post.id) 
                     // setScrolledComments(pt.concat(data)) 
                     // setScrollChild(pt.concat(data))
                     router.refresh()
-                    setTimeout(()=>{
-                   // setComment(null)
-                    
-                    }, 3000)
-                    
+                    //setCommentObj(null) 
+                    setIsEditingComment(null) 
                     };
-                    
-              
+                  
+   
                 const deleteComment =async (commentx) => {
                   try{
                   const supabase = createClient();  
@@ -691,43 +713,7 @@ setLocateItem(prev => !prev)
                     router.refresh()
                    
                     };
-                    const postDelete =async (id_) => { 
-                      try{
-                        const supabase = createClient();  
-                        const { data: commentsData, error: commentsError } = await supabase
-                        .from('comments')
-                        .delete()
-                        .eq('post_id', id_);
-                      
-                      if (commentsError) {
-                        throw new Error('Error deleting comments')
-                        // console.error('Error deleting comments:', commentsError);
-                        // return;
-                      }
-                      
-                      // Then, delete the post
-                      const { data , error: postError } = await supabase
-                        .from('posts')
-                        .delete()
-                        .eq('id', id_);
-                      
-                      if (postError) {
-                        throw new Error('Error deleting posts')
-                       
-                      }
-                      if(!postData ||!data){
-                      router.back()
-                      
-                      } 
-                      }catch(err){
-                      console.log(err)
-                      } 
-                       
-                     
-                      // const pt = scrolledPosts.filter((te)=> te.id!== id_) 
-                      // setScrolledPosts(pt )
-                      //window.location.reload()
-                      };
+                  
                       
                       
                       const postTag = async (post, tagToDelete ) => {
@@ -771,9 +757,9 @@ setLocateItem(prev => !prev)
                       .update({ tags:[ ...oldTags]})
                       .eq('id', post.id);
                       if (updateError) {
-                      console.error('Error updating tags:', updateError );
+                      console.error('Error deleting tags:', updateError );
                       } else { 
-                      console.log('Tag updated successfully.'); 
+                      console.log('Tag deleted successfully.'); 
                       
                       }
                       //window.location.reload()
@@ -781,36 +767,41 @@ setLocateItem(prev => !prev)
                       } 
               
 return ( 
-<>
+<> 
 {userActions &&<LoginModal setUserActions={setUserActions}  />} 
 <div className='flex justify-between relative'> 
 <p onClick={() => router.back()}><FontAwesomeIcon icon={faChevronLeft}width={50} className="text-lg hover:scale-125 my-8 opacity-80 border p-3 m-2 cursor-pointer"/></p> 
- <Link href='/search-page'><p onClick={searchLocation}><FontAwesomeIcon icon={faSearch}width={50} className="text-lg hover:scale-125 my-8 opacity-80 border p-3 m-2 cursor-pointer"/></p></Link>  
+ {/* <Link href='/search-page'><p onClick={searchLocation}><FontAwesomeIcon icon={faSearch}width={50} className="text-lg hover:scale-125 my-8 opacity-80 border p-3 m-2 cursor-pointer"/></p></Link>   */}
 
 </div>
 <div className='w-full flex items-center justify-center'> {notify&&<p className="m-auto fixed z-10 top-0 bg-green-500 border-2 text-center text-white p-3 text-xl">{notify}</p>}</div>
  
- <div className='lg:flex lg:justify-center sm:max-w-2xl lg:max-w-6xl m-auto px-4'> 
-{/* xs:w-4/5 sm:w-3/4 md:w-4/6 m-auto */}
-<div className='py-3'> 
+ <div className='lg:flex justify-center max-w-5xl m-auto px-4'> 
+ 
+
   {navDropper?
- (<div ref={dropperRef} className="absolute -mr-12 text-white text-center py-3 right-1/4 xl:mr-11 2xl:mr-20 text-md rounded-none shadow-4xl p-3 border w-3/4 max-w-xs z-10 bg-slate-900 mt-52">  
+ (<div ref={dropperRef} className="relative">  
  { postData?.user_id=== user?.id?
- <div className='p-2 ' > 
- <div className='flex justify-between text-xl p-2 cursor-pointer '><FontAwesomeIcon icon={faDeleteLeft} /><p onClick={()=> postDelete(postData.id) }>Delete</p></div>
- <div className='flex justify-between text-xl p-2 cursor-pointer' onClick={editAction}><FontAwesomeIcon icon={faPencil} /><p>Edit</p>
+ <div className='p-2 absolute text-white text-center z-10 py-3 left-96 text-md rounded-none shadow-4xl p-3 border w-56 bg-slate-900 top-48'> 
+
+ <div className='flex justify-between text-xl p-2 cursor-pointer'><FontAwesomeIcon icon={faDeleteLeft}width={20} /><p onClick={()=> postDelete(postData.id) }>Delete</p></div>
+
+ <div className='flex justify-between text-xl p-2 cursor-pointer' onClick={editAction}><FontAwesomeIcon icon={faPencil} /><p>Edit</p> 
   </div>
  </div>
  :null} 
   
  </div>) 
  :
-null}  
+null}
+
+  <div className='py-3'> 
  {val && <p className="w-1/2 text-center m-auto my-2 text-white p-2 bg-gray-400">
 {val}
-</p>} 
-<div className='shadow-2xl m-auto lg:max-w-xl xl:max-w-2xl'>
-  <div > 
+</p>}
+
+<div className='shadow-2xl m-auto max-w-2xl px-3'>
+  
 <div className='m-auto flex flex-col items-center border-b-2'> 
 {postData?.avatar_url? <Link href={`/profile/${postData?.user_id}`}><Image src={postData?.avatar_url} 
 width={80} 
@@ -822,28 +813,29 @@ width={80}
 height={80} 
 className='rounded-full'
 alt={postData?.user_email}/></Link> }  
-<Link href={`/profile/${postData?.user_id}`}><h3 className='p-3 text-lg font-bold '>{postData?.user_email} </h3></Link>
+<Link href={`/profile/${postData?.user_id}`}><h3 className='p-3 text-lg font-bold'>{postData?.user_email} </h3></Link>
 </div>
 
-</div>
+ 
 {!editId ?
 <div ref={replyRef}> 
 <div className='m-2 p-3'>  
-<div className='relative' >
+<div className='relative ' >
 <small className="my-4">
 {moment(postData.created_at, "YYYYMMDD").fromNow() }  
 </small> 
-<p className='text-2xl p-3 underline text-center '>{postData?.title} </p> 
- {postData.user_id === user?.id&& <p onClick={() => setNavDropper(prev=> !prev)} className= 'absolute opacity-80 cursor-pointer text-xl pr-5 left-full top-0'> <FontAwesomeIcon icon={faEllipsisVertical} /></p>}
+<p className='text-2xl p-3 underline text-center'>{postData?.title} </p> 
+ {postData.user_id === user?.id&& <p onClick={() => setNavDropper(prev=> !prev)} className='absolute z-50 opacity-80 cursor-pointer text-xl right-0 top-0'> <FontAwesomeIcon icon={faEllipsisVertical} /></p>}
  </div>
  <p className='text-lg py-2 leading-relaxed'>{postData?.story} </p> 
-  </div>
+  </div> 
  <div className="flex flex-wrap text-md m-3"> 
 {postData?.tags?.map((xy, vi)=>
 xy.split(',').map((ex, xi)=> ex&&
 <div className="flex bg-gray-100 mx-1 my-4" key={xi}>
-<Link href={`/tag/${ex.replace('#', '')}`}><p className="p-1 m-1 hover:opacity-70 cursor-pointer" >{'#' + ex.replace('.', '')} </p></Link>
-<small className="p-2 hover:bg-gray-400" onClick={()=>deleteTag(postData, ex)}>x</small>
+<Link href={`/search-page/?searchVal=${ex.replace('#', '')}`}><p className="p-1 m-1 hover:opacity-70 cursor-pointer" >{'#' + ex.replace('.', '')} </p></Link>
+
+  {postData.user_id === user?.id && <small className="p-2 hover:bg-gray-400 cursor-pointer" onClick={()=>deleteTag(postData, ex)}>x</small>} 
 </div> ))} 
  
 </div> 
@@ -902,18 +894,17 @@ alt={postData.title}
 </div>: 
   
 <div ref={replyRef} className='p-2 [&_.post-view]:shadow-none [&_.btn-link]:w-1/4 [&_.btn-link]:m-auto [&_.post-view]:text-lg [&_.post-view]:border-gray-900 [&_.post-view]:bg-transparent [&_.edit-view]:bg-black [&_.edit-view]:p-1 [&_.edit-view]:border-slate-900 [&_.edit-view]:border-2'>
- 
-    <CreateForm createPost={createPost} postEdit={postEdit} post={postData} />  
+ <CreateForm postEdit={postEdit} post={postData} val={val} setPost={setPost} />  
 </div> 
 } 
 
  <div className=" flex justify-evenly mt-4 w-full m-auto">  
- <button onClick={()=>postLike(postData )}className="hover:scale-105 relative justify-between focus:outline-none left-0 flex m-1 text-lg rounded-none p-1 bg-inherit">
+ <button onClick={()=>postLike(postData, user )}className="hover:scale-105 relative justify-between focus:outline-none left-0 flex m-1 text-lg rounded-none p-1 bg-inherit">
  <FontAwesomeIcon icon={faThumbsUp} width={25}/>
  <p className="px-1 ">{postData?.likes?.length}</p> 
  </button>  
  <div> 
- <button onClick={()=>handleOpen(postData)} className="hover:scale-105 relative focus:outline-none justify-between left-0 flex m-1 text-lg rounded-none p-1 ">
+ <button onClick={()=>handleOpen(postData)} className="hover:scale-105 relative focus:outline-none justify-between left-0 flex m-1 text-lg rounded-none p-1">
  <FontAwesomeIcon width={25}icon={faComment}rotation={180}/>
  <p className="px-1 ">{postData.comments.length}</p>
  </button>
@@ -929,7 +920,7 @@ alt={postData.title}
  
  </div>
  
- {activeReply && onIdx=== postData.id&&
+ {postReply &&
    <div className="text-center"> 
  <form className='relative animate-in flex justify-center' ref={elRef} onSubmit={(e)=>createComment(e, postData.id, null)} >  
  <textarea
@@ -971,28 +962,41 @@ alt={postData.title}
    userActions={userActions} 
     setUserActions={setUserActions} />: 
     <ShareButtons  
-    item={postData} 
+    item={postData}
+    shareOptions={shareOptions}
+    activeIdx={activeIdx}
     /> }
 
   </div> 
 
-<section className='my-4' >
+<section className='my-4' ref={ref} >
 {rootComments && rootComments.length > 0 && 
  (
 <div className="" > 
 <AllComments
 user={user}
 createComment={createComment} 
-commentId={commentId}
-setCommentId={setCommentId} 
+commentObj={commentObj}
+setCommentObj={setCommentObj}
 comments={rootComments}  
-postData={postData}
-commentLike={commentLike}
-commentEdit={commentEdit}
-deleteComment={deleteComment}  
+postData={postData} 
+commentEdit={commentEdit}   
 commentsByParentId={commentsByParentId} 
 all_comments={comments}
 rootComments={rootComments}
+commentLike={commentLike}
+deleteComment={deleteComment}
+show={show}
+setShow={setShow}
+setImgIndex={setImgIndex} 
+imgIndex={imgIndex}  
+activeIdx={activeIdx}  
+setActiveIdx={setActiveIdx}
+shareOptions={shareOptions}
+setShareOptions={setShareOptions} 
+setNotify={setNotify}
+isEditingComment={isEditingComment}
+setIsEditingComment={setIsEditingComment}
 /> 
 </div>
   )} 
@@ -1000,17 +1004,17 @@ rootComments={rootComments}
   
 </div>
 
-<div className='hidden lg:block [&_.trendy]:m-0 [&_.trendx]:block [&_.trendx]:w-full overflow-hidden [&_.trendx]:m-0 [&_.trendx]:p-0'>
+<div className='hidden lg:block overflow-hidden '>
 <Trends 
 trends={trends}/>
-<Relevant
+<Relevant 
 item={postData}
 related={related}
 />
 </div>
 </div>
-<div ref={ref}>Loading...</div>
+ 
  </>)
 }
 
-export default PostX
+export default Post 

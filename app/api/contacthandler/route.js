@@ -5,8 +5,7 @@ export async function POST(req,res){
     if(req.method !== "POST"){
         return res.status(405).send({ message: 'Only Posts'})
     }
-    const resp = await req.json()
- 
+    const resp = await req.json() 
 try{
 const auth = new google.auth.GoogleAuth( {
     credentials:{
@@ -25,7 +24,7 @@ const sheets= google.sheets({
 })
 
 const response =await sheets.spreadsheets.values.append({
-    spreadsheetId:process.env.SPREADSHEET_ID,
+    spreadsheetId:process.env.SPREADSHEET_CONTACT_ID,
     range:'A1:B1',
     valueInputOption: 'USER_ENTERED',
     requestBody:{

@@ -1,5 +1,4 @@
-import Footer from "@/components/Footer"; 
-import Header from "@/components/Header"; 
+ 
 import { Open_Sans, Nokora } from 'next/font/google';
  const openSans = Open_Sans({ 
     subsets: ['latin'], 
@@ -26,14 +25,8 @@ export const metadata = {
 
 const Layout = ({children}) => {
   return (
-<div className={noko.className}>
-<nav className="h-18">
-<div className="items-center text-sm">            
- <Header/>  
-</div>        
-</nav>   
-{children}   
-<Footer/> 
+<div className={`${noko.className}`} >   
+{children}  
 </div>
 )
 }

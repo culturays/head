@@ -21,21 +21,15 @@ export const metadata = {
 }; 
  
 const Layout = ({children}) => {
-  return (
-    <div>
-<nav className="h-18">
-<div className=" items-center text-sm">            
-<Header/> 
-</div>        
-</nav>   
-<AuthButton/> 
-<div className='thoughts-text bg-culturaysBg text-white p-8 text-center flex justify-between'> 
-<p>Trending <span></span> <span>&#10141;</span></p>
-</div>
+  
+  return ( 
+    <div> 
 {children}
+<div className="flex p-8 lg:px-32"> 
+<NewsLetter/>  
+</div>
  <Top10 />  
-<Latests/>
-<Footer/>   
+<Latests/> 
     </div>
   )
 }

@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const LoginForm = ({ handleOauthLogin, signUp, signIn, searchParams}) => {
 const password_pattern=new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,20}$`)
-const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$`)
+const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$`) 
 const name_pattern=new RegExp(`^[A-Za-z0-9]{3,10}$`) 
 const [passType, setPassType] = useState('password');
 const [icon, setIcon] = useState(faEyeSlash);
@@ -42,7 +42,7 @@ if (data.name === 'password'&&!password_pattern.test(data.value.trim())) {
   setErrors(newErrors); 
  
   } 
- 
+  //AD234!@fgfhghw usertx usertx@mail.com
 //AD234!@fgfhghg ngenetc
 return (  
 <> 
@@ -143,7 +143,7 @@ Create Account
  <button type="submit" formAction={handleOauthLogin} className="bg-tranparent"><p className="text-white cursor-pointer p-2 text-lg bg-gray-700 p-2"> Sign in with Google</p></button>
  </form>
  
-  <Link href='/forgotten-password'><p className="p-4 text-pink-900 cursor-pointer text-center hover:bg-gray-600">Forgot Password?</p></Link> 
+ <Link href='/forgotten-password'><p className="p-4 my-8 text-white cursor-pointer text-center bg-gray-600 text-lg">Forgot Password?</p></Link> 
  
   </> )
 }

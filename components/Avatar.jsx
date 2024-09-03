@@ -1,11 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { createClient } from '@/utils/supabase/client'
-import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUpload } from '@fortawesome/free-solid-svg-icons'
-
-export default function Avatar({  url, size }) {
+import { createClient } from '@/utils/supabase/client' 
+export default function Avatar({ url, size }) {
   const supabase = createClient()
   const [avatarUrl, setAvatarUrl] = useState(url) 
   useEffect(() => {
@@ -15,7 +11,7 @@ export default function Avatar({  url, size }) {
         if (error) {
           throw error
         }
-
+       
         const url = URL.createObjectURL(data)
         setAvatarUrl(url)
       } catch (error) {
@@ -24,19 +20,34 @@ export default function Avatar({  url, size }) {
     }
 
     if (url) downloadImage(url)
-  }, [url, supabase])
- 
-
- 
+  }, [url, supabase]) 
   return (
     <> 
     {avatarUrl ? (
-    <>  
-       <div className="absolute w-screen h-screen bg-transparent top-0" style={{'backgroundImage': `url(${avatarUrl})` ,backgroundRepeat:'no-repeat',backgroundPosition:'center',backgroundSize:'100rem' ,backgroundColor:'transparent'}} />
-    <div className="absolute w-full h-2/3 rounded-bl-full border left-1/4 top-0 md:left-1/2 xl:left-3/4 z-10" style={{'backgroundImage': `url(${avatarUrl})` ,backgroundRepeat:'no-repeat'}}/>  
-     
-   </> ) : (
-      <div className="avatar no-image" style={{ height: size, width: size }} />
+    <div className='h-screen w-screen'>
+      
+       <div 
+       className='h-screen w-screen' 
+    style={{
+      backgroundImage: `url(${avatarUrl})`, 
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: '',  
+      backgroundColor: 'transparent',
+      backgroundSize: 'cover', 
+    }} 
+  />
+  <div className='relative h-full w-full bottom-full my-3 sm:my-1 lg:my-1'> 
+      <div 
+    className="absolute rounded-bl-full border w-3/4 h-1/2 sm:h-4/5 left-1/3 lg:left-1/2 xl:h-full" 
+    style={{
+      backgroundImage: `url(${avatarUrl})`, 
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover', 
+    }} 
+  />   
+     </div>
+   </div> ) : (
+      <div className="" style={{ height: size, width: size }} />
     )}  
   </>
   )
