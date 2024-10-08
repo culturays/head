@@ -43,7 +43,7 @@ const content = await response.json()
   }
   const [closeQuestion, setCloseQuestion]= useState(false)
     return (
-<div className='py-3 w-80 relative md:w-3/4 max-w-xl border bg-gray-900 text-gray-200 z-10 m-auto rounded-lg my-4'>
+<div className='news-letter-unflexed py-3 w-80 relative md:w-3/4 max-w-xl border bg-gray-900 text-gray-200 z-10 m-auto rounded-lg my-4'>
 
     {!closeQuestion&& <p onClick={()=> setCloseQuestion(prev => !prev)} className="cursor-pointer px-4 text-2xl font-bold opacity-90 m-2">X</p> }
  {closeQuestion&&  <p onClick={()=> setCloseQuestion(prev => !prev)} className="cursor-pointer px-4 text-2xl font-bold opacity-90 m-2">&#x2014;</p>} 
@@ -62,7 +62,7 @@ placeholder='name'
 onChange={(e)=> setSubNm({...subNm, name:e.target.value} )}
 /> 
 </div> */}
-<div className="flex flex-col justify-between w-3/4">
+<div className="news-letter-nowidth flex flex-col justify-between w-3/4">
 <label htmlFor="email" className="font-bold">
 Email:
 </label>
@@ -76,7 +76,7 @@ placeholder='you@email.com'
 onChange={(e)=> setSubNm({...subNm, email:e.target.value} )}
 /> 
 </div>  
- <div className="mt-5 mx-2 bg-gray-800 text-white cursor-pointer font-bold hover:bg-opacity-80 rounded border md:w-1/5 h-max p-4 "> 
+ <div className="news-letter-buttonwidth mt-5 mx-2 bg-gray-800 text-white cursor-pointer font-bold hover:bg-opacity-80 rounded border md:w-1/5 h-max p-4"> 
 <button type="submit" >
   Submit
 </button> 

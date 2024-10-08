@@ -16,7 +16,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
  const previousImages = (await parent).openGraph?.images || [] 
  
   return {
-    title:`${user?.user_metadata.full_name}`,
+    title:`Culturays | ${user?.user_metadata.full_name}`,
     openGraph: {
     images: [user?.user_metadata.picture],
     },

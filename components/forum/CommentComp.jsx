@@ -174,7 +174,7 @@ const { data:updateData, error:updateErr } = await supabase
   setTimeout(
     () =>setNotify(''),  
     2000 
-  );
+  ); 
   router.refresh()
 }
 const [imgMode, setImgMode]=useState(false)

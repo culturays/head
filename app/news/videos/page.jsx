@@ -1,20 +1,28 @@
-import { naijaWikiVids } from "@/app/naija-wiki/newCharHandle"
-import VideoPage from "@/components/News/Videos";
+import Videos from "@/components/news/Videos";
+import { vids } from "../articlehandle";
+const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
+  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/videos` 
+  : "http://localhost:3000/videos";
 
-const Videos = async () => { 
-  const content_videos = await naijaWikiVids(); 
+export const metadata = {
+  metadataBase: new URL(defaultUrl), 
+   title:"Culturays | Videos",   
+}; 
+const VideosPage = async () => {
+  const content_videos = await vids(); 
+  
    return ( 
-    <>    
-  <VideoPage 
+    <> 
+  <Videos
   content_videos={content_videos}
   />   
-  
+ 
    </>
     )
-   
+    
   }
   
   
  
 
-export default Videos
+export default VideosPage

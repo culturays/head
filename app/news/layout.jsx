@@ -1,9 +1,6 @@
-import Latests from "@/components/Latests";
-import NewsLetter from "@/components/NewsLetter";
-
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
-  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}` 
-  : "http://localhost:3000";
+  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/news` 
+  : "http://localhost:3000/news";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -14,10 +11,9 @@ export const metadata = {
 const Layout = ({children}) => {
   return ( 
 <div> 
-{children}
- 
-<NewsLetter/>  
-<Latests/> 
+{children} 
+{/* <NewsLetter/>  */}
+{/* <Latests/>  */}
 </div>
  
   )

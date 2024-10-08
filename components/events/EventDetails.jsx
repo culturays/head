@@ -13,7 +13,7 @@ const [eventId,setEventId]= useState([])
 const openForm = () => {
 setActive(prev => !prev);  
 }
-console.log(eventTitle.loc_slug)
+//console.log(eventTitle.loc_slug)
 useEffect(()=>{
 const simValues = async () => {  
 const supabase = createClient();  
@@ -39,7 +39,7 @@ return (
   <div className='flex flex-col items-center justify-center bg-cover bg-center h-screen'style={{'backgroundImage': `url(https://peezrwllibppqkolgsto.supabase.co/storage/v1/object/public/event_avatars/${eventTitle?.img_url})`}}>   
   
 <div className="p-32 hover:shadow-3xl border border-t-8 hover:opacity-70 cursor-pointer p-3 bg-gray-700 opacity-70 w-11/12 h-full" >
-  {/* <p className="text-lg border bg-white ml-14 m-2 w-14 rounded-full p-3 text-center relative bottom-32 left-full cursor-pointer" onClick={openForm} ><FontAwesomeIcon icon={faPen} /></p>  */}
+  {/* <p className="text-lg border bg-white ml-14 m-2 w-14 rounded-full p-3 text-center relative bottom-32 left-full cursor-pointer" onClick={openForm} ><FontAwesomeIcon icon={faPen} /></p> */}
  <h2 className="text-5xl font-bold text-center text-white">{eventTitle.title}</h2>  
 <p className="text-2xl font-bold py-3 text-center text-white">{eventTitle.location}</p>
 <p className="text-2xl font-bold py-3 text-center text-white">{eventTitle.genre}</p>
@@ -73,7 +73,7 @@ eventEdit={eventTitle}
       backgroundSize: 'cover',}}
       className="rounded-lg py-20 bg-black px-8 hover:border-solid"> 
  <Link href={`/naija-events/event/${ex.slug}`}>
- <h3 className="text-3xl pb-5 pt-16 text-white font-bold cursor-pointer hover:opacity-80">
+ <h3 className="text-3xl pb-5 pt-16 text-gray-700 uppercase font-bold cursor-pointer hover:opacity-80">
 {ex.title}
 </h3></Link>
 <p className="text-lg text-white font-bold text-right">
@@ -81,7 +81,7 @@ eventEdit={eventTitle}
 </p>
 <hr/>  
 
- <div className="rounded-lg hover:shadow-3xl px-2 w-full animated-in">
+ <div className="rounded-lg hover:shadow-3xl bg-gray-900 bg-opacity-90 px-4 w-full animated-in">
    <p className="text-lg pt-4 text-white font-bold hover:opacity-80">
 {ex.location}
 </p>

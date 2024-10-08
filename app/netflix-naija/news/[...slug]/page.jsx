@@ -1,15 +1,14 @@
 import NaijaWikiNetflixNewsDetails from "@/components/NetflixNaija/NaijaWikiNetflixNewsDetails" 
-import { netflixNewsDets } from "../../netflix-news"
-import { headers } from "next/headers"
-import { naijaWikiVids } from "@/app/naija-wiki/newCharHandle"
+import { netflixNewsDets } from "../../netflix-news" 
+import { vids } from "@/app/news/articlehandle"
 
 export async function generateMetadata({ params, searchParams }, parent) { 
   const slug =params.slug[0]
-  const news_details = await netflixNewsDets(slug) 
+  const news_details = await netflixNewsDets(slug)  
   const previousImages = (await parent).openGraph?.images || []
  
   return {
-    title:`Naija Wiki News- ${news_details?.title}`,
+    title:`Culturays | Naija Wiki News- ${news_details?.title}`,
     openGraph: { 
       images: [news_details?.featuredImage.node.sourceUrl],
     },
@@ -19,7 +18,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
 const NetflixNaijaNewsDetailsPage = async({params}) => {
 const slug =params.slug[0]
 const news_details = await netflixNewsDets(slug)
-const content_videos = await naijaWikiVids();
+const content_videos = await vids();
+ 
   return (
     <div>
     <NaijaWikiNetflixNewsDetails

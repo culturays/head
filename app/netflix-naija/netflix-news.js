@@ -1,6 +1,6 @@
 import {agent, fetchWithRetry } from "@/utils/fetchwithretry"
- 
-export async function newsbyNewOnCategory(req, res){
+
+export async function newsbyNewOnCategory(notIn){ 
   const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       timeout: 5000 ,
@@ -10,87 +10,114 @@ export async function newsbyNewOnCategory(req, res){
       },
       body: JSON.stringify({
         query:`
-        query WPPOSTS {
-     netflixCategories(where: {name: "New on Netflix Naija"}) {
-       edges {
+        query WPPOSTS($notIn:[ID]) {
+     netflixCategories(where: {name: "New on Netflix"}) {
+         edges {
       node {
         name
-        slug
-        netflixNaija {
-          edges {
-            node {
-              content
-              date
-              excerpt
-              slug
-              title
-              featuredImage {
+        slug 
+        netflixNaijaPosts(where:{notIn:$notIn}) {
+        edges{
+        cursor
+          node {
+            title
+            slug
+           excerpt
+            id
+            date
+            content
+            author{
+            node{
+            name
+            slug
+            avatar{
+            url
+            }
+            }
+            }
+             featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                } 
+               contentTags{
+                     nodes{
+                     name
+                     slug
+                     }
+                     }
+           children {
+              edges {
                 node {
-                  altText
-                  sourceUrl
+                  id
+                  ... on NetflixNaijaPost {
+                    id  
+                  slug
+                title
+                excerpt
+                content
+                date
+                 netflixNewsGroup { 
+                  netflixEmbeds
+                    genre
+                  director
+                  cast
+                  filmTitle
                 }
-              }
-              netflixTags { 
-                  nodes {
+              contentTags { 
+                  nodes{
                     name
                     slug
                   } 
               }
-                netflixNewsGroup {
-      netflixRelated {
-        nodes {
-          date
-          slug
-           ... on Latest {
-            id
-            content
-            excerpt
-            title
-            slug
-             contentTypeName
-            featuredImage {
-              node {
-                altText
-                sourceUrl
+              netflixCategories { 
+                  nodes{
+                    name
+                    slug
+                  } 
+              }
+                featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                } 
+                  }
+                }
               }
             }
-           }
-          ... on NetflixNaija {
-            id
-            content
-            excerpt
-            title
-            slug
-             contentTypeName
-            featuredImage {
-              node {
-                altText
-                sourceUrl
-              }
+            netflixNewsGroup {
+              netflixEmbeds
+              genre
+              filmTitle
+              embedText
+              director
+              cast
             }
+         
           }
         }
-      }
-    }    
-            }
-          }
-        }
-      }
+      }}
     }
        } 
        }  
-       ` 
+       ` ,variables:{notIn:notIn}
       
       })
       
-      }).then(response => response)  
+      }).then(response => response)
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-     const response = wprest.data.netflixCategories.edges
+      const response = wprest.data.netflixCategories.edges
       return response
 }
 
-export async function newsbyComingtoCategory(req, res){
+export async function newsbyComingtoCategory(notIn){
   const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       timeout: 5000 ,
@@ -100,431 +127,173 @@ export async function newsbyComingtoCategory(req, res){
       },
       body: JSON.stringify({
         query:`
-        query WPPOSTS {
-      netflixCategories(where: {name: "Coming to Netflix Naija"}) {
-     edges {
+        query WPPOSTS($notIn:[ID]) {
+      netflixCategories(where: {name: "Coming to Netflix"}) {
+         edges {
       node {
         name
         slug
-        netflixNaija {
-          edges {
+         children {
+         edges{
+         cursor
+        node {
+          name
+          slug
+          netflixNaijaPosts(first:50) {
+          edges{
+          
+          
             node {
-              content
-              date
-              excerpt
-              slug
               title
+           slug
+           excerpt
+            id
+            date
+            content
+                author{
+            node{
+            name
+            slug 
+             avatar{
+            url
+            }
+            }
+            }
               featuredImage {
-                node {
-                  altText
-                  sourceUrl
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
                 }
-              }
-              netflixTags { 
+                  contentTags { 
                   nodes {
                     name
                     slug
                   } 
               }
-                   netflixNewsGroup {
-      netflixRelated {
-        nodes {
-          date
-          slug
-           ... on Latest {
-            id
-            content
-            excerpt
-            title
-            slug
-             contentTypeName
-            featuredImage {
-              node {
-                altText
-                sourceUrl
+              netflixCategories { 
+                  nodes {
+                    name
+                    slug
+                  } 
               }
-            }
-           }
-          ... on NetflixNaija {
-            id
-            content
-            excerpt
-            title
-            slug
-             contentTypeName
-            featuredImage {
-              node {
-                altText
-                sourceUrl
-              }
+
             }
           }
         }
-      }
-    }    
-      
+      }}}
+        netflixNaijaPosts(where:{notIn:$notIn}) {
+        edges{
+        cursor
+          node {
+            title
+            slug
+           excerpt
+            id
+            date
+            content
+                author{
+            node{
+            name
+            slug 
+             avatar{
+            url
             }
+            }
+            }
+              featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                }
+                  contentTags { 
+                  nodes {
+                    name
+                    slug
+                  } 
+              }
+              netflixCategories { 
+                  nodes {
+                    name
+                    slug
+                  } 
+              }
+           children {
+              edges {
+                node {
+                  id
+                  ... on NetflixNaijaPost {
+                    id  
+                  slug
+                title
+                excerpt
+                content
+                date
+                 netflixNewsGroup { 
+                  netflixEmbeds
+                    genre
+                  director
+                  cast
+                  filmTitle
+                }
+              contentTags { 
+                  nodes {
+                    name
+                    slug
+                  } 
+              }
+              netflixCategories { 
+                  nodes {
+                    name
+                    slug
+                  } 
+              }
+                featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                } 
+                  }
+                }
+              }
+            }
+            netflixNewsGroup {
+              netflixEmbeds
+              genre
+              filmTitle
+              embedText
+              director
+              cast
+            }
+         
           }
         }
       }
     }
-       }  }
-       ` 
+       }  }}
+
+       ` ,variables:{notIn:notIn}
       
       })
       
-      }).then(response => response) 
+      }).then(response =>  response)  
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-       const response = wprest.data.netflixCategories.edges
-       return response 
+      const response = wprest.data.netflixCategories.edges
+      return response 
 } 
  
-export async function byNetflixCategory(slug){
-  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-    method: 'POST',
-    timeout: 5000 ,
-    agent: agent,
-    headers:{
-    'Content-Type':'application/json'
-    },
-    body: JSON.stringify({
-    query:`
-    query TREND($id: ID!, $idType: NetflixNaijaIdType) {
-    netflixNaija(id: $id, idType: $idType) {
-         title
-      slug
-      content
-      excerpt
-      author{
-      node{
-      name
-      }
-      }
-       featuredImage {
-                node {
-                  altText
-                  sourceUrl
-                }
-              }
-              netflixTags {
-                nodes {
-                  name
-                  slug
-                }
-              }
-        netflixNewsGroup {
-            intro
-            netflixEmbeds
-                netflixRelated {
-                  edges {
-                    node {
-                      date
-                      id
-                      slug
-                      ... on NetflixNaija {
-                        id
-                        content
-                        title
-                        slug
-                      }
-                    }
-                  }
-                }
-              }
-      netflixCategories {
-        nodes {
-          name
-          netflixNaija {
-            nodes {
-              content
-              date
-              id
-              title
-              excerpt  slug
-              featuredImage {
-                node {
-                  altText
-                  sourceUrl
-                }
-              }
-              netflixTags {
-                nodes {
-                  name
-                  slug
-                }
-              }
-               netflixNewsGroup {
-                netflixRelated {
-                  edges {
-                    node {
-                      date
-                      id
-                      slug
-                      ... on NetflixNaija {
-                        id
-                        content
-                        title
-                        slug
-                      }
-                    }
-                  }
-                }
-              }
-  
-  
-            }
-          }
-        }
-      }
-      }
-      
-    }   
-    ` ,
-    variables:{
-    id: slug,
-    idType: 'SLUG' 
-    }
-    
-    })
-    
-    }).then(response => response )  
-           .then(data =>data) 
-           .catch(error => console.error('Error:', error));
-   const response = wprest.data.netflixNaija 
-   return response
-} 
-export async function byFirstLook(slug){
-  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-    method: 'POST',
-    timeout: 5000 ,
-    agent: agent,
-    headers:{
-    'Content-Type':'application/json'
-    },
-    body: JSON.stringify({
-    query:`
-    query TREND($id: ID!, $idType: NetflixNaijaIdType) {
-    netflixNaija(id: $id, idType: $idType) {
-         title
-      slug
-      content
-      excerpt
-      author{
-      node{
-      name
-      }
-      }
-       featuredImage {
-                node {
-                  altText
-                  sourceUrl
-                }
-              }
-              contentTags {
-                nodes {
-                  name
-                  slug
-                }
-              }
-        netflixNewsGroup {
-            intro
-            netflixEmbeds
-                netflixRelated {
-                  edges {
-                    node {
-                      date
-                      id
-                      slug
-                      ... on NetflixNaija {
-                        id
-                        content
-                        title
-                        slug
-                      }
-                    }
-                  }
-                }
-              }
-      netflixCategories {
-        nodes {
-          name
-          allNetflixNaija {
-            nodes {
-              content
-              date
-              id
-              title
-              excerpt 
-               slug
-              featuredImage {
-                node {
-                  altText
-                  sourceUrl
-                }
-              }
-              contentTags {
-                nodes {
-                  name
-                  slug
-                }
-              }
-               netflixNewsGroup {
-                netflixRelated {
-                  edges {
-                    node {
-                      date
-                      id
-                      slug
-                      ... on NetflixNaija {
-                        id
-                        content
-                        title
-                        slug
-                      }
-                    }
-                  }
-                }
-              } 
-            }
-          }
-        }
-      }
-      }
-      
-    }   
-    ` ,
-    variables:{
-    id: slug,
-    idType: 'SLUG' 
-    }
-    
-    })
-    
-    }).then(response =>  response)  
-           .then(data =>data) 
-           .catch(error => console.error('Error:', error));
-           const response = wprest.data.netflixNaija 
-           return response
-}
 
-export async function byMonthly(slug){
-  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-    method: 'POST',
-    timeout: 5000 ,
-    agent: agent,
-    headers:{
-    'Content-Type':'application/json'
-    },
-    body: JSON.stringify({
-    query:`
-    query TREND($id: ID!, $idType: NetflixNaijaIdType) {
-    netflixNaija(id: $id, idType: $idType) {
-         title
-      slug
-      content
-      excerpt
-      author{
-      node{
-      name
-      }
-      }
-       featuredImage {
-                node {
-                  altText
-                  sourceUrl
-                }
-              }
-              netflixTags {
-                nodes {
-                  name
-                  slug
-                }
-              }
-        netflixNewsGroup {
-            intro
-            netflixEmbeds
-                netflixRelated {
-                  edges {
-                    node {
-                      date
-                      id
-                      slug
-                      ... on NetflixNaija {
-                        id
-                        content
-                        title
-                        slug
-                      }
-                    }
-                  }
-                }
-              }
-      netflixCategories {
-        nodes {
-          name
-          netflixNaija {
-            nodes {
-              content
-              date
-              id
-              title
-              excerpt  slug
-              featuredImage {
-                node {
-                  altText
-                  sourceUrl
-                }
-              }
-              netflixTags {
-                nodes {
-                  name
-                  slug
-                }
-              }
-               netflixNewsGroup {
-                netflixRelated {
-                  edges {
-                    node {
-                      date
-                      id
-                      slug
-                      ... on NetflixNaija {
-                        id
-                        content
-                        title
-                        slug
-                      }
-                    }
-                  }
-                }
-              }
-  
-  
-            }
-          }
-        }
-      }
-      }
-      
-    }   
-    ` ,
-    variables:{
-    id: slug,
-    idType: 'SLUG' 
-    }
-    
-    })
-    
-    }).then(response => response )  
-           .then(data =>data) 
-           .catch(error => console.error('Error:', error));
-   const response = wprest.data.netflixNaija 
-   return response
-}
- 
-  
- export async function addedOnCategory(req, res){
+
+export async function addedOnCategory(req, res){
   const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       timeout: 5000 ,
@@ -536,19 +305,33 @@ export async function byMonthly(slug){
         query:`
         query WPPOSTS {
          netflixCategories(where: {name: "Added on Netflix"}) {
-      edges {
+          edges {
       node {
         name
-        slug
-         children {
-          nodes {
-            name
-            netflixNaija {
-             edges{
-              node { 
+        slug 
+        
+          children {       
+            nodes {
               slug
-                title
-                excerpt
+              name
+              netflixNaijaPosts {
+               nodes {
+                    title
+                     excerpt
+                     contentTags{
+                     nodes{
+                     name
+                     slug
+                     }
+                     }
+                     featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                }
                 content
                 date
                  netflixNewsGroup { 
@@ -557,97 +340,278 @@ export async function byMonthly(slug){
                   director
                   cast
                   filmTitle
+                      netflixNewsRelated {
+                    edges {
+                      node {
+                        ... on NetflixNaijaPost {
+                          id
+                          slug
+                          title
+                          excerpt
+                             contentTags{
+                     nodes{
+                     name
+                     slug
+                     }
+                     }
+                          featuredImage {
+                            node {
+                              altText
+                              sourceUrl
+                              caption
+                            }
+                          }
+                          date
+                        }
+                      }
+                    }
+                  }
                 }
+                  }
+                
+              }
+            }
+         
+        }
+        netflixNaijaPosts {
+          nodes {
+            title
+            slug
+           excerpt
+            id
+            date
+            content
+               parent {
+            node {
+              ... on NetflixNaijaPost {
+                id
+                title
+                slug
+                children {
+                  nodes {
+                    ... on NetflixNaijaPost {
+                      id
+                      title
+                      slug
+                    }
+                  }
+                }
+              }
+            }
+          }
+               contentTags{
+                     nodes{
+                     name
+                     slug
+                     }
+                     }
                 featuredImage {
                   node {
                     altText
                     sourceUrl
                     date
+                    caption
                   }
-                } 
-              }}
-            }
-          }
-        }
-        netflixNaija {
-          edges {
-            node {
-              content
-              date
-              excerpt
-              slug
-              title
+                }
+           children { 
+                nodes {
+                  id
+                  ... on NetflixNaijaPost {
+                    id  
+                  slug
+                title
+                excerpt
+                content
+                date
+                   contentTags{
+                     nodes{
+                     name
+                     slug
+                     }
+                     }
+                featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                }
                  netflixNewsGroup { 
                   netflixEmbeds
                     genre
                   director
                   cast
                   filmTitle
+                      netflixNewsRelated {
+                    edges {
+                      node {
+                        ... on NetflixNaijaPost {
+                          id
+                          slug
+                          title
+                          excerpt
+                             contentTags{
+                     nodes{
+                     name
+                     slug
+                     }
+                     }
+                          featuredImage {
+                            node {
+                              altText
+                              sourceUrl
+                              caption
+                            }
+                          }
+                          date
+                        }
+                      }
+                    }
+                  }
                 }
-              featuredImage {
-                node {
-                  altText
-                  sourceUrl
-                }
-              }
-              netflixTags { 
+              contentTags { 
                   nodes {
                     name
                     slug
                   } 
               }
-            }
-          }
-        }
-        netflixNaija {
-          edges {
-            node {
-              content
-              date
-              excerpt
-              slug
-              title
-                  netflixNewsGroup { 
-                  netflixEmbeds
-                  genre
-                  director
-                  cast
-                  filmTitle
-                  embedText
-                }
-              featuredImage {
-                node {
-                  altText
-                  sourceUrl
-                }
-              }
-            netflixTags { 
+              netflixCategories { 
                   nodes {
                     name
                     slug
                   } 
               }
+                featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                } 
+                  }
+                }    
             }
+            netflixNewsGroup {
+              netflixEmbeds
+              genre
+              filmTitle
+              embedText
+              director
+              cast
+                  netflixNewsRelated {
+                    edges {
+                      node {
+                        ... on NetflixNaijaPost {
+                          id
+                          slug
+                          title
+                          excerpt
+                             contentTags{
+                     nodes{
+                     name
+                     slug
+                     }
+                     }
+                          featuredImage {
+                            node {
+                              altText
+                              sourceUrl
+                              caption
+                            }
+                          }
+                          date
+                        }
+                      }
+                    }
+                  }
+            }
+         
           }
         }
       }
     }
-       }  }  
+ }  }  
        ` 
       
-      })
+      }) 
       
       })
-      .then(response =>  response)  
+      .then(response => response)  
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-     const response = wprest.data.netflixCategories.edges
-     return response 
+      const response = wprest.data.netflixCategories.edges
+     return response
 }
 
+ export async function readNext(after){
+ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+      method: 'POST',
+      timeout: 5000 ,
+      agent: agent,
+      headers:{
+      'Content-Type':'application/json'
+      },
+      body: JSON.stringify({
+        query:`
+        query NEXTPOSTS($after: String!){
+    netflixNaijaPosts(first:4,after:$after) {
+    edges {
+      node {
+        title
+        slug
+        date
+        contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+          netflixCategories { 
+          nodes {
+            name
+            slug
+          }
+        }
+    
+        author{
+        node{
+        name
+        slug
+        }
+        }
+        featuredImage {
+          node {
+            altText
+            sourceUrl
+            caption
+          }
+        }
+      }
+    }
+  }
+    }
+      `,
+      variables: { after: after },
+    
+    
+    })}).then(response => response)  
+      .then(data =>data) 
+      .catch(error => console.error('Error:', error));
+      const response = wprest.data.netflixNaijaPosts.edges
+     return response
 
-export async function netflixDetails(slug){
+ }
+
+
+export async function byNetflixCategory(slug){
  
+          
+} 
+
+
+export async function netflixDetails(slug){ 
     try{
      const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
   method: 'POST',
@@ -658,50 +622,76 @@ export async function netflixDetails(slug){
   },
   body: JSON.stringify({
   query:`
-  query TREND($id: ID!, $idType: NetflixNaijaIdType) {
-  netflixNaija(id: $id, idType: $idType) {
+  query POSTTYPE($id: ID!, $idType: NetflixNaijaPostIdType) {
+  netflixNaijaPost(id: $id, idType: $idType) {
       title
     id
-    excerpt
-    slug
-    netflixTags {
+    excerpt 
+    slug 
+    contentTypeName
+    contentTags {
       nodes {
         slug
         name
       }
     }
-    featuredImage {
-      node {
-        sourceUrl
-        altText
+    netflixCategories {
+      nodes {
+        name
+        slug
       }
     }
+  featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                }
     date
     content
     author {
       node {
-        name
+        name 
+        slug
+        avatar{
+            url
+            }
       }
     }
-         netflixNewsGroup {
+    netflixNewsGroup {
       intro
       netflixEmbeds
-      netflixRelated {
-        nodes {
-          ... on NetflixNaija {
+       mostAnticpatedAfrican
+        mostAnticpatedForeign
+        mostAnticpatedNollywood
+      netflixNewRelated {
+       edges {
+          cursor
+        node{
+          ... on NetflixNaijaPost {
             id
             date
             content
             excerpt
             slug
-            title
-            featuredImage {
-              node {
-                altText
-                sourceUrl
+            title 
+          featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                }
+            contentTags {
+              nodes {
+                name
+                slug
               }
             }
-            netflixTags {
+            netflixCategories {
               nodes {
                 name
                 slug
@@ -710,114 +700,116 @@ export async function netflixDetails(slug){
             author {
               node {
                 name
+                slug
+                  avatar{
+            url
+            }
+              }
+            }
+          }
+        }
+  }}
+          netflixComingRelated {
+       edges {
+          cursor
+        node{
+          ... on NetflixNaijaPost {
+            id
+            date
+            content
+            excerpt
+            slug
+            title 
+          featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                }
+            contentTags {
+              nodes {
+                name
+                slug
+              }
+            }
+            netflixCategories {
+              nodes {
+                name
+                slug
+              }
+            }
+            author {
+              node {
+                name
+                slug
+                  avatar{
+            url
+            }
+              }
+            }
+          }
+        }
+  }}
+      netflixNewsRelated {
+        nodes {
+          ... on NetflixNaijaPost {
+            id
+            date
+            content
+            excerpt
+            slug
+            title 
+          featuredImage {
+                  node {
+                    altText
+                    sourceUrl
+                    date
+                    caption
+                  }
+                }
+            contentTags {
+              nodes {
+                name
+                slug
+              }
+            }
+            netflixCategories {
+              nodes {
+                name
+                slug
+              }
+            }
+            author {
+              node {
+                name
+                slug
+                  avatar{
+            url
+            }
               }
             }
           }
         }
       }
     }
- netflixCategories {
-      nodes {
-        name
-        slug
-         children {
-          nodes {
-            name
-            netflixNaija {
-             edges{
-              node { 
-              slug
-                title
-                excerpt
-                content
-                date
-                   author{
-                      node{
-                      name
-                      }
-                      }
-                 netflixNewsGroup { 
-                  netflixEmbeds
-                    genre
-                  director
-                  cast
-                  filmTitle
-                }
-                featuredImage {
-                  node {
-                    altText
-                    sourceUrl
-                    date
-                  }
-                } 
-              }}
-            }
-          }
-        }
-        netflixNaija {
-          nodes {
-            content
-            date
-            id
-            title
-            excerpt 
-             slug
-               author{
-                node{
-                name
-                }
-                }
-            featuredImage {
-              node {
-                altText
-                sourceUrl
-              }
-            }
-            netflixTags {
-              nodes {
-                name
-                slug
-              }
-            }
-             netflixNewsGroup {
-              netflixRelated {
-                edges {
-                  node {
-                    date
-                    id
-                    slug
-                    ... on NetflixNaija {
-                      id
-                      content
-                      title
-                      slug
-                    }
-                  }
-                }
-              }
-            }
-
-
-          }
-        }
-      }
-    } 
   }
     
   }   
   ` ,
   variables:{
   id: slug,
-  idType: 'SLUG' 
+  idType: 'URI'   
   }
   
   })
   
-  }).then(response => response )  
+  }).then(response =>  response)   
     .then(data =>data) 
     .catch(error => console.error('Error:', error));
- const response = wprest.data.netflixNaija 
- return response
+const response = wprest.data.netflixNaijaPost
+return response
     } catch (error) {
        console.error('Error fetching data:', error); 
      } 
@@ -834,10 +826,10 @@ export async function netflixDetails(slug){
         body: JSON.stringify({
           query:`
           query WPPOSTS { 
- netflixCategories(where: {name: "Full List of New"}) {
+ netflixCategories(where: {name: "Full List Newly Added"}) {
     edges {
       node {
-        netflixNaija { 
+        netflixNaijaPosts { 
             nodes {
               slug
               title
@@ -875,7 +867,7 @@ export async function netflixDetails(slug){
  netflixCategories(where: {name: "What to Watch"}) {
     edges {
       node {
-        allNetflixNaija { 
+        netflixNaijaPosts(first:1) { 
             nodes {
               slug
               title
@@ -897,9 +889,7 @@ export async function netflixDetails(slug){
   netflixNewsGroup { 
   intro 
   
-  }
-
-          }
+  }  }
         }
       }
     }
@@ -933,7 +923,7 @@ export async function netflixDetails(slug){
       node {
       name
       slug         
-          allNetflixNaija { 
+          netflixNaijaPosts(first:20) { 
           nodes { 
           id
             slug
@@ -954,7 +944,8 @@ export async function netflixDetails(slug){
   netflixNewsGroup { 
   intro 
   
-  }  netflixCategories {
+  } 
+   netflixCategories {
               nodes {
                 slug
                 name
@@ -973,87 +964,18 @@ export async function netflixDetails(slug){
   }
         }
       }
-   
-    
-       ` 
+     ` 
       
       })
       
-      }).then(response => response )  
+      }).then(response => response) 
       .then(data =>data) 
       .catch(error => console.error('Error:', error));     
       const response = wprest.data.netflixCategories.edges
       return response
   }
+ 
 
-  export async function netflixAfrica() {
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{
-      'Content-Type':'application/json'
-      },
-      body: JSON.stringify({
-        query:`
-      query WPPOSTS { 
- netflixCategories(where: {name: "Africa"}) {
-    edges {
-      node {
-      name
-      slug         
-          allNetflixNaija { 
-          nodes { 
-          id
-            slug
-            title
-            date
-            excerpt 
-             featuredImage {
-                node {
-                  altText
-                  sourceUrl 
-                }
-              }
-         author{
-      node{
-      name
-      }
-      }
-  netflixNewsGroup { 
-  intro 
-  
-  }  netflixCategories {
-              nodes {
-                slug
-                name
-              }
-            }
-            contentTags{
-              nodes{
-              name
-              slug
-              }
-              }
-          }
-        }
-      }
-              
-  }
-        }
-      }
-   
-    
-       ` 
-      
-      })
-      
-      }).then(response => response )  
-      .then(data =>data) 
-      .catch(error => console.error('Error:', error));     
-      const response = wprest.data.netflixCategories.edges
-      return response
-  }
   export async function netflixPopular() {
     const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
@@ -1070,7 +992,7 @@ export async function netflixDetails(slug){
       node {
       name
       slug         
-          allNetflixNaija { 
+          netflixNaijaPosts(first:50) { 
           nodes { 
           id
             slug
@@ -1123,7 +1045,8 @@ export async function netflixDetails(slug){
       return response
   }
  
-  export async function netflixCulture() {
+
+  export async function netflixAfrica() {
     const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       timeout: 5000 ,
@@ -1134,80 +1057,12 @@ export async function netflixDetails(slug){
       body: JSON.stringify({
         query:`
       query WPPOSTS { 
- netflixCategories(where: {name: "Culture"}) {
-    edges { 
-      node {
-      name
-      slug         
-          allNetflixNaija { 
-          nodes { 
-          id
-            slug
-            title
-            date
-            excerpt 
-             featuredImage {
-                node {
-                  altText
-                  sourceUrl 
-                }
-              }
-         author{
-      node{
-      name
-      }
-      }
-  netflixNewsGroup { 
-  intro 
-  
-  }  netflixCategories {
-              nodes {
-                slug
-                name
-              }
-            }
-            contentTags{
-              nodes{
-              name
-              slug
-              }
-              }
-          }
-        }
-      }
-              
-  }
-        }
-      }
-   
-    
-       ` 
-      
-      })
-      
-      }).then(response => response )  
-      .then(data =>data) 
-      .catch(error => console.error('Error:', error));     
-      const response = wprest.data.netflixCategories.edges
-      return response
-  }
-  export async function netflixStories() {
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{
-      'Content-Type':'application/json'
-      },
-      body: JSON.stringify({
-        query:`
-      query WPPOSTS { 
- netflixCategories(where: {name: "Stories"}) {
+ netflixCategories(where: {name: "Africa"}) {
     edges {
       node {
       name
       slug         
-          allNetflixNaija { 
+          netflixNaijaPosts(first:50) { 
           nodes { 
           id
             slug
@@ -1253,216 +1108,13 @@ export async function netflixDetails(slug){
       
       })
       
-      }).then(response => response )  
+      }).then(response =>  response)   
       .then(data =>data) 
       .catch(error => console.error('Error:', error));     
       const response = wprest.data.netflixCategories.edges
       return response
   }
-  export async function netflixSocials() {
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{
-      'Content-Type':'application/json'
-      },
-      body: JSON.stringify({
-        query:`
-      query WPPOSTS { 
- netflixCategories(where: {name: "Socials"}) {
-    edges {
-      node {
-      name
-      slug         
-          allNetflixNaija { 
-          nodes { 
-          id
-            slug
-            title
-            date
-            excerpt 
-             featuredImage {
-                node {
-                  altText
-                  sourceUrl 
-                }
-              }
-         author{
-      node{
-      name
-      }
-      }
-  netflixNewsGroup { 
-  intro 
-  
-  }  netflixCategories {
-              nodes {
-                slug
-                name
-              }
-            }
-            contentTags{
-              nodes{
-              name
-              slug
-              }
-              }
-          }
-        }
-      }
-              
-  }
-        }
-      }
-   
-    
-       ` 
-      
-      })
-      
-      }).then(response => response )  
-      .then(data =>data) 
-      .catch(error => console.error('Error:', error));     
-      const response = wprest.data.netflixCategories.edges
-      return response
-  }
-  export async function netflixDeals() {
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{
-      'Content-Type':'application/json'
-      },
-      body: JSON.stringify({
-        query:`
-      query WPPOSTS { 
- netflixCategories(where: {name: "Deals"}) {
-    edges {
-      node {
-      name
-      slug         
-          allNetflixNaija { 
-          nodes { 
-          id
-            slug
-            title
-            date
-            excerpt 
-             featuredImage {
-                node {
-                  altText
-                  sourceUrl 
-                }
-              }
-         author{
-      node{
-      name
-      }
-      }
-  netflixNewsGroup { 
-  intro 
-  
-  }  netflixCategories {
-              nodes {
-                slug
-                name
-              }
-            }
-            contentTags{
-              nodes{
-              name
-              slug
-              }
-              }
-          }
-        }
-      }
-              
-  }
-        }
-      }
-   
-    
-       ` 
-      
-      })
-      
-      }).then(response => response )  
-      .then(data =>data) 
-      .catch(error => console.error('Error:', error));     
-      const response = wprest.data.netflixCategories.edges
-      return response
-  }
-  export async function netflixCollaborations() {
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{
-      'Content-Type':'application/json'
-      },
-      body: JSON.stringify({
-        query:`
-      query WPPOSTS { 
- netflixCategories(where: {name: "Collaborations"}) {
-    edges {
-      node {
-      name
-      slug         
-          allNetflixNaija { 
-          nodes { 
-          id
-            slug
-            title
-            date
-            excerpt 
-             featuredImage {
-                node {
-                  altText
-                  sourceUrl 
-                }
-              }
-         author{
-      node{
-      name
-      }
-      }
-  netflixNewsGroup { 
-  intro 
-  
-  }  netflixCategories {
-              nodes {
-                slug
-                name
-              }
-            }
-            contentTags{
-              nodes{
-              name
-              slug
-              }
-              }
-          }
-        }
-      }
-              
-  }
-        }
-      }
-   
-    
-       ` 
-      
-      })
-      
-      }).then(response => response )  
-      .then(data =>data) 
-      .catch(error => console.error('Error:', error));     
-      const response = wprest.data.netflixCategories.edges
-      return response
-  }
+ 
   
  export async function netflixNewsDets(slug){
  
@@ -1505,7 +1157,7 @@ export async function netflixDetails(slug){
          netflixNewsGroup {
       intro
       netflixEmbeds
-      netflixRelated {
+      netflixNewsRelated {
         nodes {
           ... on NetflixNaija {
             id
@@ -1542,7 +1194,7 @@ export async function netflixDetails(slug){
          children {
           nodes {
             name
-            allNetflixNaija {
+            netflixNaijaPosts {
              edges{
               node { 
               slug
@@ -1573,7 +1225,7 @@ export async function netflixDetails(slug){
             }
           }
         }
-        allNetflixNaija {
+        netflixNaijaPosts {
           nodes {
             content
             date
@@ -1599,7 +1251,7 @@ export async function netflixDetails(slug){
               }
             }
              netflixNewsGroup {
-              netflixRelated {
+              netflixNewsRelated {
                 edges {
                   node {
                     date
@@ -1658,7 +1310,7 @@ export async function netflixDetails(slug){
       name
       slug 
           
-          allNetflixNaija(first: 2) {
+          netflixNaijaPosts(first: 2) {
              pageInfo {
               startCursor
               endCursor
@@ -1734,7 +1386,7 @@ export async function netflixDetails(slug){
       node {
       name
       slug      
-      allNetflixNaija(first:2) {
+      netflixNaijaPosts(first:2) {
          pageInfo {
               startCursor
               endCursor
@@ -1810,7 +1462,7 @@ export async function netflixDetails(slug){
       node {
       name
       slug         
-          allNetflixNaija(first:$first, after: $after){
+          netflixNaijaPosts(first:$first, after: $after){
            pageInfo {
                 hasNextPage
                 endCursor
@@ -1868,72 +1520,6 @@ export async function netflixDetails(slug){
     return res_naija
   }
 
-//  secondSet: tags(last: 100, after: "YXJyYXljb25uZWN0aW9uOjQx"){      
-//   nodes {
-//     id 
-//     slug
-//     name
-//     posts{
-//       nodes{
-//           slug
-//       title
-//       tags{
-//         nodes{
-//           name
-//           slug
-//         }
-//       }
-//       featuredImage{
-//         node{ 
-//           sourceUrl
-//           altText
-//         }
-//       }
-//       }
-     
-
-
-//     }
-//   }
-
-// pageInfo {
-//   endCursor
-//   hasNextPage
-// }
-// }
-// thirdSet: tags(last: 100, after: " "){      
-// nodes {
-//   id 
-//   slug
-//   name
-//   posts{
-//     nodes{
-//         slug
-//     title
-//     tags{
-//       nodes{
-//         name
-//         slug
-//       }
-//     }
-//     featuredImage{
-//       node{
-//         sourceUrl
-//         altText
-//       }
-//     }
-//     }
-   
-
-
-//   }
-// }
-
-// pageInfo {
-// endCursor
-// hasNextPage
-// }
-// }
  export const fetchNewInter = async (first, after ) => {  
 
   const wp_naija = await fetchWithRetry('https://content.culturays.com/graphql',{
@@ -1951,7 +1537,7 @@ export async function netflixDetails(slug){
     node {
     name
     slug         
-        allNetflixNaija(first:$first, after: $after){
+        netflixNaijaPosts(first:$first, after: $after){
          pageInfo {
               hasNextPage
               endCursor
@@ -2008,3 +1594,5 @@ intro
   const res_naija = wp_naija.data.netflixCategories.edges
   return res_naija
 }
+
+ 

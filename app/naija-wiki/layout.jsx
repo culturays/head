@@ -34,7 +34,7 @@ const Layout = ({children}) => {
 <CharacterQuestion/> 
 </div>
 <div className=''> 
-<Latests/> 
+{/* <Latests/>  */}
 </div>
 </div>
 )

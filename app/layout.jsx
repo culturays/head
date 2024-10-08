@@ -13,6 +13,10 @@ import AuthButton from '@/components/AuthButton';
 import Nav from '@/components/Nav';
 import SearchItems from '@/components/SearchItems'; 
 import TabNav from '@/components/TabNav';
+import Latests from '@/components/Latests';
+const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
+  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/` 
+  : "http://localhost:3000/";
 
 const noko =Nokora({
   subsets:['latin'], 
@@ -34,14 +38,14 @@ export const viewport = {
  export const metadata = {
  title:{
   default: 'Culturays',
-  template:"%s - Culturays"
+  template:"%s | Culturays"
  },
  description: 'This is an upcoming new outlet that gives coverage to events in Nigeria, Africa and the rest of the world.',
 generator: 'Culturays',
 applicationName: 'Culturays',
 referrer: 'origin-when-cross-origin',
-keywords: ['Africa', 'News', 'Nigeria'],
-authors: [{ name: 'Christina Ngene', url: 'https://culturays.com/creator' }],
+keywords: ['Africa', 'News', 'Nigeria', 'Nollywood', 'Netflix Naija', 'Business', 'Movies'],
+authors: [{ name: 'Christina Ngene', url: 'https://culturays.com/creator/christina-ngene' }],
 creator: 'Christina Ngene',
 publisher: 'Christina Ngene',
 metadataBase: new URL('https://culturays.com'),
@@ -55,6 +59,7 @@ images: [
 url: 'https://culturays.com/assets/images/culturays.png',  
 width: 800,
 height: 600,
+alt: 'Culturays Image & Logo',
 },
       {
         url: 'https://culturays.com/assets/images/culturays.png', 
@@ -65,7 +70,7 @@ height: 600,
     ],
     locale: 'en_NG',
     type: 'website',
-  
+  },
   robots: {
     // index: false,
     follow: true,
@@ -79,12 +84,7 @@ height: 600,
       'max-snippet': -1,
     },
   },
-  icons: {
-  //icon: '/assets/icons/favicon-32x32.png',
-  //   shortcut: '/assets/icons/favicon-16x16.png',
-  //   apple: '/assets/icons/apple-touch-icon.png',
-    
-  },
+ 
   icons: {
     // icon: [
     //   { url: '/assets/icons/favicon-32x32.png' },
@@ -116,19 +116,19 @@ height: 600,
       'en-US': 'https://www.culturays.com/en-US', 
     }
   },
-    types: {
-      'application/rss+xml': 'https://culturays.com/rss',
-      // 'application/rss+xml': 'https://culturays.com/rss2',
-      // 'application/rss+xml': 'https://culturays.com/rss3',
-      // 'application/rss+xml': 'https://culturays.com/rss4',
-      // 'application/rss+xml': 'https://culturays.com/rss5',
-      // 'application/rss+xml': 'https://culturays.com/rss6',
-    },
-  },
+  
   verification: {
     google: 'google',  
   },
-  
+  alternates: {
+    types: {
+      'application/rss+xml':`${defaultUrl}/rss.xml`,
+      'application/rss+xml':`${defaultUrl}/rss1.xml`,
+      'application/rss+xml': `${defaultUrl}/rss2.xml`,
+      'application/rss+xml': `${defaultUrl}/rss3.xml`,
+      'application/rss+xml': `${defaultUrl}/rss4.xml`, 
+    },
+  },
  }
   
 
@@ -137,7 +137,7 @@ export default function RootLayout({ children  }) {
  const GA_ID= process.env.GA_ID
  const consent = getCookie('localConsent'); 
 //  const headersList = new URL(headers().get('x-url') )
- const url = new URL(headers().get('pathname')); 
+ const url = new URL(headers()?.get('pathname')); 
 const { searchParams } = new URL(url);  
 const pathname=url.pathname
 const confirmParam= searchParams?.get("confirm")
@@ -151,8 +151,7 @@ const confirmParam= searchParams?.get("confirm")
     });
     return inputStr;
 } 
-
-
+ 
  return (
     <html lang="en" > 
      <Script async type="text/javascript" src="//clickiocmp.com/t/consent_234292.js"/> 
@@ -195,7 +194,7 @@ const confirmParam= searchParams?.get("confirm")
  <Suspense fallback={<p>Loading...</p>}>  
     {children}  
 </Suspense>
-
+  <Latests/> 
 </main>
  <Footer/> 
 </body> 

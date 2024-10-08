@@ -312,14 +312,16 @@ export async function newcharCall(slug){
                         node {
                           sourceUrl
                           altText
+                          caption
                        
                       }
                  }
-                  charactertitles {
+                  charactertitles { 
                     actorImgs {
                       node{
                          altText
                       sourceUrl
+                       caption
                       }
                      
                     }
@@ -327,11 +329,19 @@ export async function newcharCall(slug){
                       node{
                         altText
                      sourceUrl
+                      caption
                      }
                     }
                     actorWiki
                     actorsBios
                     charBios
+                    filmImg1{
+                    node{
+                      altText
+                      sourceUrl
+                      caption
+                    }
+                    }
                     releaseDate
                     characterWiki
                     country
@@ -393,64 +403,3 @@ export async function newcharCall(slug){
     return response 
 } 
   
-export const naijaWikiVids = async()=>{  
-  try{
-  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-    method: 'POST',
-    headers:{ 
-    'Content-Type':'application/json'
-    },
-    body: JSON.stringify({
-      query: `
-       query WPVIDEOS {
-      culturaysVideos { 
-    nodes {
-      videos {
-        videoUrl {
-          node {
-            title
-            slug
-            mediaItemUrl
-            date
-            altText
-          }
-        }
-      }
-      content 
-      date
-      excerpt
-      slug
-      title
-         culturaysVideoCategories{
-         nodes{
-         slug
-         name
-         }
-         
-         }   
-      featuredImage{
-      node{
-      sourceUrl
-      altText
-      }
-      
-      }
-    }
-  }
-    }
-    `
-    })
- 
-    }) 
-    .then(response => response)  
-    .then(data =>data) 
-    .catch(error => console.error('Error:', error));
-    const response = wprest.data.culturaysVideos.nodes 
-    return response 
-    
-  } catch (error) {
-    console.error('Error fetching data:', error);
- 
-  }
-  }
- 

@@ -1,5 +1,5 @@
 "use client"
-import { fetchNew, fetchNewInter } from "@/app/netflix-naija/netflix-news"
+import { fetchNew } from "@/app/netflix-naija/netflix-news"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
@@ -28,7 +28,7 @@ const NaijaContent = ({end_ng_cursor, setEnd_ng_cursor}) => {
       const debouncedSearchNaija = useDebouncedValue(end_ng_cursor, 500); 
       const loadMorePosts = useCallback(async () => { 
       const apiP = await fetchNew(2, debouncedSearchNaija);
-      const naijaNew_content = apiP.map((ex) => ex.node.allNetflixNaija)
+      const naijaNew_content = apiP.map((ex) => ex.node.netflixNaijaPosts)
                                       .map((xy) => xy.nodes)
                                      .flat();
        
@@ -39,13 +39,13 @@ const NaijaContent = ({end_ng_cursor, setEnd_ng_cursor}) => {
         // or try this if (end_ng_cursor !== null ) {
         //   setScrolledContent(prevContent => [...prevContent, ...naijaNew_content]);
         // } 
-        const hasMorePosts = apiP.map((ex) => ex.node.allNetflixNaija)
+        const hasMorePosts = apiP.map((ex) => ex.node.netflixNaijaPosts)
                                   .map((xy) => xy.pageInfo)
                                   .map((pi) => pi.hasNextPage)
                                   .flat();        
       
         if (hasMorePosts[0] && end_ng_cursor !== null) {
-          const getMore = apiP.map((ex) => ex.node.allNetflixNaija)
+          const getMore = apiP.map((ex) => ex.node.netflixNaijaPosts)
                               .map((xy) => xy.pageInfo)
                               .map((pi) => pi.endCursor)
                               .flat();

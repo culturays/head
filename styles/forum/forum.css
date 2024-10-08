@@ -1,12 +1,6 @@
 .items_search{  
   box-shadow: 0 4px 5px rgba(4, 4, 4, 0.6);
-  
-  /* background-color:$culturays-regular; */
-  //height: 150px;
-  /* p{
-    opacity: 0.9;
-    cursor:pointer
-  } */
+ 
  }
  .search{
   border: none !important;

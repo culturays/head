@@ -1,4 +1,5 @@
  
+import NewsLetter from '@/components/NewsLetter';
 import Top10 from '@/components/Top10El'; 
 const Layout = ({children}) => {
    
@@ -6,6 +7,7 @@ const Layout = ({children}) => {
 <div>  
   {children}
   <Top10 /> 
+  <NewsLetter/> 
 </div>
 )
 }

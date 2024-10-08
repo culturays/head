@@ -43,7 +43,37 @@ setSearchItem(data)
 }
 searchVals() 
   },[name])
- 
+  //use style here { netflixNaijaPosts?.map((it, index)=> 
+  //   <div key={it.id} className="items_search bg-white max-w-xl m-4 m-auto my-1 py-4"> 
+  //   <div className="px-2">
+  //     <div className="flex">        
+  //    <div className="max-w-32 xs:max-w-44"> 
+  //    <Image
+  //    src={it.featuredImage.node.sourceUrl}
+  //    width={1200}
+  //    height={675}
+  //    alt={it.featuredImage.node.altText}
+  //    />
+  //    </div>
+  //       <div className="mx-2  flex flex-col justify-between" >
+  //          <Link href={`/netflix-naija/news/${it.slug }`}><h3 className="search-title hover:opacity-50 text-lg cursor-pointer font-medium leading-tight underline">{it.title }</h3></Link> 
+    
+  //          <div className="flex py-2 text-sm"> 
+  //         <p>All tags:</p>{it.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
+  //   <Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+  //   </p>}</Link>  
+    
+  //   )}
+  //   </div> 
+    
+  //   </div> 
+  //   </div>
+       
+     
+  //    </div>
+    
+  //   </div>
+  //   )  } 
 return (
 <div>
 <div className="">  
@@ -72,7 +102,7 @@ content?.map((it, index)=>
 <div className="m-6">          
  <Link href={`/news//${it.locator}/${it.slug }`}><h3 className="search-title hover:opacity-50 text-lg m-4 cursor-pointer font-medium h-3/4 leading-tight">{it.title }</h3></Link> 
  <div className="tag-search"> {it.tags?.slice(0,5)?.map((ex, i)=>
-<Link href={`/tag/${ex.replace('.','')}`}key={i}>{ex&&<span className="cursor-pointer hover:opacity-50 p-4">#
+<Link href={`/topic/${ex.replace('.','')}/${ex.id}`}key={i}>{ex&&<span className="cursor-pointer hover:opacity-50 p-4">#
 {ex.replace('.','').split(' ').join(' ') }  
 </span>}</Link>  
 
@@ -90,7 +120,7 @@ searchItem&&searchItem?.map((it, index)=>
 <div className="m-6">          
  <Link href={`/forum/post/${it.slug }`}><h3 className="search-title hover:opacity-50 text-lg m-4 cursor-pointer font-medium h-3/4 leading-tight">{it.title }</h3></Link> 
  <div className="tag-search"> {it.tags?.slice(0,5)?.map((ex, i)=>
-<Link href={`/tag/${ex.replace('.','')}`}key={i}>{ex&&<span className="cursor-pointer hover:opacity-50 p-4">#
+<Link href={`/topic/${ex.replace('.','')}/${ex.id}`}key={i}>{ex&&<span className="cursor-pointer hover:opacity-50 p-4">#
 {ex.replace('.','').split(' ').join(' ') }  
 </span>}</Link>  
 

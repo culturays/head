@@ -1,0 +1,50 @@
+
+import fs from 'fs';
+import { Feed } from "feed";
+import { contentFeed } from '@/app/news/articlehandle'; 
+import { netflixNews } from '@/app/netflix-naija/netflix-news';
+export const revalidate= 3600
+
+async function topicsFeed(){ 
+const contentData=await contentFeed() 
+const postsData= contentData.filter((xy)=> xy.contentTypeName!== 'article').filter((xy)=> xy.contentTypeName !== 'nollywood').filter((xy)=> xy.contentTypeName !== 'post').filter((xy)=> xy.contentTypeName !== 'netflix-naija').filter((xy)=> xy.contentTypeName === 'award').filter((xy)=> xy.contentTypeName === 'char').filter((xy)=> xy.contentTypeName === 'latest').filter((xy)=> xy.contentTypeName === 'outline')        
+
+   const site_url='https://culturays.com';
+    const pubDate= new Date()
+    const author = 'Christina Ngene'  
+      const feed = new Feed({
+        title: 'Culturays | RSS Feed',
+        description: 'Culturays is the news site for trends in business and domestic industries in Africa.',
+        id: site_url,
+        link: site_url,
+        image: `${site_url}/favicon.ico`,
+        favicon: `${site_url }/favicon.ico`,
+        copyright: `All rights reserved ${pubDate.getFullYear()}, Culturays`,
+        updated: pubDate,
+        date:pubDate,
+        generator: "Feed for Culturays",
+        feedLinks: {
+          rss2: `${site_url}/rss.xml`,
+          json: `${site_url }/rss/feed.json`,
+        },
+        author,
+      });
+      postsData.map((post) => {
+      const url = `${site_url}/news${post.contentTypeName}//${post.slug}`;     
+       feed.addItem({
+         title: post.title,
+         id: url, 
+         link: url,
+         description: post.excerpt,
+         content: post.excerpt,
+         author: post.author.node.name ,
+         contributor: [ post.author.node.name ],
+         date: new Date(post.date),
+       image: post.featuredImage.node.sourceUrl.split('?')[0]
+       });
+ fs.writeFileSync("./public/rss4.xml", feed.rss2(), { recursive: true} );
+    });
+
+     
+   }
+   export default topicsFeed 

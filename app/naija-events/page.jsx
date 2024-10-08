@@ -9,7 +9,7 @@ const supabase = createClient()
 const { data:events , error } = await supabase 
 .from('events')
 .select('*')
- 
+.order('id', { ascending: false }) 
 if (error) {
     throw new Error(error.message)
  }
@@ -18,8 +18,6 @@ return {events}
 } 
 const {events} =await forumEvents() 
 const top10Naija = await getTop10() 
-const top10Names = top10Naija.map((ex)=> ex.name)
- 
 return ( 
 <>   
 <div className='xxs:flex xxs:flex-col'> 

@@ -1,5 +1,5 @@
 "use client"
-import { fetchNew, fetchNewInter } from "@/app/netflix-naija/netflix-news"
+import { fetchNewInter } from "@/app/netflix-naija/netflix-news"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
@@ -29,7 +29,7 @@ const InterContent = ({end_ng_cursor,end_inter_cursor, setEnd_inter_cursor }) =>
       const loadMorePosts = useCallback(async () => {
  
         const apiP = await fetchNewInter(2, debouncedSearchNaija);
-        const naijaNew_content = apiP.map((ex) => ex.node.allNetflixNaija)
+        const naijaNew_content = apiP.map((ex) => ex.node.netflixNaijaPosts)
                                       .map((xy) => xy.nodes)
                                      .flat();
        
@@ -40,13 +40,13 @@ const InterContent = ({end_ng_cursor,end_inter_cursor, setEnd_inter_cursor }) =>
         // or try this if (end_ng_cursor !== null ) {
         //   setScrolledContent(prevContent => [...prevContent, ...naijaNew_content]);
         // } 
-        const hasMorePosts = apiP.map((ex) => ex.node.allNetflixNaija)
+        const hasMorePosts = apiP.map((ex) => ex.node.netflixNaijaPosts)
                                   .map((xy) => xy.pageInfo)
                                   .map((pi) => pi.hasNextPage)
                                   .flat();
        
         if (hasMorePosts[0] && end_inter_cursor !== null) {
-          const getMore = apiP.map((ex) => ex.node.allNetflixNaija)
+          const getMore = apiP.map((ex) => ex.node.netflixNaijaPosts)
                               .map((xy) => xy.pageInfo)
                               .map((pi) => pi.endCursor)
                               .flat();
@@ -88,7 +88,7 @@ const InterContent = ({end_ng_cursor,end_inter_cursor, setEnd_inter_cursor }) =>
 )}
  
 </div>
- {console.log(end_inter_cursor === null &&end_ng_cursor === null)}
+ {/* {console.log(end_inter_cursor === null &&end_ng_cursor === null)} */}
 {end_ng_cursor === null&& end_inter_cursor==='' ?
 <p ref={ref} className="p-4">Loading</p>: ''
  }

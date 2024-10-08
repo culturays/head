@@ -790,9 +790,9 @@ const commentEdit = async(e) => {
    <p className="text-white font-bold text-center text-lg my-1">Genres:</p>
    {xx?.genre?.slice(0,3)?.map((xy, vi)=>
    <div className="text-white text-center" key={vi}>
-   <Link href={`/tag/${xy}'`}><p className="m-1 hover:opacity-70 cursor-pointer" >{ xy} </p></Link>
-   </div>
-   )} 
+   <Link href={`/topic/${xy}'`}><p className="m-1 hover:opacity-70 cursor-pointer" >{ xy} </p></Link>
+   </div> 
+   )}  
    
    </div> 
    <div className=""> 
@@ -803,7 +803,7 @@ const commentEdit = async(e) => {
    {xx?.tags?.map((xy, vi)=> 
    xy.split(',').map((ex, xi)=> ex&&
    <div className="flex bg-gray-100 m-1 " key={xi}>
-   <Link href={`/tag/${ex.replace('#', '')}'`}><p className="p-1 m-1 hover:opacity-70 cursor-pointer" >{'#' + ex.replace('.', '')} </p></Link>
+   <Link href={`/topic/${ex.replace('#', '')}'`}><p className="p-1 m-1 hover:opacity-70 cursor-pointer" >{'#' + ex.replace('.', '')} </p></Link>
  {xx?.user_id === user?.id &&  <small className="p-2 hover:bg-gray-400" onClick={()=>deleteTag(xx, ex)}>x</small>}
    </div> ))} 
     

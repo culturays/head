@@ -8,6 +8,7 @@ export const fetchWithRetry = async (url, options, retries = 3) => {
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
+          //console.log(response)
           throw new Error('Network response was not ok ' + response.statusText);
         }
         return await response.json();

@@ -31,9 +31,10 @@ import axios from 'axios';
        throw new Error('Error downloading the file:');
     }
   }
- export async function processImages(url, location) {  
-      if (url); 
-      ////USE FOR EVENTS IMGS
+ export async function processImages(url, location) {
+    ////USE FOR EVENTS IMGS
+      if (url){  
+    
         const fileName = await getFileNameFromUrl(url); 
         const fileBuffer = await downloadImage(url);
 //------------------------------------------
@@ -54,27 +55,25 @@ import axios from 'axios';
  
     return fileName
   }
-   export async function processSbImages(url, location) {   
-    if (url)    
-     ;
-         //USE FOR SIIVERBIRDS IMGS
-        const fileName = await getFileNameFromSilverBirds(url)
+  }
+   export async function processSbImages(url, location) { 
+       //USE FOR SIIVERBIRDS IMGS
+    if (url) { 
+     const fileName = await getFileNameFromSilverBirds(url)
         const fileBuffer = await downloadSBImage(url)
 //-----------------------------------------------------------
-
          const mimeType = mime.getType(fileName); 
          const supabase = await createClient()
          if(mimeType !== null){
          const { error } = await supabase.storage
                .from(location) 
-               .upload(fileName, fileBuffer, {contentType: mimeType, upsert: true });
-         
+               .upload(fileName, fileBuffer, {contentType: mimeType, upsert: true });         
              if (error) throw new Error(error); 
       
    } 
      console.log(`File uploaded as ${fileName}`);
-       //const imgX = await uploadImageToSupabase(fileName, fileBuffer, mimeType)
- 
+       //const imgX = await uploadImageToSupabase(fileName, fileBuffer, mimeType) 
     return fileName
+  }
   }
    

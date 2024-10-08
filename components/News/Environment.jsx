@@ -3,18 +3,19 @@ import { faAngleLeft, faAngleRight, faCircle, faDotCircle } from "@fortawesome/f
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import moment from "moment"
 import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"  
-import Pagination from "./Pagination"
+import Link from "next/link" 
+import { useEffect, useState } from "react"  
+import Pagination from "../Pagination"
+import SlideFxn from "../SlideFxn"
 
-const Environment = ({eco_news}) => {
-  const top_eco_items= eco_news.slice(0,4) 
-  const carousel_eco_items= eco_news.slice(0,4) 
-  const [activeSlide,setActiveSlide] =useState( 0)
+const Environment = ({environment_news }) => {
+
   const [posts, setPosts]=useState([]) 
   const [currPg, setCurrPg]=useState(1)
-  const [postPerPage, setPostPerP]=useState(2) 
-  
+  const [postPerPage, setPostPerP]=useState(10) 
+     const world_news = environment_news.map((ex)=>ex.environmentCategories?.nodes.filter((xy)=> xy?.name==="World")).flat().map((tx)=> tx?.environments.nodes).flat()
+     const africa_news = environment_news.map((ex)=>ex.environmentCategories?.nodes.filter((xy)=> xy?.name==="Africa")).flat().map((tx)=> tx?.environments.nodes).flat()     
+     const environment_items=environment_news.map((ex)=>ex.environmentCategories?.nodes.filter((xy)=> xy?.name!=="World")).flat().filter((xy)=> xy?.name!=="Africa").map((tx)=> tx?.environments.nodes).flat()
   function decrement() {
    setCurrPg(currPg - 1);
  }
@@ -24,10 +25,10 @@ const Environment = ({eco_news}) => {
  
  useEffect(()=>{
    const fetchPs= async()=>{ 
-     setPosts([...eco_news]) 
+     setPosts([...environment_items.slice(8)]) 
    }
    fetchPs()
- },[eco_news])
+ },[environment_news])
  
   
  const idxLastPs= currPg * postPerPage
@@ -38,144 +39,115 @@ const Environment = ({eco_news}) => {
  setCurrPg(pageNumber) 
  }
 
-  const prevSlide=()=> { 
-    const slide =activeSlide - 1 < 0
-      ?10 - 1
-      :activeSlide -1;
-      setActiveSlide(slide);
-  }
-  const nextSlide=()=> {
-    let slide = activeSlide + 1 < 10
-      ? activeSlide + 1
-      : 0;
-      setActiveSlide(slide);  
-  }
+ 
   const replaceHTMLTags=(string)=>{
     const regex = /(<([^>]+)>)/gi;
-    //(/<\/?[^>]+(>|$)/g, "")
-    const newString = string.replace(regex, "");
+    //(/<\/?[^>]+(>|$)/g, "") 
+    const newString = string?.replace(regex, "");
     return newString
      }
      const [activeSet , setActiveSet]=useState(false)
+    
+     const title_item=environment_news.map((ex)=>ex.contentTypeName)[0]
+
   return (
     <div> 
-    <div className="bg-gray-100"> 
-    <div className="xl:grid xl:grid-cols-2 justify-between gap-1 w-3/4 m-auto lg:w-4/5">  
-      <section className="md:grid md:grid-cols-2 justify-center m-auto gap-1 w-full xl:w-full lg:w-3/4"> 
-      {top_eco_items.map((xy,i)=>
-      <div className="xs:w-3/4 sm:w-full m-auto" key={xy.title + ' ' + i}>
+    <div className="bg-gray-50 py-4 m-auto" style={{maxWidth:'1800px'}}> 
+    <div className="xl:flex justify-center gap-1 px-2 m-auto" style={{maxWidth:'1550px'}}>  
+      <section className="sm:grid sm:grid-cols-2 justify-center m-auto gap-1 px-2 max-w-4xl"> 
+      {environment_items.length>4 &&environment_items.slice(4,8).map((xy,i)=>
+      <div className="max-w-md lg:max-w-xl m-auto" key={xy?.title + ' ' + i}>
         <div className="bg-white p-4 m-1 h-52 shadow"> 
-        <div className="my-3">
-           <span className="border rounded-2xl bg-red-500 text-white p-2">
+        <div className="my-3 cursor-pointer ">
+          <Link href={`/topic/${xy?.contentTags?.nodes[0]?.slug}/${xy?.contentTags?.nodes[0]?.id}`}></Link> <span className="border rounded-2xl bg-red-500 text-white p-2 hover:bg-red-600">
             <FontAwesomeIcon 
            icon={faCircle}
            width={10}
            className="text-white mx-2"
-           />{xy.tags.nodes[0]?.name} </span>
+           />{xy?.contentTags?.nodes[0]?.name} </span>
          
             </div>
-                <div className="my-4">
-            <div className="">
-           <h2 className=""><Link href="/">{xy.title}</Link></h2>
-                  </div>
-            <p className="my-3"><small className=""><em>{moment(xy.date).fromNow()}</em></small></p>
+                <div className="my-6">
+            <div className="cursor-pointer">
+           <Link href={`/news/environment/${xy?.slug}`}><h2 className="text-xl font-medium hover:text-gray-500">{xy?.title}</h2></Link> 
+           </div>
+            <small className="text-sm my-3 text-red-500"><em>{moment(xy?.date).fromNow()}</em></small>
          </div>
     </div>
       </div> 
 )}
 </section>
 
-<section className='xl:my-20 w-3/4 m-auto mx-4'> 
+<div className="max-w-2xl m-auto xl:m-0">
+  <SlideFxn title_item={title_item} content={environment_items}/>  
+</div>
 
- <div className="flex justify-between relative top-16 w-full"> 
- <div onClick={prevSlide} className='text-5xl text-white opacity-70 bg-gray-400 cursor-pointer'> 
- <FontAwesomeIcon icon={faAngleLeft}/> </div>
-  
- <div onClick={nextSlide} className='text-5xl text-white opacity-70 bg-gray-400 cursor-pointer'> 
- <FontAwesomeIcon icon={faAngleRight}/>
-  </div> 
- </div> 
- <div className="mx-11"> 
- { carousel_eco_items.map((item, index)=> 
- index===activeSlide&&
- <div className='my-2' key={item.name + ' ' + index}> 
- <h2 className='text-2xl text-gray-600 my-1 font-bold'>{item?.title} </h2> 
- <p className='m-1 text-gray-600'>{replaceHTMLTags(item.excerpt)} </p>
- <p className="my-3"><small className=""><em>{moment(item.date).fromNow()}</em></small></p>
-  </div > 
-) }  
- 
- </div> 
- </section>
- 
     </div>
   </div>
-  
+    
  <section>
-<div className="grid lg:grid-cols-6 w-3/4 m-auto p-8 lg:w-11/12 xl:w-4/5"> 
-<div className="lg:col-span-4 lg:col-start-1">
-<h2 className="text-3xl m-4">Business</h2>
+<div className="lg:flex m-auto p-6 gap-2 justify-center" style={{maxWidth:'1750px'}}> 
+<div>
+<h2 className="text-5xl font-bold m-4">Environment</h2>
 <hr className="bg-black py-0.5"/>
-<div className="grid sm:grid-cols-2 justify-center ">
-{currentPosts.map((xy, ix)=> 
-<div className=" my-2 px-2 m-auto border-b xs:w-3/4 sm:w-full " key={xy.title + ' ' + ix}>
-<h2 className="text-xl lg:h-28 py-3 md:h-20 h-24 mt-4">{xy.title} </h2>
+<div className="grid sm:grid-cols-2 justify-center max-w-2xl lg:max-w-5xl m-auto">
+{currentPosts.length>0 &&currentPosts.map((xy, ix)=> 
+<div className="my-2 px-2 m-auto border-b max-w-xs lg:max-w-max py-4" key={xy?.title + ' ' + ix}> 
+<div className="overflow-hidden text-ellipsis h-28" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}> 
+<Link href={`/news/environment/${xy?.slug}`}>
+<h2 className="text-3xl hover:text-gray-500 leading-9 py-10">{xy?.title} </h2></Link>
+</div>
 <Image
-src={xy.featuredImage.node.sourceUrl}
+className="hover:opacity-70 cursor-pointer max-h-44"
+src={xy?.featuredImage.node.sourceUrl}
 width={1200}
 height={675}
-alt={xy.featuredImage.node.altText}
+alt={xy?.featuredImage.node.altText}
 /> 
-<p className="my-2">{replaceHTMLTags(xy.excerpt)} </p>
-<p className="my-3"><small className=""><em>{moment(xy.date).fromNow()}</em></small></p>
+<Link href={`/news/environment/${xy?.slug}`}><p style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}className="overflow-hidden text-ellipsis my-2 text-lg hover:text-gray-500 py-2 leading-9">{replaceHTMLTags(xy?.excerpt)} </p></Link>
+ <small className="text-sm my-3 text-red-500"><em>{moment(xy?.date).fromNow()}</em></small> 
 </div>
 )}
 </div>
-<div className=""> 
+<div className="flex justify-between"> 
  
- <div  >
+ <div>
 {currPg === 1 ? 
-'':<button onClick={decrement}>
+'':<button onClick={decrement}className="text-lg p-4 text-orange-700 border border border-orange-700 rounded-xl hover:bg-black hover:text-gray-300">
  <span>&#x226A;</span> Previous Page 
  </button> } </div> 
 <div >
-  {currPg === postPerPage ?'': <button onClick={increment}>
+  {currPg === postPerPage ?'': <button onClick={increment} className="text-lg p-4 text-orange-700 border border border-orange-700 rounded-xl hover:bg-black hover:text-gray-300">
   Next Page  <span>&#x226B;</span> 
    </button> }
    </div>
  </div>
 </div>
  
-<div className="flex justify-between lg:col-span-2 lg:col-start-5"> 
-<div> 
-<h2 onClick={()=> setActiveSet(prev => !prev)} className="text-xl cursor-pointer">World</h2>
-<hr className={activeSet?"bg-red-500 py-0.5":''}/>
-<div>
-{activeSet&&eco_news.map((xy, ix)=> 
-<div className=" my-2 px-2 m-auto border-b xs:w-3/4 sm:w-full" key={xy.title + ' ' + ix}>
-<h2 className="text-xl lg:h-28 py-3 md:h-20 h-24 mt-4">{xy.title} </h2>
- 
-<p className="my-2">{replaceHTMLTags(xy.excerpt)} </p>
-<p className="my-3"><small className=""><em>{moment(xy.date).fromNow()}</em></small></p>
+<div className="flex justify-between lg:block xl:flex my-5 max-w-4xl m-auto">
+
+<div className="xl:w-1/2 mx-1 h-max px-2 py-4"><h2 onClick={()=> setActiveSet(prev => !prev)}className={!activeSet?"text-2xl font-bold":'text-2xl cursor-pointer'}>Africa</h2>
+<hr className={!activeSet?"bg-red-500 py-0.5 font-bold":''}/>
+{ africa_news.slice(0,5).map((xy, ix)=> 
+<div className="my-2 px-2 m-auto border-b border-l" key={xy?.title + ' ' + ix}>
+<Link href={`/news/environment/${xy?.slug}`}><h2 style={{ display: '-webkit-box', WebkitLineClamp:2, WebkitBoxOrient: 'vertical' }} className="overflow-hidden text-ellipsis  leading-8 text-xl py-1 mt-4 hover:text-gray-600 cursor-pointer">{xy?.title} </h2></Link>
+<Link href={`/news/environment/${xy?.slug}`}><p style={{ display: '-webkit-box', WebkitLineClamp:2, WebkitBoxOrient: 'vertical' }} className="overflow-hidden text-ellipsis my-2 hover:text-gray-600 text-base">{replaceHTMLTags(xy?.excerpt)} </p></Link>
+ <small className="text-sm my-3 text-red-500 "><em>{moment(xy?.date).fromNow()}</em></small> 
 </div>
 )}
 </div>
-</div>
-<div>
-<h2 onClick={()=> setActiveSet(prev => !prev)}className="text-xl cursor-pointer">Africa</h2>
-<hr className={!activeSet?"bg-red-500 py-0.5":''}/>
-<div>
-{!activeSet&&eco_news.map((xy, ix)=> 
-<div className=" my-2 px-2 m-auto border-b xs:w-3/4 sm:w-full" key={xy.title + ' ' + ix}>
-<h2 className="text-xl lg:h-28 py-3 md:h-20 h-24 mt-4">{xy.title} </h2>
- 
-<p className="my-2">{replaceHTMLTags(xy.excerpt)} </p>
-<p className="my-3"><small className=""><em>{moment(xy.date).fromNow()}</em></small></p>
+<div className="xl:w-1/2 mx-1 h-max px-2 py-4"><h2 onClick={()=> setActiveSet(prev => !prev)}className={activeSet?"text-2xl font-bold":'text-2xl cursor-pointer'}>World</h2>
+<hr className={activeSet?"bg-red-500 py-0.5 font-bold":''}/>
+{ world_news.slice(0,5).map((xy, ix)=> 
+<div className="my-2 px-2 m-auto border-b border-l" key={xy?.title + ' ' + ix}>
+<Link href={`/news/environment/${xy?.slug}`}><h2 style={{ display: '-webkit-box', WebkitLineClamp:2, WebkitBoxOrient: 'vertical' }} className="overflow-hidden text-ellipsis  leading-8 text-xl py-1 mt-4 hover:text-gray-600 cursor-pointer">{xy?.title} </h2></Link>
+<Link href={`/news/environment/${xy?.slug}`}><p style={{ display: '-webkit-box', WebkitLineClamp:2, WebkitBoxOrient: 'vertical' }} className="overflow-hidden text-ellipsis my-2 hover:text-gray-600 text-base">{replaceHTMLTags(xy?.excerpt)} </p></Link>
+ <small className="text-sm my-3 text-red-500 "><em>{moment(xy?.date).fromNow()}</em></small> 
 </div>
 )}
-</div>
 </div>
 
+ 
 </div>
 <Pagination postPerPage={postPerPage} totalPosts={posts.length} paginating={paginating} />
 </div>

@@ -1,15 +1,13 @@
 
-import { Open_Sans, Nokora } from 'next/font/google';
-import Latests from "@/components/Latests"; 
-import NewsLetter from '@/components/NewsLetter';  
+import { Open_Sans, Nokora } from 'next/font/google'; 
 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
 ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/netflix-naija` 
 : "http://localhost:3000/netflix-naija";
-
+ 
 export const metadata = {
 metadataBase: new URL(defaultUrl), 
- title:"Naija Wiki",  
+ title:"Netflix Naija",  
 description: "Culturays is an independent news outlet operating under Ngenet Studio and focused on events from around the world that affect Nigeria and the rest of Africa.",
 }; 
 
@@ -30,10 +28,7 @@ const Layout = ({children}) => {
    
   return (
 <div className={noko.className}>  
-  {children}
- 
-<NewsLetter/>  
-<Latests/> 
+  {children} 
 </div>
 )
 }

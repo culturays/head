@@ -24,12 +24,13 @@ const Layout = ({children}) => {
   
   return ( 
     <div> 
-{children}
+{children} 
+<Top10 />  
 <div className="flex p-8 lg:px-32"> 
 <NewsLetter/>  
 </div>
- <Top10 />  
-<Latests/> 
+
+{/* <Latests/>  */}
     </div>
   )
 }
