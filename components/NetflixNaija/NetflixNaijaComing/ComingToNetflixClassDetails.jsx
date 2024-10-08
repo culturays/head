@@ -1,7 +1,3 @@
- //returning titles coming in month, year -[english, non-english]
- //first look-[will list movies/series by each month of realease, subheading may have bg] 
-  //coming to netflix naija in the holidays
-  //fan favorite including korean coming
 import ShareButtons from "@/components/ShareButtons";
 import { faNewspaper } from "@fortawesome/free-regular-svg-icons";
 import { faAngleRight, faClapperboard, faFilm } from "@fortawesome/free-solid-svg-icons";

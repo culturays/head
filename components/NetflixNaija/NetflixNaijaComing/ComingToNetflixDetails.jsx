@@ -6,10 +6,6 @@ import { faAngleRight, faAward, faClapperboard, faFilm } from '@fortawesome/free
 import ShareButtons from '@/components/ShareButtons';
 import moment from 'moment';
 import { faClock, faNewspaper, faUser } from '@fortawesome/free-regular-svg-icons';
-  //What's Coming to Netflix Naija in the month - [ can have most anticiated, or no subheading]
- //what's coming in the week - [ can have most anticiated, or no sbheading ]
- //what's coming in the weekend - [ can have most anticiated, or no sbheading]
- //what's coming in the daily - [ can have most anticiated, or no sbheading]
 const ToNetflixDetails = ({coming_to_netflix_naija,  netflix_related, netflix_news, coming_to_netflix_details }) => { 
    const replaceHHTMLTags=(string)=>{
     const regex = /(<([^>]+)>)/gi;

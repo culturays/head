@@ -1,8 +1,8 @@
  
 import { headers } from "next/headers"
-import ArticleDetail from "@/components/news/ArticleDetail"
 import SideBar from "@/components/Side"
 import { news_details_all } from "../articlehandle"
+import ArticleDetail from "@/components/News/ArticleDetail"
 const CULTURAYS_CONTENT_WP = process.env.CULTURAYS_WP
 
 export async function generateMetadata({ params, searchParams }, parent) { 

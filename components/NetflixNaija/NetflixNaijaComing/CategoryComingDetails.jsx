@@ -6,10 +6,6 @@ import { faAngleRight, faAward, faClapperboard, faFilm } from '@fortawesome/free
 import ShareButtons from '@/components/ShareButtons';
 import moment from 'moment';
 import { faClock, faNewspaper, faUser } from '@fortawesome/free-regular-svg-icons';
-
- //every movies /series coming - [will list movies/series by each month of realease,  subheading may have bg]
- //category coming in the year, month, week -subheadings [new & returnsing, category existing on netflix for the year, category coming in the year, month, week inside detail ] 
- //sequels coming
   
 const CategoryComingDetails = ({coming_to_netflix_naija,  netflix_related, netflix_news, coming_to_netflix_details }) => {  
   const replaceHHTMLTags=(string)=>{

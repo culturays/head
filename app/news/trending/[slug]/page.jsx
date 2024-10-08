@@ -1,4 +1,4 @@
-import Trending from "@/components/news/Trending"
+import Trending from "@/components/News/Trending"
 import { similarTrending, trending, trends } from "../../articlehandle" 
 export async function generateMetadata({ params, searchParams }, parent) {
  const slug = params.slug

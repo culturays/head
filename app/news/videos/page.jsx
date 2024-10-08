@@ -1,4 +1,4 @@
-import Videos from "@/components/news/Videos";
+import Videos from "@/components/News/Videos";
 import { vids } from "../articlehandle";
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/videos` 
