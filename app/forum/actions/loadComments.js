@@ -1,23 +1,5 @@
 'use server' 
-import { createClient } from '@/utils/supabase/server'
-
-// const childView = async () => { 
-//   const supabase = createClient();  
-//   const { data:comment_ex, error} = await supabase
-//   .from('comments') 
-//   .select('*') 
-//   .eq('id', comment.id)
-//   .order('id', { ascending: true })
-//   .range(0,2)
-//   if (error) {  
-//   console.error('Error fetching posts:', error );
-//   return;
-//   }
-     
-//   return comment_ex
-//   } 
-
-
+import { createClient } from '@/utils/supabase/server' 
 export const getComments = async (offset , limit, post) => {
 
     try{
@@ -26,9 +8,7 @@ export const getComments = async (offset , limit, post) => {
         .from('comments')
         .select('*')
         .eq('post_id', post.id) 
-        .range(offset, limit)         
-         //console.log(error)
-         //revalidatePath('/forum') 
+        .range(offset, limit) 
        return comments
       
       }catch(err){
