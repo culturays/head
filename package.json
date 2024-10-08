@@ -2,11 +2,12 @@
   "name": "culturays",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://culturays.com",
-"scripts": {
-    "dev": "node server.js",
+  
+  "scripts": {
+    "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
     "@emailjs/browser": "^4.3.3",
