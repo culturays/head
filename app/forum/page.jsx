@@ -1,24 +1,10 @@
-import Link from "next/link"
-import { createClient } from ".././../utils/supabase/server";
-import { redirect } from "next/navigation";
-import { revalidatePath, revalidateTag } from "next/cache"; 
-import NewsLetter from "@/components/NewsLetter"; 
-import AuthButton from "@/app/AuthButton"; 
-import SearchItems from "@/components/SearchItems"; 
-import {getNaijaEvents1, getNaijaEvents2 , events1Details, getNaijaEvents3, events3Details } from "@/app/naija-events/eventData/eventContent";
+import { createClient } from ".././../utils/supabase/server"; 
 import { getNaijaTrends1 } from "../api/trends/naija";
-import { getGoogleNewsTitles } from "../api/news/route"; 
-import { netFlixData } from "../naija-wiki/filmsdata";  
-import { processImages } from "@/utils/processImages";
-import { replaceSpecialCharacters } from "@/utils/replacechar";
 import { getPosts } from "./actions/loadPosts";
 import Main from "@/components/forum/Main";  
-import { searchValues } from "../lib/searches/search";
-import { popPeople, getPeople } from "./peopledata";
- //const pxl= await popPeople()
- export const revalidate = 3
- const INITIAL_NUMBER_OF_POSTS = 2
-const MONGOKEY = process.env.MONGODB_;
+import { searchValues } from "../lib/searches/search"; 
+ export const revalidate = 3600
+ const INITIAL_NUMBER_OF_POSTS = 2 
 
 const Forum = async({searchParams, params}) => {
 const supabase = createClient()    
@@ -30,6 +16,7 @@ const forumBdays =async ()=>{
   const { data: bday, error } = await supabase
   .from('bday')
   .select('*')
+  console.log(error)
   if(error)throw new Error('An Error has Occured')
   return bday
 }
