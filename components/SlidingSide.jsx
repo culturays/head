@@ -88,7 +88,7 @@ function formatTime(seconds) {
 </div> 
 
  <div className="px-3 cursor-pointer w-max py-2">    
- <Link href={`/videos/video/${item.slug}`}>
+ <Link href={`/news/video/${item.slug}`}>
  <h2 key={index} className='text-xl font-bold text-gray-700 hover:text-orange-800'>
         {item.title}
     </h2></Link> 
