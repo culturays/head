@@ -4,7 +4,7 @@ import ChangingText from "./Changing"
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretLeft, faCaretUp } from "@fortawesome/free-solid-svg-icons"; 
-// import { newsViews, sideBarNewsItems, sidePanelNewsItems } from "@/app/news/rootpostsHandle";
+import { newsViews, sideBarNewsItems, sidePanelNewsItems } from "@/app/news/rootpostsHandle";
 import { useEffect, useState } from "react";
 
 const TabNav = ({trends}) => {
