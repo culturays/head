@@ -160,7 +160,7 @@ setCategoryPost(currentPosts)
  
 <div className='flex text-gray-400 justify-between items-center p-4 leading-8 '> 
 <Link href={`/creator/${ex.node?.author.node.slug}`}><p>{ ex.node?.author.node.name }</p></Link>  
- <p>{ dateFormatter?.format(Date.parse(ex.node?.date)) }</p> 
+ <p >{ dateFormatter?.format(Date.parse(ex.node?.date)) }</p> 
 </div>  
 </div>
 )}  

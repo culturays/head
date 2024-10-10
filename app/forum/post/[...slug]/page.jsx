@@ -3,11 +3,8 @@ import Post from "@/components/forum/Post";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers"
 import { getChildComments, getComments } from "../../actions/loadComments";
-import { getNaijaTrends1 } from "@/app/api/trends/naija";
-import { searchValues } from "@/app/lib/searches/search";
-import { getRelatedPosts } from "../../actions/loadPosts";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { getNaijaTrends1 } from "@/app/api/trends/naija"; 
+import { getRelatedPosts } from "../../actions/loadPosts"; 
  
 const INITIAL_NUMBER_OF_POSTS =1
 export async function generateMetadata({ params, searchParams }, parent) {

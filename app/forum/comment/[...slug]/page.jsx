@@ -1,8 +1,6 @@
  
 import CommentX from "@/components/forum/Comments";
-import { createClient } from "@/utils/supabase/server"; 
-import { headers } from "next/headers"  
- 
+import { createClient } from "@/utils/supabase/server";  
 import { getNaijaTrends1 } from "@/app/api/trends/naija";
 import { getChildComments } from "../../actions/loadComments";
 import { getRelatedPosts } from "../../actions/loadPosts";

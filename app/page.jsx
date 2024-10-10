@@ -82,11 +82,11 @@ const Home =async ({searchParams}) => {
    } 
  
     try {    
-      //    const supabase = createClient()
-      //   const { data, error } = await supabase 
-      //  .from('events')
-      //  .upsert([grouped])
-      //  .select()
+         const supabase = createClient()
+        const { data, error } = await supabase 
+       .from('events')
+       .upsert([grouped])
+       .select()
                    
      if (error) {
        console.error('Error inserting event:', error);
@@ -132,7 +132,7 @@ const Home =async ({searchParams}) => {
            .upsert(grouped)
            .select();                         
          if (error) {
-          console.error('Error inserting items:', error);
+           console.error('Error inserting items:', error);
          } else {
          // console.log('It ran');
         }
@@ -141,11 +141,10 @@ const Home =async ({searchParams}) => {
      }  
     } 
      
-    const daily_intervals = ()=> {
-      // 7 * 24 * 60 * 60 * 1000 1000 * 60 * 60 * 24
+    const daily_intervals = ()=> { 
       const intervalId = setInterval(()=>{ 
-      // dailyEv3()
-        // dailyWiki(); 
+        dailyEv3()
+         dailyWiki(); 
       },1000 * 60 * 60 * 24); 
       return () => { 
         clearInterval(intervalId);

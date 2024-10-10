@@ -1,4 +1,3 @@
-import { getNaijaTrends1 } from '@/app/api/trends/naija'
 import { trends } from '@/app/news/articlehandle' 
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

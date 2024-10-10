@@ -1,8 +1,7 @@
 import { newchars } from './newCharHandle'
 import { getTop10} from './filmsdata'
 import Main from '@/components/NaijaWiki/Main'   
-import { createClient } from '@/utils/supabase/server' 
-import { processSbImages } from '@/utils/processImages'
+import { createClient } from '@/utils/supabase/server'  
 import { netflixAfrica, netflixDeals, netflixInter, netflixNews, netflixNigNaija, netflixPopular, netflixSocials, netflixStories } from '../netflix-naija/netflix-news'
 import { vids } from '../news/articlehandle'
  
@@ -21,13 +20,11 @@ return { cinema_titles }
  
 }
 const {cinema_titles} =await naija_wiki() 
-const netflix__News = await netflixNews()
-////const trends =await getNaijaTrends1('NG') 
+const netflix__News = await netflixNews() 
 const netflix_africa= await netflixAfrica() 
 const netflix_popular = await netflixPopular()
 const netflix_inter = await netflixInter()
-const netflix__NG_naija = await netflixNigNaija()
-////const trending_data = trends.slice(0,3)
+const netflix__NG_naija = await netflixNigNaija() 
  const news_blog =netflix__News?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
  const africa_blog =netflix_africa?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
  

@@ -22,31 +22,14 @@ export async function getNaijaTrends1(location) {
             } catch (err) {
                 console.error('Error fetching trends data:', err);
             }  
-    //   const submitForm = async () => { 
-    //     const data = new FormData()
-    //     for (const xy of titleObj) {
-    //     Object.entries({title:xy.title }).forEach(([key, value]) => {
-    //     data.append(key, value);
-    //     })
-    //          const supabase = createClient()
-    //     try {
-    //     // const { data:trendData, error } = await supabase
-    //     // .from('trends')
-    //     // .insert([data])
-    //     // .select()
-         
-    //             } catch (error) {
-    //               console.error('Error submitting form:', error);
-    //             }
-    //        } 
-    //     } 
+
     const submitForm = async () => { 
       const data = new FormData()
        for (const xy of titleObj) {  
         Object.entries({title:xy.title }).forEach(([key, value]) => {
         data.append(key, value);
       })
-      //to post to latest postType 'https://content.culturays.com/wp-json/wp/v2/latest'
+       
         try {
           const response = await fetch('https://content.culturays.com/wp-json/wp/v2/trending', { 
             method: "POST",  
@@ -70,6 +53,20 @@ export async function getNaijaTrends1(location) {
    }
   
   }
- //await submitForm() 
+  const daily_intervals = ()=> { 
+    const intervalId = setInterval(()=>{ 
+    submitForm() 
+    },1000 * 60 * 60 * 24); 
+    return () => { 
+      clearInterval(intervalId);
+    };
+  }
+  
+  const stopDailyInterval = daily_intervals();
+  setTimeout(() => {
+    stopDailyInterval(); 
+   }, 30000);    
+
+ 
   return titleObj   
    }

@@ -16,7 +16,6 @@ const forumBdays =async ()=>{
   const { data: bday, error } = await supabase
   .from('bday')
   .select('*')
-  console.log(error)
   if(error)throw new Error('An Error has Occured')
   return bday
 }
