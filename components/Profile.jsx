@@ -144,7 +144,7 @@ localStorage.setItem('font_choice', font_x[i]?.className )
 setShowFont(false) 
 } 
     useEffect(()=>{
-   const font= localStorage.getItem('font_choice')
+   const font= localStorage?.getItem('font_choice')
    setChosenFont(font) 
     }, [])
     
