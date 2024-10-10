@@ -2,14 +2,13 @@ import Search from "@/components/Search";
 import { searchValues } from "../lib/searches/search";
  
 const SearchPage = async ({searchParams}) => {
- const {searchVal}= searchParams  
-const content = await searchValues() 
- 
+const {name}= searchParams  
+const content = await searchValues(name) 
   return (
     <div>  
-    <Search searchVal={searchVal} content={content}/>  
+    <Search name={name} content={content}/>  
     </div>
-  )
+  ) 
 }
 
 export default SearchPage

@@ -1,5 +1,5 @@
  import Business from "@/components/News/Business"
-import { businessBlog } from "../../articlehandle"
+ import { businessBlog } from "../../articlehandle"
 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/business` 
@@ -14,7 +14,7 @@ const BusinessPage =async ({searchParams}) => {
   const business_news = await businessBlog() 
   return (
     <div >
- <Business
+  <Business
 business_news={business_news}
 />  
  

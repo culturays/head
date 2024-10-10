@@ -7,7 +7,7 @@ export const revalidate= 3600
 
 async function topicsFeed(){ 
 const contentData=await contentFeed() 
-const postsData= contentData.filter((xy)=> xy.contentTypeName!== 'article').filter((xy)=> xy.contentTypeName !== 'nollywood').filter((xy)=> xy.contentTypeName !== 'post').filter((xy)=> xy.contentTypeName !== 'netflix-naija').filter((xy)=> xy.contentTypeName === 'award').filter((xy)=> xy.contentTypeName === 'char').filter((xy)=> xy.contentTypeName === 'latest').filter((xy)=> xy.contentTypeName === 'outline')        
+const postsData= contentData?.filter((xy)=> xy.contentTypeName!== 'article')?.filter((xy)=> xy.contentTypeName !== 'nollywood').filter((xy)=> xy.contentTypeName !== 'post')?.filter((xy)=> xy.contentTypeName !== 'netflix-naija')?.filter((xy)=> xy.contentTypeName === 'award').filter((xy)=> xy.contentTypeName === 'char')?.filter((xy)=> xy.contentTypeName === 'latest')?.filter((xy)=> xy.contentTypeName === 'outline')        
 
    const site_url='https://culturays.com';
     const pubDate= new Date()
@@ -29,7 +29,7 @@ const postsData= contentData.filter((xy)=> xy.contentTypeName!== 'article').filt
         },
         author,
       });
-      postsData.map((post) => {
+      postsData?.map((post) => {
       const url = `${site_url}/news${post.contentTypeName}//${post.slug}`;     
        feed.addItem({
          title: post.title,

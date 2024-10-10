@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 import { headers } from "next/headers";
 import SocialNav from "@/components/SocialNav"
 import Header from '@/components/Header';
-import AuthButton from '@/components/AuthButton';
+import AuthButton from '@/app/AuthButton';
 import Nav from '@/components/Nav';
 import SearchItems from '@/components/SearchItems'; 
 import TabNav from '@/components/TabNav';
@@ -192,14 +192,14 @@ const confirmParam= searchParams?.get("confirm")
  <SearchItems />
  <TabNav/>
  <Suspense fallback={<p>Loading...</p>}>  
-    {children}  
+    {children} 
 </Suspense>
   <Latests/> 
 </main>
  <Footer/> 
 </body> 
    <TagManager gtmId={'GTM-W7BMCC9'}/>
-
+ 
 </html>
 )
 }

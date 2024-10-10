@@ -1,4 +1,3 @@
- 
 import ComingToNetflixNaija from "@/components/NetflixNaija/NetflixNaijaComing/ComingToNetflixNaija"
 import { netflixNews, newsbyComingtoCategory } from "../netflix-news"  
  

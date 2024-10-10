@@ -1,7 +1,7 @@
  
 import { headers } from "next/headers"
 import SideBar from "@/components/Side"
-import { news_details_all } from "../articlehandle"
+ import { news_details_all } from "../articlehandle"
 import ArticleDetail from "@/components/News/ArticleDetail"
 const CULTURAYS_CONTENT_WP = process.env.CULTURAYS_WP
 
@@ -20,17 +20,17 @@ const slug_category = params.slug[0]
 
 const ArticleDetailPage = async ({params}) => {
 const slug = params.slug[1]
-const slug_category = params.slug[0]
-  const news_detail= await news_details_all(`${CULTURAYS_CONTENT_WP}/${slug_category}/${slug}/`) 
+ const slug_category = params.slug[0]
+ const news_detail= await news_details_all(`${CULTURAYS_CONTENT_WP}/${slug_category}/${slug}/`) 
   
   return ( 
     <div className="bg-gray-50"> 
     <div className="lg:flex justify-center m-auto px-4 bg-white" style={{maxWidth:'1700px' }}>
-      <ArticleDetail
+       <ArticleDetail
       news_detail={news_detail }   
       /> 
       <div> 
-      <SideBar/> 
+       <SideBar/> 
       </div>
     </div></div>
   ) 

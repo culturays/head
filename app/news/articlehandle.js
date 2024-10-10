@@ -1,64 +1,12 @@
 import { agent, fetchWithRetry } from "@/utils/fetchwithretry";
  
- export async function category (slug) { 
-// const wprest = await fetch('https://content.culturays.com/graphql',{
-// method: 'POST',
-// headers:{
-// 'Content-Type':'application/json'
-// },
-// body: JSON.stringify({
-// query:`
-// query POSTCATEGORY($id: ID!, $idType: CategoryIdType) {
-// category(id: $id, idType:$idType){
-// id
-// name
-// slug
-// posts {
-// edges {
-// node {
-// id
-// postId
-// slug
-// title 
-// date
-// featuredImage{
-// node{
-//   sourceUrl
-//   altText
-// }
-// }
-// categories {
-// nodes {
-//   id
-//   name
-// slug
-// }
-// }
-// }
-// }
-// }
-// }
-// }   
-// ` ,
-// variables:{
-// id: slug,
-// idType: 'SLUG' 
-// }
-
-// })
-
-// })
-// if( wprest.status!==200)throw new Error( wprest.status)
-// const itemRes = await wprest.json()
-// return itemRes
-}
 
 export async function businessBlog(req, res){
   try{
     const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       timeout: 5000 ,
-      agent: agent,
+      agent: agent, 
       headers:{ 
       'Content-Type':'application/json', 
       },
@@ -132,10 +80,10 @@ export async function businessBlog(req, res){
       }).then(response =>  response)  
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-       const response = wprest.data.businesses.nodes
+       const response = wprest?.data.businesses.nodes
        return response
   } catch (error) {
-     console.error('Error fetching data:', error);
+   throw new Error('Error fetching data:', error);
   
    }
  
@@ -221,12 +169,12 @@ export async function techBlog(req, res){
       }).then(response => response) 
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-        const response = wprest.data.technologies.nodes
+        const response = wprest?.data.technologies.nodes
         
        return response  
  
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:', error);
   
    }
  
@@ -312,10 +260,10 @@ export async function economyBlog(req, res){
       }).then(response =>  response)  
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-       const response = wprest.data.economies.nodes
+       const response = wprest?.data.economies.nodes
        return response
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:', error);
   
    }
  
@@ -376,10 +324,10 @@ export async function awardsBlog(req, res){
       }).then(response =>response)
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-       const response = wprest.data.awards.nodes
+       const response = wprest?.data.awards.nodes
        return response
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:', error);
   
    }
  
@@ -466,12 +414,12 @@ export async function healthBlog(req, res){
       }).then(response => response) 
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-        const response = wprest.data.healths.nodes
+        const response = wprest?.data.healths.nodes
         
        return response  
  
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:', error);
   
    }
  
@@ -554,12 +502,12 @@ export async function environmentBlog(req, res){
       }).then(response => response) 
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-        const response = wprest.data.environments.nodes
+        const response = wprest?.data.environments.nodes
         
        return response  
  
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:', error);
   
    }
  
@@ -643,11 +591,11 @@ export async function societyBlog(req, res){
       }).then(response => response) 
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-        const response = wprest.data.societies.nodes        
+        const response = wprest?.data.societies.nodes        
        return response  
  
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:', error);
   
    }
  
@@ -706,14 +654,14 @@ export async function nollywoodBlog(req, res){
        `  
       })
       
-      }).then(response =>response) 
+      }).then(response => response) 
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-       const response = wprest.data.nollywoods.nodes        
+       const response = wprest?.data.nollywoods.nodes        
        return response  
  
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:');
   
    }
  
@@ -776,11 +724,11 @@ export async function trends(notIn){
       }).then(response => response) 
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-       const response = wprest.data.trends.nodes 
+       const response = wprest?.data.trends.nodes 
        return response 
  
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:', error);
   
    }
  
@@ -898,11 +846,11 @@ idType: 'SLUG'
 }).then(response =>  response) 
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-      const response = wprest.data.trending 
+      const response = wprest?.data.trending 
        return response 
  
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:', error);
   
    }
  
@@ -988,11 +936,11 @@ export async function similarTrending(notIn){
  }).then(response =>  response) 
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-       const response = wprest.data.trendingCategories.nodes 
+       const response = wprest?.data.trendingCategories.nodes 
         return response 
   
    } catch (error) {
-      console.error('Error fetching data:', error);
+    throw new Error('Error fetching data:', error);
    
     }
     
@@ -1480,16 +1428,17 @@ idType: 'URI'
 }).then(response =>  response)    
        .then(data =>data) 
        .catch(error => console.error('Error:', error)); 
-      const response = wprest.data.contentNode
+      const response = wprest?.data.contentNode
       return response
   } catch (error) {
-     console.error('Error fetching data:', error); 
+    throw new Error('Error fetching data:'); 
   
    }
   
 }
 export async function news__Articles(){
-  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+  try{ 
+ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
 method: 'POST',
 timeout: 5000 ,
 agent: agent,
@@ -1592,8 +1541,15 @@ title
         }).then(response => response)   
         .then(data =>data) 
         .catch(error => console.error('Error:', error)) 
-        const response = wprest.data.articlesCategories.nodes
-      return response 
+        const response = wprest?.data.articlesCategories.nodes
+      return response
+
+} catch (error) {
+  throw new Error('Error fetching data:'); 
+
+ }
+
+  
 }
 
  export async function viddetails(slug){
@@ -1696,10 +1652,11 @@ idType: 'SLUG'
 }).then(response =>  response)   
        .then(data =>data) 
        .catch(error => console.error('Error:', error)); 
-     const response = wprest.data.video
+     const response = wprest?.data.video
        return response
   } catch (error) {
-     console.error('Error fetching data:', error);
+    throw new Error('Error fetching data')
+    // console.error('Error fetching data:', error);
   
    }
   
@@ -1774,11 +1731,12 @@ export const vids = async()=>{
     .then(response =>  response)   
     .then(data =>data) 
     .catch(error => console.error('Error:', error));
-    const response = wprest.data.videos.nodes 
+    const response = wprest?.data.videos.nodes 
     return response 
     
   } catch (error) {
-    console.error('Error fetching data:', error);
+    throw new Error('Error fetching data')
+    //console.error('Error fetching data:', error);
  
   }
   }
@@ -1980,10 +1938,11 @@ export const vids = async()=>{
       }).then(response => response)   
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-      const response = wprest.data.contentNodes.nodes 
+      const response = wprest?.data.contentNodes.nodes 
       return response
     } catch (error) {
-      console.error('Error fetching data:', error);
+   throw new Error('Error fetching data')
+   //console.error('Error fetching data:', error);
    
     }
     }

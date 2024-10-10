@@ -4,7 +4,7 @@ import ChangingText from "./Changing"
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretLeft, faCaretUp } from "@fortawesome/free-solid-svg-icons"; 
-import { newsViews, sideBarNewsItems, sidePanelNewsItems } from "@/app/news/rootpostsHandle";
+// import { newsViews, sideBarNewsItems, sidePanelNewsItems } from "@/app/news/rootpostsHandle";
 import { useEffect, useState } from "react";
 
 const TabNav = ({trends}) => {
@@ -21,19 +21,19 @@ const [closeQuestion, setCloseQuestion]= useState(false)
  
 //  const [other_content, setOtherContent]= useState([]) 
 //   const [followUps, setFollowUps]= useState([])
-   const get_other_content= async ()=>{
-      // const otherContent= await sideBarNews()
-      // const follow_up = await sideBarNews()
-      const sideNewsursor= await newsViews()    
-      const prev_cursor = sideNewsursor.map((xy)=> xy.cursor) 
-      const sidebar_news=await sidePanelNewsItems(prev_cursor) 
-      setSideBarData(sidebar_news)
-      // setFollowUps([...follow_up.slice(0,10)] )
-      // setOtherContent([...otherContent.slice(0,5)]) 
-    }
-    useEffect(()=> {
-      get_other_content()
-    },[sideBarData])  
+  //  const get_other_content= async ()=>{
+  //     // const otherContent= await sideBarNews()
+  //     // const follow_up = await sideBarNews()
+  //     const sideNewsursor= await newsViews()    
+  //     const prev_cursor = sideNewsursor?.map((xy)=> xy.cursor) 
+  //     const sidebar_news=await sidePanelNewsItems(prev_cursor) 
+  //     setSideBarData(sidebar_news)
+  //     // setFollowUps([...follow_up.slice(0,10)] )
+  //     // setOtherContent([...otherContent.slice(0,5)]) 
+  //   }
+  //   useEffect(()=> {
+  //     get_other_content()
+  //   },[sideBarData])  
   
     // const pastNews = sideBarData.filter((ex)=> ex.newsNewsGroup.passageNewsArticles !== null).map((xy)=> xy.newsNewsGroup.passageNewsArticles.nodes).flat() 
  
@@ -85,7 +85,7 @@ const [closeQuestion, setCloseQuestion]= useState(false)
     
   return (
   <div className="">   
-   <div className={closeQuestion?'hidden': "text-8xl text-orange-600 mx-24 -mt-10 cursor-pointer hover:text-gray-400"} onClick={()=>setCloseQuestion(prev=> !prev)}> 
+   {/* <div className={closeQuestion?'hidden': "text-8xl text-orange-600 mx-24 -mt-10 cursor-pointer hover:text-gray-400"} onClick={()=>setCloseQuestion(prev=> !prev)}> 
   <FontAwesomeIcon icon={faCaretDown} />  
  </div>
    <div className={closeQuestion?'fixed text-6xl w-max h-8 text-orange-600 cursor-pointer bottom-0 top-0 left-0': "hidden"} onClick={()=>setCloseQuestion(prev=> !prev)}> 
@@ -183,7 +183,7 @@ height={675}
      </div> 
      </div>  
       </div> 
-}  
+}   */}
  
  </div>
   )

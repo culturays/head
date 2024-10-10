@@ -3,9 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";   
 import Profile from "@/components/Profile";
 import { getProfile } from "../profileActions";
-const INITIAL_NUMBER_OF_POSTS = 2
-  
-
+const INITIAL_NUMBER_OF_POSTS = 2 
 export async function generateMetadata({ params, searchParams }, parent) {
 
     const supabase = createClient();  

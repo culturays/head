@@ -20,7 +20,7 @@ function Culturayscreator() {
  
   return (
 <div> 
-<Creator />  
+  <Creator /> 
 </div> 
   )
 }

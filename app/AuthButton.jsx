@@ -5,10 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";  
 import { headers, cookies } from "next/headers";
-import ConfirmModal from "./ConfirmModal"; 
+import ConfirmModal from "../components/ConfirmModal";
+
 export default async function AuthButton({confirmParam, profile}) {
 const supabase = createClient();
- const {
+ const { 
     data: { user },
   } = await supabase.auth.getUser(); 
 const headersList = headers();
@@ -24,7 +25,6 @@ const pathname = headersList.get('referer') || ""
 <div className="flex flex-col items-center pb-2 leading-none"> 
 <div className="flex items-center"> 
 <Link href={`/profile/${user.id}`}><p className="m-1 text-lg hover:scale-105">Hey, {user.email}!</p></Link>  
- 
 </div>
 
 <form className="m-1 flex m-auto justify-center">  
@@ -49,7 +49,7 @@ const pathname = headersList.get('referer') || ""
  </button> 
 </form>
 {confirmParam==='logout?'&& !confirmParam?.startsWith('yes') 
-&&  <ConfirmModal/> } 
+&&  <ConfirmModal/>  } 
 
 </div>
 )  :  (

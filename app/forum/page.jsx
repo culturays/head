@@ -3,7 +3,7 @@ import { createClient } from ".././../utils/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath, revalidateTag } from "next/cache"; 
 import NewsLetter from "@/components/NewsLetter"; 
-import AuthButton from "@/components/AuthButton"; 
+import AuthButton from "@/app/AuthButton"; 
 import SearchItems from "@/components/SearchItems"; 
 import {getNaijaEvents1, getNaijaEvents2 , events1Details, getNaijaEvents3, events3Details } from "@/app/naija-events/eventData/eventContent";
 import { getNaijaTrends1 } from "../api/trends/naija";
@@ -34,11 +34,11 @@ const forumBdays =async ()=>{
   return bday
 }
 
- const bday =await forumBdays()
+const bday =await forumBdays()
 const peopleEls = bday  
 const peopleItems =JSON.parse(JSON.stringify(peopleEls))
 const postsItems =async()=>{ 
-  const initialPosts = await getPosts(0, INITIAL_NUMBER_OF_POSTS)  
+const initialPosts = await getPosts(0, INITIAL_NUMBER_OF_POSTS)  
   return initialPosts  
 } 
 const query = searchParams?.name;

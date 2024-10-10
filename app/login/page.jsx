@@ -1,12 +1,10 @@
 import LoginForm from "./form"
 import { redirect } from "next/navigation"
 import { headers } from "next/headers";
-import { createClient } from "@/utils/supabase/server";  
-import Link from "next/link";
-import { compare, hash } from "bcrypt"
+import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache"; 
-import { Suspense } from "react";
 const Login =async ({searchParams} ) => {
+
   const getURL = () => {
     let url = 
       process?.env?.NEXT_PUBLIC_BASE_URL ??  
@@ -85,10 +83,10 @@ const handleOauthLogin = async () => {
 };
 
 
-  return ( 
+return (
 <div className='m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center'> 
-  <div className=''> 
-<div>
+  <div> 
+{/* <div>
   <Link 
   href='\' 
 className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground text-white bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
@@ -109,14 +107,16 @@ className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foregrou
 </svg>{" "}
 Back 
 </Link>
-</div> 
+</div>  */}
+
 <LoginForm  
 signUp={signUp} 
 signIn={signIn} 
 searchParams={searchParams}
 handleOauthLogin={handleOauthLogin}
- /> 
-</div>  
+ />
+
+</div>
 </div>
 
 )

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { dateFormatter } from '@/utils/dateFormat'
 import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
-import { fetchNewPosts } from '@/app/news/rootpostsHandle'
+// import { fetchNewPosts } from '@/app/news/rootpostsHandle'
 import moment from 'moment'
 const replaceHTMLTags=(string)=>{
   const regex = /(<([^>]+)>)/gi;
@@ -111,7 +111,7 @@ setCategoryPost(currentPosts)
 
   return ( 
 <div>  
- <MainSlider data={latestPosts} interval={5000} /> 
+   <MainSlider data={latestPosts} interval={5000} /> 
 <div className='lg:flex justify-center xl:px-4 ' > 
 <div className='py-20 md:px-1 m-auto' > 
 <div className='py-5'>
@@ -127,7 +127,7 @@ setCategoryPost(currentPosts)
            onClick={changeSet} >
       All
     </li> 
-    {post_categories.map((xy, idx) =>  
+    {post_categories?.map((xy, idx) =>  
       <li 
         className={actIdx === idx ? 
           'font-bold text-base cursor-pointer text-gray-500 mx-2 decoration-cyan-400 underline decoration-4 hover:text-gray-800' : 
@@ -145,7 +145,7 @@ setCategoryPost(currentPosts)
 
   <div className='lg:flex justify-center max-w-7xl m-auto '> 
 <div className='px-2 m-auto my-8 xs:max-w-md lg:max-w-xl '> 
- {categoryPost.slice(0,1).map((ex, i)=>
+ {categoryPost?.slice(0,1).map((ex, i)=>
 <div className='shadow-2xl' key={ex.node.title + ' ' + Math.random()}>
   <div className='h-3/4'> 
   <Image 
@@ -168,7 +168,7 @@ setCategoryPost(currentPosts)
 </div>
  
   <div className='max-w-md my-8 m-auto xl:max-w-xl'>
-  {categoryPost.slice(1).map((ex)=>
+  {categoryPost?.slice(1).map((ex)=>
 <div className='shadow flex my-6 first:md:my-0 first:md:py-0 md:pb-4' key={ex.node.title + ' ' + Math.random()}>
   <div className='w-1/4 mx-2 py-6 md:py-0'> 
   <Image
@@ -206,7 +206,7 @@ setCategoryPost(currentPosts)
  <div className="bg-white w-full my-8">   
  <div className="xs:grid grid-cols-2 justify-center xs:items-start items-center xl:grid-cols-4 max-w-2xl lg:max-w-max m-auto py-8 "> 
   <div className='max-w-sm m-auto  border-r xs:m-0'>   
- { posts_notIn_newsPosts[0]?.nodes.slice(0,5).map((it, index)=> 
+ { posts_notIn_newsPosts?.length>0&& posts_notIn_newsPosts[0]?.nodes.slice(0,5).map((it, index)=> 
  <div key={index} className="px-4"> 
  { index === 0 &&
 <div className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3 '> 
@@ -237,7 +237,7 @@ className='rounded-xl h-44 object-cover'
   
 </div>   
  <div className='max-w-sm m-auto border-r xs:m-0'>   
- {posts_notIn_newsPosts[1]?.nodes.slice(0,5).map((it, index)=> 
+ { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[1]?.nodes.slice(0,5).map((it, index)=> 
  <div key={index} className="px-4"> 
  { index === 0 &&
 <div className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3 '> 
@@ -269,7 +269,7 @@ className='rounded-xl h-44 object-cover'
 </div> 
  
 <div className='max-w-sm m-auto xs:m-0 border-r'>   
- {posts_notIn_newsPosts[2]?.nodes.slice(0,5).map((it, index)=> 
+ { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[2]?.nodes.slice(0,5).map((it, index)=> 
  <div key={index} className="px-4"> 
  { index === 0 &&
 <div className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3 '> 
@@ -301,7 +301,7 @@ className='rounded-xl h-44 object-cover'
 </div>  
 
  <div className='max-w-sm m-auto xs:m-0 border-r'>   
- {posts_notIn_newsPosts[3]?.nodes.slice(0,5).map((it, index)=> 
+ { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[3]?.nodes.slice(0,5).map((it, index)=> 
  <div key={index} className="px-4"> 
  { index === 0 &&
 <div className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3 '> 
@@ -333,7 +333,7 @@ className='rounded-xl h-44 object-cover'
 </div>  
 </div> 
 
-</div> 
+</div>   
 </div>  
   )
 }

@@ -3,11 +3,10 @@ import fs from 'fs';
 import { Feed } from "feed";
 import { contentFeed } from '@/app/news/articlehandle'; 
 import { netflixNews } from '@/app/netflix-naija/netflix-news';
-export const revalidate= 3600
-
+export const revalidate= 3600 
 async function newsFeed(){ 
 const contentData=await contentFeed()
-const postsData= contentData.filter((xy)=> xy.contentTypeName === 'post') 
+const postsData= contentData?.filter((xy)=> xy.contentTypeName === 'post') 
    const site_url='https://culturays.com';
     const pubDate= new Date()
     const author = 'Christina Ngene'  
@@ -28,7 +27,7 @@ const postsData= contentData.filter((xy)=> xy.contentTypeName === 'post')
         },
         author,
       });
-      postsData.map((post) => {
+      postsData?.map((post) => {
       const url = `${site_url}/news/topic/${post.slug}`;     
        feed.addItem({
          title: post.title,

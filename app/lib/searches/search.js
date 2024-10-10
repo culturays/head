@@ -1,11 +1,10 @@
 "use server"
 import { createClient } from "@/utils/supabase/server";
 import { agent, fetchWithRetry } from "@/utils/fetchwithretry"; 
-export const searchValues = async (name) => { 
-    const searches=[] 
+export const searchValues = async (name) => {   
     const supabase = createClient()
     const { data:posts, error } = await supabase
-    .from('posts')
+    .from('posts') 
     .select("*")
     .filter('title', 'ilike', `%${name}%`);
     
@@ -25,9 +24,9 @@ export const searchValues = async (name) => {
     throw new Error(eventErr.message)
  
     }
-    
+     
    try{
-    
+  
         const post_response = await fetchWithRetry('https://content.culturays.com/graphql', {
           method: 'POST',
           headers: {
@@ -35,149 +34,269 @@ export const searchValues = async (name) => {
           },
           body: JSON.stringify({
             query: `
-              {
-                posts(where: { search: "${name}" }) {   
-                  edges {
-                    node {
-                      id
-                      title
-                      content
-                      excerpt
-                      date
-                      author {
-                        node {
-                          name
-                        }
-                      }
-                      categories {
-                        edges {
-                          node {
-                            name
-                          }
-                        }
-                      }
-                      tags {
-                        edges {
-                          node {
-                            name
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
+            query SEARCHES  {
+     contentNodes(where: { search: "${name}"}) {
+     nodes {
+      contentTypeName
+      ... on Post {
+        id
+        title
+        slug
+        tags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Video {
+         id
+        title
+        slug
+        contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Trending {
+         id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Tech {
+        id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Society {
+        id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Nollywood {
+       id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on NetflixNaijaPost {
+       id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+            netflixCategories(where: {name: "News"}) {
+          nodes {
+            netflixNaijaPosts {
+              nodes {
+                 id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
               }
-            `
-          })
+            }
+          }
+        }
+      }
+      ... on Health {
+        id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Environment {
+      id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Economy {
+     id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Char {
+        id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Business {
+        id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Award {
+         id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+      ... on Article {
+         id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+    }
+     
+    }
+  }
+   `
+     })
           
         }).then(response => response) 
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-         const post_res = post_response.data.posts.edges.map((xy)=> xy.node)
-
-        const char_response = await fetchWithRetry('https://content.culturays.com/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            query: `
-              {
-                chars(where: { search: "${name}" }) {   
-                  edges {
-                    node {
-                      id
-                      title
-                      content
-                      excerpt
-                      date
-                      author {
-                        node {
-                          name
-                        }
-                      }
-                      charCategories {
-                        edges {
-                          node {
-                            name
-                          }
-                        }
-                      }
-                      contentTags {
-                        edges {
-                          node {
-                            name
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            `
-          })
-        }).then(response =>   response)   
-        .then(data =>data) 
-        .catch(error => console.error('Error:', error));
-        const char_res = char_response.data.chars.edges.map((xy)=> xy.node)
-
-        const vid_response = await fetchWithRetry('https://content.culturays.com/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            query: `
-              {
-                culturaysVideos(where: { search: "${name}" }) {   
-                  edges {
-                    node {
-                      id
-                      title
-                      content
-                      excerpt
-                      date
-                      author {
-                        node {
-                          name
-                        }
-                      }
-                      culturaysVideoCategories {
-                        edges {
-                          node {
-                            name
-                          }
-                        }
-                      }
-                      contentTags {
-                        edges {
-                          node {
-                            name
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            `
-          })
-        }) .then(response =>  response)  
-        .then(data =>data) 
-        .catch(error => console.error('Error:', error));
-         const vid_res = vid_response.data.culturaysVideos.edges.map((xy)=> xy.node)
-//
-// const char_result =await char_response.json(); 
-// if(char_result.errors)throw new Error (char_result.errors[0].message) 
-//   const wp_chars=char_result.data.chars.edges.map((ef)=> ef.node).flat() 
- 
-searches.push(vid_res )
-searches.push(post_res )
-searches.push(char_res)
- searches.push(posts)
- searches.push(events) 
-    return searches.flat()
- 
+        const response = post_response.data.contentNodes.nodes 
+        return response 
   } catch (error) {
     console.error('Error fetching search values:', error); 
     if (error.message.includes('SocketError')) {

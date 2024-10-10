@@ -22,7 +22,7 @@ const TrendingDetails =async ({params}) => {
 
   return (
     <div>
-         <Trending
+          <Trending
         trends={trends_detail} 
         trends_categories={trends_categories}
         related_to_trend={related_to_trend}

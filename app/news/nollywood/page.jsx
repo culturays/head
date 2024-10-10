@@ -10,13 +10,13 @@ export const metadata = {
    title:"Culturays | Nollywood",   
 }; 
 const NollywoodPage =async () => {
-const nollywood_news = await nollywoodBlog()
+ const nollywood_news = await nollywoodBlog()
  
   return (
     <div>      
-    <Nollywood
+  <Nollywood
      nollywood_news={nollywood_news}
-     />   
+  />  
     </div>
   )
 } 

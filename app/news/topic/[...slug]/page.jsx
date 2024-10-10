@@ -18,7 +18,7 @@ const slug = params.slug[0]
  
   return (
     <div>
-         <NewsDetail 
+      <NewsDetail 
       post={news_detail}      
       />  
     </div>

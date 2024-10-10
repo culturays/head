@@ -1,4 +1,4 @@
-import AuthButton from "@/components/AuthButton";
+import AuthButton from "@/app/AuthButton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header"; 
 import Latests from "@/components/Latests";

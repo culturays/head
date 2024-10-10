@@ -9,13 +9,13 @@ export const metadata = {
    title:"Culturays | Videos",   
 }; 
 const VideosPage = async () => {
-  const content_videos = await vids(); 
+const content_videos = await vids(); 
   
    return ( 
     <> 
-  <Videos
+<Videos
   content_videos={content_videos}
-  />   
+  />  
  
    </>
     )

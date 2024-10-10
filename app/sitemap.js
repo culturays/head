@@ -1,4 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
 import { netflixNews } from "./netflix-naija/netflix-news";
 import { contentFeed } from "./news/articlehandle";
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL

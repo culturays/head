@@ -5,13 +5,12 @@ import Image from "next/image"
 import Link from "next/link"
 import { dateFormatter } from "@/utils/dateFormat"
 
-
 const SideBar = async() => {
     const newsViewCursors = await newsViews()
-    const prev_newsView_cursors = newsViewCursors.map((xy)=> xy.cursor)  
+    const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)  
     const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
-    const prev_sidepanel_cursors = sidePanelCursors.map((xy)=> xy.cursor)
-    const start_cursor_sidebar = prev_sidepanel_cursors.concat(prev_newsView_cursors)
+    const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
+    const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
     const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
 
     const naija_wiki =async ()=>{  
@@ -31,7 +30,7 @@ const SideBar = async() => {
 <NewsLetter/>
 </div> 
  <div className='m-auto max-w-md lg:m-0 '>
- {sidebarItems.slice(1).map((ex)=>
+ {sidebarItems?.slice(1).map((ex)=>
 <div className='shadow flex my-3' key={ex.node.title + ' ' + Math.random()}>
  <div className='w-1/4 lg:w-1/2 mx-1 py-6 '> 
  <Image
@@ -56,7 +55,7 @@ const SideBar = async() => {
 
 </div>
  <div className='max-w-sm lg:max-w-md py-6 m-auto border-b border-t border-yellow-600 border-b-4 border-t-4 lg:m-0 xl:max-w-sm'> 
-{sidebarItems.slice(0, 1).map((ex, i)=>
+{sidebarItems?.slice(0, 1).map((ex, i)=>
 <div key={ex.node.title + ' ' + Math.random()}> 
 <div> 
  <Image

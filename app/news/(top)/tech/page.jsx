@@ -1,5 +1,5 @@
 import Tech from "@/components/News/Tech";
-import { techBlog } from "../../articlehandle"  
+ import { techBlog } from "../../articlehandle" 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/tech` 
   : "http://localhost:3000/tech";
@@ -10,14 +10,13 @@ export const metadata = {
 }; 
 
 const TechPage =async ({searchParams}) => { 
-  const tech_news = await techBlog() 
+ const tech_news = await techBlog() 
   return (
     <div >  
-<Tech
+  <Tech
 tech_news={tech_news}
-/>
-   
-    </div>
+/>  
+ </div>
   )
 }
 

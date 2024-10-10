@@ -27,7 +27,7 @@ export async function usersList(req, res){
         }).then(response => response)   
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = wprest.data.users.edges
+        const response = wprest?.data.users.edges
         return response
 }
 

@@ -420,7 +420,6 @@ className='overflow-hidden first:border-r first:md:border-r-0 first:md:border-b 
 <div
 key={index}
 className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3'>
-
 <div className='my-3 sm:my-0 md:px-1 '>
 <Link href={`/news/article/${it.slug}`}><h3 className='overflow-hidden text-ellipsis hover:text-gray-500 text-base md:my-0 md:py-0 font-bold 'style={{ display: '-webkit-box', WebkitLineClamp:2, WebkitBoxOrient: 'vertical' }}>{it.title}</h3></Link>
 <Link href={`/topic/${it.contentTags.nodes[0].slug}/${it.contentTags.nodes[0].id}`}><h4 className='md:text-end py-2 md:px-0 underline hover:text-gray-500'>{it.contentTags.nodes[0].name }</h4></Link>
@@ -472,11 +471,11 @@ className='rounded-xl object-cover'
 
 </div>
  <div className='max-w-sm m-auto border-r xs:m-0'>
- { news9.slice(0,5).map((it, index)=>
+ { news9.slice(0,5).map((it, index)=> 
  <div key={index} className="px-4">
  { index === 0 &&
 <div className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3 '>
-     <Image
+  <Image
 className='rounded-xl object-cover'
   width={1200}
   height={675}

@@ -113,7 +113,7 @@ export async function newsbyNewOnCategory(notIn){
       }).then(response => response)
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-      const response = wprest.data.netflixCategories.edges
+      const response = wprest?.data.netflixCategories.edges
       return response
 }
 
@@ -287,7 +287,7 @@ export async function newsbyComingtoCategory(notIn){
       }).then(response =>  response)  
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-      const response = wprest.data.netflixCategories.edges
+      const response = wprest?.data.netflixCategories.edges
       return response 
 } 
  
@@ -541,7 +541,7 @@ export async function addedOnCategory(req, res){
       .then(response => response)  
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-      const response = wprest.data.netflixCategories.edges
+      const response = wprest?.data.netflixCategories.edges
      return response
 }
 
@@ -599,7 +599,7 @@ export async function addedOnCategory(req, res){
     })}).then(response => response)  
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-      const response = wprest.data.netflixNaijaPosts.edges
+      const response = wprest?.data.netflixNaijaPosts.edges
      return response
 
  }
@@ -808,7 +808,7 @@ export async function netflixDetails(slug){
   }).then(response =>  response)   
     .then(data =>data) 
     .catch(error => console.error('Error:', error));
-const response = wprest.data.netflixNaijaPost
+const response = wprest?.data.netflixNaijaPost
 return response
     } catch (error) {
        console.error('Error fetching data:', error); 
@@ -849,7 +849,7 @@ return response
         }).then(response =>  response)   
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = wprest.data.netflixCategories.edges
+        const response = wprest?.data.netflixCategories.edges
        return response
   }
 
@@ -902,7 +902,7 @@ return response
       }).then(response => response)  
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-       const response = wprest.data.netflixCategories.edges
+       const response = wprest?.data.netflixCategories.edges
        return response
   }
 
@@ -971,7 +971,7 @@ return response
       }).then(response => response) 
       .then(data =>data) 
       .catch(error => console.error('Error:', error));     
-      const response = wprest.data.netflixCategories.edges
+      const response = wprest?.data.netflixCategories.edges
       return response
   }
  
@@ -1041,7 +1041,7 @@ return response
       }).then(response => response )  
       .then(data =>data) 
       .catch(error => console.error('Error:', error));     
-      const response = wprest.data.netflixCategories.edges
+      const response = wprest?.data.netflixCategories.edges
       return response
   }
  
@@ -1111,7 +1111,7 @@ return response
       }).then(response =>  response)   
       .then(data =>data) 
       .catch(error => console.error('Error:', error));     
-      const response = wprest.data.netflixCategories.edges
+      const response = wprest?.data.netflixCategories.edges
       return response
   }
  
@@ -1287,7 +1287,7 @@ return response
   }).then(response => response)   
     .then(data =>data) 
     .catch(error => console.error('Error:', error));
-    const response = wprest.data.netflixNaija 
+    const response = wprest?.data.netflixNaija 
     return response
     } catch (error) {
        console.error('Error fetching data:', error); 
@@ -1365,7 +1365,7 @@ return response
       }).then(response => response )  
       .then(data =>data) 
       .catch(error => console.error('Error:', error));     
-     const response= wprest.data.netflixCategories
+     const response= wprest?.data.netflixCategories
      return response
   }
 
@@ -1441,7 +1441,7 @@ return response
       }).then(response =>  response)  
       .then(data =>data) 
       .catch(error => console.error('Error:', error));     
-      const response= wprest.data.netflixCategories 
+      const response= wprest?.data.netflixCategories 
       return response
   }
 
@@ -1516,7 +1516,7 @@ return response
       }).then(response => response)   
       .then(data =>data) 
       .catch(error => console.error('Error:', error));     
-    const res_naija = wp_naija.data.netflixCategories.edges
+    const res_naija = wp_naija?.data.netflixCategories.edges
     return res_naija
   }
 
@@ -1591,7 +1591,7 @@ intro
     }).then(response => response)   
     .then(data =>data) 
     .catch(error => console.error('Error:', error));     
-  const res_naija = wp_naija.data.netflixCategories.edges
+  const res_naija = wp_naija?.data.netflixCategories.edges
   return res_naija
 }
 

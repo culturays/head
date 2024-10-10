@@ -5,7 +5,7 @@ import { contentFeed } from '@/app/news/articlehandle';
 export const revalidate= 3600
 async function articleFeed(){ 
     const contentData=await contentFeed()
-    const articleData= contentData.filter((xy)=> xy.contentTypeName === 'article')  
+    const articleData= contentData?.filter((xy)=> xy.contentTypeName === 'article')  
     const site_url='https://culturays.com';
     const pubDate= new Date()
     const author = 'Christina Ngene'  
@@ -27,7 +27,7 @@ async function articleFeed(){
         author,
       });
      
-     articleData.map((post) => { 
+     articleData?.map((post) => { 
          const url = `${site_url}/news/article/${post.slug}`;     
          feed.addItem({
            title: post.title,

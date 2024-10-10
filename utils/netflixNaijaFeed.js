@@ -7,7 +7,7 @@ export const revalidate= 3600
 
 async function netflixNewsFeed(){
     const netflix__News = await netflixNews() 
-    const netflixFeed =netflix__News.map((ex)=> ex.node.netflixNaijaPosts.nodes).flat()  
+    const netflixFeed =netflix__News?.map((ex)=> ex.node.netflixNaijaPosts.nodes).flat()  
    const site_url='https://culturays.com';
     const pubDate= new Date()
     const author = 'Christina Ngene'  
@@ -28,7 +28,7 @@ async function netflixNewsFeed(){
         },
         author,
       });
-     netflixFeed.map((post) => {
+     netflixFeed?.map((post) => {
       const url = `${site_url}/netflix-naija/news/${post.slug}`;     
        feed.addItem({
          title: post.title,

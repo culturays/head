@@ -41,9 +41,8 @@ if (data.name === 'password'&&!password_pattern.test(data.value.trim())) {
   const newErrors = validateForm(e.currentTarget)
   setErrors(newErrors); 
  
-  } 
-  //AD234!@fgfhghw usertx usertx@mail.com
-//AD234!@fgfhghg ngenetc
+  }
+  
 return (  
 <> 
 <form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative" noValidate>
@@ -137,14 +136,11 @@ Create Account
 {searchParams.message}
 </p>
 )} 
- 
-  <hr />
+ <hr />
   <small className="text-white text-center cursor-pointer text-lg">or </small> 
- <button type="submit" formAction={handleOauthLogin} className="bg-tranparent"><p className="text-white cursor-pointer p-2 text-lg bg-gray-700 p-2"> Sign in with Google</p></button>
- </form>
- 
- <Link href='/forgotten-password'><p className="p-4 my-8 text-white cursor-pointer text-center bg-gray-600 text-lg">Forgot Password?</p></Link> 
- 
+ <button type="submit" formAction={handleOauthLogin} className="bg-tranparent"><p className="text-white cursor-pointer p-2 text-lg bg-gray-700 p-2">Sign in with Google</p></button>
+ </form> 
+ <Link href='/forgotten-password'><p className="p-4 my-8 text-white cursor-pointer text-center bg-gray-600 text-lg">Forgot Password?</p></Link>  
   </> )
 }
  

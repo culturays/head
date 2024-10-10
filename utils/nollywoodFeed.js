@@ -5,7 +5,7 @@ export const revalidate= 3600
 
 async function nollywoodFeed(){
 const contentData=await contentFeed()
-const nollywood_news = contentData.filter((xy)=> xy.contentTypeName === 'nollywood')  
+const nollywood_news = contentData?.filter((xy)=> xy.contentTypeName === 'nollywood')  
    const site_url='https://culturays.com';
     const pubDate= new Date()
     const author = 'Christina Ngene'  
@@ -26,7 +26,7 @@ const nollywood_news = contentData.filter((xy)=> xy.contentTypeName === 'nollywo
         },
         author,
       });
-      nollywood_news.map((post) => {
+      nollywood_news?.map((post) => {
       const url = `${site_url}/news/nollywood/${post.slug}`;     
        feed.addItem({
          title: post.title,

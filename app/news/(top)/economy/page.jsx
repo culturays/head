@@ -1,5 +1,5 @@
 import Economy from "@/components/News/Economy"
-import { economyBlog } from "../../articlehandle"
+ import { economyBlog } from "../../articlehandle"
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/economy` 
   : "http://localhost:3000/economy";
@@ -9,11 +9,11 @@ export const metadata = {
    title:"Culturays | Economy",   
 }; 
 const EconomyPage =async ({searchParams}) => { 
-  const economy_news = await economyBlog()
+ const economy_news = await economyBlog()
  
   return (
     <div >
-  <Economy
+   <Economy
 economy_news={economy_news } 
 />  
   </div>

@@ -1,8 +1,12 @@
 import { agent, fetchWithRetry } from "@/utils/fetchwithretry";
 
-export async function newsByLatest(req, res){  
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+export async function newsByLatest(req, res){
+  try{
+
+ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         method: 'POST',
+         timeout: 5000 ,
+         agent: agent,
         headers:{
             'Content-Type':'application/json'
         },
@@ -73,14 +77,22 @@ export async function newsByLatest(req, res){
         
         })
         
-        }).then(response => response)     
+        
+        })  
+        .then(response =>  response)     
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = wprest.data 
+        const response = wprest?.data 
         return response
+  }catch(error){
+    console.log(error)
+
   }
-  export async function newsViews(req, res){  
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+   
+  }
+  export async function newsViews(req, res){
+    try{
+     const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         method: 'POST',
         headers:{
             'Content-Type':'application/json'
@@ -130,7 +142,7 @@ export async function newsByLatest(req, res){
                       sourceUrl
                     }
                   }
-             postnewsgroup {
+             postNewsGroup {
           newsPassage {
             nodes {
               ... on Post {
@@ -152,14 +164,19 @@ export async function newsByLatest(req, res){
         
         })
         
-        }).then(response => response)     
+        }).then(response =>response)    
         .then(data =>data) 
-        .catch(error => console.error('Error:', error));
-        const response = wprest.data.posts.edges
+        .catch(error => console.error('Error:', error)); 
+        const response = wprest?.data.posts.edges
         return response
+    }catch(error){
+   throw new Error('Error fetching data')
+    }
+  
   }
    export async function postCategories (string){
-   const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+    try{
+  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         method: 'POST',
         headers:{
             'Content-Type':'application/json'
@@ -222,15 +239,20 @@ export async function newsByLatest(req, res){
         
         })
         
-        }).then(response => response)    
+        }).then(response => response)     
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = wprest.data
+        const response = wprest?.data
         return response
+    }catch(error){
+      throw new Error ('Error fetching data') 
+    }
+ 
   } 
 
   export async function categoriesUnusedPosts (notIn ){
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+    try{
+  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       headers:{
           'Content-Type':'application/json'
@@ -286,14 +308,19 @@ export async function newsByLatest(req, res){
       
       })
       
-      }).then(response =>response)   
+      }).then(response => response)    
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-      const response = wprest.data
-      return response
+     const response = wprest?.data
+     return response
+    }catch(error){
+      throw new Error('Error fetching data')
+    }
+  
   }
   export async function postNextCategories (string ){
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+    try{
+ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
            method: 'POST',
            headers:{
                'Content-Type':'application/json'
@@ -349,14 +376,18 @@ export async function newsByLatest(req, res){
            
            })
            
-           }).then(response =>response)   
+           }).then(response =>  response)   
            .then(data =>data) 
            .catch(error => console.error('Error:', error));
-           const response = wprest.data
+           const response = wprest?.data
            return response
+    }catch(error){
+      throw new Error('Error fetching data')
+    }
      } 
-export async function newsPosts(notIn){ 
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+export async function newsPosts(notIn){
+  try{
+   const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         method: 'POST',
         timeout: 5000 ,
         agent: agent,
@@ -448,12 +479,17 @@ export async function newsPosts(notIn){
         }).then(response => response) 
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = wprest.data 
+        const response = wprest?.data 
         return response
+  }catch(error){
+    throw new Error('Error fetching data')
+  }
+ 
   }   
    
   export async function nextNewsPosts(notIn){
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+    try{
+  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       headers:{
           'Content-Type':'application/json'
@@ -512,10 +548,15 @@ export async function newsPosts(notIn){
       }).then(response =>  response)    
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-      const response = wprest.data
+      const response = wprest?.data
       return response
+    }catch(error){
+      throw new Error('Error fetching data')
+    }
+  
   }
   export async function postsOutline (){
+    try{
  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         method: 'POST',
         headers:{
@@ -541,12 +582,17 @@ export async function newsPosts(notIn){
         }).then(response =>  response)    
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = wprest.data.outlines.nodes 
+        const response = wprest?.data.outlines.nodes 
         return response
+    }catch(error){
+      throw new Error('Error fetching data')
+    }
+
   }
  
   export async function postLastAndScrolledCategories (string ){
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+    try{
+ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
            method: 'POST',
            headers:{
                'Content-Type':'application/json'
@@ -642,12 +688,17 @@ export async function newsPosts(notIn){
            }).then(response => response)    
            .then(data =>data) 
            .catch(error => console.error('Error:', error));
-           const response = wprest.data.categories.edges 
+           const response = wprest?.data.categories.edges 
            return response
+    }catch(error){
+      throw new Error('Error fetching data')
+    }
+   
      }
 
   export const fetchNewPosts = async (first, after, exclude, notIn) => {  
-    const wp_naija = await fetchWithRetry('https://content.culturays.com/graphql',{
+    try{
+const wp_naija = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       timeout: 5000 ,
       agent: agent,
@@ -739,8 +790,12 @@ export async function newsPosts(notIn){
       }).then(response => response)   
       .then(data =>data) 
       .catch(error => console.error('Error:', error));     
-      const res_naija = wp_naija.data
+      const res_naija = wp_naija?.data
       return res_naija
+    }catch(error){
+      throw new Error('Error fetching data')
+    }
+    
   }
 
   export async function newsDetailData(slug){ 
@@ -765,7 +820,7 @@ export async function newsPosts(notIn){
     content
     date
     excerpt
-     postnewsgroup {  
+     postNewsGroup {  
   relatedPosts {  
   nodes {
   ... on Post {
@@ -843,17 +898,14 @@ export async function newsPosts(notIn){
   }).then(response => response)  
          .then(data =>data) 
          .catch(error => console.error('Error:', error)); 
-         const response = wprest.data.post
+         const response = wprest?.data.post
          return response
     } catch (error) {
-       console.error('Error fetching data:', error);
+      throw new Error('Error fetching data:');
     
      }
-   
   }
-  
-
-
+   
   export async function sideBarNews(){
 //     const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
 //         method: 'POST',
@@ -1128,10 +1180,10 @@ export async function newsPosts(notIn){
 //           const response = wprest.data.contentNodes.edges 
 //           return response
   }
-
-
+ 
   export async function sidePanelNewsItems(notIn){
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+    try{
+const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       headers:{
           'Content-Type':'application/json'
@@ -1180,7 +1232,7 @@ export async function newsPosts(notIn){
                     sourceUrl
                   }
                 }
-           postnewsgroup {
+           postNewsGroup {
         newsPassage {
           nodes {
             ... on Post {
@@ -1202,16 +1254,21 @@ export async function newsPosts(notIn){
       
       })
       
-      }).then(response => response)     
+      }).then(response => response)    
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-      const response = wprest.data.posts.edges
-      return response
+       const response = wprest?.data.posts.edges
+       return response
+    }catch(error){
+      throw new Error('Error fetching data')
+    }
+    
   }
 
 
   export async function sideBarNewsItems(notIn){
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+    try{
+  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       headers:{
           'Content-Type':'application/json'
@@ -1260,7 +1317,7 @@ export async function newsPosts(notIn){
                     sourceUrl
                   }
                 }
-           postnewsgroup {
+           postNewsGroup {
         newsPassage {
           nodes {
             ... on Post {
@@ -1285,13 +1342,18 @@ export async function newsPosts(notIn){
       }).then(response => response)     
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-      const response = wprest.data.posts.edges
+      const response = wprest?.data.posts.edges
       return response
+    }catch(error){
+      throw new Error('Error fetching data')
+    }
+  
   }
 
 
   export async function altPageNewsItems(notIn){
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+    try{
+  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       method: 'POST',
       headers:{
           'Content-Type':'application/json'
@@ -1312,7 +1374,8 @@ export async function newsPosts(notIn){
               title
                 slug
                 tags {
-                  nodes {  id
+                  nodes {
+                   id
                     name
                     slug
                   }
@@ -1340,7 +1403,7 @@ export async function newsPosts(notIn){
                     sourceUrl
                   }
                 }
-           postnewsgroup {
+           postNewsGroup {
         newsPassage {
           nodes {
             ... on Post {
@@ -1365,6 +1428,10 @@ export async function newsPosts(notIn){
       }).then(response => response)      
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
-  const response =wprest.data.posts.edges
-  return response
+      const response =wprest?.data.posts.edges
+      return response
+    }catch(error){
+      throw new Error('Error fetching data')
+    }
+  
   }

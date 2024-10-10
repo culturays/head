@@ -140,7 +140,7 @@ export async function newchars(req, res){
         }).then(response => response)  
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-       const response = wprest.data.chars.nodes
+       const response = wprest?.data.chars.nodes
        return response 
       } catch (error) {
         console.error('Error fetching posts:', error); 
@@ -286,7 +286,7 @@ export async function relatedChars(req, res){
         }).then(response => response)  
        .then(data =>data) 
        .catch(error => console.error('Error:', error));
-       const response = wprest.data.chars.nodes
+       const response = wprest?.data.chars.nodes
         return response 
       } catch (error) {
         console.error('Error fetching posts:', error); 
@@ -399,7 +399,7 @@ export async function newcharCall(slug){
     .then(response => response)  
     .then(data =>data) 
     .catch(error => console.error('Error:', error)); 
-    const response = wprest.data.char 
+    const response = wprest?.data.char 
     return response 
 } 
   

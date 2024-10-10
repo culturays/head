@@ -6,15 +6,17 @@ export const agent = new http.Agent({
 export const fetchWithRetry = async (url, options, retries = 3) => {
     for (let i = 0; i < retries; i++) {
       try {
-        const response = await fetch(url, options);
+        const response = await fetch(url, options); 
         if (!response.ok) {
-          //console.log(response)
-          throw new Error('Network response was not ok ' + response.statusText);
+         // console.log(response)
+          throw new Error( response.statusText);
         }
         return await response.json();
-      } catch (error) { 
+      }catch (error) {
+       // console.error(`Fetch error (attempt ${i + 1}):`, error);
         if (i === retries - 1) throw error;
       }
+      
     }
   };
   

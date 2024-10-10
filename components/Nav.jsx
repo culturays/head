@@ -5,9 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link' 
 
 const Nav =async () => {
-  const trendsData =await trends() 
- const trending_data = trendsData.slice(0,4) 
- if(!trending_data )throw new Error('An error has occured.')
+  const trendsData =await trends()
+   const trending_data = trendsData?.slice(0,4) 
   return (
     <nav className='flex shadow-detailShadow pt-6 justify-center my-1'> 
     <div className='text-center'> 
@@ -20,9 +19,8 @@ const Nav =async () => {
     </ul> 
      )}  
   
-     </div>  
-   
-     </div> 
+     </div>
+      </div> 
    
    </nav>  
   )

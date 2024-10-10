@@ -32,7 +32,7 @@ const Nollywood = ({nollywood_news}) => {
 
  <section className='xl:flex relative m-auto justify-center max-w-5xl xl:max-w-max'> 
   <div className='border'> 
-  {nollywood_news.slice(0,1).map((nt)=>(
+  {nollywood_news?.slice(0,1).map((nt)=>(
   <div key={nt.slug} className='home_grid_alt'>
     <Image
     style={{maxHeight:'650px'}}
@@ -51,7 +51,7 @@ const Nollywood = ({nollywood_news}) => {
 ) }</div> 
 
 <div className='xl:max-w-xs xs:flex xl:flex-col border overflow-hidden overflow-x-auto sm:overflow-x-hidden'>
-  {nollywood_news.slice(1,4).map((nt)=>(
+  {nollywood_news?.slice(1,4).map((nt)=>(
   <div key={nt.slug} className='home_grid_alt2 border-b lg:border-b-0 lg:text-white lg:relative my-1 '>
        <Image  
         width={1200}  
@@ -74,7 +74,7 @@ const Nollywood = ({nollywood_news}) => {
   
 </div> 
 <div className="md:flex justify-between max-w-max"> 
-<Paginate content={nollywood_news.slice(4)}/>
+<Paginate content={nollywood_news?.slice(4)}/>
 <SideBar/>
  </div>  
  </div>

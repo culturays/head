@@ -1,5 +1,5 @@
 import About from "@/components/About" 
-import { usersList } from "../creator/usersHandle"
+ import { usersList } from "../creator/usersHandle"
  
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/about` 
@@ -13,10 +13,11 @@ export const metadata = {
 
 const AboutUs =async () => {
   const listedUsers= await usersList()
-   return ( 
-<About 
+   return ( <> 
+ <About 
 listedUsers={listedUsers}
 />  
+</>
 )
 }
 

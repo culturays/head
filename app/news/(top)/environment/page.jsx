@@ -1,6 +1,6 @@
 
 import Environment from "@/components/News/Environment";
-import { environmentBlog } from "../../articlehandle";
+  import { environmentBlog } from "../../articlehandle";
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/environment` 
   : "http://localhost:3000/environment";
@@ -10,12 +10,12 @@ export const metadata = {
    title:"Culturays | Environment",   
 }; 
 const EnvironmentPage =async () => {
-  const environment_news = await environmentBlog()
+   const environment_news = await environmentBlog()
   return ( 
    <div> 
-<Environment 
+ <Environment 
 environment_news={environment_news}
-/>
+/>  
   </div> 
   )
 } 
