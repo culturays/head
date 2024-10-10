@@ -65,7 +65,7 @@ const signUp = async (formData) => {
   revalidatePath('/', 'layout')
   return redirect("/login?message=Check email to continue the sign in process");
 };
-
+ 
 const handleOauthLogin = async () => {
   'use server';
   const origin = headers().get("origin"); 

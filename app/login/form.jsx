@@ -11,7 +11,7 @@ const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:
 const name_pattern=new RegExp(`^[A-Za-z0-9]{3,10}$`) 
 const [passType, setPassType] = useState('password');
 const [icon, setIcon] = useState(faEyeSlash);
-
+ 
 const handleToggle = (textPass) => {
 if (passType===textPass){
   setIcon(faEyeSlash);
@@ -133,7 +133,7 @@ Create Account
 </div> 
 {searchParams?.message && (
 <p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
-{searchParams.message}
+Invalid Login
 </p>
 )} 
  <hr />
