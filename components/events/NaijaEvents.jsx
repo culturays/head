@@ -35,7 +35,7 @@ const artistEl = Object.keys(eventByArtists).map((ux)=> ux.replace(/ /g, '').spl
  
 return (
   <> 
-<div className="top_event mt-8 m-auto xl:w-4/5 lg:w-11/12 px-4 min-[481px]:px-8" >
+<div className="top_event mt-8 m-auto max-w-7xl px-4 min-[481px]:px-8" >
 <h2 className="py-6 xxs:text-2xl text-3xl font-bold bg-gray-700 text-center text-gray-300 mb-1">Find Events by Location</h2>
 <div className="grid md:grid-cols-3 gap-1 min-[481px]:grid-cols-2">
 {Object.keys(eventByLocale).map((ex, i)=> 
@@ -55,8 +55,8 @@ alt={ex}
  </ul>
 </div>  
 )}
-
- <h2 className="absolute top-5 text-cnter text-white px-3 py-2 z-10 font-bold text-2xl">{ex.charAt(0).toUpperCase() + ex.slice(1).replace(/-/g," ") }</h2> 
+{/* {ex.charAt(0).toUpperCase() + ex.slice(1).replace(/-/g," ") } */}
+ <h2 className="absolute top-5 text-cnter text-white px-3 py-2 z-10 font-bold text-2xl capitalize">{ex}</h2> 
 </div> 
 ) }  
 )}   

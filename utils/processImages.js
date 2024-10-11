@@ -67,7 +67,8 @@ import axios from 'axios';
          if(mimeType !== null){
          const { error } = await supabase.storage
                .from(location) 
-               .upload(fileName, fileBuffer, {contentType: mimeType, upsert: true });         
+               .upload(fileName, fileBuffer, {contentType: mimeType, upsert: true }); 
+              // console.log(fileName, fileBuffer)      
              if (error) throw new Error(error); 
       
    } 

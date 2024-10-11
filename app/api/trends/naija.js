@@ -53,18 +53,18 @@ export async function getNaijaTrends1(location) {
    }
   
   }
-  // const daily_intervals = ()=> { 
-  //   const intervalId = setInterval(()=>{ 
-  //   submitForm() 
-  //   },1000 * 60 * 60 * 24); 
-  //   return () => { 
-  //     clearInterval(intervalId);
-  //   };
-  // }
-  submitForm() 
-  // const stopDailyInterval = daily_intervals();
-  // setTimeout(() => {
-  //   stopDailyInterval(); 
-  //  }, 30000);  
+  const daily_intervals = ()=> { 
+    const intervalId = setInterval(()=>{ 
+    submitForm() 
+    },1000 * 60 * 60 * 24); 
+    return () => { 
+      clearInterval(intervalId);
+    };
+  }
+ 
+  const stopDailyInterval = daily_intervals();
+  setTimeout(() => {
+    stopDailyInterval(); 
+   }, 30000);  
   return titleObj   
    }

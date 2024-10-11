@@ -1,10 +1,10 @@
-"use client"
-import Link from "next/link";
+"use client" 
 import { useRouter,useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react"; 
-import { usePagesContext } from "./Pages-Context";
+import { useParams } from "react-router-dom";
  
-const ConfirmModal = ({confirmParam, user}) => { 
+const ConfirmModal = () => { 
+  const searchParams = useSearchParams()
+ 
   // const {handleConfirmLogout, setCurrentUrl}=usePagesContext()
  
   // useEffect(() => {  

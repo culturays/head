@@ -14,7 +14,7 @@ setBarState(prev=> !prev)
 
 useEffect(()=>{
   setPathname(pathname)
-},[])
+},[pathname])
  return ( 
  <> 
   <header className="flex justify-between w-full"> 

@@ -12,7 +12,7 @@ const [similarEvents,setSimilarEvents]= useState([])
 const [eventId,setEventId]= useState([]) 
 const openForm = () => {
 setActive(prev => !prev);  
-}
+} 
 //console.log(eventTitle.loc_slug)
 useEffect(()=>{
 const simValues = async () => {  
@@ -36,18 +36,18 @@ simValues()
  
 return (
   <div className="my-6"> 
-  <div className='flex flex-col items-center justify-center bg-cover bg-center h-screen'style={{'backgroundImage': `url(https://peezrwllibppqkolgsto.supabase.co/storage/v1/object/public/event_avatars/${eventTitle?.img_url})`}}>   
+  <div className='flex flex-col items-center justify-center bg-cover bg-center'style={{'backgroundImage': `url(https://peezrwllibppqkolgsto.supabase.co/storage/v1/object/public/event_avatars/${eventTitle?.img_url})`}}>   
   
-<div className="p-32 hover:shadow-3xl border border-t-8 hover:opacity-70 cursor-pointer p-3 bg-gray-700 opacity-70 w-11/12 h-full" >
+<div className="xl:p-32 hover:shadow-3xl border border-t-8 hover:opacity-70 cursor-pointer p-3 bg-gray-700 opacity-80 w-11/12 my-6" >
   {/* <p className="text-lg border bg-white ml-14 m-2 w-14 rounded-full p-3 text-center relative bottom-32 left-full cursor-pointer" onClick={openForm} ><FontAwesomeIcon icon={faPen} /></p> */}
- <h2 className="text-5xl font-bold text-center text-white">{eventTitle.title}</h2>  
-<p className="text-2xl font-bold py-3 text-center text-white">{eventTitle.location}</p>
-<p className="text-2xl font-bold py-3 text-center text-white">{eventTitle.genre}</p>
-<p className="text-2xl font-bold py-3 text-center text-white">{eventTitle.day}</p>
+ <h2 className="text-3xl xl:text-5xl font-bold text-center text-white my-4">{eventTitle.title}</h2>  
+<p className="text-xl font-bold py-3 text-center text-white my-4">Location: {eventTitle.location}</p>
+<p className="text-xl font-bold py-3 text-center text-white my-4">Genre: {eventTitle.genre}</p>
+<p className="text-xl font-bold py-3 text-center text-white my-4">Date: {eventTitle.day}</p>
 {/* <p className="text-xl font-bold py-3 text-center text-white">{eventTitle.date}</p>
  {eventTitle.genre.split(' ').map((xy, i)=><p key={i}className="text-xl font-bold py-3 text-center text-white">{xy}</p> )}  */}
- <div className="m-4 ">
-<p className="text-xl p-3 text-white text-center leading-6 opacity-80">{eventTitle.desc}</p>
+ <div className="my-4 ">
+<p className="text-xl text-white text-center leading-9 opacity-90">{eventTitle.desc}</p>
 </div>
 
 </div> 
@@ -63,30 +63,33 @@ user={user}
 eventEdit={eventTitle}
  /> } 
   </div>
-<div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-1 m-auto sm:max-w-full w-full p-5 min-[360px]:w-11/12 max-w-sm min-[420px]:px-8 sm:px-0 md:px-11 md:max-w-2xl lg:max-w-5xl" >
+  <h2 className="text-3xl p-6 text-gray-700 font-bold">Related Events</h2>
+<div className="relative flex flex-wrap gap-1 justify-center m-auto max-w-5xl px-3" >
 {similarEvents.filter((xx)=> xx.title!== eventTitle.title).map((ex)=>
+ 
 <div key={ex.title}style={{
   backgroundImage: `url(https://peezrwllibppqkolgsto.supabase.co/storage/v1/object/public/event_avatars/${ex?.img_url})`,  
   backgroundRepeat: 'no-repeat',
-      backgroundPosition: '',  
-      backgroundColor: 'transparent',
+      backgroundPosition: '',
       backgroundSize: 'cover',}}
-      className="rounded-lg py-20 bg-black px-8 hover:border-solid"> 
+      className="rounded-lg px-8 bg-black hover:border-solid max-w-xs my-4 py-20"> 
  <Link href={`/naija-events/event/${ex.slug}`}>
- <h3 className="text-3xl pb-5 pt-16 text-gray-700 uppercase font-bold cursor-pointer hover:opacity-80">
+ <h3 className="text-ellipsis overflow-hidden text-3xl text-gray-100 font-bold cursor-pointer hover:opacity-80 leading-10 shadow-sharebtn px-3 bg-gray-700 bg-opacity-90 "style={{ display: '-webkit-box', WebkitLineClamp:2, WebkitBoxOrient: 'vertical' }}>
 {ex.title}
 </h3></Link>
-<p className="text-lg text-white font-bold text-right">
+<p className="text-lg text-white font-bold text-right py-4 capitalize">
 {ex.genre}
 </p>
 <hr/>  
 
- <div className="rounded-lg hover:shadow-3xl bg-gray-900 bg-opacity-90 px-4 w-full animated-in">
-   <p className="text-lg pt-4 text-white font-bold hover:opacity-80">
+ <div className="rounded-lg hover:shadow-3xl bg-gray-700 bg-opacity-90 px-4 w-full animated-in">
+   <p className="text-lg pt-4 text-white font-bold hover:opacity-80 leading-9">
 {ex.location}
 </p>
-<p className="pb-14 pt-2 text-white font-bold cursor-pointer hover:opacity-80 ">{ex.day}</p></div>  
-</div>)}
+<p className="pb-14 pt-2 text-white font-bold cursor-pointer hover:opacity-80 leading-7">{ex.day}</p></div>  
+</div>
+ 
+)}
  
 </div>  
 

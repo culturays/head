@@ -1,12 +1,5 @@
-import AuthButton from "@/app/AuthButton";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header"; 
-import Latests from "@/components/Latests";
 import NewsLetter from "@/components/NewsLetter";
 import Top10 from "@/components/Top10El";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
  
 // import '@styles/globals.css'
 // import '@styles/events.css'

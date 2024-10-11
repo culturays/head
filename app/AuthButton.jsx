@@ -1,26 +1,15 @@
-import { createClient } from "../utils/supabase/server";
-import Link from "next/link";
-import { redirect} from "next/navigation"; 
+import Link from "next/link";  
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import Image from "next/image";  
-import { headers, cookies } from "next/headers";
+import Image from "next/image";   
 import ConfirmModal from "../components/ConfirmModal";
+import { createClient } from "@/utils/supabase/server";
 
-export default async function AuthButton({confirmParam, profile}) {
+export default async function AuthButton({handleLogout}) {
 const supabase = createClient();
- const { 
-    data: { user },
-  } = await supabase.auth.getUser(); 
-const headersList = headers();
-const pathname = headersList.get('referer') || ""  
- 
- const handleLogout=async()=>{ 
-  "use server"
-  redirect(`${pathname}?confirm=logout?`)
-  
-   }
-  
+const {   
+  data: { user },
+} = await supabase.auth.getUser()
  return user? ( 
 <div className="flex flex-col items-center pb-2 leading-none"> 
 <div className="flex items-center"> 
@@ -36,21 +25,19 @@ const pathname = headersList.get('referer') || ""
   {user.user_metadata.picture&& 
    <Link href={`/profile/${user.id}`}>
    <div > 
-     <Image
- src={`${process.env.SUPABASE_STORAGE_PROFILE_URL}/${profile?.avatar_url}`} 
+      <Image
+ src={`${process.env.SUPABASE_STORAGE_PROFILE_URL}/${user.user_metadata.picture}`} 
  width={50}
  height={50}
  className="cursor-pointer border rounded-full hover:scale-105 h-10 w-10"
  alt={user.user_metadata.full_name}
- />
+ /> 
  </div></Link> } 
    <button formAction={handleLogout}className="button block text-lg m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
    Sign out
  </button> 
 </form>
-{confirmParam==='logout?'&& !confirmParam?.startsWith('yes') 
-&&  <ConfirmModal/>  } 
-
+<ConfirmModal /> 
 </div>
 )  :  (
   

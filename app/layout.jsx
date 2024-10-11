@@ -14,6 +14,8 @@ import Nav from '@/components/Nav';
 import SearchItems from '@/components/SearchItems'; 
 import TabNav from '@/components/TabNav';
 import Latests from '@/components/Latests';
+import { redirect } from 'next/navigation';
+import { createClient } from '@/utils/supabase/server';
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/` 
   : "http://localhost:3000/";
@@ -132,16 +134,17 @@ alt: 'Culturays Image & Logo',
  }
   
 
-export default function RootLayout({ children  }) { 
+export default  function RootLayout({ children  }) { 
  const GTM_ID = process.env.GTM_ID
  const GA_ID= process.env.GA_ID
  const consent = getCookie('localConsent'); 
-//  const headersList = new URL(headers().get('x-url') )
- const url = new URL(headers()?.get('pathname')); 
-const { searchParams } = new URL(url);
-const confirmParam= searchParams?.get("confirm")
   //console.log(JSON.stringify(Array.from(headersList.entries()), null, 2))
- 
+  const headersList = headers();
+  const pathname = headersList.get('referer') || ""  
+   const handleLogout=async()=>{ 
+    "use server"
+    redirect(`${pathname}?confirm=logout?`)
+     }
   function transformString(inputStr) { 
     inputStr = inputStr.replace(/^\/|\/$/g, ''); 
     inputStr = inputStr.replace(/-/g, ' '); 
@@ -150,7 +153,8 @@ const confirmParam= searchParams?.get("confirm")
     });
     return inputStr;
 } 
- 
+
+
  return (
     <html lang="en" > 
      <Script async type="text/javascript" src="//clickiocmp.com/t/consent_234292.js"/> 
@@ -186,19 +190,19 @@ const confirmParam= searchParams?.get("confirm")
   <main >
   <Header/> 
  <SocialNav/> 
- <AuthButton confirmParam={confirmParam} /> 
+ 
+ <AuthButton handleLogout={handleLogout}/> 
  <Nav /> 
  <SearchItems />
  <TabNav/> 
  <Suspense fallback={<p>Loading...</p>}>  
     {children} 
 </Suspense>
-  <Latests/> 
+   <Latests/>  
 </main>
  <Footer/> 
 </body> 
-   <TagManager gtmId={'GTM-W7BMCC9'}/>
- 
+   <TagManager gtmId={'GTM-W7BMCC9'}/> 
 </html>
 )
 }

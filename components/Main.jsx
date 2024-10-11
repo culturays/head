@@ -34,9 +34,7 @@ const Main = ({
      const [categoryName,setCategoryName]=useState('') 
      const [scrolledContent, setScrolledContent]=useState([])    
      const {ref, inView } =useInView();
-    const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
-    console.log(err) 
-    console.log(err1)
+    const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);  
     function useDebouncedValue(value , delay) {
       const [debouncedValue, setDebouncedValue] = useState(value )
     

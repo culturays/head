@@ -7,7 +7,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
   const previousImages = (await parent).openGraph?.images || []
  
   return {
-    title:`Culturays | News- ${char_details?.title}`,
+    title:`Culturays | Movie Character - ${char_details?.title}`,
     openGraph: { 
       images: [char_details?.featuredImage.node.sourceUrl],
     },

@@ -9,7 +9,7 @@ const Nav =async () => {
   return (
     <nav className='flex shadow-detailShadow pt-6 justify-center my-1'> 
     <div className='text-center'> 
-  <Link href='/news/trending'><p className='hover:text-gray-500 text-2xl text-gray-700 font-bold'>Trending <span></span> <span>&#10141;</span></p> </Link>
+   <p className='hover:text-gray-500 text-2xl text-gray-700 font-bold'>Trending <span></span> <span>&#10141;</span></p> 
   <p className='text-gray-700 text-right w-screen text-xl hover:text-orange-700'><Link href='/search-page'><FontAwesomeIcon icon={faMagnifyingGlass} width={100}/></Link></p>
 <div className='text-md text-gray-700 font-medium flex justify-center xs:flex-row flex-wrap' >
   {trending_data?.map((ex)=> 

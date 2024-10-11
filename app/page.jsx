@@ -144,13 +144,13 @@ const evData = await events3Details(one.atitle)
        console.error('Unexpected error:', error);
      }  
     } 
-    var now = new Date();
-    var delay = 60 * 60 * 1000; // 1 hour in msec
-    var start = delay - (now.getMinutes() * 60 + now.getSeconds()) * 1000 + now.getMilliseconds();
-    
+    const now = new Date();
+    const delay = 1000 * 60 * 60 * 24;  
+    const start = delay - (now.getDay() * 60 +now.getMinutes() * 60 + now.getSeconds()) * 1000 + now.getMilliseconds();
+     dailyWiki();
     setTimeout(function doSomething() {
        dailyEv3()
-       dailyWiki();
+      
        // schedule the next tick
        setTimeout(doSomething, delay);
      
