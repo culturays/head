@@ -11,7 +11,7 @@ const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:
 const name_pattern=new RegExp(`^[A-Za-z0-9]{3,10}$`) 
 const [passType, setPassType] = useState('password');
 const [icon, setIcon] = useState(faEyeSlash);
- 
+console.log(err)
 const handleToggle = (textPass) => {
 if (passType===textPass){
   setIcon(faEyeSlash);
@@ -41,7 +41,7 @@ if (data.name === 'password'&&!password_pattern.test(data.value.trim())) {
   const newErrors = validateForm(e.currentTarget)
   setErrors(newErrors);  
   }
-  console.log(err)
+ 
 return (  
 <> 
 <form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative" noValidate>

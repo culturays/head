@@ -27,7 +27,7 @@ const [activeSlide, setActiveSlide]=useState(0)
 const [activeIndices, setActiveIndices] = useState([0, 1]);
 const [end_ng_cursor, setEnd_ng_cursor] = useState('');
 const [end_inter_cursor, setEnd_inter_cursor] = useState(''); 
-
+console.log(err)
 const replaceHTMLTags=(string)=>{
 const regex = /(<([^>]+)>)/gi;
 //(/<\/?[^>]+(>|$)/g, "")
@@ -68,7 +68,7 @@ return newString
       return [newLeft, newRight];
     });
   };
- console.log(err)
+
   return (
    <div className='bg-slate-50'>
     <div className=' m-auto px-4' style={{maxWidth:'1700px'}}>  

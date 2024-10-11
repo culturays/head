@@ -35,7 +35,8 @@ const Main = ({
      const [scrolledContent, setScrolledContent]=useState([])    
      const {ref, inView } =useInView();
     const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
-
+    console.log(err)
+    console.log(err1)
     function useDebouncedValue(value , delay) {
       const [debouncedValue, setDebouncedValue] = useState(value )
     
@@ -110,8 +111,7 @@ setCategoryPost(currentPosts)
    //posts_notIn_newsPosts[8].nodes.slice(8)
    //posts_notIn_newsPosts[7].nodes.slice(9)
     //posts_notIn_newsPosts[9].nodes
-    console.log(err)
-    console.log(err1)
+ 
   return ( 
 <div>  
    <MainSlider data={latestPosts} interval={5000} /> 

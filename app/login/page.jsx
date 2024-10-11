@@ -30,8 +30,7 @@ const supabase = createClient();
     password ,
   }); 
   if (error) {
-     console.log(error)
-   
+     console.log(error)   
     return redirect("/login?message=Could not authenticate user");
   }
    console.log('successfull')
@@ -112,12 +111,12 @@ Back
 </Link>
 </div>  */}
 
-<LoginForm  
+<LoginForm
+err={err}
 signUp={signUp} 
 signIn={signIn} 
 searchParams={searchParams}
 handleOauthLogin={handleOauthLogin}
-err={err}
  />
 
 </div>
