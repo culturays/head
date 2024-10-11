@@ -15,6 +15,8 @@ const replaceHTMLTags=(string)=>{
    }  
  
 const Main = ({
+  err,
+  err1,
   postCategory_next_cursor,
    posts_notIn_newsPosts,
     cinema_titles, 
@@ -108,7 +110,8 @@ setCategoryPost(currentPosts)
    //posts_notIn_newsPosts[8].nodes.slice(8)
    //posts_notIn_newsPosts[7].nodes.slice(9)
     //posts_notIn_newsPosts[9].nodes
-
+    console.log(err)
+    console.log(err1)
   return ( 
 <div>  
    <MainSlider data={latestPosts} interval={5000} /> 

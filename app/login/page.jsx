@@ -18,7 +18,8 @@ const Login =async ({searchParams} ) => {
   }
    
 
-const signIn = async (formData ) => {
+let err=''
+const signIn = async (formData) => {
   "use server"; 
 const email = formData.get("email");
 const password = formData.get("password")  
@@ -30,6 +31,7 @@ const supabase = createClient();
   }); 
   if (error) {
      console.log(error)
+   
     return redirect("/login?message=Could not authenticate user");
   }
    console.log('successfull')
@@ -58,6 +60,7 @@ const signUp = async (formData) => {
     },
   }); 
   if (error) {
+    err+=error
     console.log(error)
     return redirect(`/login?message="${error}"`);
   }
@@ -114,6 +117,7 @@ signUp={signUp}
 signIn={signIn} 
 searchParams={searchParams}
 handleOauthLogin={handleOauthLogin}
+err={err}
  />
 
 </div>

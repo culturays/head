@@ -5,7 +5,7 @@ import {faEyeSlash, faEye} from '@fortawesome/free-solid-svg-icons'
 import { SubmitButton } from "./submit-button";   
 import Link from "next/link";
  
-const LoginForm = ({ handleOauthLogin, signUp, signIn, searchParams}) => {
+const LoginForm = ({err, handleOauthLogin, signUp, signIn, searchParams}) => {
 const password_pattern=new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,20}$`)
 const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$`) 
 const name_pattern=new RegExp(`^[A-Za-z0-9]{3,10}$`) 
@@ -39,10 +39,9 @@ if (data.name === 'password'&&!password_pattern.test(data.value.trim())) {
  
   const handleFocus=(e)=>{
   const newErrors = validateForm(e.currentTarget)
-  setErrors(newErrors); 
- 
+  setErrors(newErrors);  
   }
-  
+  console.log(err)
 return (  
 <> 
 <form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative" noValidate>

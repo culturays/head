@@ -215,7 +215,8 @@ last_two_categories={last_two_categories}
 post_end_cursor={post_end_cursor}
 last_cursors={last_cursors}
 news_post_cursor={news_post_cursor}  
- 
+  err={err}
+ err1={err1}
  />  
   <SideBar/>  
 </div>
@@ -224,6 +225,7 @@ news_post_cursor={news_post_cursor}
  post_end_cursor={post_end_cursor}
  news_post_cursor={news_post_cursor}
  last_cursors={last_cursors}
+
  />  
 </div> 
  )
