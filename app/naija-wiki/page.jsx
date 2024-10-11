@@ -9,12 +9,13 @@ const NaijaWikiPage =async ({searchParams, params}) => {
 const newChars = await newchars()
 const naijaWikiVideos =await vids()
 const netFlixTop10= await getTop10()
-
+let err =''
 const naija_wiki =async ()=>{  
 const supabase = createClient() 
 const { data:cinema_titles , error } = await supabase 
 .from('cinema_titles')
 .select('*')
+err+=error
 if(error)throw new Error('An Error has occured!')
 return { cinema_titles } 
  
@@ -48,6 +49,7 @@ inter_blog={inter_blog}
 naija_blog={naija_blog}
 inter_cursor={inter_cursor}
 naija_cursor={naija_cursor}
+ err={err}
 />  
 </div>
   )

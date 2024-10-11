@@ -11,6 +11,7 @@ import NaijaContent from './NaijaContent'
 import InterContent from './InterContent'
 
 const Main = ({
+  err,
   africa_blog,   
   popular_blog,
   inter_blog,
@@ -67,7 +68,7 @@ return newString
       return [newLeft, newRight];
     });
   };
- 
+ console.log(err)
   return (
    <div className='bg-slate-50'>
     <div className=' m-auto px-4' style={{maxWidth:'1700px'}}>  
