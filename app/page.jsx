@@ -20,10 +20,11 @@ import nollywoodFeed from "@/utils/nollywoodFeed"
 // //const newsTitles = await getNaijaNews1()
 //   console.log('News Titles:', newsTitles);
 // })();
- 
+  
 const Home =async ({searchParams}) => {
 const eventExp = await getNaijaEvents3()
  let err1= ''
+  let err= ''
 const dailyEv3 =async()=>{ 
 const result = await Promise.all(eventExp.titleAObj.map(async one=> {  
 const evData = await events3Details(one.atitle)
@@ -101,7 +102,7 @@ const evData = await events3Details(one.atitle)
   console.log('it ran')
    } 
   
- let err= ''
+
    const silverBTitles= await scrapeSilverBird()   
   const dailyWiki =async()=>{
  
@@ -134,8 +135,7 @@ const evData = await events3Details(one.atitle)
            .upsert(grouped)
            .select();                         
          if (error) {
- 
-  err+=error
+         err+=error
            console.error('Error inserting items:', error);
          } else {
            console.log('It ran');
@@ -195,15 +195,15 @@ const news_outline=await postsOutline()
 
 //  ///Post Data after mapping
  const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
- await newsFeed()
- await netflixNewsFeed()
- await nollywoodFeed()
- await articleFeed()
- await topicsFeed()   
+//  await newsFeed()
+//  await netflixNewsFeed()
+//  await nollywoodFeed()
+//  await articleFeed()
+//  await topicsFeed()   
 return (  
 <div > 
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
-    <Main  
+    {/* <Main  
 posts={postsData?.posts.edges} 
 latestPosts={latest_post_categories} 
 post_categories={post_data?.categories.edges }
@@ -217,16 +217,15 @@ last_cursors={last_cursors}
 news_post_cursor={news_post_cursor}  
   err={err}
  err1={err1}
- />  
-  <SideBar/>  
+ />   */}
+  {/* <SideBar/>   */}
 </div>
-   <MainBottom 
+   {/* <MainBottom 
  posts_notIn_newsPosts={posts_all} 
  post_end_cursor={post_end_cursor}
  news_post_cursor={news_post_cursor}
- last_cursors={last_cursors}
-
- />  
+ last_cursors={last_cursors} 
+ />   */}
 </div> 
  )
 }
