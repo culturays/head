@@ -144,21 +144,30 @@ const evData = await events3Details(one.atitle)
        console.error('Unexpected error:', error);
      }  
     } 
-     
-    const daily_intervals = ()=> { 
-      const intervalId = setInterval(()=>{ 
-        dailyEv3()
-         dailyWiki(); 
-      },1000 * 60 * 60 * 24); 
-      return () => { 
-        clearInterval(intervalId);
-      };
-    }
+    var now = new Date();
+    var delay = 60 * 60 * 1000; // 1 hour in msec
+    var start = delay - (now.getMinutes() * 60 + now.getSeconds()) * 1000 + now.getMilliseconds();
     
-    const stopDailyInterval = daily_intervals();
-    setTimeout(() => {
-      stopDailyInterval(); 
-     }, 30000);    
+    setTimeout(function doSomething() {
+       dailyEv3()
+       dailyWiki();
+       // schedule the next tick
+       setTimeout(doSomething, delay);
+     
+    }, start);
+    // const daily_intervals = ()=> { 
+    //   const intervalId = setInterval(()=>{ 
+    
+    //   },1000 * 60 * 60); 
+    //   return () => { 
+    //     clearInterval(intervalId);
+    //   };
+    // }
+    
+    // const stopDailyInterval = daily_intervals();
+    // setTimeout(() => {
+    //   stopDailyInterval(); 
+    //  }, 30000);    
 
 const latestPosts=await newsByLatest()
 const posts_cursor=latestPosts?.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor)
@@ -203,7 +212,7 @@ const news_outline=await postsOutline()
 return (  
 <div > 
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
-    {/* <Main  
+     <Main  
 posts={postsData?.posts.edges} 
 latestPosts={latest_post_categories} 
 post_categories={post_data?.categories.edges }
@@ -217,15 +226,15 @@ last_cursors={last_cursors}
 news_post_cursor={news_post_cursor}  
   err={err}
  err1={err1}
- />   */}
-  {/* <SideBar/>   */}
+ />   
+  <SideBar/>   
 </div>
-   {/* <MainBottom 
+   <MainBottom 
  posts_notIn_newsPosts={posts_all} 
  post_end_cursor={post_end_cursor}
  news_post_cursor={news_post_cursor}
  last_cursors={last_cursors} 
- />   */}
+ />  
 </div> 
  )
 }

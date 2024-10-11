@@ -5,13 +5,13 @@ import {faEyeSlash, faEye} from '@fortawesome/free-solid-svg-icons'
 import { SubmitButton } from "./submit-button";   
 import Link from "next/link";
  
-const LoginForm = ({err, handleOauthLogin, signUp, signIn, searchParams}) => {
+const LoginForm = ({ handleOauthLogin, signUp, signIn, searchParams}) => {
 const password_pattern=new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,20}$`)
 const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$`) 
 const name_pattern=new RegExp(`^[A-Za-z0-9]{3,10}$`) 
 const [passType, setPassType] = useState('password');
 const [icon, setIcon] = useState(faEyeSlash);
-console.log(err)
+//console.log(err)
 const handleToggle = (textPass) => {
 if (passType===textPass){
   setIcon(faEyeSlash);

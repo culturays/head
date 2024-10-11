@@ -15,10 +15,7 @@ const Login =async ({searchParams} ) => {
     // Make sure to include a trailing `/`.
     url = url.endsWith('/') ? url : `${url}/`
     return url
-  }
-   
-
-let err=''
+  } 
 const signIn = async (formData) => {
   "use server"; 
 const email = formData.get("email");
@@ -57,9 +54,9 @@ const signUp = async (formData) => {
         full_name, 
       },
     },
-  }); 
-  if (error) {
-    err+=error
+  });
+
+  if (error) { 
     console.log(error)
     return redirect(`/login?message="${error}"`);
   }
@@ -83,8 +80,7 @@ const handleOauthLogin = async () => {
  }
  return redirect(data.url);
 };
-
-
+ 
 return (
 <div className='m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center'> 
   <div> 
@@ -111,8 +107,7 @@ Back
 </Link>
 </div>  */}
 
-<LoginForm
-err={err}
+<LoginForm 
 signUp={signUp} 
 signIn={signIn} 
 searchParams={searchParams}

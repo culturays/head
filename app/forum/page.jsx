@@ -17,7 +17,7 @@ const forumBdays =async ()=>{
   .from('bday')
   .select('*')
   if(error)throw new Error('An Error has Occured')
-    err+=error
+    err+=error 
   return bday
 }
 
