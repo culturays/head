@@ -11,12 +11,13 @@ const supabase = createClient()
 const {
 data: { user }, 
 } = await supabase.auth.getUser(); 
-
+let err= ''
 const forumBdays =async ()=>{
   const { data: bday, error } = await supabase
   .from('bday')
   .select('*')
   if(error)throw new Error('An Error has Occured')
+    err+=error
   return bday
 }
 
@@ -55,7 +56,7 @@ trends={trends}
 events={events}
 initialPosts={initialPosts}
 bday={bday} 
- 
+err={err}
 />  
  </div> 
  

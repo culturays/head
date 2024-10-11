@@ -22,7 +22,8 @@ import Trends from "./Trends";
 function sortAscending(pb, pa){  
   return (pb?.id - pa?.id);
  } 
-const Main = ({ user, trends, events, bday, initialPosts }) => {
+const Main = ({err, user, trends, events, bday, initialPosts }) => {
+  console.log(err)
 const router = useRouter()   
 const [onIdx, setOnIdx]=useState(null)
 const [activeReply,setActiveReply]=useState(null)
