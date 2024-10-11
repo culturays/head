@@ -11,7 +11,7 @@ export const createClient = () => {
       cookies: {
         get(name) {
           return cookieStore.get(name)?.value;
-        },
+        }, 
         set(name, value, options) {
           try {
             cookieStore.set({ name, value, ...options });
