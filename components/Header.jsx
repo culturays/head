@@ -3,12 +3,18 @@ import Link from "next/link"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";   
-const Header = ({item}) => {
-const [ barState, setBarState]= useState(false) 
+import { usePathname, useRouter } from "next/navigation";
+const Header = () => {
+  const pathname = usePathname()
+const [ barState, setBarState]= useState(false)
+const [path,setPathname]=useState(pathname)
 const menuClick=()=>{
-setBarState(prev=> !prev) 
+setBarState(prev=> !prev)  
 }
- 
+
+useEffect(()=>{
+  setPathname(pathname)
+},[])
  return ( 
  <> 
   <header className="flex justify-between w-full"> 
@@ -17,7 +23,7 @@ setBarState(prev=> !prev)
 <span className="py-1 px-3 head-forum-span text-6xl">C</span>ulturays
 </h1></Link>
  
-<Link href={`/${item?.replace(' ',"") .replace(/ /g,"-").replace('|',"")}`}className="text-2xl text-gray-500 mt-12 ml-1 py-3"><small >{item}</small></Link>
+<Link href={`/${path.split('/')[1]}`}><p className="text-xl text-gray-500 mt-20 mb-2">{`/${path.split('/')[1]}/`}</p></Link>
 </div> 
 {barState&&
 <div className="fixed h-screen z-50 bg-gray-800 w-full top-0 bottom-0 animate-in cursor-pointer bg-opacity-90" onClick={menuClick}>  

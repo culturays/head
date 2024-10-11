@@ -5,7 +5,7 @@ import {faFacebookF, faGoogle, faInstagram, faWhatsapp, faXTwitter} from "@forta
 const SocialNav = async() => {
  
  return (
-   <div className="flex flex-col items-center pb-2 leading-none ">  
+   <div className="flex flex-col items-center leading-none my-4">  
 <div className="flex social-forum">
 <Link target="_blank" href="https://www.facebook.com/CulturaysSpot">
 <p className="m-1 p-2"><FontAwesomeIcon

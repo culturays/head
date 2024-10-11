@@ -74,7 +74,7 @@ onChange={(e)=> setSubNm({...subNm, email:e.target.value} )}
 Message:
 </label>
 <textarea
-className="p-2 resize-none overflow-scroll text-sm my-2 focus:outline-none rounded border border-green-500 text-black"
+className="p-2 resize-none overflow-auto text-sm my-2 focus:outline-none rounded border border-green-500 text-black"
 id="message"
 name="message"
 placeholder='your message'

@@ -138,8 +138,7 @@ export default function RootLayout({ children  }) {
  const consent = getCookie('localConsent'); 
 //  const headersList = new URL(headers().get('x-url') )
  const url = new URL(headers()?.get('pathname')); 
-const { searchParams } = new URL(url);  
-const pathname=url.pathname
+const { searchParams } = new URL(url);
 const confirmParam= searchParams?.get("confirm")
   //console.log(JSON.stringify(Array.from(headersList.entries()), null, 2))
  
@@ -185,12 +184,12 @@ const confirmParam= searchParams?.get("confirm")
  )}   
 <body className={` ${noko.className}` } > 
   <main >
-  <Header item={`| ${pathname.split('/')[1]}` }/> 
+  <Header/> 
  <SocialNav/> 
  <AuthButton confirmParam={confirmParam} /> 
  <Nav /> 
  <SearchItems />
- <TabNav/>
+ <TabNav/> 
  <Suspense fallback={<p>Loading...</p>}>  
     {children} 
 </Suspense>
