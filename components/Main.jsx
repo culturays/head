@@ -37,7 +37,7 @@ const Main = ({
     const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);  
     function useDebouncedValue(value , delay) {
       const [debouncedValue, setDebouncedValue] = useState(value )
-    
+    console.log(err, err1)
       useEffect(() => {
         const handler = setTimeout(() => {
           setDebouncedValue(value )

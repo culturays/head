@@ -2,8 +2,9 @@
 import Link from "next/link"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useRef, useState } from "react";   
+import { useEffect, useState } from "react";   
 import { usePathname, useRouter } from "next/navigation";
+import ConfirmModal from "./ConfirmModal";
 const Header = () => {
   const pathname = usePathname()
 const [ barState, setBarState]= useState(false)
@@ -16,7 +17,8 @@ useEffect(()=>{
   setPathname(pathname)
 },[pathname])
  return ( 
- <> 
+ <>
+ <ConfirmModal />  
   <header className="flex justify-between w-full"> 
 <div className="md:m-3 flex mt-5" >       
 <Link href='/'><h1 className="head-forum font-bold text-5xl sm:mb-4 mt-4 my-4 md:mt-11 lg:mt-6 mb-4 mx-4 font-mono tightest"> 

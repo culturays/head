@@ -6,8 +6,7 @@ export async function POST(req) {
   const supabase = createClient() 
   const {
     data: { user },
-  } = await supabase.auth.getUser()
- 
+  } = await supabase.auth.getUser() 
   
   if (user) {
     await supabase.auth.signOut()

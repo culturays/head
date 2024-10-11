@@ -1,8 +1,7 @@
 import Link from "next/link";  
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import Image from "next/image";   
-import ConfirmModal from "../components/ConfirmModal";
+import Image from "next/image";    
 import { createClient } from "@/utils/supabase/server";
 
 export default async function AuthButton({handleLogout}) {
@@ -26,21 +25,18 @@ const {
    <Link href={`/profile/${user.id}`}>
    <div > 
       <Image
- src={`${process.env.SUPABASE_STORAGE_PROFILE_URL}/${user.user_metadata.picture}`} 
+ src={user.user_metadata.picture} 
  width={50}
  height={50}
  className="cursor-pointer border rounded-full hover:scale-105 h-10 w-10"
  alt={user.user_metadata.full_name}
  /> 
  </div></Link> } 
-   <button formAction={handleLogout}className="button block text-lg m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
-   Sign out
- </button> 
+
 </form>
-<ConfirmModal /> 
+
 </div>
-)  :  (
-  
+):(  
 <div className="flex flex-col items-center pb-2 leading-none text-xs">
 <Link
 href="/login"
