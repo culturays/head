@@ -1,12 +1,12 @@
 import { createServerClient, CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const createClient = () => {
+export const createClient = () => { 
   const cookieStore = cookies();
  
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+   'https://peezrwllibppqkolgsto.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlZXpyd2xsaWJwcHFrb2xnc3RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM5MTAyNjUsImV4cCI6MjAyOTQ4NjI2NX0.0JuDSTuZpCa7zPsAhGAyZSBT1bQkwxHMWYhgbC_hMg4',
     {
       cookies: {
         get(name) {
