@@ -22,9 +22,8 @@ import nollywoodFeed from "@/utils/nollywoodFeed"
 // })();
   
 const Home =async ({searchParams}) => {
-const eventExp = await getNaijaEvents3()
- let err1= ''
-  let err= ''
+const eventExp = await getNaijaEvents3() 
+  const silverBTitles= await scrapeSilverBird() 
 const dailyEv3 =async()=>{ 
 const result = await Promise.all(eventExp.titleAObj.map(async one=> {  
 const evData = await events3Details(one.atitle)
@@ -89,8 +88,7 @@ const evData = await events3Details(one.atitle)
        .upsert([grouped])
        .select()
                    
-     if (error) {
-      err1+=error
+     if (error) { 
        console.error('Error inserting event:', error);
      } else {
        // console.log('Inserted event:', data); 
@@ -102,59 +100,61 @@ const evData = await events3Details(one.atitle)
   console.log('it ran')
    } 
   
-
-   const silverBTitles= await scrapeSilverBird()   
-  const dailyWiki =async()=>{
  
-    const silverB_titles = silverBTitles.filter((xy)=> xy.title !==undefined).map((ex)=> ex.title)  
-    const silverB_urls = silverBTitles.filter((xy)=> xy.titleUrl !==undefined).map((ex)=> ex.titleUrl) 
-    const silverB_imgs = silverBTitles.filter((xy)=> xy.img_url !==undefined).map((ex)=> ex.img_url)   
-     const silverB_dur = silverBTitles.filter((xy)=> xy.dur !==undefined).map((ex)=> ex.dur)
-    const silverB_gnr = silverBTitles.filter((xy)=> xy.genre !==undefined).map((ex)=> ex.genre)
-    const silverB_released = silverBTitles.filter((xy)=> xy.release_date !==undefined).map((ex)=> ex.release_date)
-   const minLength = Math.max(silverB_titles.length,silverB_urls.length, silverB_imgs.length, silverB_dur.length, silverB_gnr.length, silverB_released.length);   
-   const grouped = [];
    
-   for (let i = 0; i < minLength; i++) { 
-    const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' ).catch(console.error);
-    console.log(imgMime) 
-    grouped.push({ 
-     title: silverB_titles[i], 
-     url: silverB_urls[i],
-      img_url: imgMime ,
-       release_date: silverB_released[i],
-       genre: silverB_gnr[i], 
-       dur: silverB_dur[i]
-     });
-    }  
    
-    try {  
-        const supabase = createClient()
-         const { data, error } = await supabase
-           .from('cinema_titles')
-           .upsert(grouped)
-           .select();                         
-         if (error) {
-         err+=error
-           console.error('Error inserting items:', error);
-         } else {
-           console.log('It ran');
-        }
-     } catch (error) {
-       console.error('Unexpected error:', error);
-     }  
-    } 
+  // const dailyWiki =async()=>{
+ 
+  //   const silverB_titles = silverBTitles.filter((xy)=> xy.title !==undefined).map((ex)=> ex.title)  
+  //   const silverB_urls = silverBTitles.filter((xy)=> xy.titleUrl !==undefined).map((ex)=> ex.titleUrl) 
+  //   const silverB_imgs = silverBTitles.filter((xy)=> xy.img_url !==undefined).map((ex)=> ex.img_url)   
+  //    const silverB_dur = silverBTitles.filter((xy)=> xy.dur !==undefined).map((ex)=> ex.dur)
+  //   const silverB_gnr = silverBTitles.filter((xy)=> xy.genre !==undefined).map((ex)=> ex.genre)
+  //   const silverB_released = silverBTitles.filter((xy)=> xy.release_date !==undefined).map((ex)=> ex.release_date)
+  //  const minLength = Math.max(silverB_titles.length,silverB_urls.length, silverB_imgs.length, silverB_dur.length, silverB_gnr.length, silverB_released.length);   
+  //  const grouped = [];
+   
+  //  for (let i = 0; i < minLength; i++) { 
+  //   const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' ).catch(console.error);
+  //   console.log(imgMime) 
+  //   grouped.push({ 
+  //    title: silverB_titles[i], 
+  //    url: silverB_urls[i],
+  //     img_url: imgMime ,
+  //      release_date: silverB_released[i],
+  //      genre: silverB_gnr[i], 
+  //      dur: silverB_dur[i]
+  //    });
+  //   }  
+   
+  //   try {  
+  //       const supabase = createClient()
+  //        const { data, error } = await supabase
+  //          .from('cinema_titles')
+  //          .upsert(grouped)
+  //          .select();                         
+  //        if (error) { 
+  //          console.error('Error inserting items:', error);
+  //        } else {
+  //          console.log('It ran');
+  //       }
+  //    } catch (error) {
+  //      console.error('Unexpected error:', error);
+  //    }  
+  //   } 
     const now = new Date();
     const delay = 1000 * 60 * 60 * 24;  
     const start = delay - (now.getDay() * 60 +now.getMinutes() * 60 + now.getSeconds()) * 1000 + now.getMilliseconds();
-     dailyWiki();
+   
     setTimeout(function doSomething() {
        dailyEv3()
-      
+       // dailyWiki();
        // schedule the next tick
        setTimeout(doSomething, delay);
      
     }, start);
+
+
     // const daily_intervals = ()=> { 
     //   const intervalId = setInterval(()=>{ 
     
@@ -169,41 +169,41 @@ const evData = await events3Details(one.atitle)
     //   stopDailyInterval(); 
     //  }, 30000);    
 
-const latestPosts=await newsByLatest()
-const posts_cursor=latestPosts?.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor)
+// const latestPosts=await newsByLatest()
+// const posts_cursor=latestPosts?.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor)
 
-///////////////////////////////////////////////
-const post_data = await postCategories(posts_cursor)  
-const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
- const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
- const newsViewCursors = await newsViews()
- const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)  
- const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
- const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
- const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
- const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
-const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
- const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
-//////////////////////////////////////
-const postsData= await newsPosts(allExitingPostCursors)
-const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
-const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
-/////////////////////////////////////// 
+// ///////////////////////////////////////////////
+// const post_data = await postCategories(posts_cursor)  
+// const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
+//  const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
+//  const newsViewCursors = await newsViews()
+//  const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)  
+//  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+//  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
+//  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+//  const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
+// const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
+//  const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+// //////////////////////////////////////
+// const postsData= await newsPosts(allExitingPostCursors)
+// const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
+// const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
+// /////////////////////////////////////// 
 
-const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
-const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
-const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
-//////////////////////////////////////////////////////////////////
-//const unusedPostsinPostCategories = await categoriesUnusedPosts(allExitingPostCursors)
-//////////////////////////////////////////////////////////////////
-// const next_posts_categories =await postNextCategories(postCategory_next_cursor)
-const last_categories = await postLastAndScrolledCategories(last_cursors)
-const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
-const news_outline=await postsOutline() 
- const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
+// const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+// const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
+// const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+// //////////////////////////////////////////////////////////////////
+// //const unusedPostsinPostCategories = await categoriesUnusedPosts(allExitingPostCursors)
+// //////////////////////////////////////////////////////////////////
+// // const next_posts_categories =await postNextCategories(postCategory_next_cursor)
+// const last_categories = await postLastAndScrolledCategories(last_cursors)
+// const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
+// const news_outline=await postsOutline() 
+//  const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
 
-//  ///Post Data after mapping
- const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
+// //  ///Post Data after mapping
+//  const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
 //  await newsFeed()
 //  await netflixNewsFeed()
 //  await nollywoodFeed()
@@ -212,7 +212,7 @@ const news_outline=await postsOutline()
 return (  
 <div > 
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
-     <Main  
+     {/* <Main  
 posts={postsData?.posts.edges} 
 latestPosts={latest_post_categories} 
 post_categories={post_data?.categories.edges }
@@ -226,15 +226,15 @@ last_cursors={last_cursors}
 news_post_cursor={news_post_cursor}  
   err={err}
  err1={err1}
- />   
-  <SideBar/>   
+ />    */}
+  {/* <SideBar/>    */}
 </div>
-   <MainBottom 
+   {/* <MainBottom 
  posts_notIn_newsPosts={posts_all} 
  post_end_cursor={post_end_cursor}
  news_post_cursor={news_post_cursor}
  last_cursors={last_cursors} 
- />  
+ />   */}
 </div> 
  )
 }

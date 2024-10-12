@@ -20,7 +20,7 @@ const SideBar = async() => {
         .select('*')
         if(error)throw new Error('An Error has occured!')
         return { cinema_titles } 
-           
+            
         }   
      const {cinema_titles} =await naija_wiki()
      const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))

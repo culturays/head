@@ -20,7 +20,7 @@ function useDebouncedValue(value , delay) {
     }, [value , delay])
    
     return debouncedValue
-  }
+  } 
 const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, last_cursors}) => {
     const [scrolledContent, setScrolledContent]=useState([])
     const {ref, inView } =useInView();

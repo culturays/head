@@ -18,7 +18,7 @@ const Main = ({
   err,
   err1,
   postCategory_next_cursor,
-   posts_notIn_newsPosts,
+   posts_notIn_newsPosts, 
     cinema_titles, 
      post_end_cursor, 
       post_categories, 
