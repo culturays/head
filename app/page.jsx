@@ -163,10 +163,10 @@ const evData = await events3Details(one.atitle)
     //  }, 30000);    
 
  const latestPosts=await newsByLatest()
-//  const posts_cursor=latestPosts?.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor)
+ const posts_cursor=latestPosts?.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor)
 
 // // ///////////////////////////////////////////////
-// const post_data = await postCategories(posts_cursor)  
+ const post_data = await postCategories(posts_cursor)  
 // const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
 //  const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
 //  const newsViewCursors = await newsViews()
@@ -207,9 +207,9 @@ return (
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
       <Main  
 // posts={postsData?.posts.edges} 
-// latestPosts={latest_post_categories} 
-// post_categories={post_data?.categories.edges }
-// news_outline={news_outline} 
+   latestPosts={latest_post_categories} 
+   post_categories={post_data?.categories.edges }
+   news_outline={news_outline} 
 // // next_posts_categories={next_posts_categories.categories.edges }
 // posts_notIn_newsPosts={posts_all} 
 // post_next_cursor={postCategory_next_cursor}
