@@ -54,7 +54,7 @@ Copyright{" "}
 </Link>
 
 </div>
-  <Consent /> 
+  {/* <Consent />  */}
 </footer>  
 )
 }

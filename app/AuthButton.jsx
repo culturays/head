@@ -32,7 +32,9 @@ const {
  alt={user.user_metadata.full_name}
  /> 
  </div></Link> } 
-
+ <button formAction={handleLogout}className="button block text-lg m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
+   Sign out
+ </button> 
 </form>
 
 </div>
