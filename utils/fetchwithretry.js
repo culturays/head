@@ -11,6 +11,7 @@ export const fetchWithRetry = async (url, options, retries = 3) => {
         // console.log(response)
          throw new Error( response.statusText);
         }
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         return await response.json();
       }catch (error) {
        // console.error(`Fetch error (attempt ${i + 1}):`, error);

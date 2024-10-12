@@ -16,6 +16,7 @@ import TabNav from '@/components/TabNav';
 import Latests from '@/components/Latests';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
+import Loading from './loading';
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/` 
   : "http://localhost:3000/";
@@ -200,7 +201,8 @@ export default  function RootLayout({ children  }) {
 {/* </Suspense> */}
    <Latests/>  
 </main>
- <Footer/> 
+ <Footer/>
+ <Suspense fallback={<Loading />}>{children}</Suspense>
 </body> 
    <TagManager gtmId={'GTM-W7BMCC9'}/> 
 </html>
