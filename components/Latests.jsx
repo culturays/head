@@ -99,7 +99,7 @@ alt={ex.node.title}/>
 )}  
 </div> 
    
-<Link href='/news'><p className="underline my-8 hover:text-gray-400 text-white"> See More</p></Link>
+<Link href='/news'><p className="underline m-8 hover:text-gray-400 text-white"> See More</p></Link>
 </div>   
    </div>)
 }

@@ -93,10 +93,10 @@ alt: 'Culturays Image & Logo',
     //   new URL('/assets/icons/favicon-32x32.png', 'https://culturays.com'),
     //   { url: '/assets/icons/culturays.png', media: '(prefers-color-scheme: dark)' },
     // ],
-    shortcut: ['/assets/icons/favicon-16x16.png'],
+    shortcut: ['/assets/icons/favicon.ico'],
     apple: [
-      { url: '/assets/icons/apple-touch-icon.png' },
-      { url: '/assets/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/assets/icons/favicon.ico' },
+      { url: '/assets/icons/favicon.ico', sizes: '180x180' },
     ],
  
   },
