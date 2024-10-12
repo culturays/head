@@ -178,14 +178,14 @@ const evData = await events3Details(one.atitle)
  const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
  const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
 // //////////////////////////////////////
-// const postsData= await newsPosts(allExitingPostCursors)
-// const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
-// const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
+const postsData= await newsPosts(allExitingPostCursors)
+const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
+const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
 // // /////////////////////////////////////// 
 
-// const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
-// const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
-// const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
+const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
 // //////////////////////////////////////////////////////////////////
 // //const unusedPostsinPostCategories = await categoriesUnusedPosts(allExitingPostCursors)
 // //////////////////////////////////////////////////////////////////
