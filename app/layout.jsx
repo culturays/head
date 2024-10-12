@@ -96,7 +96,7 @@ alt: 'Culturays Image & Logo',
     shortcut: ['/assets/icons/favicon.ico'],
     apple: [
       { url: '/assets/icons/favicon.ico' },
-      { url: '/assets/icons/favicon.ico', sizes: '180x180' },
+      // { url: '/assets/icons/favicon.ico', sizes: '180x180' },
     ],
  
   },
@@ -195,9 +195,9 @@ export default  function RootLayout({ children  }) {
  <Nav /> 
  <SearchItems />
  <TabNav/> 
- <Suspense fallback={<p>Loading...</p>}>  
+ {/* <Suspense fallback={<p>Loading...</p>}>   */}
     {children} 
-</Suspense>
+{/* </Suspense> */}
    <Latests/>  
 </main>
  <Footer/> 
