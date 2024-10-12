@@ -99,59 +99,54 @@ const evData = await events3Details(one.atitle)
  } 
   console.log('it ran')
    } 
-  
+    
+  const dailyWiki =async()=>{
  
+    const silverB_titles = silverBTitles.filter((xy)=> xy.title !==undefined).map((ex)=> ex.title)  
+    const silverB_urls = silverBTitles.filter((xy)=> xy.titleUrl !==undefined).map((ex)=> ex.titleUrl) 
+    const silverB_imgs = silverBTitles.filter((xy)=> xy.img_url !==undefined).map((ex)=> ex.img_url)   
+     const silverB_dur = silverBTitles.filter((xy)=> xy.dur !==undefined).map((ex)=> ex.dur)
+    const silverB_gnr = silverBTitles.filter((xy)=> xy.genre !==undefined).map((ex)=> ex.genre)
+    const silverB_released = silverBTitles.filter((xy)=> xy.release_date !==undefined).map((ex)=> ex.release_date)
+   const minLength = Math.max(silverB_titles.length,silverB_urls.length, silverB_imgs.length, silverB_dur.length, silverB_gnr.length, silverB_released.length);   
+   const grouped = [];
    
+   for (let i = 0; i < minLength; i++) { 
+    const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' ).catch(console.error);
+    console.log(imgMime) 
+    grouped.push({ 
+     title: silverB_titles[i], 
+     url: silverB_urls[i],
+      img_url: imgMime ,
+       release_date: silverB_released[i],
+       genre: silverB_gnr[i], 
+       dur: silverB_dur[i]
+     });
+    }  
    
-  // const dailyWiki =async()=>{
- 
-  //   const silverB_titles = silverBTitles.filter((xy)=> xy.title !==undefined).map((ex)=> ex.title)  
-  //   const silverB_urls = silverBTitles.filter((xy)=> xy.titleUrl !==undefined).map((ex)=> ex.titleUrl) 
-  //   const silverB_imgs = silverBTitles.filter((xy)=> xy.img_url !==undefined).map((ex)=> ex.img_url)   
-  //    const silverB_dur = silverBTitles.filter((xy)=> xy.dur !==undefined).map((ex)=> ex.dur)
-  //   const silverB_gnr = silverBTitles.filter((xy)=> xy.genre !==undefined).map((ex)=> ex.genre)
-  //   const silverB_released = silverBTitles.filter((xy)=> xy.release_date !==undefined).map((ex)=> ex.release_date)
-  //  const minLength = Math.max(silverB_titles.length,silverB_urls.length, silverB_imgs.length, silverB_dur.length, silverB_gnr.length, silverB_released.length);   
-  //  const grouped = [];
-   
-  //  for (let i = 0; i < minLength; i++) { 
-  //   const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' ).catch(console.error);
-  //   console.log(imgMime) 
-  //   grouped.push({ 
-  //    title: silverB_titles[i], 
-  //    url: silverB_urls[i],
-  //     img_url: imgMime ,
-  //      release_date: silverB_released[i],
-  //      genre: silverB_gnr[i], 
-  //      dur: silverB_dur[i]
-  //    });
-  //   }  
-   
-  //   try {  
-  //       const supabase = createClient()
-  //        const { data, error } = await supabase
-  //          .from('cinema_titles')
-  //          .upsert(grouped)
-  //          .select();                         
-  //        if (error) { 
-  //          console.error('Error inserting items:', error);
-  //        } else {
-  //          console.log('It ran');
-  //       }
-  //    } catch (error) {
-  //      console.error('Unexpected error:', error);
-  //    }  
-  //   } 
+    try {  
+        const supabase = createClient()
+         const { data, error } = await supabase
+           .from('cinema_titles')
+           .upsert(grouped)
+           .select();                         
+         if (error) { 
+           console.error('Error inserting items:', error);
+         } else {
+           console.log('It ran');
+        }
+     } catch (error) {
+       console.error('Unexpected error:', error);
+     }  
+    } 
     const now = new Date();
     const delay = 1000 * 60 * 60 * 24;  
     const start = delay - (now.getDay() * 60 +now.getMinutes() * 60 + now.getSeconds()) * 1000 + now.getMilliseconds();
    
     setTimeout(function doSomething() {
        dailyEv3()
-       // dailyWiki();
-       // schedule the next tick
-       setTimeout(doSomething, delay);
-     
+        dailyWiki(); 
+       setTimeout(doSomething, delay); 
     }, start);
 
 
@@ -211,6 +206,7 @@ const evData = await events3Details(one.atitle)
 //  await topicsFeed()   
 return (  
 <div > 
+  text shows
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
      {/* <Main  
 posts={postsData?.posts.edges} 
