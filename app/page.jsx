@@ -175,10 +175,10 @@ const evData = await events3Details(one.atitle)
  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
   const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
  const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
- const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
- const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+ //const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
+ //const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
 // //////////////////////////////////////
- const postsData= await newsPosts(allExitingPostCursors)
+ //const postsData= await newsPosts(allExitingPostCursors)
 // const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
 // const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
 // // /////////////////////////////////////// 
