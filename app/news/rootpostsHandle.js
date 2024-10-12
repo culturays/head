@@ -1204,7 +1204,8 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               title
                 slug
                 tags {
-                  nodes {  id
+                  nodes {
+                   id
                     name
                     slug
                   }
