@@ -183,17 +183,17 @@ const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
 const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
 // // /////////////////////////////////////// 
 
-const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
-const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
-const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+// const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+// const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
+// const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
 // //////////////////////////////////////////////////////////////////
 // //const unusedPostsinPostCategories = await categoriesUnusedPosts(allExitingPostCursors)
 // //////////////////////////////////////////////////////////////////
 // const next_posts_categories =await postNextCategories(postCategory_next_cursor)
 // const last_categories = await postLastAndScrolledCategories(last_cursors)
 // const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
- const news_outline=await postsOutline() 
- const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
+//  const news_outline=await postsOutline() 
+//  const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
 
 // // //  ///Post Data after mapping
 //  const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
@@ -207,16 +207,16 @@ return (
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
       <Main  
 // posts={postsData?.posts.edges} 
-latestPosts={latest_post_categories} 
-post_categories={post_data?.categories.edges }
-news_outline={news_outline} 
+// latestPosts={latest_post_categories} 
+// post_categories={post_data?.categories.edges }
+// news_outline={news_outline} 
 // // next_posts_categories={next_posts_categories.categories.edges }
 //posts_notIn_newsPosts={posts_all} 
-post_next_cursor={postCategory_next_cursor}
-last_two_categories={last_two_categories}
+// post_next_cursor={postCategory_next_cursor}
+// last_two_categories={last_two_categories}
 //post_end_cursor={post_end_cursor}
- last_cursors={last_cursors}
- news_post_cursor={news_post_cursor} 
+//  last_cursors={last_cursors}
+//  news_post_cursor={news_post_cursor} 
  />   
   {/* <SideBar/> */}
 </div>
