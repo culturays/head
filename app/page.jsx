@@ -207,7 +207,7 @@ return (
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
       <Main  
 // posts={postsData?.posts.edges} 
-latestPosts={latest_post_categories} 
+// latestPosts={latest_post_categories} 
 // post_categories={post_data?.categories.edges }
 // news_outline={news_outline} 
 // // next_posts_categories={next_posts_categories.categories.edges }
