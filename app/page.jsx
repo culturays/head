@@ -192,8 +192,8 @@ const evData = await events3Details(one.atitle)
 // const next_posts_categories =await postNextCategories(postCategory_next_cursor)
 // const last_categories = await postLastAndScrolledCategories(last_cursors)
 // const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
-//   const news_outline=await postsOutline() 
-//   const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
+ const news_outline=await postsOutline() 
+ const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
 
 // // //  ///Post Data after mapping
 //  const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
@@ -206,7 +206,7 @@ return (
 <div >  
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
       <Main  
-posts={postsData?.posts.edges} 
+// posts={postsData?.posts.edges} 
 latestPosts={latest_post_categories} 
 post_categories={post_data?.categories.edges }
 news_outline={news_outline} 
