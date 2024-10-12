@@ -166,9 +166,9 @@ const evData = await events3Details(one.atitle)
  const posts_cursor=latestPosts?.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor)
 
 // // ///////////////////////////////////////////////
- const post_data = await postCategories(posts_cursor)  
- const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
- const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
+//  const post_data = await postCategories(posts_cursor)  
+//  const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
+//  const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
 // const newsViewCursors = await newsViews()
  //const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
 //console.log(prev_newsView_cursors)
