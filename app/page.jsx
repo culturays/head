@@ -169,23 +169,23 @@ const evData = await events3Details(one.atitle)
  const post_data = await postCategories(posts_cursor)  
  const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
  const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
-// const newsViewCursors = await newsViews()
-// const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)  
-// const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
-// const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
-// const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
-// const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
-// const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
-// const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+ const newsViewCursors = await newsViews()
+ const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)  
+ const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+ const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
+ const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+ const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
+ const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
+ const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
 // //////////////////////////////////////
-// const postsData= await newsPosts(allExitingPostCursors)
-// const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
-// const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
+const postsData= await newsPosts(allExitingPostCursors)
+const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
+const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
 // // /////////////////////////////////////// 
 
-// const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
-// const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
-// const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
+const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
 // //////////////////////////////////////////////////////////////////
 // //const unusedPostsinPostCategories = await categoriesUnusedPosts(allExitingPostCursors)
 // //////////////////////////////////////////////////////////////////
@@ -211,12 +211,12 @@ latestPosts={latest_post_categories}
 post_categories={post_data?.categories.edges }
 news_outline={news_outline} 
 // // next_posts_categories={next_posts_categories.categories.edges }
-// posts_notIn_newsPosts={posts_all} 
-// post_next_cursor={postCategory_next_cursor}
-// last_two_categories={last_two_categories}
-// post_end_cursor={post_end_cursor}
-// last_cursors={last_cursors}
-// news_post_cursor={news_post_cursor} 
+//posts_notIn_newsPosts={posts_all} 
+post_next_cursor={postCategory_next_cursor}
+last_two_categories={last_two_categories}
+//post_end_cursor={post_end_cursor}
+ last_cursors={last_cursors}
+ news_post_cursor={news_post_cursor} 
  />   
   {/* <SideBar/> */}
 </div>
