@@ -83,7 +83,7 @@ export async function businessBlog(req, res){
        const response = wprest?.data.businesses.nodes
        return response
   } catch (error) {
-   throw new Error('Error fetching data:', error);
+  // throw new Error('Error fetching data:', error);
   
    }
  
@@ -174,7 +174,7 @@ export async function techBlog(req, res){
        return response  
  
   } catch (error) {
-    throw new Error('Error fetching data:', error);
+   // throw new Error('Error fetching data:', error);
   
    }
  
@@ -263,7 +263,7 @@ export async function economyBlog(req, res){
        const response = wprest?.data.economies.nodes
        return response
   } catch (error) {
-    throw new Error('Error fetching data:', error);
+   // throw new Error('Error fetching data:', error);
   
    }
  
@@ -327,7 +327,7 @@ export async function awardsBlog(req, res){
        const response = wprest?.data.awards.nodes
        return response
   } catch (error) {
-    throw new Error('Error fetching data:', error);
+   // throw new Error('Error fetching data:', error);
   
    }
  
@@ -419,7 +419,7 @@ export async function healthBlog(req, res){
        return response  
  
   } catch (error) {
-    throw new Error('Error fetching data:', error);
+   // throw new Error('Error fetching data:', error);
   
    }
  
@@ -507,7 +507,7 @@ export async function environmentBlog(req, res){
        return response  
  
   } catch (error) {
-    throw new Error('Error fetching data:', error);
+   // throw new Error('Error fetching data:', error);
   
    }
  
@@ -595,7 +595,7 @@ export async function societyBlog(req, res){
        return response  
  
   } catch (error) {
-    throw new Error('Error fetching data:', error);
+    //throw new Error('Error fetching data:', error);
   
    }
  
@@ -661,7 +661,7 @@ export async function nollywoodBlog(req, res){
        return response  
  
   } catch (error) {
-    throw new Error('Error fetching data:');
+  //  throw new Error('Error fetching data:');
   
    }
  
@@ -728,7 +728,7 @@ export async function trends(notIn){
        return response 
  
   } catch (error) {
-    throw new Error('Error fetching data:', error);
+   // throw new Error('Error fetching data:', error);
   
    }
  
@@ -850,7 +850,7 @@ idType: 'SLUG'
        return response 
  
   } catch (error) {
-    throw new Error('Error fetching data:', error);
+   // throw new Error('Error fetching data:', error);
   
    }
  
@@ -940,7 +940,7 @@ export async function similarTrending(notIn){
         return response 
   
    } catch (error) {
-    throw new Error('Error fetching data:', error);
+   // throw new Error('Error fetching data:', error);
    
     }
     
@@ -1431,7 +1431,7 @@ idType: 'URI'
       const response = wprest?.data.contentNode
       return response
   } catch (error) {
-    throw new Error('Error fetching data:'); 
+   // throw new Error('Error fetching data:'); 
   
    }
   
@@ -1545,7 +1545,7 @@ title
       return response
 
 } catch (error) {
-  throw new Error('Error fetching data:'); 
+  //throw new Error('Error fetching data:'); 
 
  }
 
@@ -1655,7 +1655,7 @@ idType: 'SLUG'
      const response = wprest?.data.video
        return response
   } catch (error) {
-    throw new Error('Error fetching data')
+   // throw new Error('Error fetching data')
     // console.error('Error fetching data:', error);
   
    }
@@ -1735,7 +1735,7 @@ export const vids = async()=>{
     return response 
     
   } catch (error) {
-    throw new Error('Error fetching data')
+   // throw new Error('Error fetching data')
     //console.error('Error fetching data:', error);
  
   }
@@ -1941,7 +1941,7 @@ export const vids = async()=>{
       const response = wprest?.data.contentNodes.nodes 
       return response
     } catch (error) {
-   throw new Error('Error fetching data')
+ //  throw new Error('Error fetching data')
    //console.error('Error fetching data:', error);
    
     }

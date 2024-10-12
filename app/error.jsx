@@ -2,7 +2,7 @@
 import Link from "next/link"; 
 
  const Error=({ error, reset })=> {
- 
+ console.log(error)
     return (
       <div className="h-max"> 
       <div className="grid h-screen px-4 bg-black bg-opacity-80 place-content-center border border-b-4 border-b-green-600">
