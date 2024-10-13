@@ -1,5 +1,4 @@
-import { newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, postLastAndScrolledCategories, postNextCategories, postsOutline, sideBarNewsItems, sidePanelNewsItems } from "./news/rootpostsHandle"
- 
+import { newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, postLastAndScrolledCategories, postNextCategories, postsOutline, sideBarNewsItems, sidePanelNewsItems } from "./news/rootpostsHandle" 
 import Main from "@/components/Main"
 import { events3Details, getNaijaEvents3 } from "./naija-events/eventData/eventContent"
 import { replaceSpecialCharacters } from "@/utils/replacechar"
@@ -13,6 +12,7 @@ import netflixNewsFeed from "@/utils/netflixNaijaFeed"
 import topicsFeed from "@/utils/topicsFeed"
 import articleFeed from "@/utils/articleFeed"
 import nollywoodFeed from "@/utils/nollywoodFeed"
+import { Suspense } from "react"
 
 // (async () => {
 //   const location = 'Lagos, Nigeria';  
@@ -205,7 +205,8 @@ const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts
  await articleFeed()
  await topicsFeed()   
 return (  
-<div >  
+<div > 
+<Suspense fallback={<div>Loading...</div>}>
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
       <Main  
 posts={postsData?.posts.edges} 
@@ -222,6 +223,7 @@ post_end_cursor={post_end_cursor}
  />   
   <SideBar/> 
 </div>
+</Suspense> 
  <MainBottom 
  posts_notIn_newsPosts={posts_all} 
  post_end_cursor={post_end_cursor}

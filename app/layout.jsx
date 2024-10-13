@@ -195,10 +195,8 @@ export default  function RootLayout({ children  }) {
  <AuthButton handleLogout={handleLogout}/> 
  <Nav /> 
  <SearchItems />
- <TabNav/> 
- <Suspense fallback={<div>Loading...</div>}>
- {children} 
-  </Suspense>  
+ <TabNav/>  
+ {children}  
    <Latests/>  
 </main>
  <Footer/>

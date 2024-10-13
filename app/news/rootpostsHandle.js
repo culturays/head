@@ -1,5 +1,4 @@
 import { agent, fetchWithRetry } from "@/utils/fetchwithretry";
-
 export async function newsByLatest(req, res){
   try{
 
