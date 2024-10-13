@@ -4,7 +4,6 @@ import TagManager from "@/components/TagManager";
 import GoogleAnalytics from '@/components/Analytics';
 import Script from "next/script";   
 import { Open_Sans, Nokora } from 'next/font/google';
-import { Suspense } from 'react'; 
 import Footer from '@/components/Footer';
 import { headers } from "next/headers";
 import SocialNav from "@/components/SocialNav"
@@ -14,8 +13,8 @@ import Nav from '@/components/Nav';
 import SearchItems from '@/components/SearchItems'; 
 import TabNav from '@/components/TabNav';
 import Latests from '@/components/Latests';
-import { redirect } from 'next/navigation';
-import { createClient } from '@/utils/supabase/server'; 
+import { redirect } from 'next/navigation'; 
+import { Suspense } from 'react';
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/` 
   : "http://localhost:3000/";
@@ -186,9 +185,10 @@ export default  function RootLayout({ children  }) {
 </Script> 
 
  )}   
-<body className={` ${noko.className}` } > 
-  <main >
-  <Header/> 
+<body className={` ${noko.className}` } >
+  <Header/>  
+<Suspense fallback={<div>Loading...</div>}>
+  <main >  
  <SocialNav/>  
  <AuthButton handleLogout={handleLogout}/> 
  <Nav /> 
@@ -197,6 +197,7 @@ export default  function RootLayout({ children  }) {
  {children}  
    <Latests/>  
 </main>
+</Suspense> 
  <Footer/>
  
 </body> 
