@@ -184,10 +184,9 @@ export default  function RootLayout({ children  }) {
 </Script> 
 
  )}    
-<body className={` ${noko.className}` } > 
+<body className={` ${noko.className}` } > <Suspense fallback={<div>Loading...</div>}>  
  <Header/>
-<SocialNav/>  
- {/* <Suspense fallback={<div>Loading...</div>}>  */}
+<SocialNav/> 
 <main >
 <AuthButton handleLogout={handleLogout}/>  
 <Nav />
@@ -196,8 +195,8 @@ export default  function RootLayout({ children  }) {
  {children}
 <Latests/> 
 </main>
- {/* </Suspense>  */}
 <Footer/> 
+ </Suspense> 
 </body> 
  <TagManager gtmId={'GTM-W7BMCC9'}/>  
 </html>
