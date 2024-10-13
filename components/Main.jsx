@@ -31,27 +31,20 @@ const Main = ({
      const [categoryPost,setCategoryPost]=useState([])
      const [categoryName,setCategoryName]=useState('') 
      const [scrolledContent, setScrolledContent]=useState([])    
-     const {ref, inView } =useInView();
-    const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);  
-    function debounceingValue(value , delay) {
-      const [debouncedValue, setDebouncedValue] = useState(value )
+     const { inView } =useInView();
+    const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
+    const [debouncedValue, setDebouncedValue] = useState(null)   
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(end_post_cursor )
+      }, 500)
   
-      useEffect(() => {
-        const handler = setTimeout(() => {
-          setDebouncedValue(value )
-        }, delay)
-    
-        return () => {
-          clearTimeout(handler)
-        }
-      }, [value , delay])
-     
-      return debouncedValue
-    }
-
-    const debouncedSearchPosts = debounceingValue(end_post_cursor ,500); 
+      return () => {
+        clearTimeout(handler)
+      }
+    }, [end_post_cursor, 500]) 
     const loadMorePosts = useCallback(async () => {
-           const apiP = await fetchNewPosts(2, debouncedSearchPosts, last_cursors, news_post_cursor); 
+           const apiP = await fetchNewPosts(2, debouncedValue, last_cursors, news_post_cursor); 
            const post_res = apiP.categories.nodes.map((xy)=> xy.posts) 
            const post_content = post_res.map((ex) => ex.nodes).map((xy)=> xy)
             .flat();
@@ -68,10 +61,10 @@ const Main = ({
              setEnd_post_cursor(null);
            } 
           if( scrolledContent.length===20 )setEnd_post_cursor(null);
-         }, [debouncedSearchPosts, inView]);  
+         }, [debouncedValue, inView]);  
            
          useEffect(() => { 
-           if (inView&& debouncedSearchPosts !== null ) {
+           if (inView&& debouncedValue !== null ) {
              loadMorePosts(); 
          }
    }, [loadMorePosts]);
@@ -84,6 +77,7 @@ setCategoryPost(currentPosts)
     setCategoryPost(posts)  
     }
    },[categoryName])
+   
      const changeSet = () => {
      setActiveSet(true)
      setActIdx(-1);
