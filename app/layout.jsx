@@ -14,6 +14,7 @@ import SearchItems from '@/components/SearchItems';
 import TabNav from '@/components/TabNav';
 import Latests from '@/components/Latests';
 import { redirect } from 'next/navigation'; 
+import { Suspense } from 'react';
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/` 
   : "http://localhost:3000/";
@@ -185,15 +186,17 @@ export default  function RootLayout({ children  }) {
  )}    
 <body className={` ${noko.className}` } > 
  <Header/>
-<SocialNav/> 
-<main >
+<SocialNav/>  
 <AuthButton handleLogout={handleLogout}/>  
 <Nav />
-<SearchItems />  
-<TabNav/>
+<SearchItems /> 
+<TabNav/> 
+<main > 
+<Suspense fallback={<div>Loading...</div>}> 
  {children}
-<Latests/> 
+  </Suspense> 
 </main>
+<Latests/> 
 <Footer/> 
 </body> 
  <TagManager gtmId={'GTM-W7BMCC9'}/>  

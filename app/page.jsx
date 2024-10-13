@@ -203,7 +203,8 @@ const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts
  await nollywoodFeed()
  await articleFeed()
  await topicsFeed()   
-return (    <Suspense fallback={<div>Loading...</div>}>  
+return (
+    <Suspense fallback={<div>Loading...</div>}>  
 
 <div > 
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
