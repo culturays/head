@@ -21,7 +21,6 @@ const handleSearch = useDebouncedCallback((term) => {
   }
   
   router.replace(`${pathname}?${params.toString()}`);
-
   search_data()
 }, 300);
 
