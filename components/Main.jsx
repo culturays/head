@@ -14,9 +14,7 @@ const replaceHTMLTags=(string)=>{
   return newString
    }  
  
-const Main = ({
-  err,
-  err1,
+const Main = ({ 
   postCategory_next_cursor,
    posts_notIn_newsPosts, 
     cinema_titles, 
@@ -35,71 +33,71 @@ const Main = ({
      const [scrolledContent, setScrolledContent]=useState([])    
      const {ref, inView } =useInView();
     const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);  
-//     function useDebouncedValue(value , delay) {
-//       const [debouncedValue, setDebouncedValue] = useState(value )
-//     console.log(err, err1)
-//       useEffect(() => {
-//         const handler = setTimeout(() => {
-//           setDebouncedValue(value )
-//         }, delay)
-    
-//         return () => {
-//           clearTimeout(handler)
-//         }
-//       }, [value , delay])
-     
-//       return debouncedValue
-//     }
-
-//     const debouncedSearchPosts = useDebouncedValue(end_post_cursor ,500); 
-//     const loadMorePosts = useCallback(async () => {
-//            const apiP = await fetchNewPosts(2, debouncedSearchPosts, last_cursors, news_post_cursor); 
-//            const post_res = apiP.categories.nodes.map((xy)=> xy.posts) 
-//            const post_content = post_res.map((ex) => ex.nodes).map((xy)=> xy)
-//             .flat();
-   
-//            if (post_content.length>0) {
-//              setScrolledContent(prevContent => [...prevContent, ...post_content]);
-//            } 
-
-//           const hasMorePosts = apiP.categories.nodes.map((xy)=> xy.posts.pageInfo.hasNextPage)
-//           if (hasMorePosts && end_post_cursor !== null) { 
-//              const nextCursor =apiP.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor )
-//              setEnd_post_cursor(nextCursor[0]); 
-//            } else {
-//              setEnd_post_cursor(null);
-//            } 
-//           if( scrolledContent.length===20 )setEnd_post_cursor(null);
-//          }, [debouncedSearchPosts, inView]);  
-           
-//          useEffect(() => { 
-//            if (inView&& debouncedSearchPosts !== null ) {
-//              loadMorePosts(); 
-//          }
-//    }, [loadMorePosts]);
- 
-//       useEffect(()=>{  
-//     if(categoryName){   
-// const currentPosts= post_categories.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
-// setCategoryPost(currentPosts)
-//     }else { 
-//     setCategoryPost(posts)  
-//     }
-//    },[categoryName])
-//      const changeSet = () => {
-//      setActiveSet(true)
-//      setActIdx(-1);
-//      setCategoryName('')  
-//    };
- 
-//   const changeView = (i,name) =>{
-//     setActiveSet(false)
-//     setActIdx(i);
-//     setCategoryName(name) 
+    function useDebouncedValue(value , delay) {
+      const [debouncedValue, setDebouncedValue] = useState(value )
   
-//     };
+      useEffect(() => {
+        const handler = setTimeout(() => {
+          setDebouncedValue(value )
+        }, delay)
+    
+        return () => {
+          clearTimeout(handler)
+        }
+      }, [value , delay])
+     
+      return debouncedValue
+    }
+
+    const debouncedSearchPosts = useDebouncedValue(end_post_cursor ,500); 
+    const loadMorePosts = useCallback(async () => {
+           const apiP = await fetchNewPosts(2, debouncedSearchPosts, last_cursors, news_post_cursor); 
+           const post_res = apiP.categories.nodes.map((xy)=> xy.posts) 
+           const post_content = post_res.map((ex) => ex.nodes).map((xy)=> xy)
+            .flat();
+   
+           if (post_content.length>0) {
+             setScrolledContent(prevContent => [...prevContent, ...post_content]);
+           } 
+
+          const hasMorePosts = apiP.categories.nodes.map((xy)=> xy.posts.pageInfo.hasNextPage)
+          if (hasMorePosts && end_post_cursor !== null) { 
+             const nextCursor =apiP.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor )
+             setEnd_post_cursor(nextCursor[0]); 
+           } else {
+             setEnd_post_cursor(null);
+           } 
+          if( scrolledContent.length===20 )setEnd_post_cursor(null);
+         }, [debouncedSearchPosts, inView]);  
+           
+         useEffect(() => { 
+           if (inView&& debouncedSearchPosts !== null ) {
+             loadMorePosts(); 
+         }
+   }, [loadMorePosts]);
  
-//  const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
+      useEffect(()=>{  
+    if(categoryName){   
+const currentPosts= post_categories.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
+setCategoryPost(currentPosts)
+    }else { 
+    setCategoryPost(posts)  
+    }
+   },[categoryName])
+     const changeSet = () => {
+     setActiveSet(true)
+     setActIdx(-1);
+     setCategoryName('')  
+   };
+ 
+  const changeView = (i,name) =>{
+    setActiveSet(false)
+    setActIdx(i);
+    setCategoryName(name) 
+  
+    };
+ 
+ const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
   //unused
    //posts_notIn_newsPosts[1].nodes.slice(5)
   //posts_notIn_newsPosts[2].nodes.slice(5)
@@ -112,9 +110,9 @@ const Main = ({
  
   return ( 
 <div>  
-showing
+ 
  <MainSlider data={latestPosts} interval={5000} /> 
-{/* <div className='lg:flex justify-center xl:px-4 ' > 
+  <div className='lg:flex justify-center xl:px-4 ' > 
 <div className='py-20 md:px-1 m-auto' > 
 <div className='py-5'>
 <div className='flex border-b shadow-sm justify-around items-center '> 
@@ -202,9 +200,9 @@ showing
 </div>   
 
 </div>
-  */}
- shows too 
- {/* <hr className='h-1 w-4/5 m-auto my-4'/>
+  
+ 
+ <hr className='h-1 w-4/5 m-auto my-4'/>
  <div className="bg-white w-full my-8">   
  <div className="xs:grid grid-cols-2 justify-center xs:items-start items-center xl:grid-cols-4 max-w-2xl lg:max-w-max m-auto py-8 "> 
   <div className='max-w-sm m-auto  border-r xs:m-0'>   
@@ -335,7 +333,7 @@ className='rounded-xl h-44 object-cover'
 </div>  
 </div> 
 
-</div>    */}
+</div> 
 </div>  
   )
 }

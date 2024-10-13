@@ -196,13 +196,13 @@ export default  function RootLayout({ children  }) {
  <Nav /> 
  <SearchItems />
  <TabNav/> 
- {/* <Suspense fallback={<p>Loading...</p>}>   */}
-    {children} 
-{/* </Suspense> */}
+ <Suspense fallback={<div>Loading...</div>}>
+ {children} 
+  </Suspense>  
    <Latests/>  
 </main>
  <Footer/>
- <Suspense fallback={<Loading />}>{children}</Suspense>
+ 
 </body> 
    <TagManager gtmId={'GTM-W7BMCC9'}/> 
 </html>

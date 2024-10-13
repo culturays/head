@@ -100,7 +100,7 @@ export async function newsByLatest(req, res){
         body: JSON.stringify({
           query:`
           query WPPOSTS {                  
-             posts(first:4 , where: {categoryName: "Opinions"}) {
+             posts(first:12 , where: {categoryName: "Opinions"}) {
                 pageInfo {
               startCursor
               endCursor
