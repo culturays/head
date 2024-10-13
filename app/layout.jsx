@@ -153,10 +153,11 @@ export default  function RootLayout({ children  }) {
     return inputStr;
 } 
 
-
+//ns6418.hostgator.com.
+//ns6417.hostgator.com.
  return (
     <html lang="en" > 
-     {/* <Script async type="text/javascript" src="//clickiocmp.com/t/consent_234292.js"/>  */}
+       <Script async type="text/javascript" src="//clickiocmp.com/t/consent_234292.js"/>  
      {/* <GoogleAnalytics GA_ID={GA_ID}/> 
 
    {consent === true && (
