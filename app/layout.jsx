@@ -88,13 +88,13 @@ alt: 'Culturays Image & Logo',
  
   icons: {
     // icon: [
-    //   { url: '/assets/icons/favicon-32x32.png' },
+    //   { url: '/favicon-32x32.png' },
     //   new URL('/assets/icons/favicon-32x32.png', 'https://culturays.com'),
     //   { url: '/assets/icons/culturays.png', media: '(prefers-color-scheme: dark)' },
     // ],
-    shortcut: ['/assets/icons/favicon.ico'],
+    shortcut: ['/favicon.ico'],
     apple: [
-      { url: '/assets/icons/favicon.ico' },
+      { url: '/favicon.ico' },
       // { url: '/assets/icons/favicon.ico', sizes: '180x180' },
     ],
  
