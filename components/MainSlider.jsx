@@ -5,28 +5,28 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react'; 
 
 const MainSlider = ({ data, interval = 3000 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const [currentIndex, setCurrentIndex] = useState(0);
 const [screenWidth,setScreenWidth]=useState({})
-//   useEffect(() => {
-//     const slideInterval = setInterval(() => {
-//       setCurrentIndex((prevIndex) => (prevIndex + 1) % data?.length);
-//     }, interval);
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % data?.length);
+    }, interval);
 
-//     return () => clearInterval(slideInterval);
-//   }, [data?.length, interval]);
-//   useEffect(()=>{
-// const viewport= {
-//   width: document.documentElement.clientWidth,
-//   height: document.documentElement.clientHeight
-// } 
-// setScreenWidth(viewport)
-//   },[screenWidth?.viewport?.width ]) 
+    return () => clearInterval(slideInterval);
+  }, [data?.length, interval]);
+  useEffect(()=>{
+const viewport= {
+  width: document.documentElement.clientWidth,
+  height: document.documentElement.clientHeight
+} 
+setScreenWidth(viewport)
+  },[screenWidth?.viewport?.width ]) 
  
   return (
     <div >
         <h2 className='text-gray-600 font-bold text-4xl text-center py-4'>News Plug</h2> 
         <hr className='w-3/4 m-auto bg-gray-600 h-1'/> 
-  {/* <div className="main-slider	overflow-hidden relative m-auto sm:w-auto" style={{ maxWidth:'600px', height:'30em'}}>
+   <div className="main-slider	overflow-hidden relative m-auto sm:w-auto" style={{ maxWidth:'600px', height:'30em'}}>
     <div className='main-x-slider absolute top-0 pt-4 left-4 ml-1 min-[375px]:left-10 min-[375px]:ml-6 min-[600px]:left-16 min-[481px]:ml-10 min-[550px]:ml-16 sm:left-0 sm:ml-0 md:left-16 md:m-5 min-[850px]:left-24 min-[850px]:ml-5 min-[950px]:ml-0 lg:left-0 lg:m-auto' style={{width:'9000px'}}> 
     {data?.flat()?.map((xy,i)=>
     <div className='x-main-x-slider float-left relative inline-block p-1 h-80' key={i + ' ' + Math.random()}> 
@@ -45,7 +45,7 @@ const [screenWidth,setScreenWidth]=useState({})
    )}
     </div>
 
-  </div>  */}
+  </div> 
 
     <hr className='w-11/12 m-auto bg-gray-600 h-1'/>
    </div>

@@ -33,7 +33,7 @@ const Main = ({
      const [scrolledContent, setScrolledContent]=useState([])    
      const {ref, inView } =useInView();
     const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);  
-    function useDebouncedValue(value , delay) {
+    function debounceingValue(value , delay) {
       const [debouncedValue, setDebouncedValue] = useState(value )
   
       useEffect(() => {
@@ -49,7 +49,7 @@ const Main = ({
       return debouncedValue
     }
 
-    const debouncedSearchPosts = useDebouncedValue(end_post_cursor ,500); 
+    const debouncedSearchPosts = debounceingValue(end_post_cursor ,500); 
     const loadMorePosts = useCallback(async () => {
            const apiP = await fetchNewPosts(2, debouncedSearchPosts, last_cursors, news_post_cursor); 
            const post_res = apiP.categories.nodes.map((xy)=> xy.posts) 
