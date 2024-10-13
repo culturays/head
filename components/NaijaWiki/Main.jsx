@@ -10,8 +10,7 @@ import NewsLetter from '../NewsLetter'
 import NaijaContent from './NaijaContent' 
 import InterContent from './InterContent'
 
-const Main = ({
-  err,
+const Main = ({ 
   africa_blog,   
   popular_blog,
   inter_blog,
@@ -22,12 +21,12 @@ const Main = ({
   news_blog, 
   cinema_titles, 
   naijaWikiVideos
-}) => {
+}) => { 
 const [activeSlide, setActiveSlide]=useState(0)
 const [activeIndices, setActiveIndices] = useState([0, 1]);
 const [end_ng_cursor, setEnd_ng_cursor] = useState('');
 const [end_inter_cursor, setEnd_inter_cursor] = useState(''); 
-console.log(err)
+ 
 const replaceHTMLTags=(string)=>{
 const regex = /(<([^>]+)>)/gi;
 //(/<\/?[^>]+(>|$)/g, "")

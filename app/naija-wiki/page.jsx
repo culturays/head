@@ -9,35 +9,34 @@ const NaijaWikiPage =async ({searchParams, params}) => {
 const newChars = await newchars()
 const naijaWikiVideos =await vids()
 const netFlixTop10= await getTop10()
-let err =''
+ 
 const naija_wiki =async ()=>{  
 const supabase = createClient() 
 const { data:cinema_titles , error } = await supabase 
 .from('cinema_titles')
-.select('*')
-err+=error
+.select('*') 
 if(error)throw new Error('An Error has occured!')
 return { cinema_titles } 
  
 }
 const {cinema_titles} =await naija_wiki() 
 const netflix__News = await netflixNews() 
-const netflix_africa= await netflixAfrica() 
-const netflix_popular = await netflixPopular()
-const netflix_inter = await netflixInter()
-const netflix__NG_naija = await netflixNigNaija() 
- const news_blog =netflix__News?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
- const africa_blog =netflix_africa?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+// const netflix_africa= await netflixAfrica() 
+// const netflix_popular = await netflixPopular()
+// const netflix_inter = await netflixInter()
+// const netflix__NG_naija = await netflixNigNaija() 
+//  const news_blog =netflix__News?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+//  const africa_blog =netflix_africa?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
  
-        const popular_blog =netflix_popular?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
-         const inter_blog =netflix_inter.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
-          const naija_blog =netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
-          const inter_cursor=netflix_inter?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo) 
-          const naija_cursor= netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo)
+//         const popular_blog =netflix_popular?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+//          const inter_blog =netflix_inter.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+//           const naija_blog =netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+//           const inter_cursor=netflix_inter?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo) 
+          // const naija_cursor= netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo)
            
 return (
 <div>
-  <Main  
+  {/* <Main  
 newChars={newChars}
 cinema_titles={cinema_titles}
 naijaWikiVideos={naijaWikiVideos} 
@@ -48,9 +47,8 @@ popular_blog={popular_blog}
 inter_blog={inter_blog}
 naija_blog={naija_blog}
 inter_cursor={inter_cursor}
-naija_cursor={naija_cursor}
- err={err}
-/>  
+naija_cursor={naija_cursor} 
+/>   */}
 </div>
   )
 }

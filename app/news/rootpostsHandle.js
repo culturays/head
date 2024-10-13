@@ -169,7 +169,7 @@ export async function newsByLatest(req, res){
         const response = wprest?.data.posts.edges
         return response
     }catch(error){
-  // throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
   
   }
@@ -244,7 +244,7 @@ export async function newsByLatest(req, res){
         const response = wprest?.data
         return response
     }catch(error){
-     // throw new Error ('Error fetching data') 
+      if(error)throw new Error('Error fetching data')
     }
  
   } 
@@ -313,7 +313,7 @@ export async function newsByLatest(req, res){
      const response = wprest?.data
      return response
     }catch(error){
-     // throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
   
   }
@@ -381,7 +381,7 @@ export async function newsByLatest(req, res){
            const response = wprest?.data
            return response
     }catch(error){
-    //  throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
      } 
 export async function newsPosts(notIn){
@@ -481,7 +481,7 @@ export async function newsPosts(notIn){
         const response = wprest?.data 
         return response
   }catch(error){
-   // throw new Error('Error fetching data')
+    if(error)throw new Error('Error fetching data')
   }
  
   }   
@@ -550,7 +550,7 @@ export async function newsPosts(notIn){
       const response = wprest?.data
       return response
     }catch(error){
-      //throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
   
   }
@@ -584,7 +584,7 @@ export async function newsPosts(notIn){
         const response = wprest?.data.outlines.nodes 
         return response
     }catch(error){
-   //   throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
 
   }
@@ -690,7 +690,7 @@ export async function newsPosts(notIn){
            const response = wprest?.data.categories.edges 
            return response
     }catch(error){
-    //  throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
    
      }
@@ -792,7 +792,7 @@ const wp_naija = await fetchWithRetry('https://content.culturays.com/graphql',{
       const res_naija = wp_naija?.data
       return res_naija
     }catch(error){
-    //  throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
     
   }
@@ -900,7 +900,7 @@ const wp_naija = await fetchWithRetry('https://content.culturays.com/graphql',{
          const response = wprest?.data.post
          return response
     } catch (error) {
-    //  throw new Error('Error fetching data:');
+      if(error)throw new Error('Error fetching data')
     
      }
   }
@@ -1260,7 +1260,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
        const response = wprest?.data.posts.edges
        return response
     }catch(error){
-     // throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
     
   }
@@ -1345,7 +1345,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       const response = wprest?.data.posts.edges
       return response
     }catch(error){
-   //   throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
   
   }
@@ -1431,7 +1431,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       const response =wprest?.data.posts.edges
       return response
     }catch(error){
-    //  throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     }
   
   }
