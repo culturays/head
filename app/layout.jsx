@@ -138,12 +138,8 @@ export default  function RootLayout({ children  }) {
  const GA_ID= process.env.GA_ID
  const consent = getCookie('localConsent'); 
   //console.log(JSON.stringify(Array.from(headersList.entries()), null, 2))
-  const headersList = headers();
-  const pathname = headersList.get('referer') || ""  
-   const handleLogout=async()=>{ 
-    "use server"
-    redirect(`${pathname}?confirm=logout?`)
-     }
+
+
   function transformString(inputStr) { 
     inputStr = inputStr.replace(/^\/|\/$/g, ''); 
     inputStr = inputStr.replace(/-/g, ' '); 
@@ -186,11 +182,7 @@ export default  function RootLayout({ children  }) {
  )}    
 <body className={` ${noko.className}` } > 
  <Header/>
-<SocialNav/>  
-<AuthButton handleLogout={handleLogout}/>  
-<Nav />
-<SearchItems /> 
-<TabNav/> 
+ <SocialNav/> 
 <main > 
 <Suspense fallback={<div>Loading...</div>}> 
  {children}

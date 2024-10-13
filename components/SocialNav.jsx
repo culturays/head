@@ -1,10 +1,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
  import Link from "next/link";  
 import {faFacebookF, faGoogle, faInstagram, faWhatsapp, faXTwitter} from "@fortawesome/free-brands-svg-icons";
+import AuthButton from '@/app/AuthButton';
+import { headers } from 'next/headers';
+import Nav from './Nav';
+import SearchItems from './SearchItems';
+import TabNav from './TabNav';
  
 const SocialNav = async() => {
+  const headersList = headers();
+  const pathname = headersList.get('referer') || ""  
+  const handleLogout=async()=>{ 
+    "use server"
+    redirect(`${pathname}?confirm=logout?`)
+     }
  
  return (
+ <div> 
    <div className="flex flex-col items-center leading-none my-4">  
 <div className="flex social-forum">
 <Link target="_blank" href="https://www.facebook.com/CulturaysSpot">
@@ -44,7 +56,12 @@ icon={faWhatsapp}/></p>
     </div>
 
     </div>
-    )
+   
+<AuthButton handleLogout={handleLogout}/> 
+<Nav />
+<SearchItems /> 
+<TabNav/> 
+   </div> )
   }
   
   export default SocialNav
