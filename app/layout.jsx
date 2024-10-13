@@ -151,7 +151,7 @@ export default  function RootLayout({ children  }) {
 
  return (
     <html lang="en" > 
-       <Script async type="text/javascript" src="//clickiocmp.com/t/consent_234292.js"/>  
+       {/* <Script async type="text/javascript" src="//clickiocmp.com/t/consent_234292.js"/>  
     <GoogleAnalytics GA_ID={GA_ID}/> 
 
    {consent === true && (
@@ -179,12 +179,11 @@ export default  function RootLayout({ children  }) {
 >  
 </Script> 
 
- )}    
+ )}     */}
 <body className={` ${noko.className}` } > 
- <Header/>
- <SocialNav/> 
 <main > 
 <Suspense fallback={<div>Loading...</div>}> 
+
  {children}
   </Suspense> 
 </main>
