@@ -206,7 +206,6 @@ const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts
  await topicsFeed()   
 return (  
 <div > 
-  <Suspense fallback={<div>Loading...</div>}>
   <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
       <Main  
 posts={postsData?.posts.edges} 
@@ -223,7 +222,7 @@ post_end_cursor={post_end_cursor}
  />   
   <SideBar/> 
 </div>
-</Suspense> 
+ 
  <MainBottom 
  posts_notIn_newsPosts={posts_all} 
  post_end_cursor={post_end_cursor}
