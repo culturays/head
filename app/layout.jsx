@@ -139,7 +139,6 @@ export default  function RootLayout({ children  }) {
  const consent = getCookie('localConsent'); 
   //console.log(JSON.stringify(Array.from(headersList.entries()), null, 2))
 
-
   function transformString(inputStr) { 
     inputStr = inputStr.replace(/^\/|\/$/g, ''); 
     inputStr = inputStr.replace(/-/g, ' '); 
@@ -180,17 +179,16 @@ export default  function RootLayout({ children  }) {
 </Script> 
 
  )}     */}
-<body className={` ${noko.className}` } > 
-<main > 
-<Suspense fallback={<div>Loading...</div>}> 
-
+<body className={` ${noko.className}` } >   
+ <Suspense fallback={<div>Loading...</div>}> 
+  <Header/>
+<SocialNav/>  
  {children}
-  </Suspense> 
-</main>
-<Latests/> 
+<Latests/>  
+ </Suspense> 
 <Footer/> 
 </body> 
- <TagManager gtmId={'GTM-W7BMCC9'}/>  
+ {/* <TagManager gtmId={'GTM-W7BMCC9'}/>   */}
 </html>
 )
 }
