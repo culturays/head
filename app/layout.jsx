@@ -15,8 +15,7 @@ import SearchItems from '@/components/SearchItems';
 import TabNav from '@/components/TabNav';
 import Latests from '@/components/Latests';
 import { redirect } from 'next/navigation';
-import { createClient } from '@/utils/supabase/server';
-import Loading from './loading';
+import { createClient } from '@/utils/supabase/server'; 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/` 
   : "http://localhost:3000/";
@@ -190,8 +189,7 @@ export default  function RootLayout({ children  }) {
 <body className={` ${noko.className}` } > 
   <main >
   <Header/> 
- <SocialNav/> 
- 
+ <SocialNav/>  
  <AuthButton handleLogout={handleLogout}/> 
  <Nav /> 
  <SearchItems />
