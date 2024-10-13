@@ -21,18 +21,18 @@ return { cinema_titles }
 }
 const {cinema_titles} =await naija_wiki() 
 const netflix__News = await netflixNews() 
-// const netflix_africa= await netflixAfrica() 
-// const netflix_popular = await netflixPopular()
-// const netflix_inter = await netflixInter()
-// const netflix__NG_naija = await netflixNigNaija() 
-//  const news_blog =netflix__News?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
-//  const africa_blog =netflix_africa?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+const netflix_africa= await netflixAfrica() 
+const netflix_popular = await netflixPopular()
+const netflix_inter = await netflixInter()
+const netflix__NG_naija = await netflixNigNaija() 
+ const news_blog =netflix__News?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+ const africa_blog =netflix_africa?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
  
-//         const popular_blog =netflix_popular?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
-//          const inter_blog =netflix_inter.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
-//           const naija_blog =netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
-//           const inter_cursor=netflix_inter?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo) 
-          // const naija_cursor= netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo)
+        const popular_blog =netflix_popular?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+         const inter_blog =netflix_inter.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+          const naija_blog =netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+          const inter_cursor=netflix_inter?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo) 
+          const naija_cursor= netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo)
            
 return (
 <div>
