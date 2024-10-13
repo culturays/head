@@ -153,8 +153,6 @@ export default  function RootLayout({ children  }) {
     return inputStr;
 } 
 
-//ns6418.hostgator.com.
-//ns6417.hostgator.com.
  return (
     <html lang="en" > 
        <Script async type="text/javascript" src="//clickiocmp.com/t/consent_234292.js"/>  
@@ -194,15 +192,15 @@ export default  function RootLayout({ children  }) {
    <Nav /> 
   <main > 
  <SearchItems />  
- {/* <TabNav/>   */}
+  <TabNav/> 
  {children}  
-   {/* <Latests/>   */}
+    <Latests/>  
 </main>
 </Suspense> 
- {/* <Footer/> */}
+  <Footer/>  
  
 </body> 
-   {/* <TagManager gtmId={'GTM-W7BMCC9'}/>  */}
+   <TagManager gtmId={'GTM-W7BMCC9'}/>  
 </html>
 )
 }

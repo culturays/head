@@ -24,7 +24,6 @@ const handleSearch = useDebouncedCallback((term) => {
   search_data()
 }, 300);
 
-
 const name = params.get('name'); 
 const search_data =async()=>{
   const postSearch= await searchValues(name) 
