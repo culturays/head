@@ -36,7 +36,7 @@ const netflix__NG_naija = await netflixNigNaija()
            
 return (
 <div>
-  {/* <Main  
+  <Main  
 newChars={newChars}
 cinema_titles={cinema_titles}
 naijaWikiVideos={naijaWikiVideos} 
@@ -48,7 +48,7 @@ inter_blog={inter_blog}
 naija_blog={naija_blog}
 inter_cursor={inter_cursor}
 naija_cursor={naija_cursor} 
-/>   */}
+/>  
 </div>
   )
 }
