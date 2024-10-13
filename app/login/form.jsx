@@ -6,11 +6,13 @@ import { SubmitButton } from "./submit-button";
 import Link from "next/link";
  
 const LoginForm = ({ handleOauthLogin, signUp, signIn, searchParams}) => {
+const [passType, setPassType] = useState('password');
+const [icon, setIcon] = useState(faEyeSlash);
+const [errors, setErrors] = useState({});
 const password_pattern=new RegExp(`^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,20}$`)
 const email_pattern=new RegExp(`^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$`) 
 const name_pattern=new RegExp(`^[A-Za-z0-9]{3,10}$`) 
-const [passType, setPassType] = useState('password');
-const [icon, setIcon] = useState(faEyeSlash);
+
 //console.log(err)
 const handleToggle = (textPass) => {
 if (passType===textPass){
@@ -21,7 +23,7 @@ if (passType===textPass){
   setPassType(textPass)
 }
 }
-const [errors, setErrors] = useState({});
+
 const validateForm = (data) => {
   const errors = {}; 
   if (data.name === 'full_name'&&!name_pattern.test(data.value.trim())) {

@@ -1,10 +1,10 @@
 "use client" 
-import { useRouter,useSearchParams } from "next/navigation";
-import { useParams } from "react-router-dom";
+import { useRouter,useSearchParams } from "next/navigation"; 
  
 const ConfirmModal = () => { 
   const searchParams = useSearchParams()
- 
+  const router = useRouter()   
+  const searched= useSearchParams()
   // const {handleConfirmLogout, setCurrentUrl}=usePagesContext()
  
   // useEffect(() => {  
@@ -12,8 +12,7 @@ const ConfirmModal = () => {
   //     setCurrentUrl(window.location.href);
   //   }
   // }, []);
- const router = useRouter()   
-  const searched= useSearchParams()
+
   const params = new URLSearchParams(searched);
   const prX = params.get('confirm') 
   if(prX){

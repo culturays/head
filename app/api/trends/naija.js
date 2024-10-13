@@ -1,6 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
-import axios from "axios";
-import cheerio from "cheerio" 
 import googleTrends from 'google-trends-api'
 const ourPassword = process.env.NEXT_PUBLIC_WP_SECRET
 const ourUsername = "Christina Ngene"

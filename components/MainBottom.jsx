@@ -6,28 +6,25 @@ import Link from 'next/link'
 import React, { useCallback, useEffect } from 'react'
 import { useState } from 'react'
 import { useInView } from 'react-intersection-observer'
-function useDebouncedValue(value , delay) {
-    const [debouncedValue, setDebouncedValue] = useState(value )
+ 
+const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, last_cursors}) => {
+    const [scrolledContent, setScrolledContent]=useState([])
+    const {ref, inView } =useInView();
+    const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
+    const [debouncedValue, setDebouncedValue] = useState(null) 
   
     useEffect(() => {
       const handler = setTimeout(() => {
-        setDebouncedValue(value )
-      }, delay)
+        setDebouncedValue(end_post_cursor )
+      }, 500)
   
       return () => {
         clearTimeout(handler)
       }
-    }, [value , delay])
-   
-    return debouncedValue
-  } 
-const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, last_cursors}) => {
-    const [scrolledContent, setScrolledContent]=useState([])
-    const {ref, inView } =useInView();
-    const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
-    const debouncedSearchPosts = useDebouncedValue(end_post_cursor ,500); 
+    }, [end_post_cursor , 500])  
+
     const loadMorePosts = useCallback(async () => {
-           const apiP = await fetchNewPosts(2, debouncedSearchPosts, last_cursors, news_post_cursor); 
+           const apiP = await fetchNewPosts(2, debouncedValue, last_cursors, news_post_cursor); 
            const post_res = apiP?.categories?.nodes.map((xy)=> xy.posts) 
            const post_content = post_res?.map((ex) => ex.nodes).map((xy)=> xy)
             .flat();
@@ -44,10 +41,10 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
              setEnd_post_cursor(null);
            } 
           if( scrolledContent.length===20 )setEnd_post_cursor(null);
-         }, [debouncedSearchPosts, inView]);  
+         }, [debouncedValue, inView]);  
            
          useEffect(() => { 
-           if (inView&& debouncedSearchPosts !== null ) {
+           if (inView&& debouncedValue !== null ) {
              loadMorePosts(); 
          }
    }, [loadMorePosts]);

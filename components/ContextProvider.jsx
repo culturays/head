@@ -1,11 +1,8 @@
 "use client"
 import { createClient } from "@/utils/supabase/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react"; 
- 
+import React, { useRef, useState } from "react"; 
 import { PagesContext } from "./Pages-Context"; 
-import nlp from "compromise/three";
- 
 export const ContextProvider = ({children}) => {
   let initialVal=""
   const [scrolledPosts,setScrolledPosts]=useState([])
@@ -20,15 +17,15 @@ const [editBtn, setEditBtn]=useState(false)
 const [showSuggestion, setShowSuggestion]=useState(false)
 const [deleteBtn,setDeleteBtn]=useState(false) 
 const [activeReply,setActiveReply]=useState(null)
-
+const searched= useSearchParams()
+  const params = new URLSearchParams(searched);
+  const prX = params.get('confirm')
   const pathname = usePathname()
   const imgRef= useRef() 
   const router = useRouter()
   const editingRef=useRef()
   const searchParams= useSearchParams();
-  const val = searchParams.get('message');
-
-  
+  const val = searchParams.get('message');  
  const commentReply  = async(comment, user) => { 
   const supabase = createClient(); 
   const likeidx = comment?.replies?.findIndex((id)=> id === comment.id)  
@@ -97,9 +94,7 @@ const [activeReply,setActiveReply]=useState(null)
         setScrolledPosts(pt )
           
         };
-const searched= useSearchParams()
-  const params = new URLSearchParams(searched);
-  const prX = params.get('confirm')
+
   // const [currentUrl, setCurrentUrl] = useState(''); 
   // useEffect(() => { 
   // if (process) { 
@@ -113,15 +108,6 @@ const searched= useSearchParams()
 //   //   router.push( `${currentUrl.split('/?')[0]}?confirm=yes`, { shallow: true });
 //   // }
 // };
-
-  
-
-
-
-
-
-
-
 
 //posts functions
 

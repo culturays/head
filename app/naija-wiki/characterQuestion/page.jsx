@@ -23,7 +23,6 @@ function CharacterQuestion() {
   const ourPassword = process.env.NEXT_PUBLIC_WP_SECRET
   const ourUsername = "Christina Ngene"
   const submitForm = (e) => {
-    // We don't want the page to refresh
     e.preventDefault()
     const formURL = e.target.action
     const data = new FormData() 
@@ -54,7 +53,7 @@ if(data){
     })
   } 
   
-//  py-3 max-w-xs m-auto sm:max-w-xl absolute left-0 right-0 border bg-gray-900 text-gray-200 md:m-auto rounded-lg z-20
+
   return (
     <div className="py-3 m-auto sm:max-w-xl w-80 relative md:w-3/4 max-w-xs border bg-gray-900 text-gray-200 z-10 m-auto rounded-lg my-4"> 
     {!closeQuestion&& <p onClick={()=> setCloseQuestion(prev => !prev)} className="cursor-pointer px-4 text-2xl font-bold opacity-90 m-2">X</p> }

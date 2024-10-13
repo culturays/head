@@ -33,7 +33,17 @@ const Main = ({
      const [scrolledContent, setScrolledContent]=useState([])    
      const { inView } =useInView();
     const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
-    const [debouncedValue, setDebouncedValue] = useState(null)   
+    const [debouncedValue, setDebouncedValue] = useState(null)  
+  
+
+ useEffect(()=>{  
+if(categoryName){   
+const currentPosts= post_categories.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
+setCategoryPost(currentPosts)
+}else { 
+setCategoryPost(posts)  
+}
+},[categoryName]) 
     useEffect(() => {
       const handler = setTimeout(() => {
         setDebouncedValue(end_post_cursor )
@@ -42,7 +52,8 @@ const Main = ({
       return () => {
         clearTimeout(handler)
       }
-    }, [end_post_cursor, 500]) 
+    }, [end_post_cursor, 500])
+    
     const loadMorePosts = useCallback(async () => {
            const apiP = await fetchNewPosts(2, debouncedValue, last_cursors, news_post_cursor); 
            const post_res = apiP.categories.nodes.map((xy)=> xy.posts) 
@@ -60,23 +71,13 @@ const Main = ({
            } else {
              setEnd_post_cursor(null);
            } 
-          if( scrolledContent.length===20 )setEnd_post_cursor(null);
-         }, [debouncedValue, inView]);  
-           
-         useEffect(() => { 
-           if (inView&& debouncedValue !== null ) {
-             loadMorePosts(); 
-         }
-   }, [loadMorePosts]);
- 
-      useEffect(()=>{  
-    if(categoryName){   
-const currentPosts= post_categories.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
-setCategoryPost(currentPosts)
-    }else { 
-    setCategoryPost(posts)  
+          if( scrolledContent.length===20)setEnd_post_cursor(null);
+         }, [debouncedValue, inView]);           
+        useEffect(() => { 
+      if (inView&& debouncedValue !== null ) {
+        loadMorePosts(); 
     }
-   },[categoryName])
+}, [loadMorePosts]);
    
      const changeSet = () => {
      setActiveSet(true)

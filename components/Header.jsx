@@ -3,7 +3,7 @@ import Link from "next/link"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";   
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import ConfirmModal from "./ConfirmModal";
 const Header = () => {
   const pathname = usePathname()

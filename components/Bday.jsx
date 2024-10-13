@@ -2,8 +2,9 @@
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react'; 
-const Bday = ({data}) => {
+import React, { useState} from 'react'; 
+const Bday = ({data}) => { 
+   const [activeSlide,setActiveSlide] =useState( 0) 
   const offset = -8;
   const todaysBd= new Date( new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" )
   const bdayObj= data?.filter((xy, i)=>new Date(xy.info).toLocaleString().split(',')[0].slice(0,-5) 
@@ -19,7 +20,7 @@ const filteredDates = data.filter(dateStr => {
     const dateMonth = date.getMonth();
     return dateMonth === todayMonth&&dateDay === todayDay;
 }); 
-  const [activeSlide,setActiveSlide] =useState( 0) 
+
   const prevSlide=()=> { 
     const slide =activeSlide - 1 < 0
       ?filteredDates.length - 1
