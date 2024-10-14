@@ -206,9 +206,9 @@ const evData = await events3Details(one.atitle)
 return (
 <div> 
   bjhjgfhgjjh
-  <Test latestPosts={latestPosts}
-    posts_cursor={posts_cursor} 
-newsViewCursors ={newsViewCursors}
+  <Test 
+  latestPosts={latestPosts}
+    posts_cursor={posts_cursor}  
     />
   {/* <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main  
