@@ -82,7 +82,7 @@ searchData?.slice(0,4).map((it, index)=> it?.contentTypeName !=='char' && it.con
 </div>
 )   }
 {name && 
-content?.filter((x1)=> x1?.contentTypeName ==='netflix-naija' ).map((xy)=> xy?.netflixCategories?.nodes.map((tx)=> tx?.netflixNaijaPosts.nodes)?.flat()?.map((it, index)=>
+netflixContent?.filter((x1)=> x1?.contentTypeName ==='netflix-naija' ).map((xy)=> xy?.netflixCategories?.nodes.map((tx)=> tx?.netflixNaijaPosts.nodes)?.flat()?.map((it, index)=>
 <div key={it?.id} className="items_search min-h-32 w-11/12 m-0 m-auto py-4 min-[481px]:w-3/4 sm:w-full"> 
 <div className="m-6"> 
 <Link href={`/netflix-naija/news/${it?.slug }`}><p className="text-xl text-center">{it?.title}</p></Link> 
