@@ -163,7 +163,7 @@ export async function newsByLatest(req, res){
         
         })
         
-        }).then(response =>response)    
+        }).then(response => response)   
         .then(data =>data) 
         .catch(error => console.error('Error:', error)); 
         const response = wprest?.data?.posts?.edges
