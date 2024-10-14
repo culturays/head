@@ -167,12 +167,12 @@ const evData = await events3Details(one.atitle)
 
 // // ///////////////////////////////////////////////
  const post_data = await postCategories(posts_cursor)  
- const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
- const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
-const newsViewCursors = await newsViews()
- const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
- const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
- const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
+//  const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
+//  const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
+// const newsViewCursors = await newsViews()
+//  const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
+//  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+//  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
  
 //   const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
 //  const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
@@ -198,16 +198,14 @@ const newsViewCursors = await newsViews()
 
 // // //  ///Post Data after mapping
 //  const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
- await newsFeed()
- await netflixNewsFeed()
- await nollywoodFeed()
- await articleFeed()
- await topicsFeed()  
+//  await newsFeed()
+//  await netflixNewsFeed()
+//  await nollywoodFeed()
+//  await articleFeed()
+//  await topicsFeed()  
 console.log(
   latestPosts,
-  posts_cursor,
-  post_data,
-  postCategory_next_cursor
+  posts_cursor 
 )
 return (
 <div> 
