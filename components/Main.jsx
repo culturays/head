@@ -15,10 +15,8 @@ const replaceHTMLTags=(string)=>{
   return newString
    }  
  
-const Main = ({  
-   posts_notIn_newsPosts, 
-    cinema_titles, 
-     post_end_cursor, 
+const Main = ({   
+    cinema_titles,
       post_categories, 
        posts, 
       }) => { 
@@ -28,7 +26,7 @@ const [categoryPost,setCategoryPost]=useState([])
 const [categoryName,setCategoryName]=useState('') 
 const [scrolledContent, setScrolledContent]=useState([])    
 const { inView } =useInView();
-const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
+ 
 const [debouncedValue, setDebouncedValue] = useState(null)
 const [top_Latest, setTopLatest]=useState([])
 const [top_PostsCa, setTopPostsCa]=useState([])
@@ -36,7 +34,8 @@ const [top_NewsView, setTopTopNewsView]=useState([])
 const [top_SidePanelCursors, setSidePanelCursors]=useState([])
 const [top_SidebarItems, setSidebarItems]=useState([])
 const [top_PostsData, setPostsData]=useState([])
-const [top_Posts_notIn_newsPosts, setPosts_notIn_newsPosts]=useState([])
+const [top_Posts_notIn_newsPosts, setPosts_notIn_newsPosts]=useState([]) 
+const [top_Last_categories, setLast_categories]=useState([]) 
 
 const topLatest=async()=>{
 const latestPosts=await newsByLatest()
@@ -45,14 +44,16 @@ const newsViewCursors = await newsViews()
 const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
 const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
 const postsData= await newsPosts(allExitingPostCursors)
-const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+const posts_notIn_newsPosts= await nextNewsPosts(postsCursors) 
+const last_categories = await postLastAndScrolledCategories(last_cursors)
 setTopLatest(latestPosts)
-setTopPostsCa(post_data) 
+setTopPostsCa(post_data?.categories.edges ) 
 setTopTopNewsView(newsViewCursors)
 setSidePanelCursors(sidePanelCursors)
 setSidebarItems(sidebarItems)
-setPostsData(postsData)
-setPosts_notIn_newsPosts(posts_notIn_newsPosts)
+setPostsData(postsData?.posts.edges)
+setPosts_notIn_newsPosts(posts_notIn_newsPosts) 
+setLast_categories(last_categories)
 }
 useEffect(()=>{
 topLatest()
@@ -68,17 +69,16 @@ const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
 const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
 // //////////////////////////////////////
 
-const news_post_cursor = top_PostsData?.posts?.edges.map((xy)=> xy.cursor)
+const news_post_cursor = top_PostsData?.map((xy)=> xy.cursor)
 const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
 // // /////////////////////////////////////// 
 const last_two_categories = top_Posts_notIn_newsPosts?.categories?.edges?.map((xt)=>xt.cursor)
 const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
   
 // //////////////////////////////////////////////////////////////////
-// const next_posts_categories =await postNextCategories(postCategory_next_cursor)
-// const last_categories = await postLastAndScrolledCategories(last_cursors)
-// const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
-   
+
+ const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
+ const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
  const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
    
    // // //  ///Post Data after mapping
@@ -89,14 +89,15 @@ const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("
    //  await articleFeed()
    //  await topicsFeed()  
 
-//  useEffect(()=>{  
-// if(categoryName){   
-// const currentPosts= post_categories.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
-// setCategoryPost(currentPosts)
-// }else { 
-// setCategoryPost(posts)  
-// }
-// },[categoryName]) 
+ useEffect(()=>{  
+if(categoryName){   
+const currentPosts= top_PostsCa.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
+setCategoryPost(currentPosts)
+}else { 
+setCategoryPost(top_PostsData)  
+}
+},[categoryName]) 
+
 //     useEffect(() => {
 //       const handler = setTimeout(() => {
 //         setDebouncedValue(end_post_cursor )
