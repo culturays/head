@@ -184,19 +184,19 @@ export default  function RootLayout({ children  }) {
 
  )}  */}
 <body className={` ${noko.className}` } > 
-  <Header/>
-<SocialNav/>
+  {/* <Header/> */}
+{/* <SocialNav/>
 <AuthButton handleLogout={handleLogout}/>  
 <Nav />
 <SearchItems />  
-<TabNav/>
+<TabNav/> */}
  <Suspense fallback={<div>Loading...</div>}>   
  {children}
  </Suspense>
-  <Latests/>  
-<Footer/> 
+  {/* <Latests/>  
+<Footer/>  */}
 </body> 
- {/* <TagManager gtmId={'GTM-W7BMCC9'}/>   */}
+  {/* <TagManager gtmId={'GTM-W7BMCC9'}/>   */}
 </html>
 )
 }
