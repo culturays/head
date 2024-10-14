@@ -171,9 +171,9 @@ const evData = await events3Details(one.atitle)
  const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
  const newsViewCursors = await newsViews()
  const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
- const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
- const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
- const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+//  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+//  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
+//  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
 //  const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
 //  const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
 //  const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
@@ -208,7 +208,6 @@ return (
   bjhjgfhgjjh
   <Test latestPosts={latestPosts}
     posts_cursor={posts_cursor} 
-sidePanelCursors={sidePanelCursors}
 newsViewCursors ={newsViewCursors}
     />
   {/* <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
