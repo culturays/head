@@ -208,7 +208,8 @@ return (
   latestPosts={latestPosts}
     posts_cursor={posts_cursor} 
     post_data={post_data}
- 
+    newsViewCursors={newsViewCursors}
+    news_outline={news_outline}
     />
   {/* <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main  
