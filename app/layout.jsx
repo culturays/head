@@ -155,7 +155,7 @@ export default  function RootLayout({ children  }) {
 
  return (
     <html lang="en" > 
-       {/* <Script async type="text/javascript"strategy="afterInteractive" src="//clickiocmp.com/t/consent_234292.js"/>  
+        <Script async type="text/javascript"strategy="afterInteractive" src="//clickiocmp.com/t/consent_234292.js"/>  
     <GoogleAnalytics GA_ID={GA_ID}/> 
 
    {consent === true && (
@@ -182,21 +182,21 @@ export default  function RootLayout({ children  }) {
 >  
 </Script> 
 
- )}  */}
+ )}  
 <body className={`${noko.className}` }> 
-  {/* <Header/> */}
-{/* <SocialNav/>
+   <Header/>  
+  <SocialNav/>
 <AuthButton handleLogout={handleLogout}/>  
 <Nav />
 <SearchItems />  
-<TabNav/> */}
- {/* <Suspense fallback={<div>Loading...</div>}> */}
+<TabNav/>  
+ <Suspense fallback={<div>Loading...</div>}>  
  {children}
- {/* </Suspense> */}
-  {/* <Latests/>  
-<Footer/>  */}
+  </Suspense> 
+  <Latests/>  
+<Footer/>  
 </body> 
-  {/* <TagManager gtmId={'GTM-W7BMCC9'}/> */}
+ <TagManager gtmId={'GTM-W7BMCC9'}/>  
 </html>
 )
 }
