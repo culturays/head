@@ -1,5 +1,5 @@
  "use client"
- const Test = ({ news_outline, latestPosts, posts_cursor, trendsData , post_data}) => {  
+ const Test = ({latestPosts, posts_cursor, trendsData , post_data}) => {  
   return (
     <div>
       
