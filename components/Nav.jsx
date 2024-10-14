@@ -2,9 +2,10 @@ import { trends } from '@/app/news/articlehandle'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link' 
+import Test from './Test'
 
 const Nav =async () => {
-  const trendsData =await trends()
+  const trendsData =await trends() 
    const trending_data = trendsData?.slice(0,4) 
   return (
     <nav className='flex shadow-detailShadow pt-6 justify-center my-1'> 
@@ -20,7 +21,7 @@ const Nav =async () => {
   
      </div>
       </div> 
-   
+   <Test trendsData={trendsData} />
    </nav>  
   )
 }

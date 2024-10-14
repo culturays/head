@@ -208,7 +208,8 @@ return (
   bjhjgfhgjjh
   <Test 
   latestPosts={latestPosts}
-    posts_cursor={posts_cursor}  
+    posts_cursor={posts_cursor} 
+    post_data={post_data}
     />
   {/* <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main  

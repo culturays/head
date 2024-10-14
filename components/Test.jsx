@@ -1,9 +1,15 @@
  "use client"
 
-const Test = ({ latestPosts,  posts_cursor }) => { 
+const Test = ({ latestPosts, posts_cursor, trendsData , post_data}) => { 
     console.log(
     latestPosts, 
-    posts_cursor 
+    posts_cursor ,
+
+  )  
+  
+  console.log(
+    trendsData,
+    post_data
   )
   return (
     <div>
