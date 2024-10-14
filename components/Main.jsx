@@ -20,10 +20,7 @@ const Main = ({
     cinema_titles, 
      post_end_cursor, 
       post_categories, 
-       posts,
-        latestPosts, 
-        last_cursors, 
-        news_post_cursor
+       posts, 
       }) => { 
 const [activeSet, setActiveSet]=useState(true)
 const [actIdx ,setActIdx]=useState(-1)
@@ -38,6 +35,8 @@ const [top_PostsCa, setTopPostsCa]=useState([])
 const [top_NewsView, setTopTopNewsView]=useState([])
 const [top_SidePanelCursors, setSidePanelCursors]=useState([])
 const [top_SidebarItems, setSidebarItems]=useState([])
+const [top_PostsData, setPostsData]=useState([])
+const [top_Posts_notIn_newsPosts, setPosts_notIn_newsPosts]=useState([])
 
 const topLatest=async()=>{
 const latestPosts=await newsByLatest()
@@ -45,11 +44,15 @@ const post_data = await postCategories(posts_cursor)
 const newsViewCursors = await newsViews()
 const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
 const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
+const postsData= await newsPosts(allExitingPostCursors)
+const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
 setTopLatest(latestPosts)
 setTopPostsCa(post_data) 
 setTopTopNewsView(newsViewCursors)
 setSidePanelCursors(sidePanelCursors)
 setSidebarItems(sidebarItems)
+setPostsData(postsData)
+setPosts_notIn_newsPosts(posts_notIn_newsPosts)
 }
 useEffect(()=>{
 topLatest()
@@ -59,31 +62,27 @@ const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo
 const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
 const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
 const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
- const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
- const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
- const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
- 
-//  const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
+const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
+const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
 // //////////////////////////////////////
-//  const postsData= await newsPosts(allExitingPostCursors)
-// const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
-// const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
-// // /////////////////////////////////////// 
 
-   // const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
-   // const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
-   // const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
-   // //////////////////////////////////////////////////////////////////
-   //  //const unusedPostsinPostCategories = await categoriesUnusedPosts(allExitingPostCursors)
-   // //////////////////////////////////////////////////////////////////
-   // const next_posts_categories =await postNextCategories(postCategory_next_cursor)
-   // const last_categories = await postLastAndScrolledCategories(last_cursors)
-   // const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
+const news_post_cursor = top_PostsData?.posts?.edges.map((xy)=> xy.cursor)
+const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
+// // /////////////////////////////////////// 
+const last_two_categories = top_Posts_notIn_newsPosts?.categories?.edges?.map((xt)=>xt.cursor)
+const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+  
+// //////////////////////////////////////////////////////////////////
+// const next_posts_categories =await postNextCategories(postCategory_next_cursor)
+// const last_categories = await postLastAndScrolledCategories(last_cursors)
+// const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
    
  const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
    
    // // //  ///Post Data after mapping
-   //  const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
+   const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
    //  await newsFeed()
    //  await netflixNewsFeed()
    //  await nollywoodFeed()
@@ -159,8 +158,7 @@ const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
 
   return ( 
 <div>  
-  <MainSlider data={latest_post_categories} interval={5000} />  
-
+  <MainSlider data={latest_post_categories} interval={5000} /> 
 
   {/* <div className='lg:flex justify-center xl:px-4 ' > 
 <div className='py-20 md:px-1 m-auto' > 
@@ -249,8 +247,7 @@ const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
  
 </div>   
 
-</div>
-  
+</div>  
  
  <hr className='h-1 w-4/5 m-auto my-4'/>
  <div className="bg-white w-full my-8">   
