@@ -185,9 +185,9 @@ export default  function RootLayout({ children  }) {
  )}  
 <body className={`${noko.className}` }> 
    <Header/>  
-  {/* <SocialNav/>
+ <SocialNav/>
 <AuthButton handleLogout={handleLogout}/>  
-<Nav />
+ {/* <Nav />
 <SearchItems />  
 <TabNav/>   */}
  <Suspense fallback={<div>Loading...</div>}>  
