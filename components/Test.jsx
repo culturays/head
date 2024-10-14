@@ -1,10 +1,9 @@
  "use client"
 
-const Test = ({eventExp, silverBTitles}) => {
-    console.log(eventExp, silverBTitles)
+const Test = () => { 
   return (
     <div>
-      
+      test
     </div>
   )
 }
