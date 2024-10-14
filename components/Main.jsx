@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
 // import { fetchNewPosts } from '@/app/news/rootpostsHandle'
 import moment from 'moment'
-import {newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, postLastAndScrolledCategories, postNextCategories, postsOutline, sideBarNewsItems, sidePanelNewsItems  } from '@/app/news/rootpostsHandle'
+import {newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, postLastAndScrolledCategories, sideBarNewsItems, sidePanelNewsItems  } from '@/app/news/rootpostsHandle'
 const replaceHTMLTags=(string)=>{
   const regex = /(<([^>]+)>)/gi;
   //(/<\/?[^>]+(>|$)/g, "") 
@@ -59,44 +59,46 @@ useEffect(()=>{
 topLatest()
 
 },[top_Latest])
-const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
-const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
-const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
-const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
-const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
-const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
-const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
-const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
+const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
+
+
+// const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
+// const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
+// const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
+// const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
+// const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
+// const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+// const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
+// const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
 // //////////////////////////////////////
 
-const news_post_cursor = top_PostsData?.map((xy)=> xy.cursor)
-const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
-// // /////////////////////////////////////// 
-const last_two_categories = top_Posts_notIn_newsPosts?.categories?.edges?.map((xt)=>xt.cursor)
-const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+// const news_post_cursor = top_PostsData?.map((xy)=> xy.cursor)
+// const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
+// // // /////////////////////////////////////// 
+// const last_two_categories = top_Posts_notIn_newsPosts?.categories?.edges?.map((xt)=>xt.cursor)
+// const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
   
-// //////////////////////////////////////////////////////////////////
+// // ////////////////////////////////////////////////////////////////// 
 
- const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
- const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
- const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
+//  const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
    
-   // // //  ///Post Data after mapping
-   const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
+//    // // //  ///Post Data after mapping
+//    const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
    //  await newsFeed()
    //  await netflixNewsFeed()
    //  await nollywoodFeed()
    //  await articleFeed()
    //  await topicsFeed()  
 
- useEffect(()=>{  
-if(categoryName){   
-const currentPosts= top_PostsCa.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
-setCategoryPost(currentPosts)
-}else { 
-setCategoryPost(top_PostsData)  
-}
-},[categoryName]) 
+//  useEffect(()=>{  
+// if(categoryName){   
+// const currentPosts= top_PostsCa.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
+// setCategoryPost(currentPosts)
+// }else { 
+// setCategoryPost(top_PostsData)  
+// }
+// },[categoryName]) 
 
 //     useEffect(() => {
 //       const handler = setTimeout(() => {
@@ -146,7 +148,7 @@ setCategoryPost(top_PostsData)
   
 //     };
  
-//  const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
+ const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
 //   //unused
    //posts_notIn_newsPosts[1].nodes.slice(5)
   //posts_notIn_newsPosts[2].nodes.slice(5)
@@ -254,7 +256,7 @@ setCategoryPost(top_PostsData)
  <div className="bg-white w-full my-8">   
  <div className="xs:grid grid-cols-2 justify-center xs:items-start items-center xl:grid-cols-4 max-w-2xl lg:max-w-max m-auto py-8 "> 
   <div className='max-w-sm m-auto  border-r xs:m-0'>   
- { posts_notIn_newsPosts?.length>0&& posts_notIn_newsPosts[0]?.nodes.slice(0,5).map((it, index)=> 
+ { posts_all?.length>0&& posts_all[0]?.nodes.slice(0,5).map((it, index)=> 
  <div key={index} className="px-4"> 
  { index === 0 &&
 <div className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3 '> 
@@ -285,7 +287,7 @@ className='rounded-xl h-44 object-cover'
   
 </div>   
  <div className='max-w-sm m-auto border-r xs:m-0'>   
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[1]?.nodes.slice(0,5).map((it, index)=> 
+ { posts_all?.length>0&&posts_all[1]?.nodes.slice(0,5).map((it, index)=> 
  <div key={index} className="px-4"> 
  { index === 0 &&
 <div className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3 '> 
@@ -317,7 +319,7 @@ className='rounded-xl h-44 object-cover'
 </div> 
  
 <div className='max-w-sm m-auto xs:m-0 border-r'>   
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[2]?.nodes.slice(0,5).map((it, index)=> 
+ { posts_all?.length>0&&posts_all[2]?.nodes.slice(0,5).map((it, index)=> 
  <div key={index} className="px-4"> 
  { index === 0 &&
 <div className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3 '> 
@@ -349,7 +351,7 @@ className='rounded-xl h-44 object-cover'
 </div>  
 
  <div className='max-w-sm m-auto xs:m-0 border-r'>   
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[3]?.nodes.slice(0,5).map((it, index)=> 
+ { posts_all?.length>0&&posts_all[3]?.nodes.slice(0,5).map((it, index)=> 
  <div key={index} className="px-4"> 
  { index === 0 &&
 <div className='overflow-hidden border-b first:md:border-r-0 first:md:border-b md:w-auto mx-2 px-1 pt-3 '> 
