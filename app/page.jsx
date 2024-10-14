@@ -162,15 +162,15 @@ const evData = await events3Details(one.atitle)
     //   stopDailyInterval(); 
     //  }, 30000);    
 
- const latestPosts=await newsByLatest()
+ const latestPosts=await newsByLatest() 
  const posts_cursor=latestPosts?.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor)
 
 // // ///////////////////////////////////////////////
- const post_data = await postCategories(posts_cursor)  
- const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
+ const post_data = await postCategories(posts_cursor) 
+ const postCategory_next_cursor =(post_data?.categories.edges.map((xt)=>xt.cursor )||[])
  const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
- //const newsViewCursors = await newsViews()
- //const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
+ const newsViewCursors = await newsViews()
+ const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
 //  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
 //  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
 //  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
@@ -192,7 +192,7 @@ const evData = await events3Details(one.atitle)
 // const next_posts_categories =await postNextCategories(postCategory_next_cursor)
 // const last_categories = await postLastAndScrolledCategories(last_cursors)
 // const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
-//  const news_outline=await postsOutline() 
+const news_outline=await postsOutline() 
 //  const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
 
 // // //  ///Post Data after mapping
@@ -204,12 +204,12 @@ const evData = await events3Details(one.atitle)
 //  await topicsFeed()  
 
 return (
-<div> 
-  bjhjgfhgjjh
+<div>  
   <Test 
   latestPosts={latestPosts}
     posts_cursor={posts_cursor} 
     post_data={post_data}
+    news_outline={news_outline} 
     />
   {/* <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main  

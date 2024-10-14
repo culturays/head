@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Test from './Test'
 
 const Nav =async () => {
-  const trendsData =await trends() 
+  const trendsData =await trends() ||[]
    const trending_data = trendsData?.slice(0,4) 
   return (
     <nav className='flex shadow-detailShadow pt-6 justify-center my-1'> 

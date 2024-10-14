@@ -54,7 +54,7 @@ export async function newsByLatest(req, res){
                       sourceUrl
                     }
                   }
-             postnewsgroup {
+             postNewsGroup {
           newsPassage {
             nodes {
               ... on Post {
@@ -78,10 +78,10 @@ export async function newsByLatest(req, res){
         
         
         })  
-        .then(response =>  response)     
+        .then(response => response)    
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = wprest?.data 
+        const response = wprest.data 
         return response
   }catch(error){
     console.log(error)
@@ -241,7 +241,7 @@ export async function newsByLatest(req, res){
         }).then(response => response)     
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = wprest?.data
+        const response = wprest.data
         return response
     }catch(error){
       if(error)throw new Error('Error fetching data')
