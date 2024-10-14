@@ -1,6 +1,14 @@
  "use client"
 
-const Test = () => { 
+const Test = ({ sidePanelCursors,
+    newsViewCursors , latestPosts,
+    posts_cursor }) => { 
+    console.log(
+    latestPosts,
+    sidePanelCursors,
+    newsViewCursors ,
+    posts_cursor 
+  )
   return (
     <div>
       test
