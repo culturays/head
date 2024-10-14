@@ -21,7 +21,7 @@ const viewport= {
 } 
 setScreenWidth(viewport)
   },[screenWidth?.viewport?.width ]) 
- console.log(data)
+ 
   return (
     <div >
         <h2 className='text-gray-600 font-bold text-4xl text-center py-4'>News Plug</h2> 

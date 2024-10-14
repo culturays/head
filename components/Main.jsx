@@ -36,29 +36,33 @@ const [debouncedValue, setDebouncedValue] = useState(null)
 const [top_Latest, setTopLatest]=useState([])
 const [top_PostsCa, setTopPostsCa]=useState([])
 const [top_NewsView, setTopTopNewsView]=useState([])
+const [top_SidePanelCursors, setSidePanelCursors]=useState([])
+const [top_SidebarItems, setSidebarItems]=useState([])
+
 const topLatest=async()=>{
 const latestPosts=await newsByLatest()
 const post_data = await postCategories(posts_cursor)
 const newsViewCursors = await newsViews()
+const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
 setTopLatest(latestPosts)
 setTopPostsCa(post_data) 
 setTopTopNewsView(newsViewCursors)
+setSidePanelCursors(sidePanelCursors)
+setSidebarItems(sidebarItems)
 }
 useEffect(()=>{
 topLatest()
 
 },[top_Latest])
-const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy.posts.pageInfo.endCursor) 
+const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
 const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
 const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
 const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
-
-
-//  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
-//  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
-//  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
-//  const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
-//  const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
+ const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
+ const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+ const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
+ 
 //  const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
 // //////////////////////////////////////
 //  const postsData= await newsPosts(allExitingPostCursors)
