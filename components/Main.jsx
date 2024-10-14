@@ -76,7 +76,7 @@ const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
    // const last_categories = await postLastAndScrolledCategories(last_cursors)
    // const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
    
- const latest_post_categories = top_Latest?.categories.nodes.map((xy)=> xy.posts.nodes) 
+ const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
    
    // // //  ///Post Data after mapping
    //  const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
@@ -152,12 +152,12 @@ const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
    //posts_notIn_newsPosts[8].nodes.slice(8)
    //posts_notIn_newsPosts[7].nodes.slice(9)
     //posts_notIn_newsPosts[9].nodes
- console.log(top_Latest)
+
   return ( 
 <div>  
   <MainSlider data={latest_post_categories} interval={5000} />  
 
-  
+
   {/* <div className='lg:flex justify-center xl:px-4 ' > 
 <div className='py-20 md:px-1 m-auto' > 
 <div className='py-5'>
