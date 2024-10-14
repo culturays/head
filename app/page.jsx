@@ -167,8 +167,8 @@ const evData = await events3Details(one.atitle)
  const post_data = await postCategories(posts_cursor) 
  const postCategory_next_cursor =(post_data?.categories.edges.map((xt)=>xt.cursor )||[])
  const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
- const news_outline=await postsOutline() 
-  const newsViewCursors = await newsViews()
+// const news_outline=await postsOutline() 
+//const newsViewCursors = await newsViews()
 //  const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
 //  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
 //  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
@@ -207,9 +207,7 @@ return (
   <Test 
   latestPosts={latestPosts}
     posts_cursor={posts_cursor} 
-    post_data={post_data}
-    newsViewCursors={newsViewCursors}
-    news_outline={news_outline}
+    post_data={post_data} 
     />
   {/* <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main  

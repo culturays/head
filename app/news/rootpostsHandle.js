@@ -168,8 +168,7 @@ export async function newsByLatest(req, res){
         .catch(error => console.error('Error:', error)); 
         const response = wprest?.data?.posts?.edges
         return response
-    }catch(error){
-      return error
+    }catch(error){ 
       if(error)throw new Error('Error fetching data')
     }
   
@@ -585,8 +584,7 @@ export async function newsPosts(notIn){
         .catch(error => console.error('Error:', error));
         const response = wprest?.data?.outlines?.nodes 
         return response
-    }catch(error){
-      return error
+    }catch(error){ 
       if(error)throw new Error('Error fetching data')
     }
 
