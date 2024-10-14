@@ -166,7 +166,7 @@ export async function newsByLatest(req, res){
         }).then(response =>response)    
         .then(data =>data) 
         .catch(error => console.error('Error:', error)); 
-        const response = wprest?.data.posts.edges
+        const response = wprest?.data?.posts?.edges
         return response
     }catch(error){
       if(error)throw new Error('Error fetching data')

@@ -1,6 +1,6 @@
  "use client"
- const Test = ({news_outline, latestPosts, posts_cursor, trendsData , post_data}) => { 
- console.log( news_outline )
+ const Test = ({newsViewCursors,news_outline, latestPosts, posts_cursor, trendsData , post_data}) => { 
+ console.log( newsViewCursors )
   return (
     <div>
       
