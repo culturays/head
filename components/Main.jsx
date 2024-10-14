@@ -15,8 +15,7 @@ const replaceHTMLTags=(string)=>{
   return newString
    }  
  
-const Main = ({ 
-  postCategory_next_cursor,
+const Main = ({  
    posts_notIn_newsPosts, 
     cinema_titles, 
      post_end_cursor, 
@@ -27,46 +26,47 @@ const Main = ({
         last_cursors, 
         news_post_cursor
       }) => { 
-     const [activeSet, setActiveSet]=useState(true)
-     const [actIdx ,setActIdx]=useState(-1)
-     const [categoryPost,setCategoryPost]=useState([])
-     const [categoryName,setCategoryName]=useState('') 
-     const [scrolledContent, setScrolledContent]=useState([])    
-     const { inView } =useInView();
-    const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
-    const [debouncedValue, setDebouncedValue] = useState(null)
-    const [top_Latest, setTopLatest]=useState([])
-    const [top_PostsCa, setTopPostsCa]=useState([])
-    const topLatest=async()=>{
- const latestPosts=await newsByLatest()
- const post_data = await postCategories(posts_cursor)
- setTopLatest(latestPosts)
- setTopPostsCa(post_data)
-    }
-   useEffect(()=>{
-    topLatest()
+const [activeSet, setActiveSet]=useState(true)
+const [actIdx ,setActIdx]=useState(-1)
+const [categoryPost,setCategoryPost]=useState([])
+const [categoryName,setCategoryName]=useState('') 
+const [scrolledContent, setScrolledContent]=useState([])    
+const { inView } =useInView();
+const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
+const [debouncedValue, setDebouncedValue] = useState(null)
+const [top_Latest, setTopLatest]=useState([])
+const [top_PostsCa, setTopPostsCa]=useState([])
 
-   },[top_Latest])
-    const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy.posts.pageInfo.endCursor) 
-   
-    const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
-    const postCategory_cursor =top_PostsCa?.categories.edges?.map((xy)=> xy?.node?.posts.edges).flat()?.map((t)=> t?.cursor)
+const topLatest=async()=>{
+const latestPosts=await newsByLatest()
+const post_data = await postCategories(posts_cursor)
+setTopLatest(latestPosts)
+setTopPostsCa(post_data)
+}
+useEffect(()=>{
+topLatest()
 
-    //const news_outline=await postsOutline() 
-    //const newsViewCursors = await newsViews()
-   //  const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
-   //  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
-   //  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
-   //  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
-   //  const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
-   //  const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
-   //  const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
-   // //////////////////////////////////////
-   //  const postsData= await newsPosts(allExitingPostCursors)
-   // const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
-   // const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
-   // // /////////////////////////////////////// 
-   
+},[top_Latest])
+const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy.posts.pageInfo.endCursor) 
+
+const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
+const postCategory_cursor =top_PostsCa?.categories.edges?.map((xy)=> xy?.node?.posts.edges).flat()?.map((t)=> t?.cursor)
+
+//const news_outline=await postsOutline() 
+//const newsViewCursors = await newsViews()
+//  const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
+//  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+//  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
+//  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+//  const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
+//  const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
+//  const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+// //////////////////////////////////////
+//  const postsData= await newsPosts(allExitingPostCursors)
+// const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
+// const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
+// // /////////////////////////////////////// 
+
    // const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
    // const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
    // const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
