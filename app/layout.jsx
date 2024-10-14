@@ -138,7 +138,12 @@ export default  function RootLayout({ children  }) {
  const GA_ID= process.env.GA_ID
  const consent = getCookie('localConsent'); 
   //console.log(JSON.stringify(Array.from(headersList.entries()), null, 2))
-
+  const headersList = headers();
+  const pathname = headersList.get('referer') || ""  
+   const handleLogout=async()=>{ 
+    "use server"
+    redirect(`${pathname}?confirm=logout?`)
+     }
   function transformString(inputStr) { 
     inputStr = inputStr.replace(/^\/|\/$/g, ''); 
     inputStr = inputStr.replace(/-/g, ' '); 
@@ -177,14 +182,18 @@ export default  function RootLayout({ children  }) {
 >  
 </Script> 
 
- )}     */}
-<body className={` ${noko.className}` } >   
- <Suspense fallback={<div>Loading...</div>}> 
+ )}  */}
+<body className={` ${noko.className}` } > 
   <Header/>
-<SocialNav/>  
+<SocialNav/>
+<AuthButton handleLogout={handleLogout}/>  
+<Nav />
+<SearchItems />  
+<TabNav/>
+ <Suspense fallback={<div>Loading...</div>}>   
  {children}
-<Latests/>  
- </Suspense> 
+ </Suspense>
+  <Latests/>  
 <Footer/> 
 </body> 
  {/* <TagManager gtmId={'GTM-W7BMCC9'}/>   */}

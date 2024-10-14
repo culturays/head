@@ -8,14 +8,10 @@ import TabNav from './TabNav';
 import { headers } from 'next/headers';
  
 const SocialNav = async() => {
-  const headersList = headers();
-  const pathname = headersList.get('referer') || ""  
-   const handleLogout=async()=>{ 
-    "use server"
-    redirect(`${pathname}?confirm=logout?`)
-     }
 
- return (<div> 
+
+ return (
+ 
    <div className="flex flex-col items-center leading-none my-4">  
 <div className="flex social-forum">
 <Link target="_blank" href="https://www.facebook.com/CulturaysSpot">
@@ -55,11 +51,8 @@ icon={faWhatsapp}/></p>
     </div>
 
     </div>
-    <AuthButton handleLogout={handleLogout}/>  
-<Nav />
-<SearchItems />  
-<TabNav/>
-  </div>  )
+    
+    )
   }
   
   export default SocialNav
