@@ -295,7 +295,7 @@ export const searchValues = async (name) => {
         }).then(response => response) 
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = post_response.data.contentNodes.nodes 
+        const response = post_response?.data?.contentNodes?.nodes 
         return response 
   } catch (error) {
     console.error('Error fetching search values:', error); 

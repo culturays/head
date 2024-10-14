@@ -59,24 +59,25 @@ useEffect(()=>{
 topLatest()
 
 },[top_Latest])
+ const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
+   
+// const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
 
-const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
+// const postsTop = async()=>{  
+// const post_data = await postCategories(posts_cursor)
+// setTopPostsCa(post_data?.categories.edges ) 
+// }
+// useEffect(()=>{
+//   postsTop()
 
-const postsTop = async()=>{  
-const post_data = await postCategories(posts_cursor)
-setTopPostsCa(post_data?.categories.edges ) 
-}
-useEffect(()=>{
-  postsTop()
+// },[])
 
-},[])
+// const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
+// const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
 
-const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
-const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
-
-const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
-const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
-const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+// const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
+// const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
+// const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
 
 // const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
 // const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
@@ -91,8 +92,7 @@ const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursor
   
 // // ////////////////////////////////////////////////////////////////// 
 
- const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
-   
+
 //    // // //  ///Post Data after mapping
 //    const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
    //  await newsFeed()
