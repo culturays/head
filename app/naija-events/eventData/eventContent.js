@@ -1,9 +1,7 @@
 "use server"
 import {  processImages } from "@/utils/processImages";
 import axios from "axios";
-import * as cheerio from 'cheerio';
-import mime from 'mime' ; 
-
+import * as cheerio from 'cheerio'; 
 export async function getNaijaEvents3(){
 const titleObj = []
 const titleAObj = []
@@ -58,7 +56,7 @@ $('div.subtitle', html).each(async function(){
    return { titleObj, titleAObj, imgObj,dateObj, descObj, priceObj}  
         
       }catch(err){
-        if(err) return
+        if(err) throw new Error('An error has occured')
       } 
 
       }

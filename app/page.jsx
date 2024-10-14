@@ -13,6 +13,7 @@ import topicsFeed from "@/utils/topicsFeed"
 import articleFeed from "@/utils/articleFeed"
 import nollywoodFeed from "@/utils/nollywoodFeed"
 import { Suspense } from "react"
+import Test from "@/components/Test"
 
 // (async () => {
 //   const location = 'Lagos, Nigeria';  
@@ -22,9 +23,12 @@ import { Suspense } from "react"
 // })();
   
 const Home =async ({searchParams}) => {
-// const eventExp = await getNaijaEvents3() 
-//   const silverBTitles= await scrapeSilverBird() 
+ const eventExp = await getNaijaEvents3() 
+ const silverBTitles= await scrapeSilverBird() 
+
 // const dailyEv3 =async()=>{ 
+ // const eventExp = await getNaijaEvents3() 
+ // const silverBTitles= await scrapeSilverBird() 
 // const result = await Promise.all(eventExp.titleAObj.map(async one=> {  
 // const evData = await events3Details(one.atitle)
 //  return evData 
@@ -202,10 +206,12 @@ const Home =async ({searchParams}) => {
 //  await netflixNewsFeed()
 //  await nollywoodFeed()
 //  await articleFeed()
-//  await topicsFeed()   
+//  await topicsFeed()  
+
 return (
 <div> 
   bjhjgfhgjjh
+  <Test eventExp={eventExp} silverBTitles={silverBTitles} />
   {/* <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main  
 posts={postsData?.posts.edges} 
