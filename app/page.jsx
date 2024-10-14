@@ -204,11 +204,10 @@ const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts
  await articleFeed()
  await topicsFeed()   
 return (
-  
-
-<div > 
-  <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
-  <Main  
+<div> 
+  bjhjgfhgjjh
+  {/* <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
+<Main  
 posts={postsData?.posts.edges} 
 latestPosts={latest_post_categories} 
 post_categories={post_data?.categories.edges }
@@ -218,18 +217,18 @@ posts_notIn_newsPosts={posts_all}
 post_next_cursor={postCategory_next_cursor}
 last_two_categories={last_two_categories}
 post_end_cursor={post_end_cursor}
- last_cursors={last_cursors}
- news_post_cursor={news_post_cursor} 
- />   
+last_cursors={last_cursors}
+news_post_cursor={news_post_cursor} 
+/>   
   <SideBar/> 
 </div>
- 
- <MainBottom 
+  */}
+ {/* <MainBottom 
  posts_notIn_newsPosts={posts_all} 
  post_end_cursor={post_end_cursor}
  news_post_cursor={news_post_cursor}
  last_cursors={last_cursors} 
- />  
+ />   */}
 </div> 
  )
 }

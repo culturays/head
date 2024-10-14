@@ -41,7 +41,7 @@ export const viewport = {
   default: 'Culturays',
   template:"%s | Culturays"
  },
- description: 'This is an upcoming new outlet that gives coverage to events in Nigeria, Africa and the rest of the world.',
+description: 'This is an upcoming new outlet that gives coverage to events in Nigeria, Africa and the rest of the world.',
 generator: 'Culturays',
 applicationName: 'Culturays',
 referrer: 'origin-when-cross-origin',
@@ -62,7 +62,7 @@ width: 800,
 height: 600,
 alt: 'Culturays Image & Logo',
 },
-      {
+  {
         url: 'https://culturays.com/assets/images/culturays.png', 
         width: 1800,
         height: 1600,
@@ -183,20 +183,20 @@ export default  function RootLayout({ children  }) {
 </Script> 
 
  )}  */}
-<body className={` ${noko.className}` } > 
+<body className={`${noko.className}` }> 
   {/* <Header/> */}
 {/* <SocialNav/>
 <AuthButton handleLogout={handleLogout}/>  
 <Nav />
 <SearchItems />  
 <TabNav/> */}
- <Suspense fallback={<div>Loading...</div>}>   
+ {/* <Suspense fallback={<div>Loading...</div>}> */}
  {children}
- </Suspense>
+ {/* </Suspense> */}
   {/* <Latests/>  
 <Footer/>  */}
 </body> 
-  {/* <TagManager gtmId={'GTM-W7BMCC9'}/>   */}
+  {/* <TagManager gtmId={'GTM-W7BMCC9'}/> */}
 </html>
 )
 }
