@@ -1,4 +1,4 @@
-import { newsViews, sideBarNewsItems, sidePanelNewsItems } from "@/app/news/rootpostsHandle"
+import { newsViews, postsOutline, sideBarNewsItems, sidePanelNewsItems } from "@/app/news/rootpostsHandle"
 import NewsLetter from "./NewsLetter"
 import { createClient } from "@/utils/supabase/server"
 import Image from "next/image"
@@ -12,7 +12,7 @@ const SideBar = async() => {
     const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
     const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
     const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
-
+    const news_outline=await postsOutline() 
     const naija_wiki =async ()=>{  
         const supabase = createClient() 
         const { data:cinema_titles , error } = await supabase 
@@ -25,8 +25,22 @@ const SideBar = async() => {
      const {cinema_titles} =await naija_wiki()
      const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
   return (
-    <div className='side_view_lg py-3 px-3 m-auto lg:m-0 border-l-4 max-w-md'> 
-<div className='[&_.news-letter-unflexed>form]:lg:flex-wrap [&_.news-letter-unflexed]:w-80 [&_.news-letter-unflexed]:max-w-auto [&_.news-letter-unflexed]:md:m-0 [&_.news-letter-unflexed]:my-2 [&_.news-letter-buttonwidth]:md:w-auto [&_.news-letter-nowidth]:w-auto'>
+ <div className='side_view_lg py-3 px-3 m-auto lg:m-0 border-l-4 max-w-md'> 
+ 
+ <div className='py-3 px-3 m-auto lg:m-0 border-l-4 max-w-sm'>
+<h2 className='text-gray-600 font-bold text-4xl text-center lg:text-left py-4'>Summary</h2>
+<hr className='h-1 w-4/5 m-auto my-4'/>
+<div className='m-auto lg:m-0 max-w-md md:max-w-sm'>
+  <div dangerouslySetInnerHTML={{__html: news_outline[0]?.content}}className='text-lg leading-8 py-3 text-gray-600 [&_p>a]:text-green-600 [&_p>a]:hover:bg-green-900'/>  
+ <Image
+ className='xs:h-64 lg:h-56'
+ src={news_outline[0]?.featuredImage?.node.sourceUrl} 
+ width={1200} 
+ height={675} 
+ alt={news_outline[0]?.featuredImage?.node.altText}/> 
+</div> 
+ </div>
+ <div className='[&_.news-letter-unflexed>form]:lg:flex-wrap [&_.news-letter-unflexed]:w-80 [&_.news-letter-unflexed]:max-w-auto [&_.news-letter-unflexed]:md:m-0 [&_.news-letter-unflexed]:my-2 [&_.news-letter-buttonwidth]:md:w-auto [&_.news-letter-nowidth]:w-auto'>
 <NewsLetter/>
 </div> 
  <div className='m-auto max-w-md lg:m-0 '>

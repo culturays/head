@@ -163,7 +163,6 @@ const evData = await events3Details(one.atitle)
     //  }, 30000);    
 
 
-
 return (
 <div>  
  

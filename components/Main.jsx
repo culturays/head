@@ -22,7 +22,6 @@ const Main = ({
       post_categories, 
        posts,
         latestPosts, 
-        news_outline, 
         last_cursors, 
         news_post_cursor
       }) => { 
@@ -36,25 +35,25 @@ const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
 const [debouncedValue, setDebouncedValue] = useState(null)
 const [top_Latest, setTopLatest]=useState([])
 const [top_PostsCa, setTopPostsCa]=useState([])
-
+const [top_NewsView, setTopTopNewsView]=useState([])
 const topLatest=async()=>{
 const latestPosts=await newsByLatest()
 const post_data = await postCategories(posts_cursor)
+const newsViewCursors = await newsViews()
 setTopLatest(latestPosts)
-setTopPostsCa(post_data)
+setTopPostsCa(post_data) 
+setTopTopNewsView(newsViewCursors)
 }
 useEffect(()=>{
 topLatest()
 
 },[top_Latest])
 const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy.posts.pageInfo.endCursor) 
-
 const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
-const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges).flat()?.map((t)=> t?.cursor)
+const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
+const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
 
-//const news_outline=await postsOutline() 
-//const newsViewCursors = await newsViews()
-//  const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
+
 //  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
 //  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
 //  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)

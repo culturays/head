@@ -47,7 +47,7 @@ const content = await response.json()
 
     {!closeQuestion&& <p onClick={()=> setCloseQuestion(prev => !prev)} className="cursor-pointer px-4 text-2xl font-bold opacity-90 m-2">X</p> }
  {closeQuestion&&  <p onClick={()=> setCloseQuestion(prev => !prev)} className="cursor-pointer px-4 text-2xl font-bold opacity-90 m-2">&#x2014;</p>} 
- <h2 className="p-4 text-2xl font-bold opacity-90 m-2 text-center">Unlock New Secrets ...Sign Up</h2>        
+ <h2 className="p-4 text-2xl font-bold opacity-90 m-2 text-center">Unlock News Faster ...Sign Up</h2>        
 {!closeQuestion&& <form onSubmit={saveForm} className="flex flex-col md:flex-row md:flex-wrap lg:flex-nowrap md:p-4 md:w-full md:justify-center items-center p-1"> 
  {/* <div className="flex flex-col "> 
 <label htmlFor="name" className="font-bold">
