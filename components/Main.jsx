@@ -25,7 +25,7 @@ const [actIdx ,setActIdx]=useState(-1)
 const [categoryPost,setCategoryPost]=useState([])
 const [categoryName,setCategoryName]=useState('') 
 const [scrolledContent, setScrolledContent]=useState([])    
-const { inView } =useInView();
+const { inView } =useInView(); 
  
 const [debouncedValue, setDebouncedValue] = useState(null)
 const [top_Latest, setTopLatest]=useState([])
@@ -40,61 +40,95 @@ const [top_Last_categories, setLast_categories]=useState([])
 const topLatest=async()=>{
 const latestPosts=await newsByLatest()
 const newsViewCursors = await newsViews()
-// const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
-// const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
-// const postsData= await newsPosts(allExitingPostCursors)
 // const posts_notIn_newsPosts= await nextNewsPosts(postsCursors) 
-// const last_categories = await postLastAndScrolledCategories(last_cursors)
-// const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
+
+// 
 
 setTopLatest(latestPosts)
-setTopTopNewsView(newsViewCursors)
-// setSidePanelCursors(sidePanelCursors)
-// setSidebarItems(sidebarItems)
-// setPostsData(postsData?.posts.edges)
-// setPosts_notIn_newsPosts(posts_notIn_newsPosts) 
-// setLast_categories(last_categories)
+setTopTopNewsView(newsViewCursors) 
+ 
+
 }
 useEffect(()=>{
 topLatest()
 
 },[top_Latest])
  const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
-   
-// const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
+const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
 
-// const postsTop = async()=>{  
-// const post_data = await postCategories(posts_cursor)
-// setTopPostsCa(post_data?.categories.edges ) 
-// }
-// useEffect(()=>{
-//   postsTop()
+const postsTop = async()=>{  
+const post_data = await postCategories(posts_cursor)
+setTopPostsCa(post_data?.categories.edges ) 
 
-// },[])
+}
+useEffect(()=>{
+  postsTop()
 
-// const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
-// const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
+},[])
 
-// const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
-// const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
-// const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+ const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
+ const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
 
-// const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
-// const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
- //const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
-// //////////////////////////////////////
+ const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
+ const newsTops =async()=>{
+  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+ setSidePanelCursors(sidePanelCursors)
+ }
+ useEffect(()=>{
+  newsTops()
 
-// const news_post_cursor = top_PostsData?.map((xy)=> xy.cursor)
-// const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
-// // // /////////////////////////////////////// 
-// const last_two_categories = top_Posts_notIn_newsPosts?.categories?.edges?.map((xt)=>xt.cursor)
-// const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
-  
-// // ////////////////////////////////////////////////////////////////// 
+},[])
 
+ const sideTops =async()=>{
+ const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
+ setSidebarItems(sidebarItems)
+ }
+ useEffect(()=>{
+  sideTops()
 
-//    // // //  ///Post Data after mapping
-//    const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
+},[])
+
+const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
+const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
+const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+
+ const postsDataTops =async()=>{ 
+ const postsData= await newsPosts(allExitingPostCursors)
+ setPostsData(postsData?.posts.edges)
+ }
+ useEffect(()=>{
+  postsDataTops()
+
+},[])
+ const news_post_cursor = top_PostsData?.map((xy)=> xy.cursor)
+  const postsCursors = allExitingPostCursors?.concat(news_post_cursor) 
+
+const postsNotinPosts =async()=>{ 
+  const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+ setPosts_notIn_newsPosts(posts_notIn_newsPosts)
+  }
+  useEffect(()=>{
+    postsNotinPosts()
+ 
+ },[])
+ 
+
+ const last_two_categories = top_Posts_notIn_newsPosts?.categories?.edges?.map((xt)=>xt.cursor)
+ const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+ const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
+const postsEnd =async()=>{ 
+ const last_categories = await postLastAndScrolledCategories(last_cursors)
+ setLast_categories(last_categories)
+ 
+  }
+  useEffect(()=>{
+    postsEnd()
+ 
+ },[]) 
+ const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
+const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
+ 
    //  await newsFeed()
    //  await netflixNewsFeed()
    //  await nollywoodFeed()
@@ -145,18 +179,18 @@ topLatest()
 //     }
 // }, [loadMorePosts]);
    
-//      const changeSet = () => {
-//      setActiveSet(true)
-//      setActIdx(-1);
-//      setCategoryName('')  
-//    };
+     const changeSet = () => {
+     setActiveSet(true)
+     setActIdx(-1);
+     setCategoryName('')  
+   };
  
-//   const changeView = (i,name) =>{
-//     setActiveSet(false)
-//     setActIdx(i);
-//     setCategoryName(name) 
+  const changeView = (i,name) =>{
+    setActiveSet(false)
+    setActIdx(i);
+    setCategoryName(name) 
   
-//     };
+    };
  
  const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
 //   //unused
@@ -173,7 +207,7 @@ topLatest()
 <div>  
   <MainSlider data={latest_post_categories} interval={5000} /> 
 
-  {/* <div className='lg:flex justify-center xl:px-4 ' > 
+  <div className='lg:flex justify-center xl:px-4 ' > 
 <div className='py-20 md:px-1 m-auto' > 
 <div className='py-5'>
 <div className='flex border-b shadow-sm justify-around items-center '> 
@@ -188,7 +222,7 @@ topLatest()
            onClick={changeSet} >
       All
     </li> 
-    {post_categories?.map((xy, idx) =>  
+    {top_PostsCa?.map((xy, idx) =>  
       <li 
         className={actIdx === idx ? 
           'font-bold text-base cursor-pointer text-gray-500 mx-2 decoration-cyan-400 underline decoration-4 hover:text-gray-800' : 
@@ -393,7 +427,7 @@ className='rounded-xl h-44 object-cover'
 </div>  
 </div> 
 
-</div>  */}
+</div>  
 </div>  
   )
 }

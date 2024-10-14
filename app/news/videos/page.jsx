@@ -11,7 +11,7 @@ export const metadata = {
 const VideosPage = async () => {
 const content_videos = await vids(); 
   
-   return ( 
+   return (  
     <> 
 <Videos
   content_videos={content_videos}
