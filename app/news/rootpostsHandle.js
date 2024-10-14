@@ -578,10 +578,10 @@ export async function newsPosts(notIn){
         
         })
         
-        }).then(response =>  response)    
+        }).then(response => response)     
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
-        const response = wprest?.data.outlines.nodes 
+        const response = wprest.data.outlines.nodes 
         return response
     }catch(error){
       if(error)throw new Error('Error fetching data')
