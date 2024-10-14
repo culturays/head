@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
 // import { fetchNewPosts } from '@/app/news/rootpostsHandle'
 import moment from 'moment'
+import { newsByLatest, postCategories } from '@/app/news/rootpostsHandle'
 const replaceHTMLTags=(string)=>{
   const regex = /(<([^>]+)>)/gi;
   //(/<\/?[^>]+(>|$)/g, "") 
@@ -33,67 +34,117 @@ const Main = ({
      const [scrolledContent, setScrolledContent]=useState([])    
      const { inView } =useInView();
     const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
-    const [debouncedValue, setDebouncedValue] = useState(null)  
-  
-
- useEffect(()=>{  
-if(categoryName){   
-const currentPosts= post_categories.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
-setCategoryPost(currentPosts)
-}else { 
-setCategoryPost(posts)  
-}
-},[categoryName]) 
-    useEffect(() => {
-      const handler = setTimeout(() => {
-        setDebouncedValue(end_post_cursor )
-      }, 500)
-  
-      return () => {
-        clearTimeout(handler)
-      }
-    }, [end_post_cursor, 500])
-    
-    const loadMorePosts = useCallback(async () => {
-           const apiP = await fetchNewPosts(2, debouncedValue, last_cursors, news_post_cursor); 
-           const post_res = apiP.categories.nodes.map((xy)=> xy.posts) 
-           const post_content = post_res.map((ex) => ex.nodes).map((xy)=> xy)
-            .flat();
-   
-           if (post_content.length>0) {
-             setScrolledContent(prevContent => [...prevContent, ...post_content]);
-           } 
-
-          const hasMorePosts = apiP.categories.nodes.map((xy)=> xy.posts.pageInfo.hasNextPage)
-          if (hasMorePosts && end_post_cursor !== null) { 
-             const nextCursor =apiP.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor )
-             setEnd_post_cursor(nextCursor[0]); 
-           } else {
-             setEnd_post_cursor(null);
-           } 
-          if( scrolledContent.length===20)setEnd_post_cursor(null);
-         }, [debouncedValue, inView]);           
-        useEffect(() => { 
-      if (inView&& debouncedValue !== null ) {
-        loadMorePosts(); 
+    const [debouncedValue, setDebouncedValue] = useState(null)
+    const [top_Latest, setTopLatest]=useState([])
+    const [top_PostsCa, setTopPostsCa]=useState([])
+    const topLatest=async()=>{
+ const latestPosts=await newsByLatest()
+ const post_data = await postCategories(posts_cursor)
+ setTopLatest(latestPosts)
+ setTopPostsCa(post_data)
     }
-}, [loadMorePosts]);
+   useEffect(()=>{
+    topLatest()
+
+   },[top_Latest])
+    const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy.posts.pageInfo.endCursor) 
    
-     const changeSet = () => {
-     setActiveSet(true)
-     setActIdx(-1);
-     setCategoryName('')  
-   };
- 
-  const changeView = (i,name) =>{
-    setActiveSet(false)
-    setActIdx(i);
-    setCategoryName(name) 
+    const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
+    const postCategory_cursor =top_PostsCa?.categories.edges?.map((xy)=> xy?.node?.posts.edges).flat()?.map((t)=> t?.cursor)
+
+    //const news_outline=await postsOutline() 
+    //const newsViewCursors = await newsViews()
+   //  const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
+   //  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+   //  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
+   //  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+   //  const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
+   //  const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
+   //  const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+   // //////////////////////////////////////
+   //  const postsData= await newsPosts(allExitingPostCursors)
+   // const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
+   // const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
+   // // /////////////////////////////////////// 
+   
+   // const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+   // const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
+   // const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+   // //////////////////////////////////////////////////////////////////
+   //  //const unusedPostsinPostCategories = await categoriesUnusedPosts(allExitingPostCursors)
+   // //////////////////////////////////////////////////////////////////
+   // const next_posts_categories =await postNextCategories(postCategory_next_cursor)
+   // const last_categories = await postLastAndScrolledCategories(last_cursors)
+   // const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
+   
+   //  const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
+   
+   // // //  ///Post Data after mapping
+   //  const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
+   //  await newsFeed()
+   //  await netflixNewsFeed()
+   //  await nollywoodFeed()
+   //  await articleFeed()
+   //  await topicsFeed()  
+
+//  useEffect(()=>{  
+// if(categoryName){   
+// const currentPosts= post_categories.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
+// setCategoryPost(currentPosts)
+// }else { 
+// setCategoryPost(posts)  
+// }
+// },[categoryName]) 
+//     useEffect(() => {
+//       const handler = setTimeout(() => {
+//         setDebouncedValue(end_post_cursor )
+//       }, 500)
   
-    };
+//       return () => {
+//         clearTimeout(handler)
+//       }
+//     }, [end_post_cursor, 500])
+    
+//     const loadMorePosts = useCallback(async () => {
+//            const apiP = await fetchNewPosts(2, debouncedValue, last_cursors, news_post_cursor); 
+//            const post_res = apiP.categories.nodes.map((xy)=> xy.posts) 
+//            const post_content = post_res.map((ex) => ex.nodes).map((xy)=> xy)
+//             .flat();
+   
+//            if (post_content.length>0) {
+//              setScrolledContent(prevContent => [...prevContent, ...post_content]);
+//            } 
+
+//           const hasMorePosts = apiP.categories.nodes.map((xy)=> xy.posts.pageInfo.hasNextPage)
+//           if (hasMorePosts && end_post_cursor !== null) { 
+//              const nextCursor =apiP.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor )
+//              setEnd_post_cursor(nextCursor[0]); 
+//            } else {
+//              setEnd_post_cursor(null);
+//            } 
+//           if( scrolledContent.length===20)setEnd_post_cursor(null);
+//          }, [debouncedValue, inView]);           
+//         useEffect(() => { 
+//       if (inView&& debouncedValue !== null ) {
+//         loadMorePosts(); 
+//     }
+// }, [loadMorePosts]);
+   
+//      const changeSet = () => {
+//      setActiveSet(true)
+//      setActIdx(-1);
+//      setCategoryName('')  
+//    };
  
- const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
-  //unused
+//   const changeView = (i,name) =>{
+//     setActiveSet(false)
+//     setActIdx(i);
+//     setCategoryName(name) 
+  
+//     };
+ 
+//  const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
+//   //unused
    //posts_notIn_newsPosts[1].nodes.slice(5)
   //posts_notIn_newsPosts[2].nodes.slice(5)
    //posts_notIn_newsPosts[3].nodes.slice(5) 
@@ -106,8 +157,8 @@ setCategoryPost(posts)
   return ( 
 <div>  
  
- <MainSlider data={latestPosts} interval={5000} /> 
-  <div className='lg:flex justify-center xl:px-4 ' > 
+ <MainSlider data={top_Latest} interval={5000} /> 
+  {/* <div className='lg:flex justify-center xl:px-4 ' > 
 <div className='py-20 md:px-1 m-auto' > 
 <div className='py-5'>
 <div className='flex border-b shadow-sm justify-around items-center '> 
@@ -328,7 +379,7 @@ className='rounded-xl h-44 object-cover'
 </div>  
 </div> 
 
-</div> 
+</div>  */}
 </div>  
   )
 }
