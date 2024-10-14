@@ -50,7 +50,7 @@ topLatest()
 const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy.posts.pageInfo.endCursor) 
 
 const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
-const postCategory_cursor =top_PostsCa?.categories.edges?.map((xy)=> xy?.node?.posts.edges).flat()?.map((t)=> t?.cursor)
+const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges).flat()?.map((t)=> t?.cursor)
 
 //const news_outline=await postsOutline() 
 //const newsViewCursors = await newsViews()
