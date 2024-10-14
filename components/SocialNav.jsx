@@ -5,6 +5,7 @@ import AuthButton from '@/app/AuthButton';
 import Nav from './Nav';
 import SearchItems from './SearchItems';
 import TabNav from './TabNav';
+import { headers } from 'next/headers';
  
 const SocialNav = async() => {
   const headersList = headers();
