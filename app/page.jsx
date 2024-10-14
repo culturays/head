@@ -162,48 +162,53 @@ const evData = await events3Details(one.atitle)
     //   stopDailyInterval(); 
     //  }, 30000);    
 
-//  const latestPosts=await newsByLatest()
-//  const posts_cursor=latestPosts?.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor)
+ const latestPosts=await newsByLatest()
+ const posts_cursor=latestPosts?.categories.nodes.map((xy)=> xy.posts.pageInfo.endCursor)
 
 // // ///////////////////////////////////////////////
-//  const post_data = await postCategories(posts_cursor)  
-//  const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
-//  const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
-// const newsViewCursors = await newsViews()
-//  const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
-//  const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
-//  const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
+ const post_data = await postCategories(posts_cursor)  
+ const postCategory_next_cursor =post_data?.categories.edges.map((xt)=>xt.cursor )
+ const postCategory_cursor =post_data?.categories.edges.map((xy)=> xy.node.posts.edges).flat().map((t)=> t.cursor)
+const newsViewCursors = await newsViews()
+ const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)
+ const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+ const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
  
-//   const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
-//  const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
-//  const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
-//  const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
-// //////////////////////////////////////
-//  const postsData= await newsPosts(allExitingPostCursors)
-// const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
-// const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
-// // /////////////////////////////////////// 
+  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+ const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
+ const sibarNewsCursor =sidebarItems?.map((xy)=> xy.cursor)
+ const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+//////////////////////////////////////
+ const postsData= await newsPosts(allExitingPostCursors)
+const news_post_cursor = postsData?.posts?.edges.map((xy)=> xy.cursor)
+const postsCursors = allExitingPostCursors?.concat(news_post_cursor)
+// /////////////////////////////////////// 
 
-// const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
-// const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
-// const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
-// //////////////////////////////////////////////////////////////////
-//  //const unusedPostsinPostCategories = await categoriesUnusedPosts(allExitingPostCursors)
-// //////////////////////////////////////////////////////////////////
-// const next_posts_categories =await postNextCategories(postCategory_next_cursor)
-// const last_categories = await postLastAndScrolledCategories(last_cursors)
-// const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
-//  const news_outline=await postsOutline() 
-//  const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
+const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+const last_two_categories = posts_notIn_newsPosts?.categories.edges.map((xt)=>xt.cursor)
+const last_cursors=postCategory_next_cursor?.concat(last_two_categories).push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+//////////////////////////////////////////////////////////////////
+ //const unusedPostsinPostCategories = await categoriesUnusedPosts(allExitingPostCursors)
+//////////////////////////////////////////////////////////////////
+const next_posts_categories =await postNextCategories(postCategory_next_cursor)
+const last_categories = await postLastAndScrolledCategories(last_cursors)
+const post_end_cursor=last_categories?.length>0 &&last_categories[0]?.node.posts.pageInfo.endCursor 
+ const news_outline=await postsOutline() 
+ const latest_post_categories = latestPosts?.categories.nodes.map((xy)=> xy.posts.nodes) 
 
-// // //  ///Post Data after mapping
-//  const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
-//  await newsFeed()
-//  await netflixNewsFeed()
-//  await nollywoodFeed()
-//  await articleFeed()
-//  await topicsFeed()  
-
+// //  ///Post Data after mapping
+ const posts_all=posts_notIn_newsPosts?.categories.edges.map((xy)=> xy.node.posts).filter((ex)=> ex.nodes.length>0) 
+ await newsFeed()
+ await netflixNewsFeed()
+ await nollywoodFeed()
+ await articleFeed()
+ await topicsFeed()  
+console.log(
+  latestPosts,
+  posts_cursor,
+  post_data,
+  postCategory_next_cursor
+)
 return (
 <div> 
   bjhjgfhgjjh
