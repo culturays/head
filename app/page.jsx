@@ -13,7 +13,6 @@ import topicsFeed from "@/utils/topicsFeed"
 import articleFeed from "@/utils/articleFeed"
 import nollywoodFeed from "@/utils/nollywoodFeed"
 import { Suspense } from "react"
-import Test from "@/components/Test"
 
 // (async () => {
 //   const location = 'Lagos, Nigeria';  

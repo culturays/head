@@ -30,7 +30,7 @@ const search_data =async()=>{
   setSearchData(postSearch)
 }
  
-const netflixContent = searchData?.map((xy)=> xy?.netflixCategories?.nodes.map((tx)=> tx?.netflixNaijaPosts.nodes).flat()).flat()
+const netflixContent = searchData?.map((xy)=> xy?.netflixCategories?.nodes.map((tx)=> tx?.netflixNaijaPosts?.nodes).flat()).flat()
  
 return (  
 <div > 
