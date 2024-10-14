@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
 // import { fetchNewPosts } from '@/app/news/rootpostsHandle'
 import moment from 'moment'
-import { newsByLatest, postCategories } from '@/app/news/rootpostsHandle'
+import {newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, postLastAndScrolledCategories, postNextCategories, postsOutline, sideBarNewsItems, sidePanelNewsItems  } from '@/app/news/rootpostsHandle'
 const replaceHTMLTags=(string)=>{
   const regex = /(<([^>]+)>)/gi;
   //(/<\/?[^>]+(>|$)/g, "") 
