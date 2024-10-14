@@ -39,38 +39,48 @@ const [top_Last_categories, setLast_categories]=useState([])
 
 const topLatest=async()=>{
 const latestPosts=await newsByLatest()
-const post_data = await postCategories(posts_cursor)
 const newsViewCursors = await newsViews()
-const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
-const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
-const postsData= await newsPosts(allExitingPostCursors)
-const posts_notIn_newsPosts= await nextNewsPosts(postsCursors) 
-const last_categories = await postLastAndScrolledCategories(last_cursors)
+// const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+// const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
+// const postsData= await newsPosts(allExitingPostCursors)
+// const posts_notIn_newsPosts= await nextNewsPosts(postsCursors) 
+// const last_categories = await postLastAndScrolledCategories(last_cursors)
+// const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
+
 setTopLatest(latestPosts)
-setTopPostsCa(post_data?.categories.edges ) 
 setTopTopNewsView(newsViewCursors)
-setSidePanelCursors(sidePanelCursors)
-setSidebarItems(sidebarItems)
-setPostsData(postsData?.posts.edges)
-setPosts_notIn_newsPosts(posts_notIn_newsPosts) 
-setLast_categories(last_categories)
+// setSidePanelCursors(sidePanelCursors)
+// setSidebarItems(sidebarItems)
+// setPostsData(postsData?.posts.edges)
+// setPosts_notIn_newsPosts(posts_notIn_newsPosts) 
+// setLast_categories(last_categories)
 }
 useEffect(()=>{
 topLatest()
 
 },[top_Latest])
-const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
-const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
 
+const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
 
-// const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
-// const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
-// const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
-// const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
-// const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
-// const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+const postsTop = async()=>{  
+const post_data = await postCategories(posts_cursor)
+setTopPostsCa(post_data?.categories.edges ) 
+}
+useEffect(()=>{
+  postsTop()
+
+},[])
+
+const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
+const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
+
+const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
+const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
+const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+
+// const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
 // const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
-// const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+ //const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
 // //////////////////////////////////////
 
 // const news_post_cursor = top_PostsData?.map((xy)=> xy.cursor)
@@ -81,7 +91,7 @@ const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
   
 // // ////////////////////////////////////////////////////////////////// 
 
-//  const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
+ const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
    
 //    // // //  ///Post Data after mapping
 //    const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
