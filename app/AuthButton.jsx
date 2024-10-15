@@ -4,9 +4,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";    
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
-import Test from "@/components/Test";
-
+import { redirect } from "next/navigation"; 
 export default async function AuthButton() {
 const supabase = createClient();
 const {   
@@ -45,7 +43,7 @@ redirect(`${pathname}?confirm=logout?`)
    Sign out
  </button> 
 </form>
-<Test pathname={pathname} />
+ 
 </div>
 ):(  
 <div className="flex flex-col items-center pb-2 leading-none text-xs">
