@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache' 
-import { NextResponse } from 'next/server'
+import { redirect } from 'next/navigation' 
 
 export async function POST(req) { 
   const supabase = createClient() 
@@ -15,8 +15,6 @@ if(error)throw new Error('Error Logging Out')
   }
 
   revalidatePath('/', 'layout') 
-  return NextResponse.redirect(new URL('/login', process.env.NEXT_PUBLIC_BASE_URL), {
-    status: 302,
-  });
+  return redirect('/login' );
   
 }
