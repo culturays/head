@@ -8,19 +8,15 @@ export async function POST(req) {
     data: { user },
   } = await supabase.auth.getUser() 
   
-  if (user) {
-    await supabase.auth.signOut({
-      options: {
-        callbackUrl: '/',
-        
-      },
-    })
+  if (user) { 
+    const { error } = await supabase.auth.signOut()
+if(error)throw new Error('Error Logging Out')
    
   }
 
-  revalidatePath('/', 'layout')
-  console.log(req.url)
- return NextResponse.redirect(new URL('/login', req.url), {
+  revalidatePath('/', 'layout') 
+  return NextResponse.redirect('/login', {
     status: 302,
-  }) 
+  });
+  
 }
