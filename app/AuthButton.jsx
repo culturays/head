@@ -22,7 +22,7 @@ redirect(`${pathname}?confirm=logout?`)
 <Link href={`/profile/${user.id}`}><p className="m-1 text-lg hover:scale-105">Hey, {user.email}!</p></Link>  
 </div>
 
-<form className="m-1 flex m-auto justify-center">  
+<div className="m-1 flex m-auto justify-center">  
 {!user.user_metadata.picture && <Link href={`/profile/${user.id}`}>
  <FontAwesomeIcon 
  width={15}
@@ -39,11 +39,12 @@ redirect(`${pathname}?confirm=logout?`)
  alt={user.user_metadata.full_name}
  /> 
  </div></Link> } 
- <button formAction={handleLogout}className="button block m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
+ <form action={handleLogout}className="m-1 flex m-auto justify-center">  
+ <button className="button block m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
    Sign out
- </button> 
+ </button>
 </form>
- 
+</div>
 </div>
 ):(  
 <div className="flex flex-col items-center pb-2 leading-none text-xs">
