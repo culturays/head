@@ -10,8 +10,7 @@ import newsFeed from "@/utils/newsfeed"
 import netflixNewsFeed from "@/utils/netflixNaijaFeed"
 import topicsFeed from "@/utils/topicsFeed"
 import articleFeed from "@/utils/articleFeed"
-import nollywoodFeed from "@/utils/nollywoodFeed"
-import { Suspense } from "react"
+import nollywoodFeed from "@/utils/nollywoodFeed" 
 import SideBar from "./side/Side"
 
 // (async () => {
@@ -171,7 +170,7 @@ return (
  
 <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main />   
-  <SideBar/> 
+  {/* <SideBar/>  */}
 </div>
 
  {/* <MainBottom 
