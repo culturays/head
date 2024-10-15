@@ -41,7 +41,6 @@ const Business = ({business_news }) => {
  const paginating=(pageNumber)=>{ 
  setCurrPg(pageNumber) 
  }
-
  
   const replaceHTMLTags=(string)=>{
     const regex = /(<([^>]+)>)/gi;
@@ -50,8 +49,7 @@ const Business = ({business_news }) => {
     return newString
      }
      const [activeSet , setActiveSet]=useState(false)
-    
-   
+     
   return (
     <div> 
     <div className="bg-gray-50 py-4 m-auto" style={{maxWidth:'1800px'}}> 
