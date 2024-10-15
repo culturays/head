@@ -15,6 +15,7 @@ import TabNav from '@/components/TabNav';
 import Latests from '@/components/Latests';
 import { redirect } from 'next/navigation'; 
 import { Suspense } from 'react';
+import Loading from './loading';
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/` 
   : "http://localhost:3000/";
@@ -185,7 +186,7 @@ export default  function RootLayout({ children }) {
 <Nav /> 
 <SearchItems />  
  <TabNav/> 
-<Suspense fallback={<div>Loading...</div>}>  
+<Suspense fallback={<Loading/>}>  
 {children}
 </Suspense> 
   <Latests/> 
