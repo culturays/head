@@ -1,5 +1,6 @@
 import Search from "@/components/Search";  
 import { searchValues } from "../lib/searches/search"; 
+import { Suspense } from "react";
  
 const SearchPage = async ({searchParams}) => {
 const {name}= searchParams  
