@@ -16,7 +16,7 @@ const pathname = headersList.get('referer') || ""
 
  const handleLogout=async()=>{ 
   "use server"
- await redirect(`${pathname}?confirm=logout?`)
+ redirect(`${pathname}?confirm=logout?`)
    }
  return user? ( 
 <div className="flex flex-col items-center pb-2 leading-none"> 
