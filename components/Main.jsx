@@ -129,11 +129,7 @@ const postsEnd =async()=>{
  const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
 const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
  
-   //  await newsFeed()
-   //  await netflixNewsFeed()
-   //  await nollywoodFeed()
-   //  await articleFeed()
-   //  await topicsFeed()  
+
 
 //  useEffect(()=>{  
 // if(categoryName){   
