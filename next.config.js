@@ -43,6 +43,7 @@ const nextConfig = {
   trailingSlash: true,
   experimental: {
     taint: true,
+    missingSuspenseWithCSRBailout: false,
   },
  
 };
