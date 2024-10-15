@@ -40,10 +40,6 @@ const [top_Last_categories, setLast_categories]=useState([])
 const topLatest=async()=>{
 const latestPosts=await newsByLatest()
 const newsViewCursors = await newsViews()
-// const posts_notIn_newsPosts= await nextNewsPosts(postsCursors) 
-
-// 
-
 setTopLatest(latestPosts)
 setTopTopNewsView(newsViewCursors) 
  
@@ -53,6 +49,7 @@ useEffect(()=>{
 topLatest()
 
 },[top_Latest])
+
  const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
 const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
 
@@ -127,18 +124,17 @@ const postsEnd =async()=>{
  
  },[]) 
  const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
-const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
- 
+const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
 
 
-//  useEffect(()=>{  
-// if(categoryName){   
-// const currentPosts= top_PostsCa.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
-// setCategoryPost(currentPosts)
-// }else { 
-// setCategoryPost(top_PostsData)  
-// }
-// },[categoryName]) 
+ useEffect(()=>{  
+if(categoryName){   
+const currentPosts= top_PostsCa.flat().filter((ex)=> ex.node.name=== categoryName).map((xy)=> xy?.node?.posts).map((ex)=> ex.edges).flat()
+setCategoryPost(currentPosts)
+}else { 
+setCategoryPost(top_PostsData)  
+}
+},[categoryName]) 
 
 //     useEffect(() => {
 //       const handler = setTimeout(() => {

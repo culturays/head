@@ -1,5 +1,5 @@
 import { newsViews, postsOutline, sideBarNewsItems, sidePanelNewsItems } from "@/app/news/rootpostsHandle"
-import NewsLetter from "./NewsLetter"
+import NewsLetter from "../components/NewsLetter"
 import { createClient } from "@/utils/supabase/server"
 import Image from "next/image"
 import Link from "next/link"
