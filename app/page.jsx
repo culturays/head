@@ -4,8 +4,7 @@ import { events3Details, getNaijaEvents3 } from "./naija-events/eventData/eventC
 import { replaceSpecialCharacters } from "@/utils/replacechar"
 import { createClient } from "@/utils/supabase/server"
 import { scrapeSilverBird } from "./naija-wiki/filmsdata"
-import { processSbImages } from "@/utils/processImages"
-import SideBar from "@/app/Side"
+import { processSbImages } from "@/utils/processImages" 
 import MainBottom from "@/components/MainBottom"
 import newsFeed from "@/utils/newsfeed"
 import netflixNewsFeed from "@/utils/netflixNaijaFeed"
@@ -13,6 +12,7 @@ import topicsFeed from "@/utils/topicsFeed"
 import articleFeed from "@/utils/articleFeed"
 import nollywoodFeed from "@/utils/nollywoodFeed"
 import { Suspense } from "react"
+import SideBar from "./Side"
 
 // (async () => {
 //   const location = 'Lagos, Nigeria';  
@@ -171,7 +171,7 @@ return (
  
 <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main />   
-  <SideBar/>  
+  {/* <SideBar/>   */}
 </div>
 
  {/* <MainBottom 
