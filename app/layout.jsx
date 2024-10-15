@@ -182,12 +182,12 @@ export default  function RootLayout({ children }) {
 <Header/>  
 <SocialNav/>
 <AuthButton/>  
-<Nav />
-{/* <Suspense fallback={<div>Loading...</div>}>   */}
- <SearchItems />  
+<Nav /> 
+<Suspense fallback={<div>Loading...</div>}> 
+<SearchItems />  
  <TabNav/>  
 {children}
-{/* </Suspense>  */}
+</Suspense> 
   <Latests/> 
 <Footer/>  
 </body> 
