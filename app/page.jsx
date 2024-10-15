@@ -160,11 +160,11 @@ const evData = await events3Details(one.atitle)
     //   stopDailyInterval(); 
     //  }, 30000);    
 
-    // await newsFeed()
-    // await netflixNewsFeed()
-    // await nollywoodFeed()
-    // await articleFeed()
-    // await topicsFeed()  
+    await newsFeed()
+    await netflixNewsFeed()
+    await nollywoodFeed()
+    await articleFeed()
+    await topicsFeed()  
 return (
 <div>  
  

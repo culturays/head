@@ -3,12 +3,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";    
 import { createClient } from "@/utils/supabase/server";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default async function AuthButton({handleLogout}) {
+export default async function AuthButton() {
 const supabase = createClient();
 const {   
   data: { user },
 } = await supabase.auth.getUser()
+const headersList = headers();
+const pathname = headersList.get('referer') || "" 
+
+ const handleLogout=async()=>{ 
+  "use server"
+ await redirect(`${pathname}?confirm=logout?`)
+   }
  return user? ( 
 <div className="flex flex-col items-center pb-2 leading-none"> 
 <div className="flex items-center"> 
@@ -32,7 +41,7 @@ const {
  alt={user.user_metadata.full_name}
  /> 
  </div></Link> } 
- <button formAction={handleLogout}className="button block text-lg m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
+ <button formAction={handleLogout}className="button block m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
    Sign out
  </button> 
 </form>

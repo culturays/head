@@ -5,23 +5,59 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faArrowRight, faBookOpen, faAngleLeft, faAngleRight, faTags } from '@fortawesome/free-solid-svg-icons' 
 import moment from 'moment' 
 import style from '../../styles/events.module.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import NewsLetter from '../NewsLetter'
 import NaijaContent from './NaijaContent' 
 import InterContent from './InterContent'
+import { netflixAfrica, netflixInter, netflixNews, netflixNigNaija, netflixPopular } from '@/app/netflix-naija/netflix-news'
+import { newchars } from '@/app/naija-wiki/newCharHandle'
+import { vids } from '@/app/news/articlehandle'
+import { getTop10 } from '@/app/naija-wiki/filmsdata'
 
-const Main = ({ 
-  africa_blog,   
-  popular_blog,
-  inter_blog,
-  naija_blog,
-  newChars, 
-  netFlixTop10, 
-  new_on_netflix, 
-  news_blog, 
-  cinema_titles, 
-  naijaWikiVideos
-}) => { 
+const Main = ({ cinema_titles }) => {
+const [netflix__News,setNetflix__News]=useState([])
+const [netflix_africa,setNetflix__Africa]=useState([])
+const [netflix_popular,setNetflix__Popular]=useState([])
+const [netflix_inter,setNetflix__Inter]=useState([])
+const [netflix__NG_naija,setNetflix_NG_naija]=useState([])
+const [new_Chars,setNew_Chars]=useState([])
+const [naijaWikiVideos,setNaijaWikiVideos]=useState([])
+const [netFlixTop10,setNetFlixTop10]=useState([])
+
+const wikiNetflixNews=async()=>{
+const netflix_News = await netflixNews() 
+const netflix_Africa= await netflixAfrica() 
+const netflix_Popular = await netflixPopular()
+const netflix_inter = await netflixInter()
+const netflix__NG_naija = await netflixNigNaija()
+const newChars = await newchars()
+const naijaWikiVideos =await vids()
+const netFlixTop10= await getTop10()
+
+  setNetflix__News(netflix_News)
+  setNetflix__Africa(netflix_Africa)
+  setNetflix__Popular(netflix_Popular)
+  setNetflix__Inter(netflix_inter)
+  setNetflix_NG_naija(netflix__NG_naija)
+  setNew_Chars(newChars)
+  setNaijaWikiVideos(naijaWikiVideos)
+  setNetFlixTop10(netFlixTop10)
+  }
+
+
+  useEffect(()=>{
+wikiNetflixNews()
+  },[])
+
+const news_blog =netflix__News?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+const africa_blog =netflix_africa?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+const popular_blog =netflix_popular?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+const inter_blog =netflix_inter.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+
+const naija_blog =netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
+const inter_cursor=netflix_inter?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo) 
+const naija_cursor= netflix__NG_naija?.edges?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.pageInfo)
+
 const [activeSlide, setActiveSlide]=useState(0)
 const [activeIndices, setActiveIndices] = useState([0, 1]);
 const [end_ng_cursor, setEnd_ng_cursor] = useState('');
@@ -57,7 +93,7 @@ return newString
       const newLeft = left - 1 < 0 ? africa_blog.slice(27,35).length - 1 : left - 1;
       const newRight = right - 1 < 0 ? africa_blog.slice(27,35).length - 1 : right - 1;
       return [newLeft, newRight];
-    });
+    }); 
   };
   
   const right_slide = () => {
@@ -74,7 +110,7 @@ return newString
  <div className='bg-white py-8'> 
  <h2 className='text-3xl font-bold my-6 text-center text-slate-800 opacity-80'>Featured Naija Characters</h2> 
  <div className='md:flex justify-center max-w-6xl m-auto'>  
-  {newChars&&newChars.slice(0,3).map((it, index)=>  
+  {new_Chars&&new_Chars.slice(0,3).map((it, index)=>  
         <div key={it.title + ' ' + index} className='max-w-sm md:w-80 lg:w-96 border rounded-b-xl bg-gray-700 my-2 relative m-auto'>  
           <Image
          className='w-full h-56 max-h-40 xxs:max-h-56 min-[400px]:max-h-64 md:max-h-36 min-[850px]:max-h-48 lg:max-h-64'
