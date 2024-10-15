@@ -5,17 +5,14 @@ import GoogleAnalytics from '@/components/Analytics';
 import Script from "next/script";   
 import { Open_Sans, Nokora } from 'next/font/google';
 import Footer from '@/components/Footer';
-import { headers } from "next/headers";
 import SocialNav from "@/components/SocialNav"
 import Header from '@/components/Header';
 import AuthButton from '@/app/AuthButton';
 import Nav from '@/components/Nav';
 import SearchItems from '@/components/SearchItems'; 
 import TabNav from '@/components/TabNav';
-import Latests from '@/components/Latests';
-import { redirect } from 'next/navigation'; 
+import Latests from '@/components/Latests'; 
 import { Suspense } from 'react';
-import Loading from './loading';
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/` 
   : "http://localhost:3000/";
@@ -186,7 +183,7 @@ export default  function RootLayout({ children }) {
 <Nav /> 
 <SearchItems />  
  <TabNav/> 
-<Suspense fallback={<Loading/>}>  
+<Suspense fallback={<div>Loading...</div>}>  
 {children}
 </Suspense> 
   <Latests/> 
