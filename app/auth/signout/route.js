@@ -15,7 +15,7 @@ if(error)throw new Error('Error Logging Out')
   }
 
   revalidatePath('/', 'layout') 
-  return NextResponse.redirect('/login', {
+  return NextResponse.redirect(new URL('/login', process.env.NEXT_PUBLIC_BASE_URL), {
     status: 302,
   });
   
