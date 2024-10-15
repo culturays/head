@@ -1,29 +1,56 @@
+"use client"
 import { newsViews, postsOutline, sideBarNewsItems, sidePanelNewsItems } from "@/app/news/rootpostsHandle"
 import NewsLetter from "../../components/NewsLetter"
-import { createClient } from "@/utils/supabase/server"
+import { createClient } from "@/utils/supabase/client"
 import Image from "next/image"
 import Link from "next/link"
 import { dateFormatter } from "@/utils/dateFormat"
+import { useEffect, useState } from "react"
 
-const SideBar = async() => {
-    const newsViewCursors = await newsViews()
-    const prev_newsView_cursors = newsViewCursors?.map((xy)=> xy.cursor)  
-    const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
-    const prev_sidepanel_cursors = sidePanelCursors?.map((xy)=> xy.cursor)
-    const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
-    const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
-    const news_outline=await postsOutline() 
+const SideBar = () => {
+  const [top_NewsView, setTopTopNewsView]=useState([])
+  const [top_SidePanelCursors, setSidePanelCursors]=useState([])
+  const [top_SidebarItems, setSidebarItems]=useState([])
+  const [top_Outline, setOutline]=useState([])
+  const [cinema_Titles, setCinema_titles]=useState([])
     const naija_wiki =async ()=>{  
         const supabase = createClient() 
         const { data:cinema_titles , error } = await supabase 
         .from('cinema_titles')
         .select('*')
         if(error)throw new Error('An Error has occured!')
-        return { cinema_titles } 
+      setCinema_titles(cinema_titles )   
             
         }   
-     const {cinema_titles} =await naija_wiki()
-     const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
+   
+     const coming_titles= cinema_Titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))   
+     
+     const topLatest=async()=>{ 
+     const newsViewCursors = await newsViews()
+     const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+     setSidePanelCursors(sidePanelCursors)
+     setTopTopNewsView(newsViewCursors) 
+     
+     }
+     useEffect(()=>{
+     topLatest()
+     naija_wiki()
+     },[])
+
+     const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)  
+    const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
+  const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+ 
+    const sideTops =async()=>{
+    const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)       
+    const news_outline=await postsOutline()
+      setSidebarItems(sidebarItems)
+      setOutline(news_outline)
+      }
+      useEffect(()=>{
+       sideTops()
+     
+     },[])
   return (
  <div className='side_view_lg py-3 px-3 m-auto lg:m-0 border-l-4 max-w-md'> 
  
@@ -31,8 +58,8 @@ const SideBar = async() => {
 <h2 className='text-gray-600 font-bold text-4xl text-center lg:text-left py-4'>Summary</h2>
 <hr className='h-1 w-4/5 m-auto my-4'/>
 <div className='m-auto lg:m-0 max-w-md md:max-w-sm'>
-  <div dangerouslySetInnerHTML={{__html: news_outline[0]?.content||'Summary'}}className='text-lg leading-8 py-3 text-gray-600 [&_p>a]:text-green-600 [&_p>a]:hover:bg-green-900'/> 
-{news_outline[0]?.featuredImage?.node.sourceUrl&& <Image
+  <div dangerouslySetInnerHTML={{__html: top_Outline[0]?.content||'Summary'}}className='text-lg leading-8 py-3 text-gray-600 [&_p>a]:text-green-600 [&_p>a]:hover:bg-green-900'/> 
+{top_Outline[0]?.featuredImage?.node.sourceUrl&& <Image
  className='xs:h-64 lg:h-56'
  src={news_outline[0]?.featuredImage?.node.sourceUrl} 
  width={1200} 
@@ -44,7 +71,7 @@ const SideBar = async() => {
 <NewsLetter/>
 </div> 
  <div className='m-auto max-w-md lg:m-0 '>
- {sidebarItems?.slice(1).map((ex)=>
+ {top_SidebarItems?.slice(1).map((ex)=>
 <div className='shadow flex my-3' key={ex.node.title + ' ' + Math.random()}>
  <div className='w-1/4 lg:w-1/2 mx-1 py-6 '> 
  <Image
@@ -69,7 +96,7 @@ const SideBar = async() => {
 
 </div>
  <div className='max-w-sm lg:max-w-md py-6 m-auto border-b border-t border-yellow-600 border-b-4 border-t-4 lg:m-0 xl:max-w-sm'> 
-{sidebarItems?.slice(0, 1).map((ex, i)=>
+{top_SidebarItems?.slice(0, 1).map((ex, i)=>
 <div key={ex.node.title + ' ' + Math.random()}> 
 <div> 
  <Image
