@@ -111,7 +111,7 @@ const [closeQuestion, setCloseQuestion]= useState(false)
 </div>
 <div className="p-6 text-gray-200 flex justify-between hover:scale-105"> 
 <hr className="w-1/4 my-3"/> 
-<Link href='/news/vdeos'><h3 className="cursor-pointer" onClick={()=>setCloseQuestion(false)}>Videos</h3></Link>  
+<Link href='/news/videos'><h3 className="cursor-pointer" onClick={()=>setCloseQuestion(false)}>Videos</h3></Link>  
 <hr className="w-1/4 my-3"/>  
 </div>
  
@@ -120,7 +120,7 @@ const [closeQuestion, setCloseQuestion]= useState(false)
 <div className="relative my-4 p-6 bg-white text-gray-700">
  <h3 className="font-medium text-3xl">What You Missed</h3>
  <div className=""> 
-  {sideBarData.map((ex, i)=>  
+  {sideBarData?.map((ex, i)=>  
 <div key={ex.node.title + ' ' + i} className="m-1 p-2 flex border-b border-b-red-500" >
  <div className="w-1/2 mx-1 px-1">   
 <Image  
