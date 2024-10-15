@@ -2,11 +2,11 @@
 import Image from 'next/image'
 import moment from 'moment' 
 import Link from 'next/link'   
-// import VideoPlayer from '../VideoPlayer'
-import SideBar from "../../app/side/Side"
+// import VideoPlayer from '../VideoPlayer' 
 import Paginate from "../Paginate" 
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import SideBar from '../Side'
  
  const replaceHTMLTags=(string)=>{
    const regex = /(<([^>]+)>)/gi;
@@ -92,7 +92,7 @@ const Videos = ({content_videos}) => {
 </div> 
 <div className="md:flex justify-between max-w-max bg-white m-auto"> 
 <Paginate content={content_videos.slice(4)}/>
-{/* <SideBar/> */}
+  <SideBar/>  
  </div>  
  </div>
  )

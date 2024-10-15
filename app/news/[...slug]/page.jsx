@@ -1,6 +1,6 @@
  
 import { headers } from "next/headers"
-import SideBar from "@/app/side/Side"
+import SideBar from "@/components/Side"
  import { news_details_all } from "../articlehandle"
 import ArticleDetail from "@/components/News/ArticleDetail"
 const CULTURAYS_CONTENT_WP = process.env.CULTURAYS_WP

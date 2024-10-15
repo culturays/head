@@ -1,5 +1,5 @@
 "use client"
-import { fetchNewPosts } from '@/app/news/rootpostsHandle'
+import { fetchNewPosts, newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, postLastAndScrolledCategories, sideBarNewsItems, sidePanelNewsItems } from '@/app/news/rootpostsHandle'
 import { dateFormatter } from '@/utils/dateFormat'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,22 +7,106 @@ import React, { useCallback, useEffect } from 'react'
 import { useState } from 'react'
 import { useInView } from 'react-intersection-observer'
  
-const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, last_cursors}) => {
+const MainBottom = () => {
     const [scrolledContent, setScrolledContent]=useState([])
     const {ref, inView } =useInView();
-    const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
-    const [debouncedValue, setDebouncedValue] = useState(null) 
-  
-    useEffect(() => {
-      const handler = setTimeout(() => {
-        setDebouncedValue(end_post_cursor )
-      }, 500)
-  
-      return () => {
-        clearTimeout(handler)
-      }
-    }, [end_post_cursor , 500])  
+    const [top_Latest, setTopLatest]=useState([])
+    const [top_PostsCa, setTopPostsCa]=useState([])
+    const [top_NewsView, setTopTopNewsView]=useState([])
+    const [top_SidePanelCursors, setSidePanelCursors]=useState([])
+    const [top_SidebarItems, setSidebarItems]=useState([])
+    const [top_PostsData, setPostsData]=useState([])
+    const [top_Posts_notIn_newsPosts, setPosts_notIn_newsPosts]=useState([]) 
+    const [top_Last_categories, setLast_categories]=useState([]) 
+    const [debouncedValue, setDebouncedValue] = useState(null)
 
+    const topLatest=async()=>{
+    const latestPosts=await newsByLatest()
+    const newsViewCursors = await newsViews()
+    setTopLatest(latestPosts)
+    setTopTopNewsView(newsViewCursors)  
+    
+    }
+    useEffect(()=>{
+    topLatest()
+    
+    },[top_Latest])    
+ 
+    const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
+    
+    const postsTop = async()=>{  
+    const post_data = await postCategories(posts_cursor)
+    setTopPostsCa(post_data?.categories.edges ) 
+    
+    }
+    useEffect(()=>{
+      postsTop()
+    
+    },[])
+    
+     const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
+     const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
+    
+     const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
+     const newsTops =async()=>{
+      const sidePanelCursors = await sidePanelNewsItems(prev_newsView_cursors)
+     setSidePanelCursors(sidePanelCursors)
+     }
+     useEffect(()=>{
+      newsTops()
+    
+    },[])
+    
+     const sideTops =async()=>{
+     const sidebarItems=await sideBarNewsItems(start_cursor_sidebar)
+     setSidebarItems(sidebarItems)
+     }
+     useEffect(()=>{
+      sideTops()
+    
+    },[])
+    
+    const prev_sidepanel_cursors = top_SidePanelCursors?.map((xy)=> xy.cursor)
+    const start_cursor_sidebar = prev_sidepanel_cursors?.concat(prev_newsView_cursors)
+    const sibarNewsCursor =top_SidebarItems?.map((xy)=> xy.cursor)
+    const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(start_cursor_sidebar)?.concat(sibarNewsCursor)
+    
+     const postsDataTops =async()=>{ 
+     const postsData= await newsPosts(allExitingPostCursors)
+     setPostsData(postsData?.posts.edges)
+     }
+     useEffect(()=>{
+      postsDataTops()
+    
+    },[])
+    const news_post_cursor = top_PostsData?.map((xy)=> xy.cursor)
+    const postsCursors = allExitingPostCursors?.concat(news_post_cursor) 
+    
+    const postsNotinPosts =async()=>{ 
+    const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+    setPosts_notIn_newsPosts(posts_notIn_newsPosts)
+      }
+      useEffect(()=>{
+        postsNotinPosts()
+     
+     },[])
+     
+    
+     const last_two_categories = top_Posts_notIn_newsPosts?.categories?.edges?.map((xt)=>xt.cursor)
+     const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+     const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
+    const postsEnd =async()=>{ 
+     const last_categories = await postLastAndScrolledCategories(last_cursors)
+     setLast_categories(last_categories)
+     
+      }
+      useEffect(()=>{
+        postsEnd()
+     
+     },[]) 
+     const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
+    const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor); 
+        
     const loadMorePosts = useCallback(async () => {
            const apiP = await fetchNewPosts(2, debouncedValue, last_cursors, news_post_cursor); 
            const post_res = apiP?.categories?.nodes.map((xy)=> xy.posts) 
@@ -49,6 +133,23 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
          }
    }, [loadMorePosts]);
 
+
+
+
+
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(end_post_cursor )
+      }, 500)
+  
+      return () => {
+        clearTimeout(handler)
+      }
+    }, [end_post_cursor , 500])
+    
+    
+
+ 
   return (
     <div>
        
@@ -66,7 +167,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 <div className='py-6'> 
     <div className='md:flex flex-wrap xl:flex-nowrap justify-center gap-3  m-auto'> 
       <div>
-{ posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[4]?.nodes.slice(0,1).map((xy, i)=> 
+{ posts_all?.length>0&&posts_all[4]?.nodes.slice(0,1).map((xy, i)=> 
 <div className='border max-w-lg m-auto md:m-0 px-3 py-6 h-max' key={i + ' ' + Math.random()}> 
 <Link href={`/news/topic/${xy.slug}`}>
 <h2 className='py-4 my-4 text-4xl lg:text-5xl font-bold w-4/5 hover:text-gray-400 px-1'style={{lineHeight:'50px'}}>{xy?.title}</h2></Link >
@@ -105,7 +206,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 </div>  
 )}
 <div className='m-auto max-w-lg lg:m-0 '>
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[4]?.nodes.slice(1,5).map((ex)=>
+ { posts_all?.length>0&&posts_all[4]?.nodes.slice(1,5).map((ex)=>
 <div className='shadow flex w-full' key={ex.title + ' ' + Math.random()}>
  <div className='w-1/4 lg:w-1/4 mx-1 py-6 '> 
  <Image
@@ -133,7 +234,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 
 
  <div className='m-auto my-11 px-2 md:px-1 max-w-sm md:m-0'> 
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[4]?.nodes.slice(7).map((xy, i)=> 
+ { posts_all?.length>0&&posts_all[4]?.nodes.slice(7).map((xy, i)=> 
 <div className='shadow-2xl max-w-sm m-auto my-2 px-1'style={{height:'550px' }} key={i + ' ' + Math.random()}> 
 <div> 
   <Image 
@@ -158,7 +259,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 
 <div className='col-span-4 lg:flex xl:col-span-1 xl:block justify-center'> 
 <div className='m-auto max-w-lg lg:m-0 '>
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[5]?.nodes.slice(0,5).map((ex)=>
+ { posts_all?.length>0&&posts_all[5]?.nodes.slice(0,5).map((ex)=>
 <div className='shadow flex w-full' key={ex.title + ' ' + Math.random()}>
  <div className='w-1/4 lg:w-1/4 mx-1 py-6 '> 
  <Image
@@ -184,7 +285,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 </div> 
  
 <div className='m-auto max-w-lg lg:m-0 '>
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[5]?.nodes.slice(5,10).map((ex)=>
+ { posts_all?.length>0&&posts_all[5]?.nodes.slice(5,10).map((ex)=>
 <div className='shadow flex ' key={ex.title + ' ' + Math.random()}>
  <div className='w-1/4 lg:w-1/4 mx-1 py-6 '> 
  <Image
@@ -216,7 +317,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 <hr className=' '/> 
 <div className='sm:grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-1 text-gray-600 py-4 max-w-2xl lg:max-w-max m-auto' > 
  
-{ posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[6]?.nodes.slice(0,9).map((xy, i)=>
+{ posts_all?.length>0&&posts_all[6]?.nodes.slice(0,9).map((xy, i)=>
 <div className='max-w-sm m-auto py-11 hover:text-gray-300 border-black border-b-4 px-4 sm:h-52' key={i + ' ' + Math.random()}>
 <Link href={`/news/topic/${xy.slug}`}>
 <h2 className='text-xl font-bold'>{xy.title}</h2></Link> 
@@ -240,7 +341,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 </div>  
 
 <div className='md:grid md:grid-cols-2 lg:grid-cols-4 justify-center lg:items-start m-auto my-11 px-2 md:px-1 max-w-4xl lg:max-w-max' > 
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[7]?.nodes.slice(0,4).map((xy, i)=> 
+ { posts_all?.length>0&&posts_all[7]?.nodes.slice(0,4).map((xy, i)=> 
 <div className='shadow-2xl max-w-sm md:max-w-md m-auto my-4 px-1'style={{height:'550px' }} key={i + ' ' + Math.random()}> 
 <div> 
   <Image 
@@ -264,7 +365,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 </div> 
 
 <div className='py-3 md:py-0 md:m-0 md:grid grid-cols-2 lg:block xl:grid justify-center 2xl:grid-cols-3 gap-0 xl:max-w-4xl 2xl:max-w-7xl xl:m-auto' >
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[7]?.nodes.slice(4).map((ex)=>
+ { posts_all?.length>0&&posts_all[7]?.nodes.slice(4).map((ex)=>
 <div className='shadow flex max-w-xl xl:max-w-md m-auto my-3 m-auto' key={ex.title + ' ' + Math.random()}>
   <div className='w-1/4 mx-2 py-6'> 
   <Image
@@ -289,7 +390,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
  </div>
  
   <div className='md:flex flex-wrap xl:flex-nowrap gap-1 my-11 px-2 md:px-1 m-auto max-w-2xl xl:max-w-7xl'> 
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[8]?.nodes.slice(0,4).map((xy, i)=> 
+ { posts_all?.length>0&&posts_all[8]?.nodes.slice(0,4).map((xy, i)=> 
 <div className='shadow-2xl max-w-sm md:max-w-xs m-auto my-4'style={{height:'600px' }} key={i + ' ' + Math.random()}> 
 <div> 
   <Image 
@@ -313,7 +414,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 
 
 <div className='md:grid md:grid-cols-2 lg:grid-cols-4 justify-center lg:items-start m-auto my-11 px-2 md:px-1 max-w-4xl lg:max-w-max' > 
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[8]?.nodes.slice(4,8).map((xy, i)=> 
+ { posts_all?.length>0&&posts_all[8]?.nodes.slice(4,8).map((xy, i)=> 
 <div className='shadow-2xl max-w-sm md:max-w-md m-auto my-4 px-1'style={{height:'550px' }} key={i + ' ' + Math.random()}> 
 <div> 
   <Image 
@@ -340,7 +441,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 <hr className='h-1 w-4/5 m-auto my-4'/>
 
 <div className='py-3 md:py-0 md:m-0 md:grid grid-cols-2 lg:block xl:grid justify-center 2xl:grid-cols-3 gap-0 xl:max-w-4xl 2xl:max-w-7xl xl:m-auto' >
- { posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[9]?.nodes.slice(0,6).map((ex)=>
+ { posts_all?.length>0&&posts_all[9]?.nodes.slice(0,6).map((ex)=>
 <div className='shadow flex max-w-xl xl:max-w-md m-auto my-3 m-auto' key={ex.title + ' ' + Math.random()}>
   <div className='w-1/4 mx-2 py-6'> 
   <Image
@@ -366,7 +467,7 @@ const MainBottom = ({news_post_cursor,posts_notIn_newsPosts,post_end_cursor, las
 </div> 
  
 <div className='flex flex-wrap justify-center py-6'>
-{ posts_notIn_newsPosts?.length>0&&posts_notIn_newsPosts[0]?.nodes.slice(5).concat(posts_notIn_newsPosts[9].nodes.slice(6)).map((ex,i)=>
+{ posts_all?.length>0&&posts_all[0]?.nodes.slice(5).concat(posts_all[9].nodes.slice(6)).map((ex,i)=>
 <div className='relative m-3' key={ex.title + ' ' + Math.random()} >
   <div className='max-w-sm m-auto'> 
   <Image

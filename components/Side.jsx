@@ -1,6 +1,6 @@
 "use client"
 import { newsViews, postsOutline, sideBarNewsItems, sidePanelNewsItems } from "@/app/news/rootpostsHandle"
-import NewsLetter from "../../components/NewsLetter"
+import NewsLetter from "./NewsLetter"
 import { createClient } from "@/utils/supabase/client"
 import Image from "next/image"
 import Link from "next/link"

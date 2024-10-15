@@ -11,7 +11,7 @@ import netflixNewsFeed from "@/utils/netflixNaijaFeed"
 import topicsFeed from "@/utils/topicsFeed"
 import articleFeed from "@/utils/articleFeed"
 import nollywoodFeed from "@/utils/nollywoodFeed" 
-import SideBar from "./side/Side"
+import SideBar from "../components/Side"
 
 // (async () => {
 //   const location = 'Lagos, Nigeria';  
@@ -172,13 +172,7 @@ return (
 <Main />   
 <SideBar/> 
 </div>
-
- {/* <MainBottom 
- posts_notIn_newsPosts={posts_all} 
- post_end_cursor={post_end_cursor}
- news_post_cursor={news_post_cursor}
- last_cursors={last_cursors} 
- />   */}
+ <MainBottom /> 
 </div> 
  )
 }

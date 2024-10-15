@@ -3,7 +3,7 @@ import moment from "moment/moment"
 import Image from "next/image"    
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleRight, faAward, faClapperboard, faFilm } from "@fortawesome/free-solid-svg-icons" 
-import SideBar from "@/app/side/Side"
+import SideBar from "@/components/Side"
 import Paginate from "../Paginate"
 
 const ComingToNetflixNaija = ({coming_to_netflix_grouped, netflix_news_data,coming_to_netflix_naija}) => { 

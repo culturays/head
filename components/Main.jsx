@@ -23,11 +23,10 @@ const Main = ({
 const [activeSet, setActiveSet]=useState(true)
 const [actIdx ,setActIdx]=useState(-1)
 const [categoryPost,setCategoryPost]=useState([])
-const [categoryName,setCategoryName]=useState('') 
-const [scrolledContent, setScrolledContent]=useState([])    
-const { inView } =useInView(); 
+const [categoryName,setCategoryName]=useState('')   
+// const { inView } =useInView(); 
  
-const [debouncedValue, setDebouncedValue] = useState(null)
+// const [debouncedValue, setDebouncedValue] = useState(null)
 const [top_Latest, setTopLatest]=useState([])
 const [top_PostsCa, setTopPostsCa]=useState([])
 const [top_NewsView, setTopTopNewsView]=useState([])
@@ -35,7 +34,7 @@ const [top_SidePanelCursors, setSidePanelCursors]=useState([])
 const [top_SidebarItems, setSidebarItems]=useState([])
 const [top_PostsData, setPostsData]=useState([])
 const [top_Posts_notIn_newsPosts, setPosts_notIn_newsPosts]=useState([]) 
-const [top_Last_categories, setLast_categories]=useState([]) 
+// const [top_Last_categories, setLast_categories]=useState([]) 
 
 const topLatest=async()=>{
 const latestPosts=await newsByLatest()
@@ -50,7 +49,7 @@ topLatest()
 
 },[top_Latest])
 
- const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
+const latest_post_categories = top_Latest?.categories?.nodes.map((xy)=> xy?.posts?.nodes) 
 const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo?.endCursor) 
 
 const postsTop = async()=>{  
@@ -63,7 +62,7 @@ useEffect(()=>{
 
 },[])
 
- const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
+//  const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
  const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
 
  const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
@@ -98,12 +97,12 @@ const allExitingPostCursors=posts_cursor?.concat(postCategory_cursor)?.concat(st
   postsDataTops()
 
 },[])
- const news_post_cursor = top_PostsData?.map((xy)=> xy.cursor)
-  const postsCursors = allExitingPostCursors?.concat(news_post_cursor) 
+const news_post_cursor = top_PostsData?.map((xy)=> xy.cursor)
+const postsCursors = allExitingPostCursors?.concat(news_post_cursor) 
 
 const postsNotinPosts =async()=>{ 
-  const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
- setPosts_notIn_newsPosts(posts_notIn_newsPosts)
+const posts_notIn_newsPosts= await nextNewsPosts(postsCursors)
+setPosts_notIn_newsPosts(posts_notIn_newsPosts)
   }
   useEffect(()=>{
     postsNotinPosts()
@@ -111,20 +110,20 @@ const postsNotinPosts =async()=>{
  },[])
  
 
- const last_two_categories = top_Posts_notIn_newsPosts?.categories?.edges?.map((xt)=>xt.cursor)
- const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
- const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
-const postsEnd =async()=>{ 
- const last_categories = await postLastAndScrolledCategories(last_cursors)
- setLast_categories(last_categories)
+//  const last_two_categories = top_Posts_notIn_newsPosts?.categories?.edges?.map((xt)=>xt.cursor)
+//  const last_cursors=postCategory_next_cursor?.concat(last_two_categories)?.push("YXJyYXljb25uZWN0aW9uOjUwMQ==")
+//  const post_end_cursor=top_Last_categories?.length>0 &&top_Last_categories[0]?.node.posts.pageInfo.endCursor 
+// const postsEnd =async()=>{ 
+//  const last_categories = await postLastAndScrolledCategories(last_cursors)
+//  setLast_categories(last_categories)
  
-  }
-  useEffect(()=>{
-    postsEnd()
+//   }
+//   useEffect(()=>{
+//     postsEnd()
  
- },[]) 
+//  },[]) 
  const posts_all=top_Posts_notIn_newsPosts?.categories?.edges?.map((xy)=> xy?.node.posts)?.filter((ex)=> ex?.nodes?.length>0) 
-const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
+// const [end_post_cursor, setEnd_post_cursor] = useState(post_end_cursor);
 
 useEffect(()=>{  
 if(categoryName){   
@@ -135,15 +134,15 @@ setCategoryPost(top_PostsData)
 }
 },[categoryName]) 
 
-//     useEffect(() => {
-//       const handler = setTimeout(() => {
-//         setDebouncedValue(end_post_cursor )
-//       }, 500)
+    // useEffect(() => {
+    //   const handler = setTimeout(() => {
+    //     setDebouncedValue(end_post_cursor )
+    //   }, 500)
   
-//       return () => {
-//         clearTimeout(handler)
-//       }
-//     }, [end_post_cursor, 500])
+    //   return () => {
+    //     clearTimeout(handler)
+    //   }
+    // }, [end_post_cursor, 500])
     
 //     const loadMorePosts = useCallback(async () => {
 //            const apiP = await fetchNewPosts(2, debouncedValue, last_cursors, news_post_cursor); 

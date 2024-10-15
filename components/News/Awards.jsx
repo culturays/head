@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"  
 import { dateFormatter } from "@/utils/dateFormat"
 import SlideFxn from "../SlideFxn"  
-import SideBar from "../../app/side/Side"
+import SideBar from "../Side"
 
 const Awards = ({awards_content}) => { 
 
