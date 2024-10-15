@@ -23,7 +23,7 @@ const [netflix__NG_naija,setNetflix_NG_naija]=useState([])
 const [new_Chars,setNew_Chars]=useState([])
 const [naijaWikiVideos,setNaijaWikiVideos]=useState([])
 const [netFlixTop10,setNetFlixTop10]=useState([])
-
+const [loading, setLoading]=useState(false)
 const wikiNetflixNews=async()=>{
 const netflix_News = await netflixNews() 
 const netflix_Africa= await netflixAfrica() 
@@ -32,7 +32,7 @@ const netflix_inter = await netflixInter()
 const netflix__NG_naija = await netflixNigNaija()
 const newChars = await newchars()
 const naijaWikiVideos =await vids()
-const netFlixTop10= await getTop10()
+const netFlixTopItems= await getTop10()
 
   setNetflix__News(netflix_News)
   setNetflix__Africa(netflix_Africa)
@@ -41,14 +41,16 @@ const netFlixTop10= await getTop10()
   setNetflix_NG_naija(netflix__NG_naija)
   setNew_Chars(newChars)
   setNaijaWikiVideos(naijaWikiVideos)
-  setNetFlixTop10(netFlixTop10)
+  setNetFlixTop10(netFlixTopItems)
   }
-
-
   useEffect(()=>{
 wikiNetflixNews()
-  },[])
-
+setLoading(true)
+if(netFlixTop10.length>0){
+  setLoading(false)
+}
+  },[netFlixTop10])
+ 
 const news_blog =netflix__News?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
 const africa_blog =netflix_africa?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
 const popular_blog =netflix_popular?.map((ex)=> ex.node.netflixNaijaPosts).map((xy)=> xy.nodes).flat()
@@ -178,8 +180,8 @@ return newString
 </section>
 <NewsLetter/> 
 </div> 
- 
-  <section className='bg-gray-700 text-white relative -mx-10 xl:-mx-32'> 
+
+ {loading?<p>Loading...</p>:<section className='bg-gray-700 text-white relative -mx-10 xl:-mx-32'> 
   <div className='flex justify-center py-4'>
      <p className='xxs:text-2xl xs:text-4xl'>
   <FontAwesomeIcon 
@@ -197,18 +199,19 @@ return newString
  <div onClick={nextSlide} className='text-5xl text-white opacity-70 bg-gray-400 cursor-pointer'> 
  <FontAwesomeIcon icon={faAngleRight}/> </div> 
  </div>
-  <div className='border-b mx-11 bg-gradient-to-r to-sky-400 from-red-400 bg-clip-text text-transparent py-4 lg:py-0'>
+  <div className='border-b mx-11 bg-gradient-to-r to-sky-500 from-red-600 bg-clip-text text-transparent py-4 lg:py-0'>
  { netFlixTop10.map((item, index)=>  
  index===activeSlide&&
  <div className='sm:flex justify-center max-w-xs sm:max-w-md md:max-w-2xl xl:max-w-5xl m-auto' key={item.title + ' ' + index}> 
- <p className='text-4xl md:text-6xl text-center'>{item?.title} </p> 
- <p className=' text-6xl h-max md:text-8xl text-center sm:text-left py-4 sm:py-8'>{index + 1} </p> 
+ <p className='text-4xl md:text-6xl text-center font-bold'>{item?.title} </p> 
+ <p className=' text-6xl h-max md:text-8xl text-center sm:text-left py-4 sm:py-8 font-bold'>{index + 1} </p> 
   </div > 
 ) }  
  </div>
  
  </div>
- </section>
+ </section>}
+   
 
  <section className='bg-white py-8 px-4  '>
  <h3 className='text-4xl text-gray-800 text-center border-b p-2'>Movies in the Theatre now</h3> 

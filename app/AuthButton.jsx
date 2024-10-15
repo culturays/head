@@ -5,6 +5,7 @@ import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import Test from "@/components/Test";
 
 export default async function AuthButton() {
 const supabase = createClient();
@@ -13,10 +14,9 @@ const {
 } = await supabase.auth.getUser()
 const headersList = headers();
 const pathname = headersList.get('referer') || "" 
-
  const handleLogout=async()=>{ 
-  "use server"
- redirect(`${pathname}?confirm=logout?`)
+  "use server" 
+//  redirect(`${pathname}?confirm=logout?`)
    }
  return user? ( 
 <div className="flex flex-col items-center pb-2 leading-none"> 
@@ -45,7 +45,7 @@ const pathname = headersList.get('referer') || ""
    Sign out
  </button> 
 </form>
-
+<Test pathname={pathname} />
 </div>
 ):(  
 <div className="flex flex-col items-center pb-2 leading-none text-xs">

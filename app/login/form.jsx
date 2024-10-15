@@ -1,5 +1,5 @@
 'use client' 
-import { useState } from "react"; 
+import { useEffect, useRef, useState } from "react"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faEyeSlash, faEye} from '@fortawesome/free-solid-svg-icons'
 import { SubmitButton } from "./submit-button";   
@@ -44,9 +44,18 @@ if (data.name === 'password'&&!password_pattern.test(data.value.trim())) {
   setErrors(newErrors);  
   }
  
+  const clearRef= useRef()
+
+  useEffect(() => {
+   if(searchParams?.message?.includes('Success!')){
+     clearRef.current?.reset(); 
+   }  
+ 
+ }, [signUp]);
+ 
 return (  
 <> 
-<form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative" noValidate>
+<form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative" noValidate ref={clearRef} >
 <label className="text-md block text-white text-xl" htmlFor="full_name">
 Username
 </label>
@@ -93,7 +102,6 @@ type={passType}
 pattern={password_pattern}
 required={errors.password}
 onBlur={(e) =>handleFocus(e)} 
- 
 />
 {errors.password &&
 <span className="text-red-600">
@@ -132,9 +140,14 @@ pendingText="Signing Up..."
 Create Account
 </SubmitButton>:null}
 </div> 
-{searchParams?.message && (
+  {searchParams?.message &&!searchParams?.message.includes('Success!') && (
 <p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
 Invalid Login
+</p>
+)} 
+  {searchParams?.message &&searchParams?.message.includes('Success!') && (
+<p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
+{searchParams?.message}
 </p>
 )} 
  <hr />

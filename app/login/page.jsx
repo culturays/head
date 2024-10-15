@@ -30,7 +30,7 @@ const supabase = createClient();
      console.log(error)   
     return redirect("/login?message=Could not authenticate user");
   }
-   console.log('successfull')
+  // console.log('successfull')
  revalidatePath('/') 
   return redirect( `${origin}` ); 
   // return redirect("/protected"); `${origin}/auth/callback` ,
@@ -62,7 +62,8 @@ const signUp = async (formData) => {
   }
 
   revalidatePath('/', 'layout')
-  return redirect("/login?message=Check email to continue the sign in process");
+  formData.set('email',' ')
+  return redirect("/login?message=Success! Check your email to continue the sign in process");
 };
  
 const handleOauthLogin = async () => {
