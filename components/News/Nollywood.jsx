@@ -3,7 +3,7 @@ import Link from "next/link"
 import moment from "moment/moment"
 import Image from "next/image"  
 import Paginate from "../Paginate"
-import SideBar from "../../app/Side"
+import SideBar from "../../app/side/Side"
 const Nollywood = ({nollywood_news}) => {
 //     netItems.map((ets)=> {
 //         ets.categories.nodes.map((et)=> {       

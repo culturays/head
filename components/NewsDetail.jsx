@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ShareButtons from "./ShareButtons";
 import NewsLetter from "./NewsLetter";
-import SideBar from "../app/Side";
+import SideBar from "../app/side/Side";
 const replaceHTMLTags=(string)=>{
   const regex = /(<([^>]+)>)/gi;
   //(/<\/?[^>]+(>|$)/g, "") 

@@ -12,7 +12,7 @@ import topicsFeed from "@/utils/topicsFeed"
 import articleFeed from "@/utils/articleFeed"
 import nollywoodFeed from "@/utils/nollywoodFeed"
 import { Suspense } from "react"
-import SideBar from "./Side"
+import SideBar from "./side/Side"
 
 // (async () => {
 //   const location = 'Lagos, Nigeria';  
@@ -161,17 +161,17 @@ const evData = await events3Details(one.atitle)
     //   stopDailyInterval(); 
     //  }, 30000);    
 
-    await newsFeed()
-    await netflixNewsFeed()
-    await nollywoodFeed()
-    await articleFeed()
-    await topicsFeed()  
+    // await newsFeed()
+    // await netflixNewsFeed()
+    // await nollywoodFeed()
+    // await articleFeed()
+    // await topicsFeed()  
 return (
 <div>  
  
 <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main />   
-  {/* <SideBar/>   */}
+  <SideBar/> 
 </div>
 
  {/* <MainBottom 

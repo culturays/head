@@ -3,7 +3,7 @@ import Image from 'next/image'
 import moment from 'moment' 
 import Link from 'next/link'   
 // import VideoPlayer from '../VideoPlayer'
-import SideBar from "../../app/Side"
+import SideBar from "../../app/side/Side"
 import Paginate from "../Paginate" 
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
