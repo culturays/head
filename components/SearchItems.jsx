@@ -46,7 +46,7 @@ onChange={(e) => {
 defaultValue={searchParams.get('name')?.toString()}
 /> 
  
-<div className="relative z-50 top-3 -right-3/4 ml-22 sm:ml-28 md:ml-32">
+<div className="relative z-40 top-3 -right-3/4 ml-22 sm:ml-28 md:ml-32">
 <FontAwesomeIcon icon={faAngleDoubleRight} className="cursor-pointer opacity-70 text-xl hover:scale-150" onClick={()=>!name?router.push('/search-page')
 :router.push(`/search-page?name=${name}`)}/> 
  

@@ -1,8 +1,7 @@
-import { createClient } from '@/utils/supabase/server'
-import { revalidatePath } from 'next/cache' 
+import { createClient } from '@/utils/supabase/server' 
 import { redirect } from 'next/navigation' 
 
-export async function POST(req) { 
+export async function GET(req) { 
   const supabase = createClient() 
   const {
     data: { user },
@@ -14,7 +13,7 @@ if(error)throw new Error('Error Logging Out')
    
   }
 
-  revalidatePath('/', 'layout') 
+ // revalidatePath('/', 'layout') 
   return redirect('/login' );
   
 }

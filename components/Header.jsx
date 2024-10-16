@@ -18,7 +18,7 @@ useEffect(()=>{
 },[pathname])
  return ( 
  <>
- <ConfirmModal />  
+ <ConfirmModal />
   <header className="flex justify-between w-full"> 
 <div className="md:m-3 flex mt-5" >       
 <Link href='/'><h1 className="head-forum font-bold text-5xl sm:mb-4 mt-4 my-4 md:mt-11 lg:mt-6 mb-4 mx-4 font-mono tightest"> 

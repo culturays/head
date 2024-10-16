@@ -5,7 +5,7 @@ export async function middleware(request) {
 const { response, supabase } = await updateSession(request); 
  const { data: { user } } = await supabase.auth.getUser();  
  const path = new URL(request.url).pathname;  
-
+ response.headers.set('confirm', request.nextUrl.searchParams ||'no value')
  if (path === "/") return response;       
   const unprotectedPaths = ["/login", "/forgotten-password", "/reset"]; 
   const isUnprotectedPath = unprotectedPaths.some((up) => path.startsWith(up));

@@ -7,7 +7,7 @@ import { Open_Sans, Nokora } from 'next/font/google';
 import Footer from '@/components/Footer';
 import SocialNav from "@/components/SocialNav"
 import Header from '@/components/Header';
-import AuthButton from '@/app/AuthButton';
+import AuthButton from '@/components/AuthButton';
 import Nav from '@/components/Nav';
 import SearchItems from '@/components/SearchItems'; 
 import TabNav from '@/components/TabNav';

@@ -1,14 +1,10 @@
+ "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
- import Link from "next/link";  
+import Link from "next/link";  
 import {faFacebookF, faGoogle, faInstagram, faWhatsapp, faXTwitter} from "@fortawesome/free-brands-svg-icons";
-import AuthButton from '@/app/AuthButton';
-import Nav from './Nav';
-import SearchItems from './SearchItems';
-import TabNav from './TabNav';
-import { headers } from 'next/headers';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
  
-const SocialNav = async() => {
-
+const SocialNav = () => {
 
  return (
  

@@ -16,6 +16,7 @@ const pathname = headersList.get('referer') || ""
   "use server" 
 redirect(`${pathname}?confirm=logout?`)
    }
+   console.log(pathname)
  return user? ( 
 <div className="flex flex-col items-center pb-2 leading-none"> 
 <div className="flex items-center"> 
