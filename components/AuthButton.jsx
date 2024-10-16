@@ -5,6 +5,9 @@ import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation"; 
+import SignOutBtn from "./SignOutBtn";
+ 
+
 export default async function AuthButton() {
 const supabase = createClient();
 const {   
@@ -40,11 +43,7 @@ redirect(`${pathname}?confirm=logout?`)
  alt={user.user_metadata.full_name}
  /> 
  </div></Link> } 
- <form className="m-1 flex m-auto justify-center">  
- <button formAction={handleLogout} className="button block m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
-   Sign out
- </button>
-</form>
+<SignOutBtn/>
 </div>
 </div>
 ):(  
