@@ -16,7 +16,7 @@ const pathname = headersList.get('referer') || ""
   "use server" 
 redirect(`${pathname}?confirm=logout?`)
    }
-   console.log(pathname)
+   
  return user? ( 
 <div className="flex flex-col items-center pb-2 leading-none"> 
 <div className="flex items-center"> 
@@ -40,8 +40,8 @@ redirect(`${pathname}?confirm=logout?`)
  alt={user.user_metadata.full_name}
  /> 
  </div></Link> } 
- <form action={handleLogout}className="m-1 flex m-auto justify-center">  
- <button className="button block m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
+ <form className="m-1 flex m-auto justify-center">  
+ <button formAction={handleLogout} className="button block m-1 ml-2 rounded-md no-underline bg-btn-background text-lg hover:scale-105 mt-5" type="submit">
    Sign out
  </button>
 </form>

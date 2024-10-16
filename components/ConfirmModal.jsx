@@ -5,14 +5,7 @@ const ConfirmModal = () => {
   const searchParams = useSearchParams()
   const router = useRouter()   
   const searched= useSearchParams()
-  // const {handleConfirmLogout, setCurrentUrl}=usePagesContext()
  
-  // useEffect(() => {  
-  //   if (process) {  
-  //     setCurrentUrl(window.location.href);
-  //   }
-  // }, []);
-
   const params = new URLSearchParams(searched);
   const prX = params.get('confirm') 
   if(prX){
