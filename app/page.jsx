@@ -12,15 +12,21 @@ import topicsFeed from "@/utils/topicsFeed"
 import articleFeed from "@/utils/articleFeed"
 import nollywoodFeed from "@/utils/nollywoodFeed" 
 import SideBar from "../components/Side"
+import { getNaijaTrends1 } from "./api/trends/naija"
+import { getGoogleNewsTitles, getNaijaNews1 } from "./api/news/route"
 
-// (async () => {
-//   const location = 'Lagos, Nigeria';  
-//   const newsTitles = await getGoogleNewsTitles(location)
-// //const newsTitles = await getNaijaNews1()
-//   console.log('News Titles:', newsTitles);
+// (async () => { 
+//   //await getNaijaTrends1('NG')
+//  // await getNaijaNews1()
+//  //console.log('News Titles:',newstitles);  
 // })();
   
-const Home =async ({searchParams}) => {  
+const Home =async ({searchParams}) => { 
+  const location = 'Lagos, Nigeria'; 
+  const newstitles=await getGoogleNewsTitles(location)
+  await getNaijaNews1()
+  await getNaijaTrends1('NG')
+  
 const dailyEv3 =async()=>{ 
  const eventExp = await getNaijaEvents3()  
 const result = await Promise.all(eventExp.titleAObj.map(async one=> {  
@@ -95,9 +101,10 @@ const evData = await events3Details(one.atitle)
    console.error('Unexpected error:', error);
  } 
  } 
-  console.log('it ran')
+ 
    } 
-    
+
+ 
   const dailyWiki =async()=>{
     const silverBTitles= await scrapeSilverBird() 
     const silverB_titles = silverBTitles.filter((xy)=> xy.title !==undefined).map((ex)=> ex.title)  
@@ -110,8 +117,8 @@ const evData = await events3Details(one.atitle)
    const grouped = [];
    
    for (let i = 0; i < minLength; i++) { 
-    const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' ).catch(console.error);
-    console.log(imgMime) 
+   // const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' ).catch(console.error);
+    //console.log(silverB_imgs[i]) 
     grouped.push({ 
      title: silverB_titles[i], 
      url: silverB_urls[i],
@@ -136,43 +143,36 @@ const evData = await events3Details(one.atitle)
      } catch (error) {
        console.error('Unexpected error:', error);
      }  
-    } 
-    const now = new Date();
-    const delay = 1000 * 60 * 60 * 24;  
-    const start = delay - (now.getDay() * 60 +now.getMinutes() * 60 + now.getSeconds()) * 1000 + now.getMilliseconds();
+    }
+ 
    
-    setTimeout(function doSomething() {
-       dailyEv3()
-        dailyWiki(); 
-       setTimeout(doSomething, delay); 
-    }, start); 
-    // const daily_intervals = ()=> { 
-    //   const intervalId = setInterval(()=>{ 
-    
-    //   },1000 * 60 * 60); 
-    //   return () => { 
-    //     clearInterval(intervalId);
-    //   };
-    // }
-    
-    // const stopDailyInterval = daily_intervals();
-    // setTimeout(() => {
-    //   stopDailyInterval(); 
-    //  }, 30000);    
-
-    // await newsFeed()
-    // await netflixNewsFeed()
-    // await nollywoodFeed()
-    // await articleFeed()
-    // await topicsFeed()  
+const daily_intervals = ()=> { 
+  const intervalId = setInterval(()=>{ 
+ dailyEv3() //1000 * 60 * 60 * 24  //7 * 24 * 60 * 60 * 1000
+ dailyWiki()
+ console.log('it ran home')
+  },8.64e+7); 
+// 1800000 720000
+  return () => { 
+    clearInterval(intervalId);
+  };
+}
+const stopDailyInterval = daily_intervals();
+setTimeout(() => {
+stopDailyInterval(); 
+}, 60000); 
+    await newsFeed()
+    await netflixNewsFeed()
+    await nollywoodFeed()
+    await articleFeed()
+    await topicsFeed()
 return (
 <div>  
- 
-<div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
+ <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 <Main />   
 <SideBar/> 
 </div>
- <MainBottom /> 
+ <MainBottom />  
 </div> 
  )
 }

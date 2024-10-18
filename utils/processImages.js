@@ -70,7 +70,7 @@ import axios from 'axios';
                .upload(fileName, fileBuffer, {contentType: mimeType, upsert: true }); 
               // console.log(fileName, fileBuffer)      
              if (error) throw new Error(error); 
-      
+       
    } 
      console.log(`File uploaded as ${fileName}`);
        //const imgX = await uploadImageToSupabase(fileName, fileBuffer, mimeType) 

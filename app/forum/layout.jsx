@@ -21,6 +21,10 @@ export const metadata = {
    title:"Forum",
   //title:{absolute:"Forum"},
   description: "",
+  alternates: {
+    canonical: 'https://www.culturays.com/forum',
+ 
+  },
 };  
 
 const Layout = ({children}) => {

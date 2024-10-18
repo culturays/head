@@ -11,14 +11,14 @@ const [active, setActive]= useState(false)
 const [similarEvents,setSimilarEvents]= useState([]) 
 const [eventId,setEventId]= useState([]) 
 const openForm = () => {
-setActive(prev => !prev);  
+setActive(prev => !prev); 
 } 
 //console.log(eventTitle.loc_slug)
 useEffect(()=>{
 const simValues = async () => {  
 const supabase = createClient();  
 const { data, error } = await supabase
-.from('events')   
+.from('events')
 .select("*")
 .filter('loc_slug', 'ilike', `%${eventTitle.loc_slug}%`);
 
@@ -28,7 +28,7 @@ return;
 }
 
 setSimilarEvents( data)  
-}
+} 
 simValues()
 },[eventTitle])  
 
@@ -36,7 +36,11 @@ simValues()
  
 return (
   <div className="my-6"> 
-  <div className='flex flex-col items-center justify-center bg-cover bg-center'style={{'backgroundImage': `url(https://peezrwllibppqkolgsto.supabase.co/storage/v1/object/public/event_avatars/${eventTitle?.img_url})`}}>   
+  <div className='flex flex-col items-center justify-center bg-cover bg-center'style={{backgroundImage: `url(https://peezrwllibppqkolgsto.supabase.co/storage/v1/object/public/event_avatars/${eventTitle?.img_url})`,
+  backgroundRepeat: 'no-repeat',
+  backgroundAttachment: 'fixed',
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',}}>   
   
 <div className="xl:p-32 hover:shadow-3xl border border-t-8 hover:opacity-70 cursor-pointer p-3 bg-gray-700 opacity-80 w-11/12 my-6" >
   {/* <p className="text-lg border bg-white ml-14 m-2 w-14 rounded-full p-3 text-center relative bottom-32 left-full cursor-pointer" onClick={openForm} ><FontAwesomeIcon icon={faPen} /></p> */}
@@ -63,36 +67,48 @@ user={user}
 eventEdit={eventTitle}
  /> } 
   </div>
-  <h2 className="text-3xl p-6 text-gray-700 font-bold">Related Events</h2>
-<div className="relative flex flex-wrap gap-1 justify-center m-auto max-w-5xl px-3" >
+  <div className="py-8"> 
+  <h2 className="text-3xl p-6 text-gray-700 font-bold text-center">Related Events</h2>
+<div className=" flex flex-wrap gap-1 justify-center m-auto max-w-5xl px-3" >
 {similarEvents.filter((xx)=> xx.title!== eventTitle.title).map((ex)=>
- 
-<div key={ex.title}style={{
+<div className="relative"key={ex.title}> 
+ <div className="h-full w-full bg-gray-900 bg-opacity-60 absolute rounded-lg"> </div>  
+
+<div style={{
   backgroundImage: `url(https://peezrwllibppqkolgsto.supabase.co/storage/v1/object/public/event_avatars/${ex?.img_url})`,  
   backgroundRepeat: 'no-repeat',
-      backgroundPosition: '',
-      backgroundSize: 'cover',}}
-      className="rounded-lg px-8 bg-black hover:border-solid max-w-xs my-4 py-20"> 
- <Link href={`/naija-events/event/${ex.slug}`}>
- <h3 className="text-ellipsis overflow-hidden text-3xl text-gray-100 font-bold cursor-pointer hover:opacity-80 leading-10 shadow-sharebtn px-3 bg-gray-700 bg-opacity-90 "style={{ display: '-webkit-box', WebkitLineClamp:2, WebkitBoxOrient: 'vertical' }}>
+  backgroundAttachment: 'fixed',
+  backgroundPosition: 'center',
+  height:'550px',
+  width:'100vw',
+  backgroundSize: 'cover',
+    }}
+     className="rounded-lg px-8 bg-black hover:border-solid max-w-xs py-20 "> 
+ <div className="rounded-lg hover:shadow-3xl animated-in absolute z-50 left-0 bottom-0 px-5">
+ <div>  
+    <Link href={`/naija-events/event/${ex.slug}`}>
+    <h3 className="text-3xl text-gray-100 font-bold cursor-pointer hover:opacity-80 leading-10 px-3">
 {ex.title}
 </h3></Link>
 <p className="text-lg text-white font-bold text-right py-4 capitalize">
 {ex.genre}
 </p>
-<hr/>  
-
- <div className="rounded-lg hover:shadow-3xl bg-gray-700 bg-opacity-90 px-4 w-full animated-in">
-   <p className="text-lg pt-4 text-white font-bold hover:opacity-80 leading-9">
+  </div>
+  <hr/>
+   <p className="text-lg pt-4 text-gray-200 font-bold hover:opacity-80 leading-9">
 {ex.location}
 </p>
-<p className="pb-14 pt-2 text-white font-bold cursor-pointer hover:opacity-80 leading-7">{ex.day}</p></div>  
+<p className="pb-14 pt-2 text-gray-200 font-bold cursor-pointer hover:opacity-80 leading-7">{ex.day}</p>
+</div>  
+
 </div>
  
+ </div>
+
 )}
  
 </div>  
-
+</div>
    </div> )
   }
   

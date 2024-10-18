@@ -1,9 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client' 
-export default function Avatar({ url, size }) {
+export default function Avatar({ url, size, alternativeUrl }) {
   const supabase = createClient()
-  const [avatarUrl, setAvatarUrl] = useState(url) 
+  const [avatarUrl, setAvatarUrl] = useState(url)
+ 
   useEffect(() => {
     async function downloadImage(path) {
       try {
@@ -26,10 +27,10 @@ export default function Avatar({ url, size }) {
     {avatarUrl ? (
     <div className='h-screen w-screen'>
       
-       <div 
-       className='h-screen w-screen' 
+    <div 
+    className='h-screen w-screen' 
     style={{
-      backgroundImage: `url(${avatarUrl})`, 
+      backgroundImage: `url(${avatarUrl||alternativeUrl})`, 
       backgroundRepeat: 'no-repeat',
       backgroundPosition: '',  
       backgroundColor: 'transparent',
@@ -40,7 +41,7 @@ export default function Avatar({ url, size }) {
       <div 
     className="absolute rounded-bl-full border w-3/4 h-1/2 sm:h-4/5 left-1/3 lg:left-1/2 xl:h-full" 
     style={{
-      backgroundImage: `url(${avatarUrl})`, 
+      backgroundImage: `url(${avatarUrl|| alternativeUrl})`, 
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover', 
     }} 

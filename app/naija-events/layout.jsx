@@ -11,6 +11,10 @@ export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "Naija Events",
   description: "",
+  alternates: {
+    canonical: 'https://www.culturays.com/naija-events',
+  
+  },
 }; 
  
 const Layout = ({children}) => {

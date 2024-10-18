@@ -18,15 +18,15 @@ const ComingToNetflixNaija = ({coming_to_netflix_grouped, netflix_news_data,comi
   // const newString = string.replace(regex, "");
   // return newString
    }
- console.log(coming_to_netflix_grouped)  
+  
   return (
  <div className='bg-gray-50'>  
 <div className="bg-black"> 
-<div className='m-auto py-11 px-4 max-w-max lg:max-w-7xl' > 
-<div className=" text-center">
-<h2 className="py-6 px-2 w-max text-2xl text-white font-bold" >Nigerian Movies on Netflix</h2>
+<div className='m-auto py-11 max-w-max lg:max-w-7xl' > 
+<div>
+<h2 className="py-6 text-lg xxs:text-2xl text-white font-bold" >Nigerian Movies on Netflix</h2>
 <hr className='my-2 h-2'/>
-<p className="text-xl py-4 text-white" >Get a quick overview of the new movies, TV shows/series and documentaries coming to Netflix Naija everyday.</p>
+<p className="text-xl py-4 text-white leading-8 px-2" >Get a quick overview of the new movies, TV shows/series and documentaries coming to Netflix Naija everyday.</p>
 </div>
 
   <section className='lg:flex relative '> 
@@ -86,7 +86,7 @@ const ComingToNetflixNaija = ({coming_to_netflix_grouped, netflix_news_data,comi
 <Paginate content={coming_to_netflix_grouped.slice(4)}/>
 <div> 
  
-<div className='h-max mx-1 rounded-t lg:hidden absolute -right-36 md:bg-transparent md:relative hover:right-0 md:right-0 md:w-auto cursor-pointer z-50'>  
+{/* <div className='h-max mx-1 rounded-t lg:hidden absolute -right-36 md:bg-transparent md:relative hover:right-0 md:right-0 md:w-auto cursor-pointer z-50'>  
 
 <div className='py-5 text-gray-200 flex flex-col justify-center w-full cursor-pointer bg-gray-500 my-2 md:bg-transparent md:text-gray-600 md:rounded-none rounded-full'> 
 <FontAwesomeIcon icon={faClapperboard}className='text-xl'/>
@@ -97,7 +97,7 @@ const ComingToNetflixNaija = ({coming_to_netflix_grouped, netflix_news_data,comi
 <Link href='/netflix-naija/news'><p className='p-2 font-bold text-center'>Netflix News</p></Link>  
 </div> 
  
-</div> 
+</div>  */}
 
 <div className='hidden lg:block mx-1 py-4 max-w-sm'> 
  <div className="cursor-pointer text-sm py-6 shadow max-w-sm border px-3 font-bold text-gray-600 flex items-center justify-between my-1"> 

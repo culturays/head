@@ -6,7 +6,11 @@ const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl), 
-   title:"Culturays | Videos",   
+   title:"Culturays | Videos",
+   alternates: {
+    canonical: 'https://www.culturays.com/videos',
+ 
+  }, 
 }; 
 const VideosPage = async () => {
 const content_videos = await vids(); 

@@ -9,6 +9,10 @@ export const metadata = {
 metadataBase: new URL(defaultUrl), 
  title:"Netflix Naija",  
 description: "Culturays is an independent news outlet operating under Ngenet Studio and focused on events from around the world that affect Nigeria and the rest of Africa.",
+alternates: {
+  canonical: 'https://www.culturays.com/netflix-naija',
+ 
+},
 }; 
 
  const openSans = Open_Sans({ 

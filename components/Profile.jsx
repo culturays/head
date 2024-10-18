@@ -78,7 +78,7 @@ display: 'swap',
 function sortAscending(pb, pa){ 
   return (pa?.id - pb?.id);
  } 
-
+ 
 const Profile = ({ 
  
 userPosts,
@@ -1002,17 +1002,11 @@ const commentEdit = async(e) => {
     </div> 
     </div>   
  }
-   <Avatar
-uid={user?.id}
-url={userProfile.avatar_url}
-size={150}
-setShowInput={setShowInput}
-uploadRef={uploadRef} 
-/> 
+ 
  <div className="relative mx-2" ref={updaterRef}> 
   {profileUpdater?( 
 
-  <div className="absolute w-max z-20 px-8 shadow-2xl mx-2 bg-gray-500 rounded py-6 "> 
+  <div className="absolute w-max z-20 px-8 shadow-2xl mx-2 bg-gray-500 rounded py-6 top-0"> 
 <div className="p-1 text-xl m-1 flex justify-center text-gray-300">
 <label htmlFor="email" className="m-1 p-3">Email:</label>
 <input id="email" type="text" className="bg-transparent m-1" value={user?.email} disabled />
@@ -1095,19 +1089,32 @@ disabled={loading}
 ): 
 ( 
  
-  <div className="absolute bottom-0 sm:bottom-full z-50 cursor-pointer bg-white bg-opacity-10 sm:w-3/4 md:w-1/3 hover:text-gray-300 bg-opacity-60 hover:bg-black text-gray-800 my-4 about_shadow">   
-  <p className="text-xl p-2 font-bold">{userProfile.education}</p>
-  <p className="text-xl p-2">{userProfile.website}</p>
-  <p className="text-xl p-2">{userProfile.address}</p>  
-  <p className="text-md p-2 ">{ userProfile.about } But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.</p> 
+  <div className="absolute top-0 px-3 leading-9 cursor-pointer max-w-xl z-30 bg-white bg-opacity-10 hover:text-gray-300 hover:bg-black hover:bg-opacity-60 text-gray-700   about_shadow my-4" > 
+  <h2 className="font-bold text-4xl text-center p-6">Profile</h2>
+  <p className="text-xl p-2">Education: {userProfile.education} </p>
+  <p className="text-xl p-2">Website: {userProfile.website}</p>
+  <p className="text-xl p-2 ">Address: {userProfile.address}</p>  
+  <p className="text-md p-2 font-bold">About: { userProfile.about }</p> 
      
-  </div>) }
-   </div>  
+  </div>
+
+) }
+   </div>
+   <Avatar
+   alternativeUrl={user.user_metadata.avatar_url}
+uid={user?.id}
+url={userProfile.avatar_url}
+size={150}
+setShowInput={setShowInput}
+uploadRef={uploadRef} 
+/> 
+  
+  
    <div className="relative ">  
  {user.id===id ?
-  <div ref={dropperRef}className="absolute bottom-full cursor-pointer right-11 text-2xl text-gray-600 z-50" onClick={()=>setOpenNav(prev=> !prev)}><FontAwesomeIcon icon={faEllipsisVertical} /> </div> :null} 
+  <div ref={dropperRef}className={!userProfile.avatar_url &&!user?.user_metadata.avatar_url?`absolute bottom-full cursor-pointer right-11 text-3xl text-gray-600 z-50`:'absolute bottom-full cursor-pointer right-11 text-3xl text-blac z-50'} onClick={()=>setOpenNav(prev=> !prev)}><FontAwesomeIcon icon={faEllipsisVertical} /> </div> :null} 
 
-  <div className="absolute right-5 bg-transparent" ref={dropperRef}>
+  <div className="absolute right-5 bg-transparent z-50" ref={dropperRef}>
    {openNav?
  (  <nav className='bg-gray-800'> 
     <Link href="/forum"><div className='flex justify-between text-lg p-3 text-white'><FontAwesomeIcon icon={faHouse} width={25} /><p className="mx-2">Home</p></div></Link>
@@ -1125,9 +1132,9 @@ null
  </div> 
  <div className="absolute left-0 right-0 m-auto p-4 cursor-pointer w-3/4 bottom-full"> 
   <div className="flex justify-center my-2 px-2"> 
-
-  <h2 className={`${chosenFont} text-xl sm:text-4xl m-1 font-bold p-6 text-white font-bold`}>{userProfile.fullname}</h2>
-  <div onClick={()=> setShowFont(prev =>!prev)} className="cursor-pointer   text-white"><FontAwesomeIcon icon={faPencil}/></div>
+ 
+  <h2 className={!userProfile.avatar_url &&!user?.user_metadata.avatar_url?`text-gray-600 text-2xl sm:text-4xl m-1 font-bold p-4 font-bold ${chosenFont}`:` ${chosenFont} text-2xl sm:text-4xl m-1 font-bold p-4 text-white font-bold`}>{userProfile.fullname || user?.fullname}</h2>
+  <div onClick={()=> setShowFont(prev =>!prev)} className={!userProfile.avatar_url&&!user?.user_metadata.avatar_url?'text-gray-600 text-xl m-1 font-bold p-4 font-bold':"cursor-pointer text-white"}><FontAwesomeIcon icon={faPencil}/></div>
 
   </div>
  <div className="w-4/5 sm:w-1/5 bg-gray-700 m-auto"> {showFont&& font_y.map((ex, ix)=><p  key={ex + ' ' + ix}onClick={()=>chooseFont(ix)}className="p-3 border cursor-pointer text-white text-center">{ex}</p>)}</div>
@@ -1136,8 +1143,10 @@ null
  <button type="submit"className="text-2xl p-3" >Invite</button> </div>
   </div> 
 </div>
-    
- 
+
+
+
+
 
 
   <div className='px-5 sm:px-16 my-2 m-auto xl:flex justify-center'> 

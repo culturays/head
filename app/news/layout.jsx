@@ -6,6 +6,10 @@ export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "News",
   description: "",
+  alternates: {
+    canonical: 'https://www.culturays.com/news',
+ 
+  },
 };
  
 const Layout = ({children}) => {

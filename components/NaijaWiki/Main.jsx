@@ -109,7 +109,7 @@ return newString
   return (
    <div className='bg-slate-50'>
     <div className=' m-auto px-4' style={{maxWidth:'1700px'}}>  
- <div className='bg-white py-8'> 
+{loading?<p>Loading...</p>: <div className='bg-white py-8'> 
  <h2 className='text-3xl font-bold my-6 text-center text-slate-800 opacity-80'>Featured Naija Characters</h2> 
  <div className='md:flex justify-center max-w-6xl m-auto'>  
   {new_Chars&&new_Chars.slice(0,3).map((it, index)=>  
@@ -134,7 +134,7 @@ return newString
         )}
      
         </div> 
-        </div> 
+        </div> }
 
   <div className='m-auto bg-white py-8  my-2'> 
  <h2 className='text-3xl font-bold my-6 text-center text-slate-800 opacity-80'>Netflix News - Explore</h2> 

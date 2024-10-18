@@ -23,7 +23,7 @@ function CharacterQuestion() {
   const ourPassword = process.env.NEXT_PUBLIC_WP_SECRET
   const ourUsername = "Christina Ngene"
   const submitForm = (e) => {
-    e.preventDefault()
+    e.preventDefault() 
     const formURL = e.target.action
     const data = new FormData() 
     Object.entries(formData).forEach(([key, value]) => {

@@ -97,12 +97,25 @@ alt: 'Culturays Image & Logo',
     ],
  
   },
+
+  //<link rel="alternate" type="application/rss+xml" href="https://culturays.com/rss1/"/>
   alternates: {
-    canonical: 'https://www.culturays.com',
+    canonical: 'https://www.xxx.com', 
+  types:{ 
+        "application/rss+xml":[
+          {url:'https://culturays.com/rss', title:'rss'},
+          {url:'https://culturays.com/rss1', title:'rss'},
+          {url:'https://culturays.com/rss2', title:'rss'},
+          {url:'https://culturays.com/rss3', title:'rss'},
+          {url:'https://culturays.com/rss4', title:'rss'},
+        ]
+        
+          } ,
     languages: {
-      'en-US': '/en-US', 
+      'en-US':`https://culturays.com/en-US`, 
     },
   },
+ 
  manifest: 'https://culturays.com/assets/icons/site.webmanifest',
   twitter: {
     card: 'summary_large_image',
@@ -110,24 +123,14 @@ alt: 'Culturays Image & Logo',
     description: 'This is an upcoming new outlet that gives coverage to events in Nigeria, Africa and the rest of the world.',    
     images: ['https://culturays.com/assets/images/culturays.png'],  
   },
-  alternates: { 
-    languages: {
-      'en-US': 'https://www.culturays.com/en-US', 
-    }
-  },
+  
   
   verification: {
     google: 'google',  
   },
-  alternates: {
-    types: {
-      'application/rss+xml':`${defaultUrl}/rss.xml`,
-      'application/rss+xml':`${defaultUrl}/rss1.xml`,
-      'application/rss+xml': `${defaultUrl}/rss2.xml`,
-      'application/rss+xml': `${defaultUrl}/rss3.xml`,
-      'application/rss+xml': `${defaultUrl}/rss4.xml`, 
-    },
-  },
+  
+
+ 
  }
   
 

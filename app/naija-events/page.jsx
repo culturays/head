@@ -11,7 +11,7 @@ const { data:events , error } = await supabase
 .select('*')
 .order('id', { ascending: false }) 
 if (error) {
-    throw new Error(error.message)
+    throw new Error(error.message) 
  }
 return {events}
     

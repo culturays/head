@@ -12,8 +12,7 @@ const SignOutBtn = () => {
  </button> 
  
 </div>
-    {/*   redirect(`${pathname}?confirm=logout?`) */}
-    </div>
+ </div>
   )
 }
 

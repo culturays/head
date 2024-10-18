@@ -10,7 +10,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
     const {
       data: { user }, 
       } = await supabase.auth.getUser(); 
-
+ 
  const previousImages = (await parent).openGraph?.images || [] 
  
   return {

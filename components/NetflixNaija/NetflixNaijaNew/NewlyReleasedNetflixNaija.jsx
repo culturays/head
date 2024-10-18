@@ -13,7 +13,7 @@ import NewsLetter from "@/components/NewsLetter"
 const NewlyRealeasedNetflixNaija = ({
   made_in_africa, 
   non_africa,    
-  added_on_netflix_naija,
+  added_on_netflix_naija, 
   new_on_netflix_naija,
   netflix_news_data
 }) => { 
@@ -89,10 +89,10 @@ const africa_made = made_in_africa.map((ex)=> ex.netflixNaijaPosts?.nodes).flat(
  <div className='bg-gray-50'>
   <div className="bg-black"> 
 <div className='m-auto py-11 px-4 max-w-max lg:max-w-7xl'> 
-<div className="text-center">
-<h2 className="py-6 px-1 w-max text-2xl text-white font-bold" >Nigerian Movies on Netflix</h2>
+<div>
+<h2 className="py-6 text-lg xxs:text-2xl text-white font-bold" >Nigerian Movies on Netflix</h2>
 <hr className='my-2 h-2'/>
-<p className="text-xl py-4 text-white" >Get a quick overview of the new movies, TV shows/series and documentaries on Netflix Naija.</p>
+<p className="text-xl py-4 text-white leading-8 px-2" >Get a quick overview of the new movies, TV shows/series and documentaries on Netflix Naija.</p>
 </div>
   
 <section className='lg:flex relative '> 
@@ -223,10 +223,8 @@ const africa_made = made_in_africa.map((ex)=> ex.netflixNaijaPosts?.nodes).flat(
       </div>
       
 </div>
-
- 
      
-  <div className='h-screen mx-1 rounded-t lg:hidden absolute -right-28  md:bg-transparent md:relative hover:right-0 md:right-0 md:w-auto cursor-pointer '>   
+  {/* <div className='h-screen mx-1 rounded-t lg:hidden absolute -right-28  md:bg-transparent md:relative hover:right-0 md:right-0 md:w-auto cursor-pointer '>   
  <div className='py-5 text-gray-200 flex flex-col justify-center w-full cursor-pointer bg-yellow-500 my-2 md:bg-transparent md:text-gray-600 md:rounded-none rounded-full'> 
  <FontAwesomeIcon icon={faFilm} className='text-xl p-2'/>
  <Link href='/netflix-naija/coming-to-netflix'><p className='p-2 font-bold text-center'>Coming Soon</p></Link>  
@@ -235,7 +233,7 @@ const africa_made = made_in_africa.map((ex)=> ex.netflixNaijaPosts?.nodes).flat(
  <FontAwesomeIcon icon={faNewspaper} className='text-2xl p-2'/>
  <Link href='/netflix-naija/news'><p className='p-2 font-bold text-center'>Netflix News</p></Link>  
  </div> 
- </div> 
+ </div>  */}
 
   
  <div className='hidden lg:block mx-1 py-4 max-w-sm'> 

@@ -201,7 +201,7 @@ setCategoryPost(top_PostsData)
 <div className='py-20 md:px-1 m-auto' > 
 <div className='py-5'>
 <div className='flex border-b shadow-sm justify-around items-center '> 
-<h3 className='text-xl font-bold w-max mx-4'>Don&#39;t Miss</h3>  
+<h3 data-test="header-1" className='text-xl font-bold w-max mx-4'>Don&#39;t Miss</h3>  
  <hr className='bg-black h-1 w-2/3 my-4'/>
  <div className='' >
    <ul className='flex justify-end flex-wrap py-2'> 

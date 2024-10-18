@@ -13,28 +13,28 @@ export default async function sitemap() {
        const postsData= contentData.filter((xy)=> xy.contentTypeName === 'post')
  
       const netflix_posts = netflixFeed.map((post)=>({ 
-         url:`${defaultUrl}/netflix-naija/news/${post.slug}`,
+         url:`https://culturays.com/netflix-naija/news/${post.slug}`,
          lastModified:new Date(post.date),
          changeFrequency:'daily',
          priority:0.7 
 
       }) )  
        const article_posts = articleData.map((post)=>({ 
-         url:`${defaultUrl}/news/article/${post.slug}`,
+         url:`https://culturays.com/news/article/${post.slug}`,
          lastModified:new Date(post.date),
          changeFrequency:'daily',
          priority:0.7
 
       }) )
      const nollywood_posts = nollywood_news.map((post)=>({ 
-         url:`${defaultUrl}/news/nollywood/${post.slug}`,
+         url:`https://culturays.com/news/nollywood/${post.slug}`,
          lastModified:new Date(post.date),
          changeFrequency:'daily',
          priority:0.7
 
       }) )
          const post_posts = postsData.map((post)=>({ 
-         url:`${defaultUrl}/news/topic/${post.slug}`,
+         url:`https://culturays.com/news/topic/${post.slug}`,
          lastModified:new Date(post.date),
          changeFrequency:'daily',
          priority:0.7
@@ -42,19 +42,19 @@ export default async function sitemap() {
       }) )
     return [
       {
-        url: `${defaultUrl}`,
+        url: `https://culturays.com/`,
         lastModified: new Date(),
         changeFrequency: 'daily',
         priority: 1,
       },
       {
-        url:`${defaultUrl}/about`,
+        url:`https://culturays.com/about`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.8,
       },
       {
-        url:`${defaultUrl}/forum`,
+        url:`https://culturays.com/forum`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.8,

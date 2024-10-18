@@ -51,19 +51,19 @@ height={500}
 alt={ex}
 />
  <ul> 
- <Link href={`/naija-events/event/${ux.slug}`}><li title='view event'className="absolute bottom-4 cursor-pointer text-white hover:text-gray-200 px-3 py-2 z-10 font-bold text-base underline">{ux.title }</li></Link>
+ <Link href={`/naija-events/event/${ux.slug}`}><li title='view event'className="absolute bottom-4 cursor-pointer text-white hover:text-gray-200 px-3 py-2 z-10 font-bold  left-0 right-0  text-2xl text-center underline">{ux.title }</li></Link>
  </ul>
 </div>  
 )}
 {/* {ex.charAt(0).toUpperCase() + ex.slice(1).replace(/-/g," ") } */}
- <h2 className="absolute top-5 text-cnter text-white px-3 py-2 z-10 font-bold text-2xl capitalize">{ex}</h2> 
+ <h2 className="absolute top-5 left-0 right-0 text-white px-3 py-2 z-10 font-bold text-3xl capitalize text-center ">{ex.replace(/-/g," ") }</h2> 
 </div> 
 ) }  
 )}   
 </div> 
 </div> 
 
-<div className="top_event mt-8 m-auto xl:w-4/5 lg:w-11/12 px-4 min min-[481px]:px-8" >
+<div className="top_event mt-8 m-auto max-w-7xl px-4 min-[481px]:px-8" >
 <h2 className="py-6 xxs:text-2xl text-3xl font-bold bg-gray-700 text-center text-gray-300 mb-1">Find Events by Genre</h2>
 <div className="grid md:grid-cols-3 gap-1 min-[481px]:grid-cols-2">
 {Object.keys(eventByArtists).map((ex, i)=> 
@@ -81,11 +81,11 @@ height={500}
 alt={ex}
 /> 
  <ul> 
- <Link href={`/naija-events/event/${ux.slug }`}><li title='view event'className="absolute bottom-4 cursor-pointer text-white hover:text-gray-200 px-3 py-2 z-10 font-bold text-lg underline">{ux.title }</li></Link>
+ <Link href={`/naija-events/event/${ux.slug }`}><li title='view event'className="absolute bottom-4 cursor-pointer text-white hover:text-gray-200 px-3 py-2 z-10 font-bold left-0 right-0 text-2xl text-center underline">{ux.title }</li></Link>
   </ul></div>
 )}
  
- <h2 className="absolute top-5 text-cnter text-white px-3 py-2 z-10 font-bold text-2xl">{ex.charAt(0).toUpperCase() + ex.slice(1).replace(/-/g," ") }</h2> 
+ <h2 className="absolute top-5 text-white  left-0 right-0 px-3 py-2 z-10 font-bold text-3xl text-center  capitalize">{ex.replace(/-/g," ") }</h2> 
 </div> 
 ) }  
 )}   

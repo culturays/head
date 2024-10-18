@@ -48,20 +48,21 @@ export async function getNaijaTrends1(location) {
           console.error('Error submitting form:', error);
         }
    }
-  
+   
   }
   const daily_intervals = ()=> { 
     const intervalId = setInterval(()=>{ 
-    submitForm() 
-    },1000 * 60 * 60 * 24); 
+   submitForm() 
+   console.log('it ran here too')
+    },24 * 60 * 60 * 1000); 
+  
     return () => { 
       clearInterval(intervalId);
     };
   }
- 
   const stopDailyInterval = daily_intervals();
   setTimeout(() => {
-    stopDailyInterval(); 
-   }, 30000);  
+  stopDailyInterval(); 
+  }, 60000);   
   return titleObj   
    }

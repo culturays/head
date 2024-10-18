@@ -12,7 +12,7 @@ const coming_to_netflix_grouped =netflixNaija.concat(coming_to_netflix_class).co
  
   return (
    <div>
- <ComingToNetflixNaija
+ <ComingToNetflixNaija  
   netflix_news_data={netflix_news_data}
  coming_to_netflix_naija=
  {coming_to_netflix_naija} 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as cheerio from 'cheerio';
+import * as cheerio from 'cheerio'; 
 const ourPassword = process.env.NEXT_PUBLIC_WP_SECRET
 const ourUsername = "Christina Ngene"
 
@@ -15,9 +15,9 @@ export async function getNaijaNews1() {
       const $ = cheerio.load(html)
     
        $('a.gPFEn', html).each(async function(){
-       const name = $(this).text() 
+       const title = $(this).text() 
           imgObj.push({ 
-             name ,             
+             title ,             
             } 
            )  
        }) 
@@ -27,7 +27,7 @@ export async function getNaijaNews1() {
           imgObj.map((ex)=>{  
           eventName.push( {
           author:author, 
-           name:ex.name 
+           title:ex.title 
           }
        )} ) 
       
@@ -38,7 +38,7 @@ export async function getNaijaNews1() {
           eventName.map((ex)=>{ 
           eventAll.push({
           author:ex.author,
-          name:ex.name,
+          title:ex.title,
           date:date  
       }) }) 
        })
@@ -48,7 +48,7 @@ export async function getNaijaNews1() {
       const seen = new Set(); 
       return data.reduce((unique, current) => { 
         const keyName = current.author  ;
-        const keyTitle = current.name ; 
+        const keyTitle = current.title ; 
         const keyTime = current.date ;    
    
         if(!seen.has(keyName)){
@@ -62,18 +62,18 @@ export async function getNaijaNews1() {
           }  
         return unique;
       }, []);
-    }; 
+    };  
      
     const resultX = removeDuplicatesBd(eventAll)
     const submitForm = async () => { 
       const data = new FormData()
        for (const xy of resultX) {  
-        Object.entries({title:xy.name }).forEach(([key, value]) => {
+        Object.entries({title:xy.title }).forEach(([key, value]) => {
         data.append(key, value);
       })
       //to post to latest postType 'https://content.culturays.com/wp-json/wp/v2/latest'
         try {
-          const response = await fetch('https://content.culturays.com/wp-json/wp/v2/posts', { 
+          const response = await fetch('https://content.culturays.com/wp-json/wp/v2/latest', { 
             method: "POST",  
             body:data,  
             headers: {
@@ -93,7 +93,21 @@ export async function getNaijaNews1() {
           console.error('Error submitting form:', error);
         }
    } }
-    //await submitForm()  
+   const daily_intervals = ()=> { 
+    const intervalId = setInterval(()=>{ 
+   submitForm() 
+   console.log('it ran here')
+    },8.64e+7); 
+  // 1800000
+    return () => { 
+      clearInterval(intervalId);
+    };
+  }
+  const stopDailyInterval = daily_intervals();
+  setTimeout(() => {
+  stopDailyInterval(); 
+  }, 60000); 
+  
    return resultX
  
    }
@@ -154,12 +168,12 @@ export const getGoogleNewsTitles = async (location) => {
   const submitForm = async () => { 
     const data = new FormData()
      for (const xy of newsTitlesGoogle) {  
-      Object.entries({title:xy.name }).forEach(([key, value]) => {
+      Object.entries({title:xy.title }).forEach(([key, value]) => {
       data.append(key, value);
     })
-    //to post to latest postType 'https://content.culturays.com/wp-json/wp/v2/latest'
+   
       try {
-        const response = await fetch('https://content.culturays.com/wp-json/wp/v2/posts', { 
+        const response = await fetch('https://content.culturays.com/wp-json/wp/v2/latest', { 
           method: "POST",  
           body:data,  
           headers: {
@@ -179,7 +193,22 @@ export const getGoogleNewsTitles = async (location) => {
         console.error('Error submitting form:', error);
       }
  } }
-//await submitForm()  
-  return newsTitlesGoogle;
+
+ const daily_intervals = ()=> { 
+  const intervalId = setInterval(()=>{ 
+ submitForm() //1000 * 60 * 60 * 24 //24 * 60 * 60 * 1000
+ console.log('it ran')
+  },8.64e+7); 
+
+  return () => { 
+    clearInterval(intervalId);
+  };
+}
+const stopDailyInterval = daily_intervals();
+setTimeout(() => {
+stopDailyInterval(); 
+}, 60000);  
+
+return newsTitlesGoogle;
 };
 

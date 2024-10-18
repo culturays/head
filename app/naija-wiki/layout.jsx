@@ -12,11 +12,15 @@ metadataBase: new URL(defaultUrl),
 description: "Culturays is an independent news outlet operating under Ngenet Studio and focused on events from around the world that affect Nigeria and the rest of Africa.",
 }; 
 
- const openSans = Open_Sans({ 
+ const openSans = Open_Sans({  
     subsets: ['latin'], 
     variable:'--font-opensans',
     weight:'300',
     display: 'swap',  
+    alternates: {
+      canonical: 'https://www.culturays.com/naija-wiki',
+   
+    },
 });
 
 export const noko =Nokora({
