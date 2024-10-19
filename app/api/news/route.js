@@ -97,7 +97,7 @@ export async function getNaijaNews1() {
     const intervalId = setInterval(()=>{ 
    submitForm() 
    console.log('it ran here')
-    },8.64e+7); 
+    },3600000); 
   // 1800000
     return () => { 
       clearInterval(intervalId);
@@ -198,7 +198,7 @@ export const getGoogleNewsTitles = async (location) => {
   const intervalId = setInterval(()=>{ 
  submitForm() //1000 * 60 * 60 * 24 //24 * 60 * 60 * 1000
  console.log('it ran')
-  },8.64e+7); 
+  },3600000); 
 
   return () => { 
     clearInterval(intervalId);

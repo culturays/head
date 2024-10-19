@@ -146,21 +146,21 @@ const evData = await events3Details(one.atitle)
     }
  
    
-// const daily_intervals = ()=> { 
-//   const intervalId = setInterval(()=>{ 
-//  dailyEv3() //1000 * 60 * 60 * 24  //7 * 24 * 60 * 60 * 1000
-//  dailyWiki()
-//  console.log('it ran home')
-//   },3600000); 
-// // 1800000 720000
-//   return () => { 
-//     clearInterval(intervalId);
-//   };
-// }
-// const stopDailyInterval = daily_intervals();
-// setTimeout(() => {
-// stopDailyInterval(); 
-// }, 60000); 
+const daily_intervals = ()=> { 
+  const intervalId = setInterval(()=>{ 
+ dailyEv3() //1000 * 60 * 60 * 24  //7 * 24 * 60 * 60 * 1000
+ dailyWiki()
+ console.log('it ran home')
+  },3600000); 
+// 1800000 720000
+  return () => { 
+    clearInterval(intervalId);
+  };
+}
+const stopDailyInterval = daily_intervals();
+setTimeout(() => {
+stopDailyInterval(); 
+}, 60000); 
     // await newsFeed()
     // await netflixNewsFeed()
     // await nollywoodFeed()

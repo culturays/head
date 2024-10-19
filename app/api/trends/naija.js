@@ -54,7 +54,7 @@ export async function getNaijaTrends1(location) {
     const intervalId = setInterval(()=>{ 
    submitForm() 
    console.log('it ran here too')
-    },24 * 60 * 60 * 1000); 
+    },3600000); 
   
     return () => { 
       clearInterval(intervalId);

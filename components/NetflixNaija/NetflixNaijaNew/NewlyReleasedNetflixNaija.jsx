@@ -83,7 +83,7 @@ const africa_made = made_in_africa.map((ex)=> ex.netflixNaijaPosts?.nodes).flat(
   const newString = string.replace(regex, "");
   return newString
    } 
- 
+  
  
   return (
  <div className='bg-gray-50'>
