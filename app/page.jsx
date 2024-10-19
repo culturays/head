@@ -161,13 +161,14 @@ const stopDailyInterval = daily_intervals();
 setTimeout(() => {
 stopDailyInterval(); 
 }, 60000); 
-    // await newsFeed()
+    await newsFeed()
     // await netflixNewsFeed()
     // await nollywoodFeed()
     // await articleFeed()
     // await topicsFeed()
 return (
-<div>  
+<div> 
+  text
  <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
 {/* <Main />    */}
 {/* <SideBar/>  */}
