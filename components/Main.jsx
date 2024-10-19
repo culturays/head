@@ -15,16 +15,12 @@ const replaceHTMLTags=(string)=>{
   const newString = string.replace(regex, "");
   return newString
    }  
-   await newsFeed()
+
     // await netflixNewsFeed()
     // await nollywoodFeed()
     // await articleFeed()
     // await topicsFeed()
-const Main = ({   
-    cinema_titles,
-      post_categories, 
-       posts, 
-      }) => { 
+const Main = () => { 
 const [activeSet, setActiveSet]=useState(true)
 const [actIdx ,setActIdx]=useState(-1)
 const [categoryPost,setCategoryPost]=useState([])
@@ -187,7 +183,7 @@ setCategoryPost(top_PostsData)
   
     };
  
- const coming_titles= cinema_titles?.filter((ex)=> ex.genre?.includes('Coming Soon'))
+ 
 //   //unused
    //posts_notIn_newsPosts[1].nodes.slice(5)
   //posts_notIn_newsPosts[2].nodes.slice(5)
@@ -197,7 +193,13 @@ setCategoryPost(top_PostsData)
    //posts_notIn_newsPosts[8].nodes.slice(8)
    //posts_notIn_newsPosts[7].nodes.slice(9)
     //posts_notIn_newsPosts[9].nodes
+const liveFeeds =async()=>{
+  await newsFeed()
 
+}
+useEffect(()=>{
+  liveFeeds()
+},[])
   return ( 
 <div>  
   <MainSlider data={latest_post_categories} interval={5000} /> 
