@@ -146,33 +146,33 @@ const evData = await events3Details(one.atitle)
     }
  
    
-const daily_intervals = ()=> { 
-  const intervalId = setInterval(()=>{ 
- dailyEv3() //1000 * 60 * 60 * 24  //7 * 24 * 60 * 60 * 1000
- dailyWiki()
- console.log('it ran home')
-  },8.64e+7); 
-// 1800000 720000
-  return () => { 
-    clearInterval(intervalId);
-  };
-}
-const stopDailyInterval = daily_intervals();
-setTimeout(() => {
-stopDailyInterval(); 
-}, 60000); 
-    await newsFeed()
-    await netflixNewsFeed()
-    await nollywoodFeed()
-    await articleFeed()
-    await topicsFeed()
+// const daily_intervals = ()=> { 
+//   const intervalId = setInterval(()=>{ 
+//  dailyEv3() //1000 * 60 * 60 * 24  //7 * 24 * 60 * 60 * 1000
+//  dailyWiki()
+//  console.log('it ran home')
+//   },3600000); 
+// // 1800000 720000
+//   return () => { 
+//     clearInterval(intervalId);
+//   };
+// }
+// const stopDailyInterval = daily_intervals();
+// setTimeout(() => {
+// stopDailyInterval(); 
+// }, 60000); 
+    // await newsFeed()
+    // await netflixNewsFeed()
+    // await nollywoodFeed()
+    // await articleFeed()
+    // await topicsFeed()
 return (
 <div>  
  <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
-<Main />   
-<SideBar/> 
+{/* <Main />    */}
+{/* <SideBar/>  */}
 </div>
- <MainBottom />  
+ {/* <MainBottom />   */}
 </div> 
  )
 }
