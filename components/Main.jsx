@@ -8,13 +8,18 @@ import { useInView } from 'react-intersection-observer'
 // import { fetchNewPosts } from '@/app/news/rootpostsHandle'
 import moment from 'moment'
 import {newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, postLastAndScrolledCategories, sideBarNewsItems, sidePanelNewsItems  } from '@/app/news/rootpostsHandle'
+import newsFeed from '@/utils/newsfeed'
 const replaceHTMLTags=(string)=>{
   const regex = /(<([^>]+)>)/gi;
   //(/<\/?[^>]+(>|$)/g, "") 
   const newString = string.replace(regex, "");
   return newString
    }  
- 
+   await newsFeed()
+    // await netflixNewsFeed()
+    // await nollywoodFeed()
+    // await articleFeed()
+    // await topicsFeed()
 const Main = ({   
     cinema_titles,
       post_categories, 

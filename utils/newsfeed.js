@@ -1,8 +1,7 @@
 
 import fs from 'fs';
 import { Feed } from "feed";
-import { contentFeed } from '@/app/news/articlehandle'; 
-import { netflixNews } from '@/app/netflix-naija/netflix-news';
+import { contentFeed } from '@/app/news/articlehandle';  
 export const revalidate= 3600 
 async function newsFeed(){ 
 const contentData=await contentFeed()
