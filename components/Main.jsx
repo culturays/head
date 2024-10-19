@@ -3,12 +3,14 @@ import React, { useCallback, useEffect, useState } from 'react'
 import MainSlider from './MainSlider'
 import Image from 'next/image'
 import { dateFormatter } from '@/utils/dateFormat'
-import Link from 'next/link'
-import { useInView } from 'react-intersection-observer'
-// import { fetchNewPosts } from '@/app/news/rootpostsHandle'
+import Link from 'next/link'  
 import moment from 'moment'
 import {newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, postLastAndScrolledCategories, sideBarNewsItems, sidePanelNewsItems  } from '@/app/news/rootpostsHandle'
 import newsFeed from '@/utils/newsfeed'
+import netflixNewsFeed from '@/utils/netflixNaijaFeed'
+import nollywoodFeed from '@/utils/nollywoodFeed'
+import articleFeed from '@/utils/articleFeed'
+import topicsFeed from '@/utils/topicsFeed'
 const replaceHTMLTags=(string)=>{
   const regex = /(<([^>]+)>)/gi;
   //(/<\/?[^>]+(>|$)/g, "") 
@@ -16,18 +18,12 @@ const replaceHTMLTags=(string)=>{
   return newString
    }  
 
-    // await netflixNewsFeed()
-    // await nollywoodFeed()
-    // await articleFeed()
-    // await topicsFeed()
+   
 const Main = () => { 
 const [activeSet, setActiveSet]=useState(true)
 const [actIdx ,setActIdx]=useState(-1)
 const [categoryPost,setCategoryPost]=useState([])
-const [categoryName,setCategoryName]=useState('')   
-// const { inView } =useInView(); 
- 
-// const [debouncedValue, setDebouncedValue] = useState(null)
+const [categoryName,setCategoryName]=useState('')
 const [top_Latest, setTopLatest]=useState([])
 const [top_PostsCa, setTopPostsCa]=useState([])
 const [top_NewsView, setTopTopNewsView]=useState([])
@@ -195,7 +191,10 @@ setCategoryPost(top_PostsData)
     //posts_notIn_newsPosts[9].nodes
 const liveFeeds =async()=>{
   await newsFeed()
-
+ await netflixNewsFeed()
+   await nollywoodFeed()
+    await articleFeed()
+    await topicsFeed()
 }
 useEffect(()=>{
   liveFeeds()
