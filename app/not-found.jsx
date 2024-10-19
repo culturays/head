@@ -1,8 +1,9 @@
-import Link from 'next/link'  
+import Link from 'next/link' 
  
 export default function FourOhFour() {  
   return (
-  <> 
+  <>  
+
     <div className="h-max"> 
       <div className="grid h-screen px-4 bg-black bg-opacity-80 place-content-center border border-b-4 border-b-green-600">
         <div className="text-center bg-white font-black text-3xl md:text-7xl p-8 w-max">

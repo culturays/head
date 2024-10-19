@@ -1,5 +1,5 @@
 
-import { Open_Sans, Nokora } from 'next/font/google'; 
+import { Open_Sans, Nokora } from 'next/font/google';  
 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
 ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/netflix-naija/coming-to-netflix` 
@@ -26,11 +26,11 @@ export const noko =Nokora({
  
 const Layout = ({children}) => {
    
-  return (
-<div className={noko.className}>  
+  return (  
+    <div className={noko.className}>  
   {children} 
 </div>
-)
+ )
 }
 
 export default Layout

@@ -1,4 +1,4 @@
-import NewsLetter from "@/components/NewsLetter";
+import NewsLetter from "@/components/NewsLetter"; 
  
 export const metadata = { 
   title: "Trending",
@@ -6,7 +6,7 @@ export const metadata = {
 };
  
 const Layout = ({children}) => {
-  return ( 
+  return (  
 <div> 
 {children} 
  <NewsLetter/>  

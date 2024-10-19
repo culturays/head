@@ -24,6 +24,7 @@ const searchParams = useSearchParams();
 </div>  */}
 const netflixContent = content?.map((xy)=> xy?.netflixCategories?.nodes.map((tx)=> tx?.netflixNaijaPosts.nodes).flat()).flat()
 return (
+    
 <div>
 <div className="">   
 </div> 

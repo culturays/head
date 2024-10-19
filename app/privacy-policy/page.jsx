@@ -1,5 +1,4 @@
-import Privacy from "@/components/Privacy" 
-import { Suspense } from "react"
+import Privacy from "@/components/Privacy"  
 
 const PrivacyPage = () => {
   return (   

@@ -1,5 +1,5 @@
  
-import { Open_Sans, Nokora } from 'next/font/google';
+import { Open_Sans, Nokora } from 'next/font/google'; 
  const openSans = Open_Sans({ 
     subsets: ['latin'], 
     variable:'--font-opensans',
@@ -28,10 +28,10 @@ export const metadata = {
 };  
 
 const Layout = ({children}) => {
-  return (
+  return ( 
 <div className={`${noko.className}`} >   
 {children}  
-</div>
+</div> 
 )
 }
 

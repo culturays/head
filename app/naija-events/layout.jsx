@@ -1,5 +1,5 @@
 import NewsLetter from "@/components/NewsLetter";
-import Top10 from "@/components/Top10El";
+import Top10 from "@/components/Top10El"; 
  
 // import '@styles/globals.css'
 // import '@styles/events.css'
@@ -19,7 +19,8 @@ export const metadata = {
  
 const Layout = ({children}) => {
   
-  return ( 
+  return (  
+
     <div> 
 {children} 
 <Top10 />  
@@ -29,7 +30,7 @@ const Layout = ({children}) => {
 
 {/* <Latests/>  */}
     </div>
-  )
+ )
 }
 
 export default Layout

@@ -1,3 +1,4 @@
+ 
 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/search-page` 
@@ -11,14 +12,11 @@ export const metadata = {
  
 const Layout = ({children}) => {
   return ( 
-<div> 
-{/* <div className='thoughts-text bg-culturaysBg text-white p-8 text-center flex justify-between'> 
-<p>Trending <span></span> <span>&#10141;</span></p>
-</div> */} 
+
+<div>
 {children} 
    
-</div>
- )
+</div> )
 }
 
 export default Layout

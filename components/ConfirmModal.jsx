@@ -1,8 +1,7 @@
 "use client" 
 import { useRouter,useSearchParams } from "next/navigation"; 
  
-const ConfirmModal = () => { 
-  const searchParams = useSearchParams()
+const ConfirmModal = () => {  
   const router = useRouter()   
   const searched= useSearchParams()
  
@@ -13,6 +12,7 @@ const ConfirmModal = () => {
   } 
  
   return (
+    
     <div>
  
      {prX?.includes('logout?')? 

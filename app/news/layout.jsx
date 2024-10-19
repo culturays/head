@@ -1,3 +1,5 @@
+ 
+
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/news` 
   : "http://localhost:3000/news";
@@ -13,13 +15,13 @@ export const metadata = {
 };
  
 const Layout = ({children}) => {
-  return ( 
+  return (  
 <div> 
 {children} 
 {/* <NewsLetter/>  */}
 {/* <Latests/>  */}
 </div>
- 
+
   )
 }
 

@@ -100,7 +100,7 @@ alt: 'Culturays Image & Logo',
 
   //<link rel="alternate" type="application/rss+xml" href="https://culturays.com/rss1/"/>
   alternates: {
-    canonical: 'https://www.xxx.com', 
+    canonical: 'https://www.culturays.com', 
   types:{ 
         "application/rss+xml":[
           {url:'https://culturays.com/rss', title:'rss'},

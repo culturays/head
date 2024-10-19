@@ -1,7 +1,7 @@
 
 import { Open_Sans, Nokora } from 'next/font/google';
 import CharacterQuestion from "./characterQuestion/page";
-import Latests from "@/components/Latests"; 
+ 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
 ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/naija-wiki` 
 : "http://localhost:3000/naija-wiki";
@@ -31,7 +31,8 @@ export const noko =Nokora({
  
 const Layout = ({children}) => {
    
-  return (
+  return ( 
+
 <div className={ noko.className }>  
 {children}
 <div className='relative '> 
@@ -41,7 +42,7 @@ const Layout = ({children}) => {
 {/* <Latests/>  */}
 </div>
 </div>
-)
+ )
 }
 
 export default Layout

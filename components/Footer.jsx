@@ -44,7 +44,7 @@ Culturays</h2></Link>
  
 <Link href="/about">
 <p className="p-1 hover:opacity-70 text-center ">About</p></Link> 
-<Link href="/rss">
+<Link href="/rss-home">
 <p className="p-1 hover:opacity-70 text-center ">Rss</p></Link> 
 <Link href="/">
 <p className="p-1">
