@@ -166,9 +166,9 @@ return (
 <div> 
  <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
   <Main />  
-{/* <SideBar/>  */}
+  <SideBar/>  
 </div>
- {/* <MainBottom />   */}
+  <MainBottom />  
 </div> 
  )
 }
