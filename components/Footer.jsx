@@ -38,10 +38,12 @@ Culturays</h2></Link>
 
 </div>
 <div className="m-auto text-xs">
-<a href= "https://sites.google.com/view/culturays/home" target="_blank" rel="noopener noreferrer">
+{/* <a href= "https://sites.google.com/view/culturays/home" target="_blank" rel="noopener noreferrer">
 <p className="p-1 hover:opacity-70 text-center">Privacy Policy </p>
-</a> 
- 
+</a>  */}
+ <Link href= "https://culturays.com/privacy-policy" >
+<p className="p-1 hover:opacity-70 text-center">Privacy Policy </p>
+</Link> 
 <Link href="/about">
 <p className="p-1 hover:opacity-70 text-center ">About</p></Link> 
 <Link href="/rss-home">

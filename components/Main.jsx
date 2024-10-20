@@ -180,15 +180,6 @@ setCategoryPost(top_PostsData)
     };
  
  
-//   //unused
-   //posts_notIn_newsPosts[1].nodes.slice(5)
-  //posts_notIn_newsPosts[2].nodes.slice(5)
-   //posts_notIn_newsPosts[3].nodes.slice(5) 
-   //posts_notIn_newsPosts[6].nodes.slice(8)
-   //posts_notIn_newsPosts[5].nodes.slice(8)
-   //posts_notIn_newsPosts[8].nodes.slice(8)
-   //posts_notIn_newsPosts[7].nodes.slice(9)
-    //posts_notIn_newsPosts[9].nodes
 const liveFeeds =async()=>{
   await newsFeed()
  await netflixNewsFeed()

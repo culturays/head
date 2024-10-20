@@ -3,7 +3,7 @@ export default function robots() {
       rules: {
         userAgent: '*',
         allow: '/',
-        disallow:[ '/privacy-policy','/rss']
+        disallow:[ '/privacy-policy','/rss-home']
       },
       sitemap: 'https://culturays.com/sitemap.xml',
     }
