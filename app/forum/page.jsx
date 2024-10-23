@@ -8,7 +8,7 @@ import { searchValues } from "../lib/searches/search";
 
 const Forum = async({searchParams, params}) => {
 const supabase = createClient()    
-const {
+const { 
 data: { user }, 
 } = await supabase.auth.getUser(); 
 
@@ -23,6 +23,7 @@ const forumBdays =async ()=>{
 const bday =await forumBdays()
 const peopleEls = bday  
 const peopleItems =JSON.parse(JSON.stringify(peopleEls))
+
 const postsItems =async()=>{ 
 const initialPosts = await getPosts(0, INITIAL_NUMBER_OF_POSTS)  
   return initialPosts  

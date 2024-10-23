@@ -152,7 +152,7 @@ useEffect(() => {
 setScrolledPosts(userPosts)
 }, []);  
 const loadMorePosts = async () => {
-const apiP = await getUserPosts(startScroll, startScroll + count - 1, id) 
+const apiP = await getUserPosts(startScroll, startScroll + 1, id) 
 if(apiP){
 setScrolledPosts(scrolledPosts?.concat(apiP))
 }else return

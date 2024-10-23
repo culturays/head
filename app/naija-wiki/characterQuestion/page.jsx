@@ -29,8 +29,7 @@ function CharacterQuestion() {
     Object.entries(formData).forEach(([key, value]) => {
       data.append(key, value);
     })
-    //https://content.culturays.com/wp-json/wp/v2/char
-    
+     
     fetch(formURL, {
       method: "POST",
       body: data,        
@@ -50,6 +49,11 @@ if(data){
         content:""
       })
 
+      setTimeout(
+        () =>setFormSuccessMessage(' '),  
+        2000 
+      );
+
     })
   } 
   
@@ -61,7 +65,7 @@ if(data){
       <h3 className="p-4 text-2xl font-bold opacity-90 m-2 text-center">What Other Characters Would You Like To See Here?</h3>  
        <div className="flex flex-col md:p-4 p-1">   
       {formSuccess ?
-        <div>{formSuccessMessage} 
+        <div className='text-center font-bold'>{formSuccessMessage}! 
        
         </div>:''
    }

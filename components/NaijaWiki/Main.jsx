@@ -219,8 +219,12 @@ return newString
   <div className='lg:w-1/2 md:m-5'> 
  <h4 className='text-2xl text-center p-3'>Foreign</h4>
 <hr className='bg-gray-400 py-0.5 w-1/2 m-auto '/>  
+{/*<a href={` ${itx.url}`} >
+</a> */}
+
  <ul className='lg:border-r border-b border-0 lg:border-b-0 my-6'>{non_nollywood_titles.slice(0,10).map((itx,index)=> 
-<li className='list-disc text-lg p-3' key={index}> <a target='_blank'href={` ${itx.url}`} >{itx.title }</a></li>
+<li className='list-disc text-lg p-3' key={index}> {itx.title }</li>
+ 
 )} </ul>  
 </div>
   
@@ -228,7 +232,7 @@ return newString
   <h4 className='text-2xl text-center p-3'>Nollywood</h4>
   <hr className='bg-gray-400 py-0.5 w-1/2 m-auto'/>  
  <ul className='lg:border-r border-b border-0 lg:border-b-0 my-6'>{nollywood_titles.slice(0,10)?.map((itx,index)=> 
- <li key={index} className='list-disc text-lg p-3'><a href={` ${itx.url}`} >{itx.title }</a></li>
+ <li key={index} className='list-disc text-lg p-3'>{itx.title }</li>
 )} </ul>  
 </div> 
  </div>

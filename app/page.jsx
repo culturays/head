@@ -164,7 +164,7 @@ stopDailyInterval();
  
 return (
 <div> 
- <div className="md:flex md:justify-center" style={{maxWidth:'1700px'}}> 
+ <div className="md:flex md:justify-center px-11" style={{maxWidth:'1700px'}}> 
   <Main />  
   <SideBar/>  
 </div>

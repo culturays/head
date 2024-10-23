@@ -70,7 +70,7 @@ useEffect(() => {
 }, []); 
 
 const loadMorePosts = async () => {
-  const apix = await getComments(startScroll, startScroll + count -1, postData)
+  const apix = await getComments(startScroll, startScroll + 1, postData)
 
   if(apix){
   setScrolledComments(scrolledComments?.concat(apix))  

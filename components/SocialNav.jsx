@@ -1,7 +1,7 @@
  "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from "next/link";  
-import {faFacebookF, faGoogle, faInstagram, faWhatsapp, faXTwitter} from "@fortawesome/free-brands-svg-icons"; 
+import {faFacebookF, faGoogle, faInstagram, faWhatsapp, faXTwitter, faYoutube} from "@fortawesome/free-brands-svg-icons"; 
  
 const SocialNav = () => {
 
@@ -43,6 +43,11 @@ icon={faWhatsapp}/></p>
    width={20}
    height={20}
   icon={faInstagram}/> </p></Link>
+    <Link target= "_blank" href= "https://www.youtube.com/@Culturays/"> 
+  <p className="m-1 p-2"><FontAwesomeIcon
+   width={20}
+   height={20}
+  icon={faYoutube}/> </p></Link>
     </div>
 
     </div>

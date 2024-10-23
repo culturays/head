@@ -21,7 +21,7 @@ const ComingToNetflixNaija = ({coming_to_netflix_grouped, netflix_news_data,comi
   
   return (
  <div className='bg-gray-50'>  
-<div className="bg-black"> 
+<div className="bg-black px-6"> 
 <div className='m-auto py-11 max-w-max lg:max-w-7xl' > 
 <div>
 <h2 className="py-6 text-lg xxs:text-2xl text-white font-bold" >Nigerian Movies on Netflix</h2>
@@ -82,22 +82,22 @@ const ComingToNetflixNaija = ({coming_to_netflix_grouped, netflix_news_data,comi
   
 </div>  
  
-<div className="md:flex justify-between max-w-max bg-white m-auto"> 
+<div className="sm:flex justify-between max-w-max bg-white m-auto"> 
 <Paginate content={coming_to_netflix_grouped.slice(4)}/>
 <div> 
- 
-{/* <div className='h-max mx-1 rounded-t lg:hidden absolute -right-36 md:bg-transparent md:relative hover:right-0 md:right-0 md:w-auto cursor-pointer z-50'>  
+  <div className='h-max mx-1 rounded-t lg:hidden bg-transparent max-w-36 sm:m-0 m-auto cursor-pointer'>  
 
-<div className='py-5 text-gray-200 flex flex-col justify-center w-full cursor-pointer bg-gray-500 my-2 md:bg-transparent md:text-gray-600 md:rounded-none rounded-full'> 
+<div className='py-5 flex flex-col justify-center w-full cursor-pointer my-2 text-gray-600 px-2'> 
 <FontAwesomeIcon icon={faClapperboard}className='text-xl'/>
-<Link href='/netflix-naija/new-on-netflix'><p className='p-2 font-bold text-center'>On Netflix Naija</p></Link> 
+<Link href='/netflix-naija/new-on-netflix'><p className='p-2 font-bold text-center text-lg'>On Netflix Naija</p></Link> 
 </div> 
-<div className='py-5 text-gray-200 flex flex-col justify-center w-full cursor-pointer   bg-yellow-500 my-2 md:bg-transparent md:text-gray-600 md:rounded-none rounded-full'> 
+<div className='py-5 flex flex-col justify-center w-full cursor-pointer my-2 bg-transparent text-gray-600'> 
 <FontAwesomeIcon icon={faFilm} className='text-xl p-2'/>
-<Link href='/netflix-naija/news'><p className='p-2 font-bold text-center'>Netflix News</p></Link>  
-</div> 
+<Link href='/netflix-naija/news'><p className='p-2 font-bold text-center text-lg'>Netflix News</p></Link>  
+</div>  
  
-</div>  */}
+ </div>  
+
 
 <div className='hidden lg:block mx-1 py-4 max-w-sm'> 
  <div className="cursor-pointer text-sm py-6 shadow max-w-sm border px-3 font-bold text-gray-600 flex items-center justify-between my-1"> 
@@ -127,10 +127,10 @@ alt={xy?.featuredImage?.node.altText}
 )}</div>
 
 </div>  
-
+<SideBar/>
  </div>
 
-  <SideBar/>
+
 </div>
 
  </div> 

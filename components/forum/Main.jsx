@@ -1,7 +1,6 @@
 "use client"
 import Image from "next/image"
 import { useRouter, usePathname, useSearchParams} from "next/navigation";  
-import { usePagesContext } from "../Pages-Context"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faComment, faThumbsUp } from "@fortawesome/free-regular-svg-icons"
 import { faDeleteLeft, faPencil, faShare, faAngleDown, faUser, faAngleUp } from "@fortawesome/free-solid-svg-icons"
@@ -14,8 +13,7 @@ import LoginModal from "./LoginModal"
 import { useInView } from "react-intersection-observer"
 import CreateForm from "@/app/forum/createpost"
 import nlp from 'compromise/three'
-import Events from "@/components/forum/Events";
-import { getPosts } from "@/app/forum/actions/loadPosts"; 
+import Events from "@/components/forum/Events"; 
 import { createClient } from "@/utils/supabase/client"; 
 import Bday from "../Bday";
 import Trends from "./Trends"; 
@@ -57,16 +55,20 @@ const { ref, inView } = useInView()
       }, []);  
      
     const loadMorePosts = async () => {
-    const apiP = await getPosts(startScroll, startScroll + count - 1) 
-    if(apiP){ 
+      const supabase = createClient() 
+      const { data:apiP , error } = await supabase 
+      .from('posts')
+      .select('*') 
+      .range(startScroll, startScroll + 1) 
+      if(error) return
+    if(apiP &&apiP?.length>0){ 
       setScrolledPosts(scrolledPosts?.concat(apiP))
      }else return 
     //  //setScrolledPosts([...scrolledPosts, ...apiP])
     setStartScroll((prev)=>prev + apiP?.length) 
     setCount((prev)=>prev * apiP?.length) 
     }
-    useEffect(() => { 
-      //if(inView ) loadMorePosts runs out of posts and produces an error. why?
+    useEffect(() => {  
       if (inView) {
         loadMorePosts()   
       }

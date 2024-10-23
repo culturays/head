@@ -150,7 +150,7 @@ const africa_made = made_in_africa.map((ex)=> ex.netflixNaijaPosts?.nodes).flat(
 
 
  <div className="bg-white m-auto"style={{maxWidth:'1500px'}}> 
-<section className=" rounded-b-4 flex justify-center" > 
+<section className="rounded-b-4 sm:flex justify-center" > 
   <div className="border-b-2 border-b-black border-r-4 border-r-gray-400 h-fit sm:max-w-3xl lg:max-w-6xl px-11"> 
   
   <form className="flex flex-wrap my-4 "> 
@@ -224,17 +224,19 @@ const africa_made = made_in_africa.map((ex)=> ex.netflixNaijaPosts?.nodes).flat(
       
 </div>
      
-  {/* <div className='h-screen mx-1 rounded-t lg:hidden absolute -right-28  md:bg-transparent md:relative hover:right-0 md:right-0 md:w-auto cursor-pointer '>   
- <div className='py-5 text-gray-200 flex flex-col justify-center w-full cursor-pointer bg-yellow-500 my-2 md:bg-transparent md:text-gray-600 md:rounded-none rounded-full'> 
- <FontAwesomeIcon icon={faFilm} className='text-xl p-2'/>
- <Link href='/netflix-naija/coming-to-netflix'><p className='p-2 font-bold text-center'>Coming Soon</p></Link>  
- </div> 
- <div className='py-5 text-gray-200 flex flex-col justify-center w-full cursor-pointer bg-yellow-500 my-2 md:bg-transparent md:text-gray-600 md:rounded-none rounded-full'> 
- <FontAwesomeIcon icon={faNewspaper} className='text-2xl p-2'/>
- <Link href='/netflix-naija/news'><p className='p-2 font-bold text-center'>Netflix News</p></Link>  
- </div> 
- </div>  */}
+  <div className='h-max rounded-t lg:hidden bg-transparent max-w-36 sm:m-0 m-auto cursor-pointer'>  
 
+<div className='py-5 flex flex-col justify-center w-full cursor-pointer my-2 text-gray-600 px-2'> 
+<FontAwesomeIcon icon={faFilm}className='text-xl'/>
+<Link href='/netflix-naija/coming-to-netflix'><p className='p-2 font-bold text-center'>Coming to Netflix Naija</p></Link>  
+ 
+</div> 
+<div className='py-5 flex flex-col justify-center w-full cursor-pointer my-2 bg-transparent text-gray-600'> 
+<FontAwesomeIcon icon={faFilm} className='text-xl p-2'/>
+<Link href='/netflix-naija/news'><p className='p-2 font-bold text-center text-lg'>Netflix News</p></Link>  
+</div>  
+ 
+ </div> 
   
  <div className='hidden lg:block mx-1 py-4 max-w-sm'> 
     <div className="cursor-pointer text-sm py-6 shadow max-w-sm border px-3 font-bold text-gray-600 flex items-center justify-between my-1"> 

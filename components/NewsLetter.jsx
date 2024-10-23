@@ -16,8 +16,8 @@ useEffect(()=>{
      setSuccess(success.succeeded)
     },11000) 
     }
-   
-},[ ])
+    
+},[])
   const saveForm=async (e)=>{
 e.preventDefault()
 const form = {name:subNm.name, email:subNm.email }
