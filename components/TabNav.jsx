@@ -41,12 +41,21 @@ const [closeQuestion, setCloseQuestion]= useState(false)
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
  const fieldChecked = e.target.checked;
-
+if(e.target.type==='text'){
     setFormData((prevState) => ({
       ...prevState,
       [fieldName]: fieldValue,
+    }));
+  
+  }
+  if(e.target.type==='checkbox'){
+    setFormData((prevState) => ({
+      ...prevState,
       [fieldName]: fieldChecked,
     }));
+  
+  }
+
   }
  
   const [success, setSuccess] = useState({
@@ -152,7 +161,7 @@ height={675}
         <div>{status} 
      </div>:''
    }
-
+{console.log(formData)}
  <form className="flex flex-col bg-gray-900 text-gray-200 py-4" onSubmit={submitForm}>
          <div className="flex flex-col mx-1"> 
             <label className="font-bold p-2 m-1">Email :</label>
