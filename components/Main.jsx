@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { dateFormatter } from '@/utils/dateFormat'
 import Link from 'next/link'  
 import moment from 'moment'
-import {newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, postLastAndScrolledCategories, sideBarNewsItems, sidePanelNewsItems  } from '@/app/news/rootpostsHandle'
+import {newsByLatest, newsPosts, newsViews, nextNewsPosts, postCategories, sideBarNewsItems, sidePanelNewsItems  } from '@/app/news/rootpostsHandle'
 import newsFeed from '@/utils/newsfeed'
 import netflixNewsFeed from '@/utils/netflixNaijaFeed'
 import nollywoodFeed from '@/utils/nollywoodFeed'
@@ -42,7 +42,7 @@ setTopTopNewsView(newsViewCursors)
 
 }
 useEffect(()=>{
-topLatest()
+topLatest() 
 
 },[top_Latest])
 
