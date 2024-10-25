@@ -27,6 +27,7 @@
     "compromise-dates": "^3.6.0",
     "cookie": "^0.6.0",
     "cookies-next": "^4.1.1",
+    "cron": "^3.1.7",
     "express-jwt": "^8.4.1",
     "feed": "^4.2.2",
     "filestack-react": "^5.0.0",

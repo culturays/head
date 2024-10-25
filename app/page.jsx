@@ -6,15 +6,10 @@ import { createClient } from "@/utils/supabase/server"
 import { scrapeSilverBird } from "./naija-wiki/filmsdata"
 import { processSbImages } from "@/utils/processImages" 
 import MainBottom from "@/components/MainBottom"
-import newsFeed from "@/utils/newsfeed"
-import netflixNewsFeed from "@/utils/netflixNaijaFeed"
-import topicsFeed from "@/utils/topicsFeed"
-import articleFeed from "@/utils/articleFeed"
-import nollywoodFeed from "@/utils/nollywoodFeed" 
 import SideBar from "../components/Side"
 import { getNaijaTrends1 } from "./api/trends/naija"
 import { getGoogleNewsTitles, getNaijaNews1 } from "./api/news/route"
-
+import { CronJob } from 'cron';
 // (async () => { 
 //   //await getNaijaTrends1('NG')
 //  // await getNaijaNews1()
@@ -84,26 +79,33 @@ const evData = await events3Details(one.atitle)
       
     } 
    } 
- 
-    try {    
-         const supabase = createClient()
-        const { data, error } = await supabase 
-       .from('events')
-       .upsert([grouped])
-       .select()
-                   
-     if (error) { 
-       console.error('Error inserting event:', error);
-     } else {
-       // console.log('Inserted event:', data); 
-    }                           
- } catch (error) {
-   console.error('Unexpected error:', error);
- } 
- } 
- 
-   } 
+   async function getEvs(){
+    const supabase = createClient()
+    const { data, error } = await supabase
+      .from('events')
+      .insert([grouped])
+      .select();                         
+    if (error) { 
+      console.error('Error inserting items:', error);
+    } 
 
+    }
+    setTimeout(()=>{
+     getEvs()
+
+    },3600)
+ 
+ } 
+ 
+   }
+
+
+   CronJob.from({
+    cronTime: '30 5 * * 1',
+      onTick:dailyEv3(),
+      start: true,
+      timeZone: 'Africa/Lagos'
+    });
  
   const dailyWiki =async()=>{
     const silverBTitles= await scrapeSilverBird() 
@@ -117,50 +119,44 @@ const evData = await events3Details(one.atitle)
    const grouped = [];
    
    for (let i = 0; i < minLength; i++) { 
-   // const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' ).catch(console.error);
-    //console.log(silverB_imgs[i]) 
+    
+    const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' ).catch(console.error);
     grouped.push({ 
      title: silverB_titles[i], 
      url: silverB_urls[i],
-      img_url: imgMime ,
+   img_url: imgMime ,
        release_date: silverB_released[i],
        genre: silverB_gnr[i], 
        dur: silverB_dur[i]
      });
     }  
    
-    try {  
-        const supabase = createClient()
-         const { data, error } = await supabase
-           .from('cinema_titles')
-           .upsert(grouped)
-           .select();                         
-         if (error) { 
-           console.error('Error inserting items:', error);
-         } else {
-           console.log('It ran');
-        }
-     } catch (error) {
-       console.error('Unexpected error:', error);
-     }  
+   async function getCines(){
+    const supabase = createClient()
+    const { data, error } = await supabase
+      .from('cinema_titles')
+      .insert(grouped)
+      .select();                         
+    if (error) { 
+      console.error('Error inserting items:', error);
+    } 
+
+
     }
+    setTimeout(()=>{
+     getCines()
+
+    },3600)
  
-   
-const daily_intervals = ()=> { 
-  const intervalId = setInterval(()=>{ 
- dailyEv3() //1000 * 60 * 60 * 24  //7 * 24 * 60 * 60 * 1000
- dailyWiki()
- console.log('it ran home')
-  },3600000); 
-// 1800000 720000
-  return () => { 
-    clearInterval(intervalId);
-  };
-}
-const stopDailyInterval = daily_intervals();
-setTimeout(() => {
-stopDailyInterval(); 
-}, 60000); 
+    } 
+ 
+ 
+    CronJob.from({
+    cronTime: '30 5 * * 1',
+      onTick: dailyWiki(),
+      start: true,
+      timeZone: 'Africa/Lagos'
+    });
  
 return (
 <div> 

@@ -229,7 +229,7 @@ const africa_made = made_in_africa.map((ex)=> ex.netflixNaijaPosts?.nodes).flat(
 <div className='py-5 flex flex-col justify-center w-full cursor-pointer my-2 text-gray-600 px-2'> 
 <FontAwesomeIcon icon={faFilm}className='text-xl'/>
 <Link href='/netflix-naija/coming-to-netflix'><p className='p-2 font-bold text-center'>Coming to Netflix Naija</p></Link>  
- 
+  
 </div> 
 <div className='py-5 flex flex-col justify-center w-full cursor-pointer my-2 bg-transparent text-gray-600'> 
 <FontAwesomeIcon icon={faFilm} className='text-xl p-2'/>

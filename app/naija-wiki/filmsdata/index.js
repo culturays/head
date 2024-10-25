@@ -330,11 +330,9 @@ const NETFLIX_URL = 'https://www.netflix.com/login';
 };
 
 export const scrapeCategory = async (page, categoryUrl) => {
-    await page.goto(categoryUrl, { waitUntil: 'networkidle2' });
-    
+    await page.goto(categoryUrl, { waitUntil: 'networkidle2' });    
     const content = await page.content(); 
-    const $ = cheerio.load(content);
-  
+    const $ = cheerio.load(content);  
     const titles = [];     
      $('a', content).each(function(){
            const title = $(this).text() 

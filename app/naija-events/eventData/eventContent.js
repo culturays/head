@@ -1,5 +1,5 @@
 "use server"
-import {  processImages } from "@/utils/processImages";
+import { processImgs } from "@/utils/process_imgs"; 
 import axios from "axios";
 import * as cheerio from 'cheerio'; 
 export async function getNaijaEvents3(){
@@ -91,9 +91,9 @@ fullObj['data'].push( {slug:ev.trim().toLowerCase()})
 })   
 
 $('.event-thumb', html).each(async function(){    
-const img = $(this).attr('src') 
+const img = $(this).attr('src')
 if(img!== undefined){ 
- const imgMime=await processImages(img, 'event_avatars').catch(console.error); 
+ const imgMime=await processImgs(img, 'event_avatars') 
 fullObj['data'].push( {imgMime} )   
     }  
     })     

@@ -79,12 +79,10 @@ function sortAscending(pb, pa){
   return (pa?.id - pb?.id);
  } 
  
-const Profile = ({ 
- 
+const Profile = ({  
 userPosts,
 user,
-profile,
- 
+profile 
    
 }) => {
 const [showInput, setShowInput]= useState(false)

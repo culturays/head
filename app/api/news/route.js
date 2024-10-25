@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as cheerio from 'cheerio'; 
+import { CronJob } from "cron";
 const ourPassword = process.env.NEXT_PUBLIC_WP_SECRET
 const ourUsername = "Christina Ngene"
 
@@ -71,6 +72,7 @@ export async function getNaijaNews1() {
         Object.entries({title:xy.title }).forEach(([key, value]) => {
         data.append(key, value);
       })
+      console.log('it ran away')
       //to post to latest postType 'https://content.culturays.com/wp-json/wp/v2/latest'
         try {
           const response = await fetch('https://content.culturays.com/wp-json/wp/v2/latest', { 
@@ -93,20 +95,13 @@ export async function getNaijaNews1() {
           console.error('Error submitting form:', error);
         }
    } }
-   const daily_intervals = ()=> { 
-    const intervalId = setInterval(()=>{ 
-   submitForm() 
-   console.log('it ran here')
-    },3600000); 
-  // 1800000
-    return () => { 
-      clearInterval(intervalId);
-    };
-  }
-  const stopDailyInterval = daily_intervals();
-  setTimeout(() => {
-  stopDailyInterval(); 
-  }, 60000); 
+ 
+   CronJob.from({
+    cronTime: '30 5 * * 1',
+    onTick: submitForm,
+    start: true,
+    timeZone: 'Africa/Lagos'
+  });
   
    return resultX
  
@@ -165,11 +160,33 @@ export const getGoogleNewsTitles = async (location) => {
   } catch (err) {
       console.error('Error fetching Google News data:', err);
   }
+  const removeDuplicatesBd = (data) => {
+    const seen = new Set(); 
+    return data.reduce((unique, current) => { 
+      const keyName = current.author  ;
+      const keyTitle = current.title ; 
+      const keyTime = current.date ;    
+ 
+      if(!seen.has(keyName)){
+        if(!seen.has(keyTitle)){
+          if(!seen.has(keyTime)){         
+            seen.add(keyTitle);
+            seen.add(keyName );  
+            seen.add(keyTime ); 
+        unique.push(current)
+       }}     
+        }  
+      return unique;
+    }, []);
+  };  
+   
+  const resultX = removeDuplicatesBd(newsTitlesGoogle)
   const submitForm = async () => { 
     const data = new FormData()
-     for (const xy of newsTitlesGoogle) {  
+     for (const xy of resultX) {  
       Object.entries({title:xy.title }).forEach(([key, value]) => {
-      data.append(key, value);
+      data.append(key, value); 
+      console.log('it ran fast')
     })
    
       try {
@@ -187,27 +204,17 @@ export const getGoogleNewsTitles = async (location) => {
           throw new Error(`HTTP error! status: ${response.statusText}`);
         } 
     
-        const result = await response.json(); 
-     
+        const result = await response.json();     
       } catch (error) {
         console.error('Error submitting form:', error);
       }
  } }
-
- const daily_intervals = ()=> { 
-  const intervalId = setInterval(()=>{ 
- submitForm() //1000 * 60 * 60 * 24 //24 * 60 * 60 * 1000
- console.log('it ran')
-  },3600000); 
-
-  return () => { 
-    clearInterval(intervalId);
-  };
-}
-const stopDailyInterval = daily_intervals();
-setTimeout(() => {
-stopDailyInterval(); 
-}, 60000);  
+ CronJob.from({
+  cronTime: '30 5 * * 1', 
+  onTick: submitForm,
+  start: true,
+  timeZone: 'Africa/Lagos'
+});
 
 return newsTitlesGoogle;
 };

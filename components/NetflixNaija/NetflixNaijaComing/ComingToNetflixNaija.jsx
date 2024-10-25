@@ -81,7 +81,6 @@ const ComingToNetflixNaija = ({coming_to_netflix_grouped, netflix_news_data,comi
 </div> 
   
 </div>  
- 
 <div className="sm:flex justify-between max-w-max bg-white m-auto"> 
 <Paginate content={coming_to_netflix_grouped.slice(4)}/>
 <div> 

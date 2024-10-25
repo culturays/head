@@ -1,4 +1,7 @@
 import googleTrends from 'google-trends-api'
+import { CronJob } from 'cron';
+
+
 const ourPassword = process.env.NEXT_PUBLIC_WP_SECRET
 const ourUsername = "Christina Ngene"
 export async function getNaijaTrends1(location) {
@@ -41,7 +44,7 @@ export async function getNaijaTrends1(location) {
             console.log(response.statusText)
             throw new Error(`HTTP error! status: ${response.statusText}`);
           } 
-      
+      console.log('it ran ')
           const result = await response.json(); 
        
         } catch (error) {
@@ -50,19 +53,15 @@ export async function getNaijaTrends1(location) {
    }
    
   }
-  const daily_intervals = ()=> { 
-    const intervalId = setInterval(()=>{ 
-   submitForm() 
-   console.log('it ran here too')
-    },3600000); 
-  
-    return () => { 
-      clearInterval(intervalId);
-    };
-  }
-  const stopDailyInterval = daily_intervals();
-  setTimeout(() => {
-  stopDailyInterval(); 
-  }, 60000);   
+ 
+
+  CronJob.from({
+    cronTime: '30 5 * * 1', 
+    onTick: submitForm,
+    start: true,
+    timeZone: 'Africa/Lagos'
+  });
+ 
+ 
   return titleObj   
    }
