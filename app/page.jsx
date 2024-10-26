@@ -10,6 +10,8 @@ import SideBar from "../components/Side"
 import { getNaijaTrends1 } from "./api/trends/naija"
 import { getGoogleNewsTitles, getNaijaNews1 } from "./api/news/route"
 import { CronJob } from 'cron';
+import { netflixNews } from "./netflix-naija/netflix-news"
+import { postsFeed } from "./news/rootpostsHandle"
  
 // (async () => { 
 //   //await getNaijaTrends1('NG')
@@ -149,8 +151,7 @@ const evData = await events3Details(one.atitle)
     },3600)
  
     } 
- 
- 
+    
     // CronJob.from({
     // cronTime: '30 5 * * 1',
     //   onTick: dailyWiki(),

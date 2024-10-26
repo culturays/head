@@ -1846,7 +1846,8 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
       posts {
         nodes{ 
          title
-          slug 
+          slug
+          date
            author {
           node {
             name
@@ -1870,8 +1871,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
   }
     }
    `  
-        
-        })
+   })
         
         }).then(response => response)      
         .then(data =>data) 

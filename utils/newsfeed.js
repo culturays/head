@@ -35,8 +35,8 @@ async function newsFeed(){
          link: url,
          description: post.excerpt,
          content: post.excerpt,
-         author: post?.author.node.name ,
-         contributor: [ post?.author.node.name ],
+         author: post?.author?.node.name ,
+         contributor: [ post?.author?.node.name ],
          date: new Date(post.date),
        image: post?.featuredImage?.node.sourceUrl.split('?')[0]
        });
