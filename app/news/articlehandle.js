@@ -562,7 +562,7 @@ body: JSON.stringify({
 query:`
 query PASSAGENEWS{ 
    articlesCategories(first:15){
-    nodes{
+     nodes{
     name
     slug
 articles(first:10){
@@ -648,10 +648,9 @@ title
   }
 }}
  
- `  
-      })
-        
-        }).then(response => response)   
+ ` 
+})
+}).then(response =>  response)
         .then(data =>data) 
         .catch(error => console.error('Error:', error)) 
         const response = wprest?.data.articlesCategories.nodes
@@ -866,39 +865,7 @@ export const vids = async()=>{
       nodes {
         date
         contentTypeName
-        ... on Tech {
-           id
-          title
-          slug
-          author {
-          node {
-          name
-            slug
-          }
-        }
-              featuredImage {
-          node {
-            altText
-            sourceUrl
-          }
-        }
-        }   ... on Video {
-           id
-          title
-          slug
-          author {
-          node {
-          name
-            slug
-          }
-        }
-              featuredImage {
-          node {
-            altText
-            sourceUrl
-          }
-        }
-        }   ... on Post {
+       ... on Video {
            id
           title
           slug
@@ -946,54 +913,6 @@ export const vids = async()=>{
             sourceUrl
           }
         }
-        }    ... on Society {
-          id
-          title
-          slug   
-          author {
-          node {
-         name
-            slug
-          }
-        } 
-          featuredImage {
-          node {
-            altText
-            sourceUrl
-          }
-        }
-        }  ... on Health {
-          id
-          title
-          slug 
-           author {
-          node {
-          name
-            slug
-          }
-        }
-              featuredImage {
-          node {
-            altText
-            sourceUrl
-          }
-        }
-        }  ... on Economy {
-          id
-          title
-          slug 
-           author {
-          node {
-          name
-            slug
-          }
-        } 
-          featuredImage {
-          node {
-            altText
-            sourceUrl
-          }
-        }
         }  ... on Trending {
           id
           title
@@ -1005,38 +924,6 @@ export const vids = async()=>{
           }
         } 
           featuredImage {
-          node {
-            altText
-            sourceUrl
-          }
-        }
-        }  ... on Environment {
-          id
-          title
-          slug 
-           author {
-          node {
-           name
-            slug
-          }
-        }
-              featuredImage {
-          node {
-            altText
-            sourceUrl
-          }
-        }
-        }  ... on Business {
-          id
-          title
-          slug 
-           author {
-          node {
-            name
-            slug
-          }
-        }
-              featuredImage {
           node {
             altText
             sourceUrl

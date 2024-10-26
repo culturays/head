@@ -3,12 +3,12 @@ import fs from 'fs';
 import { Feed } from "feed";
 import { contentFeed } from '@/app/news/articlehandle'; 
 import { netflixNews } from '@/app/netflix-naija/netflix-news';
+import { topCategoriesFeed } from '@/app/news/rootpostsHandle';
 export const revalidate= 3600
 
 async function topicsFeed(){ 
-const contentData=await contentFeed() 
-const postsData= contentData?.filter((xy)=> xy.contentTypeName!== 'article')?.filter((xy)=> xy.contentTypeName !== 'nollywood').filter((xy)=> xy.contentTypeName !== 'post')?.filter((xy)=> xy.contentTypeName !== 'netflix-naija')?.filter((xy)=> xy.contentTypeName === 'award').filter((xy)=> xy.contentTypeName === 'char')?.filter((xy)=> xy.contentTypeName === 'latest')?.filter((xy)=> xy.contentTypeName === 'outline')        
-
+const contentData=await topCategoriesFeed()
+const feedData =contentData.map((xy)=>xy.posts.nodes)
    const site_url='https://culturays.com';
     const pubDate= new Date()
     const author = 'Christina Ngene'  
@@ -29,8 +29,8 @@ const postsData= contentData?.filter((xy)=> xy.contentTypeName!== 'article')?.fi
         },
         author,
       });
-      postsData?.map((post) => {
-      const url = `${site_url}/news${post.contentTypeName}//${post.slug}`;     
+      feedData?.map((post) => {
+      const url = `${site_url}/news/${post?.categories?.nodes[0]?.slug}/${post.slug}`;     
        feed.addItem({
          title: post.title,
          id: url, 

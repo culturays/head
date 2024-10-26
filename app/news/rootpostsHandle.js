@@ -1115,7 +1115,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS {
-          categories(where: {name: "Business"}) {
+             categories(where: {name: "Business"}) {
     nodes {
       name
           posts(first:100){
@@ -1139,11 +1139,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-           businessCategories {
+          categories {
               nodes {
                 name 
                 slug
-                 businesses  {
+                 posts {
           nodes {
             title
             slug
@@ -1179,17 +1179,17 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
           }
         }  }
   }
-         }  
+        } 
          `  
         })
         
-        }).then(response =>  response)  
+        }).then(response => response)    
          .then(data =>data) 
          .catch(error => console.error('Error:', error));
-         const response = wprest?.data.categories.nodes.posts.nodes
+         const response = wprest?.data.categories.nodes
          return response
     } catch (error) {
-      if(error)throw new Error('Error fetching data')
+     if(error)throw new Error('Error fetching data')
     
      }
    
@@ -1233,11 +1233,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-            techCategories {
+           categories {
               nodes {
                 name
                 slug
-                  technologies {
+                  posts {
           nodes {
             title
             slug
@@ -1276,12 +1276,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
          `  
         })
         
-        }).then(response => response) 
-         .then(data =>data) 
-         .catch(error => console.error('Error:', error));
-          const response = wprest?.data.categories.nodes.posts.nodes
-          
-         return response  
+        }).then(response => response)    
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+        const response = wprest?.data.categories.nodes
+        return response
    
     } catch (error) {
       if(error)throw new Error('Error fetching data')
@@ -1327,11 +1326,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-          economyCategories {
+          categories {
               nodes {
                 name
                 slug
-                  economies {
+                  posts {
           nodes {
             title
             slug
@@ -1371,11 +1370,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
          `  
         })
         
-        }).then(response =>  response)  
-         .then(data =>data) 
-         .catch(error => console.error('Error:', error));
-         const response = wprest?.data.categories.nodes.posts.nodes
-         return response
+        }).then(response => response)    
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+        const response = wprest?.data.categories.nodes
+        return response
     } catch (error) {
       if(error)throw new Error('Error fetching data')
     
@@ -1421,11 +1420,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-            healthCategories {
+           categories {
               nodes {
                 name
                 slug
-                  healths {
+                  posts {
           nodes {
             title
             slug
@@ -1466,12 +1465,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
          `  
         })
         
-        }).then(response => response) 
-         .then(data =>data) 
-         .catch(error => console.error('Error:', error));
-          const response = wprest?.data.categories.nodes.posts.nodes 
-          
-         return response  
+        }).then(response => response)    
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+        const response = wprest?.data.categories.nodes
+        return response 
    
     } catch (error) {
       if(error)throw new Error('Error fetching data')
@@ -1515,11 +1513,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-            environmentCategories {
+           categories {
               nodes {
             name
             slug
-              environments {
+              posts {
           nodes {
             title
             slug
@@ -1558,12 +1556,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
          `  
         })
         
-        }).then(response => response) 
-         .then(data =>data) 
-         .catch(error => console.error('Error:', error));
-          const response = wprest?.data.categories.nodes.posts.nodes   
-          
-         return response  
+        }).then(response => response)    
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+        const response = wprest?.data.categories.nodes
+        return response
    
     } catch (error) {
       if(error)throw new Error('Error fetching data')
@@ -1583,7 +1580,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS {
-                 categories(where: {name: "Societies"}) {
+    categories(where: {name: "Societies"}) {
     nodes {
       name
           posts(first:100){
@@ -1607,11 +1604,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-            societyCategories {
+            categories {
               nodes {
                 name
                 slug
-                 societies {
+                 posts {
           nodes {
             title
             slug
@@ -1651,11 +1648,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
          `  
         })
         
-        }).then(response => response) 
-         .then(data =>data) 
-         .catch(error => console.error('Error:', error));
-          const response = wprest?.data.categories.nodes.posts.nodes      
-         return response  
+        }).then(response => response)    
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+        const response = wprest?.data.categories.nodes
+        return response 
    
     } catch (error) {
       if(error)throw new Error('Error fetching data')
@@ -1773,3 +1770,118 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
        }
     
   }
+
+
+
+  export async function topCategoriesFeed (){
+    try{
+  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+        method: 'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          query:`
+          query WPPOSTS { 
+         categories {
+         nodes {
+      name
+      slug
+      posts {
+        nodes{ 
+         title
+          slug 
+           author {
+          node {
+            name
+            slug
+          }
+        }
+          categories{
+          nodes{
+          slug
+          }
+          }
+              featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        }
+      }
+    }
+  }
+    }
+   `  
+        
+        })
+        
+        }).then(response => response)     
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+        const response = wprest?.data.categories.nodes
+        return response
+    }catch(error){
+      return error
+      if(error)throw new Error('Error fetching data')
+    }
+ 
+  } 
+
+
+  export async function postsFeed (){
+    try{
+  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+        method: 'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          query:`
+          query WPPOSTS { 
+         categories ["dGVybTo1ODE=","dGVybTo1ODI=","dGVybTo1ODA=","dGVybTo1Nzk=","dGVybTo1Nzc=" ,"dGVybTo1Nzg="] {
+         nodes {
+      name
+      slug
+      posts {
+        nodes{ 
+         title
+          slug 
+           author {
+          node {
+            name
+            slug
+          }
+        }
+          categories{
+          nodes{
+          slug
+          }
+          }
+              featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        }
+      }
+    }
+  }
+    }
+   `  
+        
+        })
+        
+        }).then(response => response)     
+        .then(data =>data) 
+        .catch(error => console.error('Error:', error));
+        const response = wprest?.data.categories.nodes
+        return response
+    }catch(error){
+      return error
+      if(error)throw new Error('Error fetching data')
+    }
+ 
+  } 

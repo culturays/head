@@ -1,5 +1,6 @@
 import { netflixNews } from "./netflix-naija/netflix-news";
 import { contentFeed } from "./news/articlehandle";
+import { postsFeed } from "./news/rootpostsHandle";
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}` 
   : "http://localhost:3000";
@@ -10,7 +11,9 @@ export default async function sitemap() {
        const contentData=await contentFeed()
        const articleData= contentData.filter((xy)=> xy.contentTypeName === 'article')
        const nollywood_news = contentData.filter((xy)=> xy.contentTypeName === 'nollywood')
-       const postsData= contentData.filter((xy)=> xy.contentTypeName === 'post')
+
+       const postFeeds=await postsFeed()
+       const feedData =postFeeds.map((xy)=>xy.posts.nodes)
  
       const netflix_posts = netflixFeed.map((post)=>({ 
          url:`https://culturays.com/netflix-naija/news/${post.slug}`,
@@ -33,7 +36,7 @@ export default async function sitemap() {
          priority:0.7
 
       }) )
-         const post_posts = postsData.map((post)=>({ 
+         const post_posts = feedData.map((post)=>({ 
          url:`https://culturays.com/news/topic/${post.slug}`,
          lastModified:new Date(post.date),
          changeFrequency:'daily',
@@ -62,6 +65,6 @@ export default async function sitemap() {
      ...netflix_posts,
      ...article_posts,
      ...nollywood_posts,
-    ...post_posts
+     ...post_posts
     ]
   }

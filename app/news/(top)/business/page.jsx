@@ -1,5 +1,5 @@
  import Business from "@/components/News/Business"
- import { businessBlog } from "../../articlehandle"
+import { businessBlog } from "../../rootpostsHandle";
 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}/business` 
@@ -12,13 +12,14 @@ export const metadata = {
 
 const BusinessPage =async ({searchParams}) => { 
   const business_news = await businessBlog() 
+  const business_posts = business_news.map((xy)=>xy.posts.nodes)
+   
   return (
     <div >
   <Business
-business_news={business_news}
+business_news={business_posts }
 />  
- 
-    </div>
+  </div>
   )
 }
 

@@ -1,11 +1,12 @@
 
 import fs from 'fs';
 import { Feed } from "feed";
-import { contentFeed } from '@/app/news/articlehandle';  
+ 
+import { topCategoriesFeed } from '@/app/news/rootpostsHandle';
 export const revalidate= 3600 
 async function newsFeed(){ 
-const contentData=await contentFeed()
-const postsData= contentData?.filter((xy)=> xy.contentTypeName === 'post') 
+  const contentData=await topCategoriesFeed()
+  const feedData =contentData.map((xy)=>xy.posts.nodes)
    const site_url='https://culturays.com';
     const pubDate= new Date()
     const author = 'Christina Ngene'  
