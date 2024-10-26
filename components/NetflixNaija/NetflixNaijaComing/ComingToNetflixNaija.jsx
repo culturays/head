@@ -92,7 +92,8 @@ const ComingToNetflixNaija = ({coming_to_netflix_grouped, netflix_news_data,comi
 </div> 
 <div className='py-5 flex flex-col justify-center w-full cursor-pointer my-2 bg-transparent text-gray-600'> 
 <FontAwesomeIcon icon={faFilm} className='text-xl p-2'/>
-<Link href='/netflix-naija/news'><p className='p-2 font-bold text-center text-lg'>Netflix News</p></Link>  
+{/* has all netfix naija news as no page was built for netflix naija */}
+<Link href='/naija-wiki'><p className='p-2 font-bold text-center text-lg'>Netflix News</p></Link>  
 </div>  
  
  </div>  

@@ -1,273 +1,4 @@
 import { agent, fetchWithRetry } from "@/utils/fetchwithretry";
- 
-
-export async function businessBlog(req, res){
-  try{
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent, 
-      headers:{ 
-      'Content-Type':'application/json', 
-      },
-      body: JSON.stringify({
-        query:`
-        query WPPOSTS {
-        businesses  {
-        nodes {
-           contentTypeName
-          title
-          slug
-           date
-           content
-           id
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          excerpt
-         businessCategories {
-            nodes {
-              name 
-              slug
-               businesses  {
-        nodes {
-          title
-          slug
-           date
-           content
-           id
-           excerpt
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          
-          
-          }}
-            }
-          }
-          author {
-            node {
-              firstName
-              lastName
-              name
-              description
-            }
-          }
-        }
-      }
-       }  
-       `  
-      })
-      
-      }).then(response =>  response)  
-       .then(data =>data) 
-       .catch(error => console.error('Error:', error));
-       const response = wprest?.data.businesses.nodes
-       return response
-  } catch (error) {
-    if(error)throw new Error('Error fetching data')
-  
-   }
- 
-}  
-
-
-
-export async function techBlog(req, res){
-  try{
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{ 
-      'Content-Type':'application/json', 
-      },
-      body: JSON.stringify({
-        query:`
-        query WPPOSTS {
-        technologies {
-        nodes {
-           contentTypeName
-          title
-          slug
-           date
-           content
-           id
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          excerpt
-          techCategories {
-            nodes {
-              name
-              slug
-                technologies {
-        nodes {
-          title
-          slug
-           date
-           content
-           id 
-           excerpt
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          } 
-          
-          }}
-            }
-          }
-          author {
-            node {
-              firstName
-              lastName
-              name
-              description
-            }
-          }
-        }
-      }
-       }  
-       `  
-      })
-      
-      }).then(response => response) 
-       .then(data =>data) 
-       .catch(error => console.error('Error:', error));
-        const response = wprest?.data.technologies.nodes
-        
-       return response  
- 
-  } catch (error) {
-    if(error)throw new Error('Error fetching data')
-  
-   }
- 
-} 
-
-
-export async function economyBlog(req, res){
-  try{
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{ 
-      'Content-Type':'application/json', 
-      },
-      body: JSON.stringify({
-        query:`
-        query WPPOSTS {
-        economies {
-        nodes {
-           contentTypeName
-          title
-          slug
-           date
-           content
-           id
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          excerpt
-        economyCategories {
-            nodes {
-              name
-              slug
-                economies {
-        nodes {
-          title
-          slug
-           date
-           content
-           id 
-           excerpt
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-        
-          
-          }}
-            }
-          }
-          author {
-            node {
-              firstName
-              lastName
-              name
-              description
-            }
-          }
-        }
-      }
-       }  
-       `  
-      })
-      
-      }).then(response =>  response)  
-       .then(data =>data) 
-       .catch(error => console.error('Error:', error));
-       const response = wprest?.data.economies.nodes
-       return response
-  } catch (error) {
-    if(error)throw new Error('Error fetching data')
-  
-   }
- 
-} 
 export async function awardsBlog(req, res){
   try{
     const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
@@ -280,7 +11,7 @@ export async function awardsBlog(req, res){
       body: JSON.stringify({
         query:`
         query WPPOSTS {
-        awards(first:100)  {
+        awards(first:100) {
         nodes {
            contentTypeName
           title
@@ -332,275 +63,6 @@ export async function awardsBlog(req, res){
    }
  
 } 
-
-
-export async function healthBlog(req, res){
-  try{
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{ 
-      'Content-Type':'application/json', 
-      },
-      body: JSON.stringify({
-        query:`
-        query WPPOSTS {
-        healths {
-        nodes {
-           contentTypeName
-          title
-          slug
-           date
-           content
-           id
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          excerpt
-          healthCategories {
-            nodes {
-              name
-              slug
-                healths {
-        nodes {
-          title
-          slug
-           date
-           content
-           id
-            excerpt
-          contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-         
-          }
-          
-          }
-            }
-          }
-          author {
-            node {
-              firstName
-              lastName
-              name
-              description
-            }
-          }
-        }
-      }
-       }  
-       `  
-      })
-      
-      }).then(response => response) 
-       .then(data =>data) 
-       .catch(error => console.error('Error:', error));
-        const response = wprest?.data.healths.nodes
-        
-       return response  
- 
-  } catch (error) {
-    if(error)throw new Error('Error fetching data')
-  
-   }
- 
-} 
-export async function environmentBlog(req, res){
-  try{
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{ 
-      'Content-Type':'application/json', 
-      },
-      body: JSON.stringify({
-        query:`
-        query WPPOSTS {
-        environments {
-        nodes {
-           contentTypeName
-          title
-          slug
-           date
-           content
-           id
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          excerpt
-          environmentCategories {
-            nodes {
-          name
-          slug
-            environments {
-        nodes {
-          title
-          slug
-           date
-           content
-           id
-            excerpt
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          
-          }}
-            }
-          }
-          author {
-            node {
-              firstName
-              lastName
-              name
-              description
-            }
-          }
-        }
-      }
-       }  
-       `  
-      })
-      
-      }).then(response => response) 
-       .then(data =>data) 
-       .catch(error => console.error('Error:', error));
-        const response = wprest?.data.environments.nodes
-        
-       return response  
- 
-  } catch (error) {
-    if(error)throw new Error('Error fetching data')
-  
-   }
- 
-} 
-export async function societyBlog(req, res){
-  try{
-    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-      method: 'POST',
-      timeout: 5000 ,
-      agent: agent,
-      headers:{ 
-      'Content-Type':'application/json', 
-      },
-      body: JSON.stringify({
-        query:`
-        query WPPOSTS {
-        societies {
-        nodes {
-           contentTypeName
-          title
-          slug
-           date
-           content
-           id
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          excerpt
-          societyCategories {
-            nodes {
-              name
-              slug
-               societies {
-        nodes {
-          title
-          slug
-           date
-           content
-           id
-            excerpt
-           contentTags {
-            nodes {
-              name
-              slug
-            }
-          }
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-          excerpt
-          
-          }}
-            }
-          }
-          author {
-            node {
-              firstName
-              lastName
-              name
-              description
-            }
-          }
-        }
-      }
-       }  
-       `  
-      })
-      
-      }).then(response => response) 
-       .then(data =>data) 
-       .catch(error => console.error('Error:', error));
-        const response = wprest?.data.societies.nodes        
-       return response  
- 
-  } catch (error) {
-    if(error)throw new Error('Error fetching data')
-  
-   }
- 
-} 
-
 export async function nollywoodBlog(req, res){
   try{
     const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
@@ -666,8 +128,149 @@ export async function nollywoodBlog(req, res){
    }
  
 } 
+export async function detail_news(uri){ 
  
+  try{
+   const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
+method: 'POST',
+timeout: 5000 ,
+agent: agent,
+headers:{
+'Content-Type':'application/json'
+},
+body: JSON.stringify({
+query:`
+query NODE($id: ID!, $idType: ContentNodeIdTypeEnum!) {
+contentNode(id: $id, idType: $idType) {
+   id
+    uri
+    contentTypeName
+  
+      ... on Award {
+      id
+      title
+      slug
+      excerpt
+      content
+        newsGroup {
+        related {
+         edges {
+                    node {
+                      date
+                      id 
+                      ... on Award {
+                        id
+                        content
+                        title
+                        slug
+                        awardCategories{  
+                        nodes{
+                        name
+                        slug
+                        }
+                      
+                        }
+                           featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+                      }
+                    }
+                  }
+        }
+      }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+        }
+      }
+  } 
+  ... on Nollywood {
+      id
+      title
+      slug
+      excerpt
+      content
+        newsGroup {
+        related {
+         edges {
+                    node {
+                      date
+                      id 
+                      ... on Nollywood {
+                        id
+                        content
+                        title
+                        slug
+                        nollywoodCategories{  
+                        nodes{
+                        name
+                        slug
+                        }
+                      
+                        }
+                           featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+                      }
+                    }
+                  }
+        }
+      }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+        }
+      }
+    }
+ 
+     
+  }
+}   
+` ,
+variables:{
+id: uri,
+idType: 'URI' 
+}
 
+})
+
+}).then(response =>  response)    
+       .then(data =>data) 
+       .catch(error => console.error('Error:', error)); 
+      const response = wprest?.data.contentNode
+      return response
+  } catch (error) {
+    if(error)throw new Error('Error fetching data')
+  
+   }
+  
+}
 export async function trends(notIn){ 
   try{
     const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
@@ -732,8 +335,7 @@ export async function trends(notIn){
   
    }
  
-} 
-
+}
 
 export async function trending(slug){  
   try{
@@ -944,498 +546,9 @@ export async function similarTrending(notIn){
    
     }
     
- } 
+ }
  
  
- export async function news_details_all(uri){ 
- 
-  try{
-   const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
-method: 'POST',
-timeout: 5000 ,
-agent: agent,
-headers:{
-'Content-Type':'application/json'
-},
-body: JSON.stringify({
-query:`
-query NODE($id: ID!, $idType: ContentNodeIdTypeEnum!) {
-contentNode(id: $id, idType: $idType) {
-   id
-    uri
-    contentTypeName
-     ... on Business {
-      id
-      title
-      slug
-      excerpt
-      content
-        newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Business {
-                        id
-                        content
-                        title
-                        slug
-                        businessCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-                      }
-                    }
-                  }
-        }
-      }
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
-        }
-      }
-    }
-       ... on Award {
-      id
-      title
-      slug
-      excerpt
-      content
-        newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Award {
-                        id
-                        content
-                        title
-                        slug
-                        awardCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-                      }
-                    }
-                  }
-        }
-      }
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
-        }
-      }
-    }
-
-  ... on Nollywood {
-      id
-      title
-      slug
-      excerpt
-      content
-        newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Nollywood {
-                        id
-                        content
-                        title
-                        slug
-                        nollywoodCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-                      }
-                    }
-                  }
-        }
-      }
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
-        }
-      }
-    }
-
-       ... on Article {
-      id
-      title
-      slug
-      excerpt
-      content
-        newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Article {
-                        id
-                        content
-                        title
-                        slug
-                      articlesCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-                      }
-                    }
-                  }
-        }
-      }
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
-        }
-      }
-    }
-     ... on Economy {
-      id
-      title
-      slug
-      excerpt
-      content
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
-        }
-      }
-         newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Economy {
-                        id
-                        content
-                        title
-                        slug
-                         economyCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-                      }
-                    }
-                  }
-        }
-      }
-    }
-    ... on Environment {
-      id
-      title
-      slug
-      excerpt
-      content
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
-        }
-      }
-         newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Environment {
-                        id
-                        content
-                        title
-                        slug
-                           environmentCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }}
-                    }
-                  }
-        }
-      }
-    }
-     ... on Society {
-      id
-      title
-      slug
-      excerpt
-      content
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
-        }
-      }
-         newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Society {
-                        id
-                        content
-                        title
-                        slug
-                          societyCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-                      }
-                    }
-                  }
-        }
-      }
-    } 
-    ... on Health {
-      id
-      title
-      slug
-      excerpt
-      content
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
-        }
-      }
-         newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Health {
-                        id
-                        content
-                        title
-                        slug
-                        healthCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-                      }
-                    }
-                  }
-        }
-      }
-    } 
-    ... on Tech {
-      id
-      title
-      slug
-      excerpt
-      content
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
-        }
-      }
-         newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Tech {
-                        id
-                        content
-                        title
-                        slug
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }  }  }
-     }
-        }
-      }
-    }
-  }
-}   
-` ,
-variables:{
-id: uri,
-idType: 'URI' 
-}
-
-})
-
-}).then(response =>  response)    
-       .then(data =>data) 
-       .catch(error => console.error('Error:', error)); 
-      const response = wprest?.data.contentNode
-      return response
-  } catch (error) {
-    if(error)throw new Error('Error fetching data')
-  
-   }
-  
-}
 export async function news__Articles(){
   try{ 
  const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{

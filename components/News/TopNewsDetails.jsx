@@ -5,7 +5,7 @@ import Image from "next/image";
 import React from "react";  
 import ShareButtons from "../ShareButtons";
 import Link from 'next/link';
-const ArticleDetail = ({news_detail}) => {
+const TopNewsDetail = ({news_detail}) => {
   const $ = cheerio.load({data:news_detail.content})
   let data_texts= ''
   let data_imgs= []
@@ -126,5 +126,6 @@ alt={news_detail.featuredImage.node.altText}
   )
 }
 
-export default ArticleDetail
+export default TopNewsDetail
+
  

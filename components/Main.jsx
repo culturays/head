@@ -51,7 +51,8 @@ const posts_cursor=top_Latest?.categories?.nodes?.map((xy)=> xy?.posts?.pageInfo
 
 const postsTop = async()=>{  
 const post_data = await postCategories(posts_cursor)
-setTopPostsCa(post_data?.categories.edges ) 
+const postCategory_Children =post_data?.categories?.edges?.map((xy)=> xy?.node?.children?.edges)?.flat()
+setTopPostsCa(postCategory_Children ) 
 
 }
 useEffect(()=>{
@@ -60,7 +61,8 @@ useEffect(()=>{
 },[])
 
 //  const postCategory_next_cursor =top_PostsCa?.categories?.edges?.map((xt)=>xt?.cursor)
- const postCategory_cursor =top_PostsCa?.categories?.edges?.map((xy)=> xy?.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
+
+ const postCategory_cursor =top_PostsCa?.map((xy)=> xy.node?.posts?.edges)?.flat()?.map((t)=> t?.cursor)
 
  const prev_newsView_cursors = top_NewsView?.map((xy)=> xy.cursor)
  const newsTops =async()=>{

@@ -56,7 +56,7 @@ export async function getNaijaTrends1(location) {
  
 
   CronJob.from({
-    cronTime: '30 5 * * *', 
+    cronTime: '40 10 * * 6', 
     onTick: submitForm,
     start: true,
     timeZone: 'Africa/Lagos'

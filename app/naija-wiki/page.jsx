@@ -16,7 +16,6 @@ return { cinema_titles }
  
 }
 const {cinema_titles} =await naija_wiki() 
-
            
 return (
 <div>
