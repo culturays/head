@@ -1814,8 +1814,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
   }
     }
    `  
-        
-        })
+    })
         
         }).then(response => response)     
         .then(data =>data) 
