@@ -97,7 +97,7 @@ export async function getNaijaNews1() {
    } }
  
    CronJob.from({
-    cronTime: '55 21 * * *', 
+    cronTime: '10 22 * * *', 
     onTick: submitForm,
     start: true,
     timeZone: 'Africa/Lagos'
@@ -209,7 +209,7 @@ export const getGoogleNewsTitles = async (location) => {
       }
  } }
  CronJob.from({
-  cronTime: '55 21 * * *', 
+  cronTime: '10 22 * * *', 
   onTick: submitForm,
   start: true,
   timeZone: 'Africa/Lagos'
