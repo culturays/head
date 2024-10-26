@@ -1840,7 +1840,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS { 
-         categories ["dGVybTo1ODE=","dGVybTo1ODI=","dGVybTo1ODA=","dGVybTo1Nzk=","dGVybTo1Nzc=" ,"dGVybTo1Nzg="] {
+         categories(where:{exclude: ["dGVybTo1ODE=","dGVybTo1ODI=","dGVybTo1ODA=","dGVybTo1Nzk=","dGVybTo1Nzc=" ,"dGVybTo1Nzg="]}) {
          nodes {
       name
       slug
@@ -1874,7 +1874,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         
         })
         
-        }).then(response => response)     
+        }).then(response => response)      
         .then(data =>data) 
         .catch(error => console.error('Error:', error));
         const response = wprest?.data.categories.nodes

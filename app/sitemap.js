@@ -12,8 +12,8 @@ export default async function sitemap() {
        const articleData= contentData.filter((xy)=> xy.contentTypeName === 'article')
        const nollywood_news = contentData.filter((xy)=> xy.contentTypeName === 'nollywood')
 
-       const postFeeds=await postsFeed()
-       const feedData =postFeeds.map((xy)=>xy.posts.nodes)
+      const postFeeds=await postsFeed()
+      const feedData =postFeeds.map((xy)=>xy.posts.nodes)
  
       const netflix_posts = netflixFeed.map((post)=>({ 
          url:`https://culturays.com/netflix-naija/news/${post.slug}`,
@@ -65,6 +65,6 @@ export default async function sitemap() {
      ...netflix_posts,
      ...article_posts,
      ...nollywood_posts,
-     ...post_posts
+    //  ...post_posts
     ]
   }

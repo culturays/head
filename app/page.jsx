@@ -10,7 +10,7 @@ import SideBar from "../components/Side"
 import { getNaijaTrends1 } from "./api/trends/naija"
 import { getGoogleNewsTitles, getNaijaNews1 } from "./api/news/route"
 import { CronJob } from 'cron';
-import { topCategoriesFeed } from "./news/rootpostsHandle"
+ 
 // (async () => { 
 //   //await getNaijaTrends1('NG')
 //  // await getNaijaNews1()
