@@ -477,13 +477,13 @@ export async function newsPosts(notIn){
       body: JSON.stringify({
         query:`
         query WPPOSTS($notIn:[ID]) { 
-       categories(first:20) {          
+       categories(where:{exclude: ["dGVybTo1ODE=","dGVybTo1ODI=","dGVybTo1ODA=","dGVybTo1Nzk=","dGVybTo1Nzc=" ,"dGVybTo1Nzg="]}) {          
        edges {
         cursor      
         node {
       name
       slug
-       posts( where: {notIn: $notIn}) { 
+       posts(first:20, where: {notIn: $notIn}) { 
           nodes {
             author {
               node {

@@ -99,9 +99,7 @@ const evData = await events3Details(one.atitle)
  } 
  
    }
- 
- 
-
+  
   //  CronJob.from({
   //   cronTime: '30 5 * * 1',
   //     onTick:dailyEv3(),

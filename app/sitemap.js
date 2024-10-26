@@ -65,6 +65,6 @@ export default async function sitemap() {
      ...netflix_posts,
      ...article_posts,
      ...nollywood_posts,
-    //  ...post_posts
+    ...post_posts
     ]
   }

@@ -38,7 +38,6 @@ const latestPosts=await newsByLatest()
 const newsViewCursors = await newsViews()
 setTopLatest(latestPosts)
 setTopTopNewsView(newsViewCursors) 
- 
 
 }
 useEffect(()=>{
