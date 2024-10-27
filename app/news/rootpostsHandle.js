@@ -1661,8 +1661,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
      }
    
   } 
-  export async function top_news_details_all(uri){ 
-
+  export async function top_news_details_all(slug){  
     try{
      const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
   method: 'POST',
@@ -1675,18 +1674,22 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
     query:`
     query NODE($id: ID!, $idType: PostIdType!) {
     post(id: $id, idType: $idType) {
-         author {
+     author {
         node {
           name
           slug
+            avatar {
+          url
+        }
         }
       }
       content
       date
       excerpt
-       postNewsGroup {  
-    relatedPosts {  
-    nodes {
+       postnewsgroup {  
+    relatedPosts {
+    edges{
+    node {
     ... on Post {
     id
     content  
@@ -1697,6 +1700,9 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
      excerpt
       author {
      node {
+       avatar {
+          url
+        }
       firstName
       lastName
      name
@@ -1711,7 +1717,8 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         }
      } 
        tags{
-        nodes{  id
+        nodes{ 
+        id
         name
         slug
         }
@@ -1724,7 +1731,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         }
      
      }  } }
-     
+      }
     }
       featuredImage {
         node {
@@ -1749,7 +1756,6 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
           slug
         }
       }
-    
     } 
       }  
     ` ,

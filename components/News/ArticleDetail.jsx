@@ -11,8 +11,7 @@ const ArticleDetail = ({news_detail}) => {
   let data_imgs= []
   const header_index=[]
   const h2t_index=[]
-  const h3r_index=[]
-
+  const h3r_index=[] 
   news_detail.content.split('\n').filter((xy)=> xy!=='').forEach((item, index) => {
             const tags = item.match(/<\/?[\w\s="/.':;#-\/\?]+>/gi);
             tags?.map((xy)=>{
@@ -56,11 +55,11 @@ const ArticleDetail = ({news_detail}) => {
         })});
      
   return (  
- <div className='bg-white max-w-6xl lg:max-w-xl xl:max-w-5xl' > 
-<h1 className="text-6xl">{news_detail.title}</h1>
+ <div className='bg-white max-w-6xl ' > 
+<h1 className="text-4xl font-bold md:text-5xl "style={{lineHeight:'50px'}}>{news_detail.title}</h1>
 <p className='py-4 text-lg italic'>{replaceHTMLTags(news_detail.excerpt)}</p>
 <div className="bg-gray-600 relative text-gray-200">
-  <div dangerouslySetInnerHTML={{__html:news_detail.featuredImage.node.caption}} className="absolute top-0 left-8 p-6 leading-8 shadow-xl font-mono max-w-xl"/>
+  <div dangerouslySetInnerHTML={{__html:news_detail.featuredImage.node.caption}} className="absolute top-0 left-6 p-4 leading-6 shadow-xl font-mono max-w-xl"/>
  
  </div>
 <Image 
@@ -70,14 +69,28 @@ height={675}
 alt={news_detail.featuredImage.node.altText} 
 /> 
 
-<div className='xs:flex'> 
-<div className='h-40 border-r'> 
+<div className='xs:flex justify-center'> 
+<div className=' border-r w-full'> 
 
-<Link href={`/creator/${news_detail.author.node.slug}`}><p className='text-lg p-3 underline'>{news_detail.author.node.name} </p></Link> 
+<div className='h-32 px-1'>  
+  <div className='flex xs:block sm:flex py-4'> 
+  <div className='w-10'> 
+    <Image 
+    className='rounded-full'
+    src={news_detail.author.node.avatar.url}
+    width={1200}
+    height={675}
+    alt={news_detail.author.node.name}
+    />
+   </div> 
+ 
+<Link href={`/creator/${news_detail.author.node.slug}`}><p className='text-lg p-3 underline font-bold'>{news_detail.author.node.name} </p></Link> 
+
+</div>
 <hr className='bg-black p-0.5 m-0.5'/>
 <hr className='bg-black p-0.5 m-0.5'/>
-<p className='text-sm p-3 text-red-600 italic'>{moment(news_detail.date).fromNow()} </p>
-<div className="pb-2 [&_.share-view]:bg-white [&_.share-view]:xs:absolute [&_.share-view]:relative [&_.share-view]:max-w-max [&_.share-view]:xs:flex-col [&_.share-view]:items-stretch [&_.share-view]:w-full [&_.share-view]:text-gray-800 text-xl [&_.shadow-sharebtn]:px-3 [&_.shadow-sharebtn]:xs:py-3">
+</div><p className='text-sm  text-red-600 italic my-1 text-end'>{moment(news_detail.date).fromNow()} </p>
+<div className="[&_.share-view]:bg-white [&_.share-view]:xs:absolute [&_.share-view]:relative [&_.share-view]:max-w-max [&_.share-view]:xs:flex-col [&_.share-view]:items-stretch [&_.share-view]:w-full [&_.share-view]:text-gray-800 text-xl [&_.shadow-sharebtn]:px-3 [&_.shadow-sharebtn]:xs:py-3  xs:my-11">
   <ShareButtons 
  item={news_detail} 
  activeIdx={news_detail.id}
@@ -86,12 +99,19 @@ alt={news_detail.featuredImage.node.altText}
      </div> 
 </div>
   
-<div className='py-11 relative xs:my-0 xs:bottom-44 lg:max-w-xl xl:max-w-4xl'>
+<div className='py-11 relative xs:my-0 xs:bottom-44 md:max-w-xl xl:max-w-3xl '>
 <hr className='h-2 bg-gray-800'/> 
-<div className='xs:px-3 xs:py-8 bg-white'>
+<div className='xs:px-6 xs:py-8 bg-white 6'>
+{news_detail.tags.nodes.map((xy)=>
+<div key={xy.name + ' ' + Math.random()} className='my-3'>
+ <Link href={`/topic/${xy.slug}`}><h4 className='bg-gray-600 text-gray-200 p-3 text-xl w-32 text-center'>{xy.name} </h4></Link>
+ <hr className='bg-black p-0.5 m-0.5'/>
+<hr className='bg-black p-0.5 m-0.5'/>
+</div>)}
+
 {news_detail.content.split('\n').filter((xy)=> xy !=='').map((line, index) =>(
   <div key={index + ' ' + Math.random()}className='p-1 my-1'>
-    <div dangerouslySetInnerHTML={{__html:line}} className="[&_h2]:text-3xl [&_h2]:py-3 [&_h2]:mt-4 [&_h2]:font-bold [&_h3]:text-3xl [&_h3]:py-3 [&_h2]:mt-4 [&_h3]:font-bold my-1 text-lg leading-9 [&_figure>figcaption]:italic [&_figure>figcaption]:py-2 [&_figure>figcaption]:text-sm [&_figure>figcaption]:text-center [&_img]:max-w-xs [&_img]:sm:max-w-sm [&_img]:md:max-w-md [&_img]:max-h-96 [&_img]:m-auto"/>
+    <div dangerouslySetInnerHTML={{__html:line}} className="[&_h2]:text-3xl [&_h2]:py-3 [&_h2]:mt-4 [&_h2]:font-bold [&_h3]:text-3xl [&_h3]:py-3 [&_h2]:mt-4 [&_h3]:font-bold my-1 text-lg leading-9 [&_figure>figcaption]:italic [&_figure>figcaption]:py-2 [&_figure>figcaption]:text-sm [&_figure>figcaption]:text-center [&_img]:max-w-xs [&_img]:sm:max-w-sm [&_img]:md:max-w-2xl [&_img]:max-h-96 [&_img]:m-auto"/>
     {index===5&&     
      <div className='bg-white md:flex lg:block xl:flex m-auto md:m-0'>  
       {related_content?.slice(0,2).map((ex)=>   
@@ -127,4 +147,5 @@ alt={news_detail.featuredImage.node.altText}
 }
 
 export default ArticleDetail
+
  
