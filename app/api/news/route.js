@@ -96,7 +96,7 @@ export async function getNaijaNews1() {
         }
    }
   
-   return () => clearTimeout(fxnTimeout);
+  return () => clearTimeout(fxnTimeout);
   }
   const fxnTimeout = setTimeout(() => {
     CronJob.from({
@@ -213,7 +213,7 @@ const submitForm = async () => {
       console.error('Error submitting form:', error);
     } 
 }
-  return () => clearTimeout(fxnTimeout);
+   return () => clearTimeout(fxnTimeout);
 }
 const fxnTimeout = setTimeout(() => {
   CronJob.from({

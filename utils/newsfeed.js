@@ -41,7 +41,7 @@ async function newsFeed(){
        image: post?.featuredImage?.node.sourceUrl.split('?')[0]
        });
        try {
-        fs?.writeFileSync("./public/rss.xml", feed.rss2(), { recursive: true} );
+      fs?.writeFileSync("./public/rss.xml", feed.rss2(), { recursive: true} );
       } catch (err) {
         throw err;
       }

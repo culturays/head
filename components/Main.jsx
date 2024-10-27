@@ -191,10 +191,10 @@ useEffect(()=>{
   liveFeeds()
 },[])
   return ( 
-<div >  
+<div className='max-w-7xl'>  
   <MainSlider data={latest_post_categories} interval={5000} /> 
 
-  <div className='lg:flex justify-center xl:px-4'> 
+  <div className='lg:flex xl:px-4'> 
 <div className='py-20 md:px-1 m-auto' > 
 <div className='py-5'>
 <div className='flex border-b shadow-sm justify-around items-center '> 

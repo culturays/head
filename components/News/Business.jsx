@@ -9,13 +9,13 @@ import { useEffect, useState } from "react"
 import Pagination from "../Pagination"
 import SlideFxn from "../SlideFxn"
 
-const Business = ({business_news }) => {
+const Business = ({business_news, category_title}) => { 
   const [posts, setPosts]=useState([]) 
   const [currPg, setCurrPg]=useState(1)
   const [postPerPage, setPostPerP]=useState(10) 
-     const world_news = business_news.map((ex)=>ex.businessCategories?.nodes.filter((xy)=> xy?.name==="World")).flat().map((tx)=> tx?.businesses.nodes).flat()
-     const africa_news = business_news.map((ex)=>ex.businessCategories?.nodes.filter((xy)=> xy?.name==="Africa")).flat().map((tx)=> tx?.businesses.nodes).flat()     
-     const business_items=business_news.map((ex)=>ex.businessCategories?.nodes.filter((xy)=> xy?.name!=="World")).flat().filter((xy)=> xy?.name!=="Africa").map((tx)=> tx?.businesses.nodes).flat()
+     const world_news = business_news.map((ex)=>ex.categories?.nodes.filter((xy)=> xy?.name==="World")).flat().map((tx)=> tx?.posts.nodes).flat()
+     const africa_news = business_news.map((ex)=>ex.categories?.nodes.filter((xy)=> xy?.name==="Africa")).flat().map((tx)=> tx?.posts.nodes).flat()     
+     const business_items=business_news.map((ex)=>ex.categories?.nodes.filter((xy)=> xy?.name!=="World")).flat().filter((xy)=> xy?.name!=="Africa").map((tx)=> tx?.posts.nodes).flat()
 
      const title_item=business_news.map((ex)=>ex.contentTypeName)[0]
      
@@ -79,7 +79,7 @@ const Business = ({business_news }) => {
 </section>
  
 <div className="max-w-2xl m-auto xl:m-0">
-  <SlideFxn title_item={title_item} content={business_items}/>  
+  <SlideFxn title_item={category_title} content={business_items}/>  
 </div>
 
     </div>

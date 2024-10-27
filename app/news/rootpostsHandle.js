@@ -12,7 +12,7 @@ export async function newsByLatest(req, res){
         body: JSON.stringify({
           query:`
           query WPPOSTS { 
-         categories(where: {exclude: "YXJyYXljb25uZWN0aW9uOjUwMQ==", hideEmpty: true})  { 
+         categories(where: {exclude:  ["dGVybTo1ODE=","dGVybTo1ODI=","dGVybTo1ODA=","dGVybTo1Nzk=","dGVybTo1Nzc=" ,"dGVybTo1Nzg=", "YXJyYXljb25uZWN0aW9uOjUwMQ=="], hideEmpty: true})  { 
             nodes {            
              posts(first: 1) {
                 pageInfo {
@@ -167,7 +167,7 @@ export async function newsByLatest(req, res){
           cursor      
           node {
           name
-  slug
+          slug
          posts(first:6,where: {notIn: $notIn}) {
         pageInfo{
         endCursor
@@ -1118,6 +1118,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
              categories(where: {name: "Business"}) {
     nodes {
       name
+      slug
           posts(first:100){
           nodes {
              contentTypeName

@@ -51,7 +51,7 @@ export async function getNaijaTrends1(location) {
           console.error('Error submitting form:', error);
         }
    }
-   return () => clearTimeout(fxnTimeout);
+  return () => clearTimeout(fxnTimeout);
   }
 
   const fxnTimeout = setTimeout(() => {
