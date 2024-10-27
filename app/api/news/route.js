@@ -48,9 +48,9 @@ export async function getNaijaNews1() {
        const removeDuplicatesBd = (data) => {
       const seen = new Set(); 
       return data.reduce((unique, current) => { 
-        const keyName = current.author  ;
-        const keyTitle = current.title ; 
-        const keyTime = current.date ;    
+        const keyName = current.author;
+        const keyTitle = current.title; 
+        const keyTime = current.date;    
    
         if(!seen.has(keyName)){
           if(!seen.has(keyTitle)){
@@ -69,11 +69,11 @@ export async function getNaijaNews1() {
     const submitForm = async () => { 
       const data = new FormData()
        for (const xy of resultX) {  
-        Object.entries({title:xy.title }).forEach(([key, value]) => {
+        Object.entries({title:xy.title }).filter((e, i, a) => {
+          return a.indexOf(e?.title) !== i}).forEach(([key, value]) => {
         data.append(key, value);
       })
       console.log('it ran away')
-      //to post to latest postType 'https://content.culturays.com/wp-json/wp/v2/latest'
         try {
           const response = await fetch('https://content.culturays.com/wp-json/wp/v2/latest', { 
             method: "POST",  
@@ -85,7 +85,7 @@ export async function getNaijaNews1() {
           });
       
           if (!response.ok) {
-            console.log(response.statusText)
+           // console.log(response.statusText)
             throw new Error(`HTTP error! status: ${response.statusText}`);
           } 
       
@@ -97,7 +97,7 @@ export async function getNaijaNews1() {
    } }
  
    CronJob.from({
-       cronTime: '20 15 * * *', 
+       cronTime: '25 15 * * *', 
         onTick: submitForm(),
       start: true,
       timeZone: 'Africa/Lagos'
