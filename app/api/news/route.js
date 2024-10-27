@@ -96,12 +96,12 @@ export async function getNaijaNews1() {
         }
    } }
  
-   CronJob.from({
-       cronTime: '10 8 * * *', 
-        onTick: submitForm(),
-      start: true,
-      timeZone: 'Africa/Lagos'
-     });
+  //  CronJob.from({
+  //      cronTime: '10 8 * * *', 
+  //       onTick: submitForm(),
+  //     start: true,
+  //     timeZone: 'Africa/Lagos'
+  //    });
    return resultX
  
    }
@@ -133,7 +133,7 @@ export async function getNaijaNews1() {
 // };
 
 
-export const getGoogleNewsTitles = async (location) => {
+export const getGoogleNewsTitles = async (location) => { 
   const newsTitlesGoogle = [];
   try {
       const url = `https://news.google.com/search?q=${encodeURIComponent(location)}&hl=en-US&gl=NG&ceid=NG:en`;
@@ -179,43 +179,50 @@ export const getGoogleNewsTitles = async (location) => {
     }, []);
   };  
    
-  const resultX = removeDuplicatesBd(newsTitlesGoogle)
-  const submitForm = async () => { 
-    const data = new FormData()
-     for (const xy of resultX) {  
-      Object.entries({title:xy.title }).filter((e, i, a) => {
-        return a.indexOf(e?.title) !== i}).forEach(([key, value]) => {
-      data.append(key, value); 
-      console.log('it ran fast')
-    })
-   
-      try {
-        const response = await fetch('https://content.culturays.com/wp-json/wp/v2/latest', { 
-          method: "POST",  
-          body:data,  
-          headers: {
-            'Accept': 'application/json', 
-          'Authorization': 'Basic ' + Buffer.from(`${ourUsername}:${ourPassword}`).toString('base64')
-          },
-        });
-    
-        if (!response.ok) {
-          console.log(response.statusText)
-          throw new Error(`HTTP error! status: ${response.statusText}`);
-        } 
-    
-        const result = await response.json();     
-      } catch (error) {
-        console.error('Error submitting form:', error);
-      }
- } }
- CronJob.from({
-  cronTime: '36 15 * * *', 
+  const resultX = removeDuplicatesBd(newsTitlesGoogle) 
+  
+const submitForm = async () => {
+   const data = new FormData() 
+   for (const xy of resultX ) {  
+ Object.entries({title:xy.title }).forEach(([key, value]) => {
+    data.append(key, value); 
+    console.log('it ran fast')
+  })
+      
+    try {
+      const response = await fetch('https://content.culturays.com/wp-json/wp/v2/latest', { 
+        method: "POST",  
+        body:data,  
+        headers: {
+          'Accept': 'application/json', 
+        'Authorization': 'Basic ' + Buffer.from(`${ourUsername}:${ourPassword}`).toString('base64')
+        },
+      });
+  
+      if (!response.ok) {
+        console.log(response.statusText)
+        throw new Error(`HTTP error! status: ${response.statusText}`);
+      } 
+  
+      const result = await response.json();     
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } 
+}
+  return () => clearInterval(fxnTimeout);
+}
+const fxnTimeout = setTimeout(() => {
+  CronJob.from({
+  cronTime: '35 16 * * *', 
   onTick: submitForm(),
   start: true,
   timeZone: 'Africa/Lagos'
-});
+  });
+}, 10000); 
 
+  //if this function does not return anything and saved to variab and accidentaly passed to  client, it will throw an error - functions can not be passed dirctly to client
 return resultX;
 };
+
+ 
 

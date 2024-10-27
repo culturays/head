@@ -40,7 +40,12 @@ async function newsFeed(){
          date: new Date(post.date),
        image: post?.featuredImage?.node.sourceUrl.split('?')[0]
        });
-    fs?.writeFileSync("./public/rss.xml", feed.rss2(), { recursive: true} );
+       try {
+        fs?.writeFileSync("./public/rss.xml", feed.rss2(), { recursive: true} );
+      } catch (err) {
+        throw err;
+      }
+
     });
      
    }

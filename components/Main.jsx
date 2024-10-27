@@ -32,8 +32,7 @@ const [top_SidebarItems, setSidebarItems]=useState([])
 const [top_PostsData, setPostsData]=useState([])
 const [top_Posts_notIn_newsPosts, setPosts_notIn_newsPosts]=useState([]) 
 // const [top_Last_categories, setLast_categories]=useState([]) 
-
-const topLatest=async()=>{
+ const topLatest=async()=>{
 const latestPosts=await newsByLatest()
 const newsViewCursors = await newsViews()
 setTopLatest(latestPosts)
