@@ -51,16 +51,17 @@ export async function getNaijaTrends1(location) {
           console.error('Error submitting form:', error);
         }
    }
-   
+   return () => clearTimeout(fxnTimeout);
   }
- 
-  // CronJob.from({
-  //   cronTime: '13 15 * * *', 
-  //   onTick: submitForm(),
-  //   start: true,
-  //   timeZone: 'Africa/Lagos'
-  // });
-  
+
+  const fxnTimeout = setTimeout(() => {
+    CronJob.from({
+    cronTime: '10 8 * * *', 
+    onTick: submitForm(),
+    start: true,
+    timeZone: 'Africa/Lagos'
+    });
+  }, 5000); 
    
   // const changeText = setInterval(() => {
   //   submitForm()

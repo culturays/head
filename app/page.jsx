@@ -23,7 +23,7 @@ const Home =async ({searchParams}) => {
   await getNaijaTrends1('NG')
   
 const dailyEv3 =async()=>{ 
- const eventExp = await getNaijaEvents3()  
+ const eventExp = await getNaijaEvents3() 
 const result = await Promise.all(eventExp.titleAObj.map(async one=> {  
 const evData = await events3Details(one.atitle)
  return evData 
@@ -79,32 +79,21 @@ const evData = await events3Details(one.atitle)
       
     } 
    } 
-   async function getEvs(){
+   
     const supabase = createClient()
     const { data, error } = await supabase
       .from('events')
-      .insert([grouped])
+      .upsert([grouped])
       .select();                         
     if (error) { 
       console.error('Error inserting items:', error);
-    } 
-
-    }
-    setTimeout(()=>{
-     getEvs()
-
-    },3600)
+    }  
  
  } 
- 
+  return () => clearTimeout(fxnTimeout);
+
    }
-  
-  //  CronJob.from({
-  //   cronTime: '30 5 * * 1',
-  //     onTick:dailyEv3(),
-  //     start: true,
-  //     timeZone: 'Africa/Lagos'
-  //   });
+ 
  
   const dailyWiki =async()=>{
     const silverBTitles= await scrapeSilverBird() 
@@ -119,7 +108,7 @@ const evData = await events3Details(one.atitle)
    
    for (let i = 0; i < minLength; i++) { 
     
-    const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' ).catch(console.error);
+    const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' );
     grouped.push({ 
      title: silverB_titles[i], 
      url: silverB_urls[i],
@@ -129,12 +118,12 @@ const evData = await events3Details(one.atitle)
        dur: silverB_dur[i]
      });
     }  
-   
+    console.log('it ran ')
    async function getCines(){
     const supabase = createClient()
     const { data, error } = await supabase
       .from('cinema_titles')
-      .insert(grouped)
+      .upsert(grouped)
       .select();                         
     if (error) { 
       console.error('Error inserting items:', error);
@@ -146,16 +135,27 @@ const evData = await events3Details(one.atitle)
      getCines()
 
     },3600)
- 
-    } 
+ return () => clearTimeout(fxnTimeout);
+    }  
     
-    // CronJob.from({
-    // cronTime: '30 5 * * 1',
-    //   onTick: dailyWiki(),
-    //   start: true,
-    //   timeZone: 'Africa/Lagos'
-    // });
- 
+    const fxnTimeout = setTimeout(() => {
+    CronJob.from({
+    cronTime: '10 8 * * 1', 
+    onTick:dailyEv3(),
+    start: true,
+    timeZone: 'Africa/Lagos'
+    });
+
+      CronJob.from({
+    cronTime: '10 8 * * 1',
+    onTick:dailyWiki(),
+    start: true,
+    timeZone: 'Africa/Lagos'
+    });
+
+  },5000); 
+   
+
 return (
 <div> 
  <div className="md:flex md:justify-center px-11" style={{maxWidth:'1700px'}}> 
