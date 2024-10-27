@@ -97,8 +97,8 @@ export async function getNaijaNews1() {
    } }
  
    CronJob.from({
-    cronTime: '40 5 * * *', 
-    onTick: submitForm,
+    cronTime: '10 8 * * *', 
+    // onTick: submitForm(),
     start: true,
     timeZone: 'Africa/Lagos'
   });
@@ -209,12 +209,12 @@ export const getGoogleNewsTitles = async (location) => {
       }
  } }
  CronJob.from({
-  cronTime: '25 14 * * *', 
+  cronTime: '12 15 * * *', 
   onTick: submitForm(),
   start: true,
   timeZone: 'Africa/Lagos'
 });
 
-return newsTitlesGoogle;
+return resultX;
 };
 

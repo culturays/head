@@ -30,16 +30,16 @@ async function articleFeed(){
      articleData?.map((post) => { 
          const url = `${site_url}/news/article/${post.slug}`;     
          feed.addItem({
-           title: post.title,
-           id: url, 
-           link: url,
-           description: post.excerpt,
-           content: post.excerpt,
-           author: post.author.node.name ,
-           contributor: [post.author.node.name],
-           date: new Date(post.date),
-           image: post.featuredImage.node.sourceUrl.split('?')[0]
-         });
+          title: post.title,
+          id: url, 
+          link: url,
+          description: post.excerpt,
+          content: post.excerpt,
+          author: post?.author?.node.name ,
+          contributor: [ post?.author?.node.name ],
+          date: new Date(post.date),
+        image: post?.featuredImage?.node.sourceUrl.split('?')[0]
+        });
          fs.writeFileSync("./public/rss1.xml", feed.rss2(), { recursive: true} );
        });   
       

@@ -9,10 +9,7 @@ import MainBottom from "@/components/MainBottom"
 import SideBar from "../components/Side"
 import { getNaijaTrends1 } from "./api/trends/naija"
 import { getGoogleNewsTitles, getNaijaNews1 } from "./api/news/route"
-import { CronJob } from 'cron';
-import { netflixNews } from "./netflix-naija/netflix-news"
-import { postsFeed } from "./news/rootpostsHandle"
- 
+import { CronJob } from 'cron';  
 // (async () => { 
 //   //await getNaijaTrends1('NG')
 //  // await getNaijaNews1()
@@ -162,7 +159,7 @@ const evData = await events3Details(one.atitle)
 return (
 <div> 
  <div className="md:flex md:justify-center px-11" style={{maxWidth:'1700px'}}> 
-  <Main />  
+  <Main/>  
   <SideBar/>  
 </div>
   <MainBottom />  

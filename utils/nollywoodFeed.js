@@ -28,17 +28,17 @@ const nollywood_news = contentData?.filter((xy)=> xy.contentTypeName === 'nollyw
       });
       nollywood_news?.map((post) => {
       const url = `${site_url}/news/nollywood/${post.slug}`;     
-       feed.addItem({
-         title: post.title,
-         id: url, 
-         link: url,
-         description: post.excerpt,
-         content: post.excerpt,
-         author: post.author.node.name ,
-         contributor: [ post.author.node.name ],
-         date: new Date(post.date),
-       image: post.featuredImage.node.sourceUrl.split('?')[0]
-       });
+      feed.addItem({
+        title: post.title,
+        id: url, 
+        link: url,
+        description: post.excerpt,
+        content: post.excerpt,
+        author: post?.author?.node.name ,
+        contributor: [ post?.author?.node.name ],
+        date: new Date(post.date),
+      image: post?.featuredImage?.node.sourceUrl.split('?')[0]
+      });
  fs.writeFileSync("./public/rss3.xml", feed.rss2(), { recursive: true} );
     });
 

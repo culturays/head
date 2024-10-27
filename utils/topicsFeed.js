@@ -37,10 +37,10 @@ const feedData =contentData.map((xy)=>xy.posts.nodes)
          link: url,
          description: post.excerpt,
          content: post.excerpt,
-         author: post.author.node.name ,
-         contributor: [ post.author.node.name ],
+         author: post?.author?.node.name ,
+         contributor: [ post?.author?.node.name ],
          date: new Date(post.date),
-       image: post.featuredImage.node.sourceUrl.split('?')[0]
+       image: post?.featuredImage?.node.sourceUrl.split('?')[0]
        });
  fs.writeFileSync("./public/rss4.xml", feed.rss2(), { recursive: true} );
     });
