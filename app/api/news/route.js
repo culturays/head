@@ -97,11 +97,11 @@ export async function getNaijaNews1() {
    } }
  
    CronJob.from({
-    cronTime: '10 8 * * *', 
-    // onTick: submitForm(),
-    start: true,
-    timeZone: 'Africa/Lagos'
-  });
+       cronTime: '20 15 * * *', 
+        onTick: submitForm(),
+      start: true,
+      timeZone: 'Africa/Lagos'
+     });
    return resultX
  
    }
@@ -208,12 +208,12 @@ export const getGoogleNewsTitles = async (location) => {
         console.error('Error submitting form:', error);
       }
  } }
- CronJob.from({
-  cronTime: '12 15 * * *', 
-  onTick: submitForm(),
-  start: true,
-  timeZone: 'Africa/Lagos'
-});
+//  CronJob.from({
+//   cronTime: '12 15 * * *', 
+//   onTick: submitForm(),
+//   start: true,
+//   timeZone: 'Africa/Lagos'
+// });
 
 return resultX;
 };
