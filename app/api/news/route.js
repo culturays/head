@@ -97,7 +97,7 @@ export async function getNaijaNews1() {
    } }
  
    CronJob.from({
-       cronTime: '25 15 * * *', 
+       cronTime: '10 8 * * *', 
         onTick: submitForm(),
       start: true,
       timeZone: 'Africa/Lagos'
@@ -183,7 +183,8 @@ export const getGoogleNewsTitles = async (location) => {
   const submitForm = async () => { 
     const data = new FormData()
      for (const xy of resultX) {  
-      Object.entries({title:xy.title }).forEach(([key, value]) => {
+      Object.entries({title:xy.title }).filter((e, i, a) => {
+        return a.indexOf(e?.title) !== i}).forEach(([key, value]) => {
       data.append(key, value); 
       console.log('it ran fast')
     })
@@ -208,12 +209,12 @@ export const getGoogleNewsTitles = async (location) => {
         console.error('Error submitting form:', error);
       }
  } }
-//  CronJob.from({
-//   cronTime: '12 15 * * *', 
-//   onTick: submitForm(),
-//   start: true,
-//   timeZone: 'Africa/Lagos'
-// });
+ CronJob.from({
+  cronTime: '36 15 * * *', 
+  onTick: submitForm(),
+  start: true,
+  timeZone: 'Africa/Lagos'
+});
 
 return resultX;
 };
