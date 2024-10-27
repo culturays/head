@@ -209,8 +209,8 @@ export const getGoogleNewsTitles = async (location) => {
       }
  } }
  CronJob.from({
-  cronTime: '30 5 * * *', 
-  onTick: submitForm,
+  cronTime: '25 14 * * *', 
+  onTick: submitForm(),
   start: true,
   timeZone: 'Africa/Lagos'
 });
