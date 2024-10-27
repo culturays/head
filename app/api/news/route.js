@@ -96,16 +96,16 @@ export async function getNaijaNews1() {
         }
    }
   
- //  return () => clearTimeout(fxnTimeout);
+  return () => clearTimeout(fxnTimeout);
   }
-  // const fxnTimeout = setTimeout(() => {
-  //   CronJob.from({
-  //   cronTime: '10 8 * * *', 
-  //   onTick: submitForm(),
-  //   start: true,
-  //   timeZone: 'Africa/Lagos'
-  //   });
-  // }, 4000); 
+  const fxnTimeout = setTimeout(() => {
+    CronJob.from({
+    cronTime: '10 8 * * *', 
+    onTick: submitForm(),
+    start: true,
+    timeZone: 'Africa/Lagos'
+    });
+  }, 4000); 
    return resultX
  
    }
@@ -213,16 +213,16 @@ const submitForm = async () => {
       console.error('Error submitting form:', error);
     } 
 }
- /// return () => clearTimeout(fxnTimeout);
+  return () => clearTimeout(fxnTimeout);
 }
-// const fxnTimeout = setTimeout(() => {
-//   CronJob.from({
-//   cronTime: '10 8 * * *', 
-//   onTick: submitForm(),
-//   start: true,
-//   timeZone: 'Africa/Lagos'
-//   });
-// }, 4000); 
+const fxnTimeout = setTimeout(() => {
+  CronJob.from({
+  cronTime: '10 8 * * *', 
+  onTick: submitForm(),
+  start: true,
+  timeZone: 'Africa/Lagos'
+  });
+}, 4000); 
 
   //if this function does not return anything and saved to variab and accidentaly passed to  client, it will throw an error - functions can not be passed dirctly to client
 return resultX;
