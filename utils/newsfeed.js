@@ -21,7 +21,7 @@ async function newsFeed(){
         updated: pubDate,
         date:pubDate,
         generator: "Feed for Culturays",
-        feedLinks: {
+        feedLinks: { 
           rss2: `${site_url}/rss.xml`,
           json: `${site_url }/rss/feed.json`,
         },
