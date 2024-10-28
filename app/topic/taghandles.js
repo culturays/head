@@ -26,6 +26,19 @@ tags(where: {slug: "${slug}"}){
           id
           name
           slug
+
+          }
+          }
+            categories{
+          nodes{
+          id
+          name
+          slug
+          parent{
+            node {
+                  slug
+                }
+                  }
           }
           }
           featuredImage{
@@ -44,7 +57,7 @@ tags(where: {slug: "${slug}"}){
       
     })
     
-    }).then(response =>  response)    
+    }).then(response => response)    
     .then(data =>data) 
     .catch(error => console.error('Error:', error)); 
     const response = wprest.data.tags

@@ -16,9 +16,9 @@ export async function generateMetadata({ params, searchParams }, parent) {
    } 
 const TagPage = async({params}) => { 
  const slug =params.slug[0]
-//  const id= params.slug[1].replace('%3D','')
+//const id= params.slug[1].replace('%3D','')
  const content_tag_response = await contentTag(slug)
-  const tag_response = await tag(slug)
+  const tag_response = await tag(slug) 
  
   return ( 
     <div>  

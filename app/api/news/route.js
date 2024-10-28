@@ -96,7 +96,7 @@ export async function getNaijaNews1() {
         }
    }
   
-   return () => clearTimeout(fxnTimeout);
+  return () => clearTimeout(fxnTimeout);
   }
   const fxnTimeout = setTimeout(() => {
     CronJob.from({

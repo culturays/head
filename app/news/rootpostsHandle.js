@@ -785,7 +785,7 @@ const wp_naija = await fetchWithRetry('https://content.culturays.com/graphql',{
   timeout: 5000 ,
   agent: agent,
   headers:{
-  'Content-Type':'application/json'
+  'Content-Type':'application/json' 
   },
   body: JSON.stringify({
   query:`
