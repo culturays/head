@@ -63,9 +63,9 @@ export async function getNaijaTrends1(location) {
     });
   }, 5000); 
    
-  const changeText = setInterval(() => {
-    submitForm()
-  }, 30000); 
+  // const changeText = setInterval(() => {
+  //   submitForm()
+  // }, 30000); 
 
   // return () => clearInterval(changeText);
   return titleObj   

@@ -11,11 +11,14 @@ export const metadata = {
 }; 
 const EnvironmentPage =async () => {
    const environment_news = await environmentBlog()
-   const environment_posts = environment_news.map((xy)=>xy.posts.nodes)
+   const environment_posts = environment_news.map((xy)=>xy.posts.nodes).flat()
+    const category_title=environment_news.map((xy)=>xy.slug)[0] 
+  
   return ( 
    <div> 
  <Environment 
 environment_news={environment_posts}
+category_title={category_title }
 />  
   </div> 
   )

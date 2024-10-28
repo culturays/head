@@ -16,7 +16,7 @@ const params = new URLSearchParams(searchParams);
 const handleSearch = useDebouncedCallback((term) => { 
   if (term) {
     params.set('name', term); 
-  } else {
+  } else { 
     params.delete('name');
   }
   

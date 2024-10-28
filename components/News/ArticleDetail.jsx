@@ -1,4 +1,4 @@
- 
+  
 import * as cheerio from 'cheerio';
 import moment from 'moment';
 import Image from "next/image";
@@ -55,7 +55,7 @@ const ArticleDetail = ({news_detail}) => {
         })});
      
   return (  
- <div className='bg-white max-w-6xl ' > 
+ <div className='bg-white max-w-6xl lg:max-w-2xl xl:max-w-max sm:p-6' > 
 <h1 className="text-4xl font-bold md:text-5xl "style={{lineHeight:'50px'}}>{news_detail.title}</h1>
 <p className='py-4 text-lg italic'>{replaceHTMLTags(news_detail.excerpt)}</p>
 <div className="bg-gray-600 relative text-gray-200">
@@ -69,10 +69,10 @@ height={675}
 alt={news_detail.featuredImage.node.altText} 
 /> 
 
-<div className='xs:flex justify-center'> 
-<div className=' border-r w-full'> 
+<div className='xs:flex'> 
+<div className='border-r xs:max-w-72'> 
 
-<div className='h-32 px-1'>  
+<div className='h-32 px-2'>  
   <div className='flex xs:block sm:flex py-4'> 
   <div className='w-10'> 
     <Image 
@@ -99,12 +99,12 @@ alt={news_detail.featuredImage.node.altText}
      </div> 
 </div>
   
-<div className='py-11 relative xs:my-0 xs:bottom-44 md:max-w-xl xl:max-w-3xl '>
+<div className='py-11 relative xs:my-0 xs:bottom-44 md:max-w-3xl lg:max-w-md xl:max-w-4xl'>
 <hr className='h-2 bg-gray-800'/> 
 <div className='xs:px-6 xs:py-8 bg-white 6'>
 {news_detail.tags.nodes.map((xy)=>
 <div key={xy.name + ' ' + Math.random()} className='my-3'>
- <Link href={`/topic/${xy.slug}`}><h4 className='bg-gray-600 text-gray-200 p-3 text-xl w-32 text-center'>{xy.name} </h4></Link>
+ <Link href={`/topic/${xy.slug}`}><h4 className='hover:bg-gray-600 hover:text-gray-200 border border-gray-600 bg-gray-50 text-gray-600 p-3 text-xl w-32 text-center'>{xy.name} </h4></Link>
  <hr className='bg-black p-0.5 m-0.5'/>
 <hr className='bg-black p-0.5 m-0.5'/>
 </div>)}
@@ -147,5 +147,6 @@ alt={news_detail.featuredImage.node.altText}
 }
 
 export default ArticleDetail
+
 
  

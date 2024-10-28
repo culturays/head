@@ -2,20 +2,22 @@
 import { faAngleLeft, faAngleRight, faCircle, faDotCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import moment from "moment"
-import Image from "next/image"
+import Image from "next/image" 
 import Link from "next/link"
 import { useEffect, useState } from "react"  
 import Pagination from "../Pagination"
 import SlideFxn from "../SlideFxn"
 
-const Economy = ({economy_news }) => {
-
+const Economy = ({economy_news, category_title}) => { 
   const [posts, setPosts]=useState([]) 
   const [currPg, setCurrPg]=useState(1)
   const [postPerPage, setPostPerP]=useState(10) 
-     const world_news = economy_news.map((ex)=>ex.economyCategories?.nodes.filter((xy)=> xy?.name==="World")).flat().map((tx)=> tx?.economies.nodes).flat()
-     const africa_news = economy_news.map((ex)=>ex.economyCategories?.nodes.filter((xy)=> xy?.name==="Africa")).flat().map((tx)=> tx?.economies.nodes).flat()     
-     const economy_items=economy_news.map((ex)=>ex.economyCategories?.nodes.filter((xy)=> xy?.name!=="World")).flat().filter((xy)=> xy?.name!=="Africa").map((tx)=> tx?.economies.nodes).flat()
+     const world_news = economy_news.map((ex)=>ex.categories?.nodes.filter((xy)=> xy?.name==="World")).flat().map((tx)=> tx?.posts.nodes).flat()
+     const africa_news = economy_news.map((ex)=>ex.categories?.nodes.filter((xy)=> xy?.name==="Africa")).flat().map((tx)=> tx?.posts.nodes).flat()     
+     const economy_items=economy_news.map((ex)=>ex.categories?.nodes.filter((xy)=> xy?.name!=="World")).flat().filter((xy)=> xy?.name!=="Africa").map((tx)=> tx?.posts.nodes).flat()
+
+     const title_item=economy_news.map((ex)=>ex.contentTypeName)[0]
+     
   function decrement() {
    setCurrPg(currPg - 1);
  }
@@ -30,7 +32,7 @@ const Economy = ({economy_news }) => {
    fetchPs()
  },[economy_news])
  
-  
+ 
  const idxLastPs= currPg * postPerPage
  const idxFsPage = idxLastPs - postPerPage
  const currentPosts = posts.slice(idxFsPage, idxLastPs)
@@ -38,7 +40,6 @@ const Economy = ({economy_news }) => {
  const paginating=(pageNumber)=>{ 
  setCurrPg(pageNumber) 
  }
-
  
   const replaceHTMLTags=(string)=>{
     const regex = /(<([^>]+)>)/gi;
@@ -47,9 +48,7 @@ const Economy = ({economy_news }) => {
     return newString
      }
      const [activeSet , setActiveSet]=useState(false)
-    
-     const title_item=economy_news.map((ex)=>ex.contentTypeName)[0]
-    
+     
   return (
     <div> 
     <div className="bg-gray-50 py-4 m-auto" style={{maxWidth:'1800px'}}> 
@@ -77,9 +76,9 @@ const Economy = ({economy_news }) => {
       </div> 
 )}
 </section>
-
+ 
 <div className="max-w-2xl m-auto xl:m-0">
-  <SlideFxn title_item={title_item} content={economy_items}/>  
+  <SlideFxn title_item={category_title} content={economy_items}/>  
 </div>
 
     </div>
@@ -146,7 +145,6 @@ alt={xy?.featuredImage.node.altText}
 </div>
 )}
 </div>
-
  
 </div>
 <Pagination postPerPage={postPerPage} totalPosts={posts.length} paginating={paginating} />

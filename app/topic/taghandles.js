@@ -90,45 +90,7 @@ contentTags(where: {slug: "${slug}"}){
           }
        
       }
-            healths { 
-          nodes { id
-            slug
-            title
-            contentTypeName
-               contentTags {
-            nodes{  id
-            name
-            slug
-            }
-            }
-            featuredImage{
-            node{
-            altText
-            sourceUrl
-            }
-            }  
-          }
-       
-      }
-       businesses { 
-          nodes { id
-            slug
-            title
-            contentTypeName
-               contentTags {
-            nodes{  id
-            name
-            slug
-            }
-            }
-            featuredImage{
-            node{
-            altText
-            sourceUrl
-            }
-            }
-        }
-      }
+          
          chars{
         nodes { id
           slug
@@ -148,44 +110,7 @@ contentTags(where: {slug: "${slug}"}){
             }
         }
       }
-      societies{
-        nodes { id
-          slug
-          title
-          contentTypeName
-               contentTags {
-            nodes{  id
-            name
-            slug
-            }
-            }
-             featuredImage{
-            node{
-            altText
-            sourceUrl
-            }
-            }
-        }
-      }
-      technologies{
-        nodes { id
-          slug
-          title
-          contentTypeName
-               contentTags {
-            nodes{  id
-            name
-            slug
-            }
-            }
-             featuredImage{
-            node{
-            altText
-            sourceUrl
-            }
-            }
-        }
-      }
+      
       trends{
         nodes { id
           slug
@@ -263,46 +188,7 @@ contentTags(where: {slug: "${slug}"}){
          
         }
       }
-        environments{ 
-          nodes { id
-            slug
-            title
-            contentTypeName
-               contentTags {
-            nodes{  id
-            name
-            slug
-            }
-            }
-               featuredImage{
-            node{
-            altText
-            sourceUrl
-            }
-            }
-         
-        }
-      }
-        economies { 
-          nodes { id
-            slug
-            title
-            contentTypeName
-               contentTags {
-            nodes{  id
-            name
-            slug
-            }
-            }
-          featuredImage{
-            node{
-            altText
-            sourceUrl
-            }
-            }
-         
-        }
-      }
+        
         videos { 
           nodes { id
             slug
@@ -384,30 +270,7 @@ export async function content_TAGS (slug,exclude) {
             title
           }
         }
-          businesses {
-          nodes {
-            id
-            title
-          }
-        }
-         economies {
-          nodes {
-            id
-            title
-          }
-        }
-         environments {
-          nodes {
-            id
-            title
-          }
-        }
-         healths {
-          nodes {
-            id
-            title
-          }
-        }
+        
          netflixNaijaPosts {
           nodes {
             id
@@ -420,18 +283,7 @@ export async function content_TAGS (slug,exclude) {
             title
           }
         }
-         societies {
-          nodes {
-            id
-            title
-          }
-        }
-         technologies {
-          nodes {
-            id
-            title
-          }
-        }
+        
          trends {
           nodes {
             id

@@ -9,19 +9,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import Image from "next/image"
 const Search = ({content, name }) => { 
 const [searchItem, setSearchItem]=useState([]) 
-const searchParams = useSearchParams();
-{/* <div className="mx-2  flex flex-col justify-between" >
-<Link href={`/netflix-naija/news/${it.slug }`}><h3 className="search-title hover:opacity-50 text-lg cursor-pointer font-medium leading-tight underline">{it.title }</h3></Link> 
-
-<div className="flex py-2 text-sm"> 
-<p>All tags:</p>{it.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
-</p>}</Link>  
-
-)}
-</div> 
-
-</div>  */}
+const searchParams = useSearchParams();  
 const netflixContent = content?.map((xy)=> xy?.netflixCategories?.nodes.map((tx)=> tx?.netflixNaijaPosts.nodes).flat()).flat()
 return (
     

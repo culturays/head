@@ -11,12 +11,15 @@ export const metadata = {
 }; 
  
 const SocietyPage =async ({searchParams}) => {
- const society_news = await societyBlog()
- const society_posts = society_news.map((xy)=>xy.posts.nodes)
+ const society_news = await societyBlog() 
+ const society_posts = society_news.map((xy)=>xy.posts.nodes).flat()
+ const category_title=society_news.map((xy)=>xy.slug)[0] 
+
   return (
     <div > 
  <Society 
 society_news={society_posts}
+category_title={category_title }
 /> 
    </div>
   )

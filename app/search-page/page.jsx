@@ -6,7 +6,7 @@ const content = await searchValues(name)
   return (
     <div>  
         <Search name={name} content={content}/>    
-
+ 
     </div>
   ) 
 }

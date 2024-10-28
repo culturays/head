@@ -79,7 +79,8 @@ const evData = await events3Details(one.atitle)
       
     } 
    } 
-   
+   console.log('it ran ')
+   async function getEvs(){
     const supabase = createClient()
     const { data, error } = await supabase
       .from('events')
@@ -88,6 +89,13 @@ const evData = await events3Details(one.atitle)
     if (error) { 
       console.error('Error inserting items:', error);
     }  
+
+    }
+    setTimeout(()=>{
+     getEvs()
+
+    },1000)
+ 
  
  } 
   return () => clearTimeout(fxnTimeout);
@@ -134,7 +142,7 @@ const evData = await events3Details(one.atitle)
     setTimeout(()=>{
      getCines()
 
-    },3600)
+    },1000)
  return () => clearTimeout(fxnTimeout);
     }  
     
@@ -153,7 +161,7 @@ const evData = await events3Details(one.atitle)
     timeZone: 'Africa/Lagos'
     });
 
-  },5000); 
+  },3000); 
    
 
 return (

@@ -2,26 +2,19 @@
 import { faPlay } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
-import Link from "next/link"
-import { useParams } from "next/navigation"
+import Link from "next/link" 
 
 const Tags = ({tag_response,content_tag_response}) => { 
 const posts= tag_response.nodes.map((xy)=>xy?.posts.nodes).flat() 
 const awards= content_tag_response.nodes.map((xy)=>xy?.awards.nodes).flat() 
-const businesses= content_tag_response.nodes.map((xy)=>xy?.businesses.nodes).flat()
 const chars= content_tag_response.nodes.map((xy)=>xy?.chars.nodes).flat()
 const culturaysVideos= content_tag_response.nodes.map((xy)=>xy?.videos.nodes).flat()
-const economies= content_tag_response.nodes.map((xy)=>xy?.economies.nodes).flat()
-const environments= content_tag_response.nodes.map((xy)=>xy?.environments.nodes).flat()
-const health= content_tag_response.nodes.map((xy)=>xy?.healths.nodes).flat() 
-const societies= content_tag_response.nodes.map((xy)=>xy?.societies.nodes).flat()
-const technologies= content_tag_response.nodes.map((xy)=>xy?.technologies.nodes).flat()
 const trends= content_tag_response.nodes.map((xy)=>xy.trends.nodes).flat()
 const netflixNaijaPosts= content_tag_response.nodes.map((xy)=>xy.netflixNaijaPosts.nodes).flat()
 const newsArticles= content_tag_response.nodes.map((xy)=>xy.articles.nodes).flat()
 const nollywood= content_tag_response.nodes.map((xy)=>xy.nollywoods.nodes).flat()
 const tagged=content_tag_response?.nodes.concat(tag_response.nodes)
-const tagged_reses=awards.concat(businesses).concat(culturaysVideos).concat(economies).concat(environments).concat(health).concat(societies).concat(trends).concat(technologies).concat(netflixNaijaPosts).concat(newsArticles).concat(nollywood).concat(chars).concat(posts)
+const tagged_reses=awards.concat(culturaysVideos).concat(trends).concat(netflixNaijaPosts).concat(newsArticles).concat(nollywood).concat(chars).concat(posts)
 
   return (
    <div className="search_all" > 

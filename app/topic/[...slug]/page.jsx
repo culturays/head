@@ -20,7 +20,7 @@ const TagPage = async({params}) => {
  const content_tag_response = await contentTag(slug)
   const tag_response = await tag(slug)
  
-  return (
+  return ( 
     <div>  
      <Tags
         content_tag_response={content_tag_response}

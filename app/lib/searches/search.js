@@ -5,7 +5,7 @@ export const searchValues = async (name) => {
     const supabase = createClient()
     const { data:posts, error } = await supabase
     .from('posts') 
-    .select("*")
+    .select("*") 
     .filter('title', 'ilike', `%${name}%`);
     
     if (error) {
@@ -88,38 +88,7 @@ export const searchValues = async (name) => {
            
         }
       }
-      ... on Tech {
-        id
-        title
-        slug   contentTags{
-        nodes{
-        name
-        slug
-        }
-        }
-        featuredImage{
-          node{
-            sourceUrl
-          }
-           
-        }
-      }
-      ... on Society {
-        id
-        title
-        slug   contentTags{
-        nodes{
-        name
-        slug
-        }
-        }
-        featuredImage{
-          node{
-            sourceUrl
-          }
-           
-        }
-      }
+      
       ... on Nollywood {
        id
         title
@@ -173,54 +142,8 @@ export const searchValues = async (name) => {
           }
         }
       }
-      ... on Health {
-        id
-        title
-        slug   contentTags{
-        nodes{
-        name
-        slug
-        }
-        }
-        featuredImage{
-          node{
-            sourceUrl
-          }
-           
-        }
-      }
-      ... on Environment {
-      id
-        title
-        slug   contentTags{
-        nodes{
-        name
-        slug
-        }
-        }
-        featuredImage{
-          node{
-            sourceUrl
-          }
-           
-        }
-      }
-      ... on Economy {
-     id
-        title
-        slug   contentTags{
-        nodes{
-        name
-        slug
-        }
-        }
-        featuredImage{
-          node{
-            sourceUrl
-          }
-           
-        }
-      }
+     
+     
       ... on Char {
         id
         title
@@ -237,22 +160,7 @@ export const searchValues = async (name) => {
            
         }
       }
-      ... on Business {
-        id
-        title
-        slug   contentTags{
-        nodes{
-        name
-        slug
-        }
-        }
-        featuredImage{
-          node{
-            sourceUrl
-          }
-           
-        }
-      }
+      
       ... on Award {
          id
         title

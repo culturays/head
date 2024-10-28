@@ -10,12 +10,15 @@ export const metadata = {
 }; 
 
 const TechPage =async ({searchParams}) => { 
- const tech_news = await techBlog()
- const tech_posts = tech_news.map((xy)=>xy.posts.nodes)
+ const tech_news = await techBlog() 
+ const tech_posts = tech_news.map((xy)=>xy.posts.nodes).flat()
+ const category_title=tech_news.map((xy)=>xy.slug)[0] 
+
   return (
     <div >  
   <Tech
 tech_news={tech_posts}
+category_title={category_title }
 />  
  </div>
   )

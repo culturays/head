@@ -6,7 +6,7 @@ const CULTURAYS_CONTENT_WP = process.env.CULTURAYS_WP
 export async function generateMetadata({ params, searchParams }, parent) { 
   const slug = params.slug[1]
 const slug_category = params.slug[0]
-  const news_details= await top_news_details_all(`${CULTURAYS_CONTENT_WP}/${slug_category}/${slug}/`)
+const news_details= await top_news_details_all(slug) 
   const previousImages = (await parent).openGraph?.images || [] 
   return {
     title:`Culturays | News - ${news_details?.title}`,

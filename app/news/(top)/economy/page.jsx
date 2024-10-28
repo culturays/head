@@ -9,12 +9,14 @@ export const metadata = {
    title:"Culturays | Economy",   
 }; 
 const EconomyPage =async ({searchParams}) => { 
- const economy_news = await economyBlog()
- const economy_posts = economy_news.map((xy)=>xy.posts.nodes)
+ const economy_news = await economyBlog() 
+ const economy_posts = economy_news.map((xy)=>xy.posts.nodes).flat()
+  const category_title=economy_news.map((xy)=>xy.slug)[0]
   return (
     <div >
    <Economy
-economy_news={economy_posts} 
+economy_news={economy_posts}
+category_title={category_title }
 />  
   </div>
   )
