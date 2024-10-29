@@ -8,27 +8,26 @@ import { useParams } from "next/navigation"
 const Tags = ({tag_response,content_tag_response}) => { 
 const posts= tag_response.nodes.map((xy)=>xy?.posts.nodes).flat() 
 const awards= content_tag_response.nodes.map((xy)=>xy?.awards.nodes).flat() 
- const businesses=  posts.map((xy)=>xy?.categories.nodes).flat().filter((ex)=>ex.slug==='business')[0]?.slug
+const businesses= content_tag_response.nodes.map((xy)=>xy?.businesses.nodes).flat()
 const chars= content_tag_response.nodes.map((xy)=>xy?.chars.nodes).flat()
 const culturaysVideos= content_tag_response.nodes.map((xy)=>xy?.videos.nodes).flat()
-const economies=posts.map((xy)=>xy?.categories.nodes).flat().filter((ex)=>ex.slug==='economies')[0]?.slug 
-const environments=posts.map((xy)=>xy?.categories.nodes).flat().filter((ex)=>ex.slug==='environments')[0]?.slug 
-const health=posts.map((xy)=>xy?.categories.nodes).flat().filter((ex)=>ex.slug==='healths')[0]?.slug
-const societies=posts.map((xy)=>xy?.categories.nodes).flat().filter((ex)=>ex.slug==='societies')[0]?.slug 
-const technologies=posts.map((xy)=>xy?.categories.nodes).flat().filter((ex)=>ex.slug==='technologies')[0]?.slug 
+const economies= content_tag_response.nodes.map((xy)=>xy?.economies.nodes).flat()
+const environments= content_tag_response.nodes.map((xy)=>xy?.environments.nodes).flat()
+const health= content_tag_response.nodes.map((xy)=>xy?.healths.nodes).flat() 
+const societies= content_tag_response.nodes.map((xy)=>xy?.societies.nodes).flat()
+const technologies= content_tag_response.nodes.map((xy)=>xy?.technologies.nodes).flat()
 const trends= content_tag_response.nodes.map((xy)=>xy.trends.nodes).flat()
 const netflixNaijaPosts= content_tag_response.nodes.map((xy)=>xy.netflixNaijaPosts.nodes).flat()
 const newsArticles= content_tag_response.nodes.map((xy)=>xy.articles.nodes).flat()
 const nollywood= content_tag_response.nodes.map((xy)=>xy.nollywoods.nodes).flat()
 const tagged=content_tag_response?.nodes.concat(tag_response.nodes)
-const tagged_reses=awards.concat(culturaysVideos).concat(trends).concat(netflixNaijaPosts).concat(newsArticles).concat(nollywood).concat(chars).concat(posts)
-const categorize = posts.map((xy)=>xy?.categories.nodes.filter((xy)=> xy.parent=== null)).flat() 
- 
+const tagged_reses=awards.concat(businesses).concat(culturaysVideos).concat(economies).concat(environments).concat(health).concat(societies).concat(trends).concat(technologies).concat(netflixNaijaPosts).concat(newsArticles).concat(nollywood).concat(chars).concat(posts)
+
   return (
    <div className="search_all" > 
  <div className="m-auto bg-white sm:px-4 xl:px-28 px-2 "style={{maxWidth:'1550px'}}> 
-   <h2 className="py-2 font-bold text-3xl font-bold px-3">{tagged[0]?.name}</h2>
- <div className="sm:flex justify-center py-6" >
+   <h2 className="py-3 font-bold text-3xl font-bold">{tagged[0]?.name}</h2>
+ <div className="sm:flex justify-center py-6 " >
   <div >
 {tagged_reses.slice(0,1)?.map((ex, index)=>
 ex.contentTypeName ==='video'? 
@@ -41,31 +40,33 @@ ex.contentTypeName ==='video'?
  height={675}
  alt={ex?.featuredImage?.node.altText}
  />
-  <Link href={`/news/video/${ex.slug}`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">Watch</p></Link>
+  <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link>  
  </div>
 
  <div className="flex flex-col justify-between py-4 mx-3">
  <div className="flex justify-between my-3">
-   <Link href={`/news/video/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-3xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link> 
+   <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-3xl font-bold cursor-pointer font-medium leading-9 underline ">{ex.title }</h3></Link> 
  <button> 
     <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4 hover:text-gray-50 text-2xl cursor-pointer"><FontAwesomeIcon icon={faPlay}/></span></Link>  
   </button>
 </div>
 
    <div className="flex py-2 text-sm"> 
-      <p>All tags:</p>{ex.tags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+      <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>  
 
 )}
 </div>
+
+
 </div>
   
 </div> 
  
 </div>:
 
-<div key={ex.id + Math.random()}className="max-w-4xl px-3">  
+<div key={ex.id + Math.random()}className="max-w-4xl">  
 <div className="shadow-sm my-3"> 
  <div className=""> 
  <Image
@@ -74,19 +75,15 @@ ex.contentTypeName ==='video'?
  height={675}
  alt={ex?.featuredImage?.node.altText}
  />
- {ex.categories.nodes.map((tx)=> tx.slug===businesses?<div key={ex.slug}><Link href={`/news/${businesses}/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center capitalize">{businesses}</p></Link></div> :tx.slug===economies?<div key={ex.slug}><Link href={`/news/${economies}/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center capitalize">{economies}</p></Link></div>:tx.slug===health?<div key={ex.slug}><Link href={`/news/${health}/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center capitalize">{health}</p></Link></div>:tx.slug===societies?<div key={ex.slug}><Link href={`/news/${societies}/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center capitalize">{societies}</p></Link></div>:tx.slug===environments?<div key={ex.slug}><Link href={`/news/${environments}/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center capitalize">{environments}</p></Link></div>:tx.slug===technologies?<div key={ex.slug}><Link href={`/news/tech/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center capitalize">Tech</p></Link></div>:'')} 
- 
-
-  {ex.contentTypeName !==businesses &&ex.contentTypeName !==economies && ex.contentTypeName !==health && ex.contentTypeName !==societies && ex.contentTypeName !==environments && ex.contentTypeName !==technologies && ex.contentTypeName !=='post' && ex.contentTypeName !=='video' && <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center capitalize">{ex.contentTypeName}</p></Link>  } 
+ {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' && <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center capitalize">{ex.contentTypeName }</p></Link>  }
  </div>
 
- <div className="flex flex-col justify-between py-4" >
-       {ex.contentTypeName ==='post'&&ex.categories.nodes.map((tx)=> tx.slug===businesses?<div key={ex.slug}><Link href={`/news/${businesses}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-3xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> :tx.slug===economies?<div key={ex.slug}><Link href={`/news/${economies}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-3xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===health?<div key={ex.slug}><Link href={`/news/${health}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-3xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===societies?<div key={ex.slug}><Link href={`/news/${societies}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-3xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===environments?<div key={ex.slug}><Link href={`/news/${environments}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-3xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===technologies?<div key={ex.slug}><Link href={`/news/tech/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-3xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> :<div key={ex.slug}><Link href={`/news/topic/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-3xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> )} 
+ <div className="flex flex-col justify-between py-4 mx-3" >
+       <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-3xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link> 
  
-
-   <div className="flex py-2 text-sm"> 
-      <p>All tags:</p>{ex.tags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+   <div className="flex py-3 text-sm"> 
+      <p>All tags:</p>  {ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
+  <Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name } 
 </p>}</Link>  
 
 )}
@@ -115,18 +112,18 @@ ex.contentTypeName ==='video'?
  height={675}
  alt={ex.featuredImage.node.altText}
  />
-  {ex.contentTypeName !=='post' && ex.contentTypeName ==='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+   <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
  </div> 
   
     <div className="mx-2 " >
      <div className="flex justify-between gap-5">
-      <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline max-w-96">{ex.title }</h3></Link> 
+      <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline max-w-96">{ex.title }</h3></Link> 
 <button> 
-      <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-300 text-2xl cursor-pointer"><FontAwesomeIcon icon={faPlay}/></span></Link>  
+      <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4 hover:text-gray-300 text-2xl cursor-pointer"><FontAwesomeIcon icon={faPlay}/></span></Link>  
           </button> </div> 
    <div className="flex py-2 text-sm"> 
       <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>
 
 )}
@@ -151,28 +148,18 @@ className="max-w-28 sm:max-w-32 md:max-w-44"
  height={675}
  alt={ex.featuredImage.node.altText}
  />
-  {ex.categories.nodes.map((tx)=> tx.slug===businesses?<div key={ex.slug}><Link href={`/news/${businesses}/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center capitalize">{businesses}</p></Link></div> :'')} 
- 
- {ex.contentTypeName !==businesses&& ex.contentTypeName !=='post' && ex.contentTypeName ==='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link> :''}
+ {ex.contentTypeName !=='post' && ex.contentTypeName ==='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize"></p>}
  </div> 
-   
+  
     <div className="mx-2 " >
-    {/* <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline">{ex.title }</h3></Link>  */}
-    {ex.contentTypeName ==='post'&&ex.categories.nodes.map((tx)=> tx.slug===businesses?<div key={ex.slug}><Link href={`/news/${businesses}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> :tx.slug===economies?<div key={ex.slug}><Link href={`/news/${economies}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===health?<div key={ex.slug}><Link href={`/news/${health}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===societies?<div key={ex.slug}><Link href={`/news/${societies}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===environments?<div key={ex.slug}><Link href={`/news/${environments}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===technologies?<div key={ex.slug}><Link href={`/news/tech/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> :<div key={ex.slug}><Link href={`/news/topic/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> )} 
+    <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline">{ex.title }</h3></Link> 
+ 
    <div className="flex py-2 text-sm "> 
-      <p>All tags:</p>
-      <div className="flex text-sm">
-      {ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 px-2">#{ex.name }  
+      <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50">#{ex.name }  
 </p>}</Link>  
 
-)} 
-{ex.tags?.nodes.slice(0,5)?.map((ex, i)=> 
-  <Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 px-2">#{ex.name }  
-  </p>}</Link>  
-  
-  )}
-  </div> 
+)}
 </div> 
 </div> 
 </div>   
@@ -196,21 +183,19 @@ className="max-w-28 sm:max-w-32 md:max-w-44"
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-  
+      <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
     <div className="flex justify-between py-5 mx-3 gap-1">
  
-    <Link href={`/news/video/${ex.slug }`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+    <Link href={`/news/${ex.contentTypeName}/${ex.slug }`}><h3 className="  hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
     <button> 
-    <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
+    <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4 hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
   </button>
    </div> 
  
-</div>
-
-:
+</div>:
 
 <div className="max-w-max" key={index + Math.random()} > 
-   <div className="max-w-72 xl:max-w-60 m-auto my-3 shadow h-96">
+   <div className="max-w-72 xl:max-w-60 m-auto my-3 shadow h-9 capitalize">
   <Image
    className="max-h-40 md:max-h-36 xl:max-h-36 lg:max-h-40"
    src={ex.featuredImage.node.sourceUrl}
@@ -218,28 +203,51 @@ className="max-w-28 sm:max-w-32 md:max-w-44"
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName}</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
-   <div className="py-5 mx-3">
- 
-   {/* <Link href={`/news/video/${ex.slug }`} ><h3 className='underline mx-1 text-2xl my-2'>{ex.title}</h3></Link> */}
-   {ex.contentTypeName ==='post'&&ex.categories.nodes.map((tx)=> tx.slug===businesses?<div key={ex.slug}><Link href={`/news/${businesses}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> :tx.slug===economies?<div key={ex.slug}><Link href={`/news/${economies}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===health?<div key={ex.slug}><Link href={`/news/${health}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===societies?<div key={ex.slug}><Link href={`/news/${societies}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===environments?<div key={ex.slug}><Link href={`/news/${environments}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===technologies?<div key={ex.slug}><Link href={`/news/tech/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> :<div key={ex.slug}><Link href={`/news/topic/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> )} 
-
-   </div>
+      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize capitalize">{ex.contentTypeName }</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize"></p>}
 
   </div>
+  <div className="mx-2" >
+    <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline">{ex.title }</h3></Link> 
+ 
+   <div className="flex py-2 text-sm "> 
+      <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50  ">#{ex.name }  
+</p>}</Link>  
+
+)}
+</div> 
+</div>
 </div>)}
 </div>
  
   
 <div className="sm:flex max-w-max m-auto lg:m-0"> 
-{tagged_reses.slice(7,9).map((ex,index)=>
+{tagged_reses.slice(7,9).map((ex,index)=>ex.contentTypeName ==='video'?
+<div key={index + Math.random()} className="max-w-72 xl:max-w-60 m-auto my-3 shadow">   
+  <Image
+  className="max-h-40 md:max-h-36 lg:max-h-40 xl:max-h-36"
+   src={ex.featuredImage.node.sourceUrl}
+   width={1200}
+   height={675}
+   alt={ex.featuredImage.node.altText}
+   />
+     <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
+    <div className="flex justify-between py-5 mx-3 gap-1">
+ 
+    <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="  hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+    <button> 
+    <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
+  </button>
+   </div> 
+ 
+</div>:
   <div className="shadow p-5 my-1 max-w-md sm:w-96  m-auto lg:m-0" key={ex.id + Math.random()} > 
-   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p>
+   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName }</p>
        <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 lg:text-xl font-bold cursor-pointer font-medium leading-7 underline my-3">{ex.title }</h3></Link> 
   
    <div className="flex py-2 text-sm"> 
       <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>  
 
 )}
@@ -260,10 +268,10 @@ ex.contentTypeName ==='video'?
  height={675}
  alt={ex?.featuredImage?.node.altText}
  />
-     {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-red-500 text-lg font-bold text-center h-9 "></p>}
+      <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
  </div>
 <div className="flex justify-between py-5 mx-3 gap-1">
-<Link href={`/news/video/${ex.slug }`}><h2 className="search-title text-xl md:text-2xl underline">{ex.title}</h2></Link>
+<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h2 className="search-title text-xl md:text-2xl underline">{ex.title}</h2></Link>
 <button> 
  <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
 </button>
@@ -278,11 +286,10 @@ ex.contentTypeName ==='video'?
  height={675}
  alt={ex?.featuredImage?.node.altText}
  />
-     {/* {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-red-500 text-lg font-bold text-center h-9"></p>} */}
+     {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize capitalize">{ex.contentTypeName }</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-red-500 text-lg font-bold text-center h-9 capitalize"></p>}
  </div>
 <div className="py-6 mx-3">
-{/* <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h2 className="search-title text-xl md:text-2xl underline">{ex.title}</h2></Link> */}
-{ex.contentTypeName ==='post'&&ex.categories.nodes.map((tx)=> tx.slug===businesses?<div key={ex.slug}><Link href={`/news/${businesses}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> :tx.slug===economies?<div key={ex.slug}><Link href={`/news/${economies}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===health?<div key={ex.slug}><Link href={`/news/${health}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===societies?<div key={ex.slug}><Link href={`/news/${societies}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===environments?<div key={ex.slug}><Link href={`/news/${environments}/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div>:tx.slug===technologies?<div key={ex.slug}><Link href={`/news/tech/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> :<div key={ex.slug}><Link href={`/news/topic/${ex.slug }`}><h3 className="search-title leading-9 hover:opacity-50 text-2xl font-bold cursor-pointer font-medium underline">{ex.title }</h3></Link></div> )} 
+<Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h2 className="search-title text-xl md:text-2xl underline">{ex.title}</h2></Link>
 
 </div>
 </div>)}
@@ -300,14 +307,14 @@ ex.contentTypeName ==='video'?
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-    {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+     <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
     <div className="flex justify-between py-5 mx-3 gap-1">
  
-    <Link href={`/news/video/${ex.slug }`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+    <Link href={`/news/${ex.contentTypeName}/${ex.slug}`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
     <button> 
     <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
   </button>
-   </div> 
+   </div>
  
 </div>:
 <div key={ex.id + Math.random()} className="m-auto my-3 shadow max-w-xs md:max-w-5xl"> 
@@ -319,7 +326,7 @@ ex.contentTypeName ==='video'?
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center  h-9"></p>}
+      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize"></p>}
    <div className="py-5 mx-3">
  
    <Link href={`/news/video/${ex.slug }`} ><h3 className=' mx-1 text-2xl my-2 underline'>{ex.title}</h3></Link>
@@ -340,10 +347,10 @@ ex.contentTypeName ==='video'?
      height={675}
      alt={ex.featuredImage.node.altText}
      />
-      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+       <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
       <div className="flex justify-between py-5 mx-3 gap-1">
    
-      <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+      <Link href={`/news/${ex.contentTypeName}/${ex.slug}`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
       <button> 
       <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
     </button>
@@ -359,14 +366,15 @@ ex.contentTypeName ==='video'?
      height={675}
      alt={ex.featuredImage.node.altText}
      />
-  {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+  {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize"></p>}
    
  <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline p-4">{ex.title }</h3></Link>
 </div>
 
 )} 
 
- </div> 
+ </div>
+ 
 
  <div className="xs:grid xs:grid-cols-2 sm:grid-cols-3 gap-2 my-6 max-w-6xl m-auto lg:m-0" > 
 {tagged_reses.slice(20,26).map((ex,index)=>ex.contentTypeName ==='video'?
@@ -378,15 +386,14 @@ ex.contentTypeName ==='video'?
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-    {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+      <Link href={`/news/video/${ex.slug}`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
     <div className="flex justify-between py-5 mx-3 gap-1">
  
-    <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+    <Link href={`/news/${ex.contentTypeName}/${ex.slug}`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
     <button> 
     <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
   </button>
-   </div>
- 
+   </div> 
  
 </div>:
 <div key={index} className="m-auto my-3 shadow max-w-xs md:max-w-5xl"> 
@@ -398,7 +405,7 @@ ex.contentTypeName ==='video'?
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center  h-9"></p>}
+      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center  h-9 capitalize"></p>}
    <div className="py-5 mx-3">
  
    <Link href={`/news/video/${ex.slug }`} ><h3 className=' mx-1 text-2xl my-2 underline'>{ex.title}</h3></Link>
@@ -409,14 +416,32 @@ ex.contentTypeName ==='video'?
  
 
 <div className="sm:flex max-w-max m-auto lg:m-0"> 
-{tagged_reses.slice(26,29).map((ex,index)=>
-  <div className="shadow p-5 my-1 max-w-md sm:w-96  m-auto lg:m-0"  key={ex.id + Math.random()}> 
-   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p>
+{tagged_reses.slice(26,29).map((ex,index)=>ex.contentTypeName ==='video'?
+<div key={index + Math.random()} className="max-w-72 xl:max-w-60 m-auto my-3 shadow">   
+  <Image
+  className="max-h-40 md:max-h-36 lg:max-h-40 xl:max-h-36"
+   src={ex.featuredImage.node.sourceUrl}
+   width={1200}
+   height={675}
+   alt={ex.featuredImage.node.altText}
+   />
+     <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
+    <div className="flex justify-between py-5 mx-3 gap-1">
+ 
+    <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="  hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+    <button> 
+    <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
+  </button>
+   </div> 
+ 
+</div>:
+  <div className="shadow p-5 my-1 max-w-md sm:w-96 m-auto lg:m-0" key={ex.id + Math.random()}> 
+   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName }</p>
        <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 lg:text-xl font-bold cursor-pointer font-medium leading-7 underline my-3">{ex.title }</h3></Link> 
   
    <div className="flex py-2 text-sm"> 
       <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>  
 
 )}
@@ -436,47 +461,71 @@ ex.contentTypeName ==='video'?
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-    {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+     <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
     <div className="flex justify-between py-5 mx-3 gap-1">
  
     <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
     <button> 
-    <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
+    <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4 hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
   </button>
-   </div>
-
- 
+   </div> 
  
 </div>:
 <div key={index} className="m-auto my-3 shadow max-w-xs md:max-w-5xl"> 
    
+<div className="max-w-72 xl:max-w-60 m-auto my-3 shadow h-9">
   <Image
-   className="max-h-36 sm:max-h-28 md:max-h-40 lg:max-h-48 xl:max-h-52"
+   className="max-h-40 md:max-h-36 xl:max-h-36 lg:max-h-40"
    src={ex.featuredImage.node.sourceUrl}
    width={1200}
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center  h-9"></p>}
-   <div className="py-5 mx-3">
- 
-   <Link href={`/news/video/${ex.slug }`} ><h3 className=' mx-1 text-2xl my-2 underline'>{ex.title}</h3></Link>
+      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize capitalize">{ex.contentTypeName }</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize"></p>}
 
-   </div>
+  </div>
+  <div className="mx-2" >
+    <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline">{ex.title }</h3></Link> 
+ 
+   <div className="flex py-2 text-sm "> 
+      <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50  ">#{ex.name }  
+</p>}</Link>  
+
+)}
+</div> 
+</div>
 </div>)}
 </div>
-
-
+ 
 
 <div className="sm:flex max-w-max m-auto lg:m-0"> 
-{tagged_reses.slice(35,37).map((ex,index)=>
-  <div className="shadow p-5 my-1 max-w-md sm:w-96  m-auto lg:m-0" key={ex.id + Math.random()} > 
-   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p>
+{tagged_reses.slice(35,37).map((ex,index)=>ex.contentTypeName ==='video'?
+<div key={index + Math.random()} className="max-w-72 xl:max-w-60 m-auto my-3 shadow">   
+  <Image
+  className="max-h-40 md:max-h-36 lg:max-h-40 xl:max-h-36"
+   src={ex.featuredImage.node.sourceUrl}
+   width={1200}
+   height={675}
+   alt={ex.featuredImage.node.altText}
+   />
+     <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
+    <div className="flex justify-between py-5 mx-3 gap-1">
+ 
+    <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="  hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+    <button> 
+    <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
+  </button>
+   </div> 
+ 
+</div>:
+  <div className="shadow p-5 my-1 max-w-md sm:w-96 m-auto lg:m-0" key={ex.id + Math.random()} > 
+   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName }</p>
        <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 lg:text-xl font-bold cursor-pointer font-medium leading-7 underline my-3">{ex.title }</h3></Link> 
   
    <div className="flex py-2 text-sm"> 
       <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>  
 
 )}
@@ -495,19 +544,17 @@ ex.contentTypeName ==='video'?
      height={675}
      alt={ex.featuredImage.node.altText}
      />
-      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+       <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
       <div className="flex justify-between py-5 mx-3 gap-1">
    
       <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
       <button> 
       <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
     </button>
-     </div>
-  
-   
+     </div>   
    
   </div>:
-<div  key={index + Math.random()}className="m-auto my-3 shadow max-w-xs md:max-w-md"> 
+<div key={index + Math.random()}className="m-auto my-3 shadow max-w-xs md:max-w-md"> 
 
 <Image
     className="max-h-44 sm:max-h-48 md:max-h-56 lg:max-h-40"
@@ -516,9 +563,9 @@ ex.contentTypeName ==='video'?
      height={675}
      alt={ex.featuredImage.node.altText}
      />
-  {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+  {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link>: <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize"></p>}
    
- <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline p-4">{ex.title }</h3></Link>
+ <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug}`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline p-4">{ex.title }</h3></Link>
 </div>
 
 )} 
@@ -526,14 +573,32 @@ ex.contentTypeName ==='video'?
  </div>
 
  <div className="sm:flex "> 
-{tagged_reses.slice(41,44).map((ex,index)=>
+{tagged_reses.slice(41,44).map((ex,index)=>ex.contentTypeName ==='video'?
+<div key={index + Math.random()} className="max-w-72 xl:max-w-60 m-auto my-3 shadow">   
+  <Image
+  className="max-h-40 md:max-h-36 lg:max-h-40 xl:max-h-36"
+   src={ex.featuredImage.node.sourceUrl}
+   width={1200}
+   height={675}
+   alt={ex.featuredImage.node.altText}
+   />
+     <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
+    <div className="flex justify-between py-5 mx-3 gap-1">
+ 
+    <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="  hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+    <button> 
+    <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
+  </button>
+   </div> 
+ 
+</div>:
   <div className="shadow p-5 my-1 max-w-md" key={index + Math.random()} > 
-   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p>
+   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName }</p>
        <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 lg:text-xl font-bold cursor-pointer font-medium leading-7 underline my-3">{ex.title }</h3></Link> 
   
    <div className="flex py-2 text-sm"> 
       <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>  
 
 )}
@@ -555,12 +620,12 @@ ex.contentTypeName ==='video'?
  height={675}
  alt={ex?.featuredImage?.node.altText}
  />
-  {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+   <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
  </div>
 
  <div className="flex flex-col justify-between py-4 mx-3">
  <div className="flex justify-between my-3">
-   <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-3xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link> 
+   <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-3xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link> 
  <button> 
     <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl cursor-pointer"><FontAwesomeIcon icon={faPlay}/></span></Link>  
   </button>
@@ -568,7 +633,7 @@ ex.contentTypeName ==='video'?
 
    <div className="flex py-2 text-sm"> 
       <p>All tags:</p>{ex.tags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>  
 
 )}
@@ -590,7 +655,7 @@ ex.contentTypeName ==='video'?
  height={675}
  alt={ex?.featuredImage?.node.altText}
  />
- {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' && <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link>  }
+ {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' && <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center">{ex.contentTypeName }</p></Link>  }
  </div>
 
  <div className="flex flex-col justify-between py-4 mx-3" >
@@ -598,7 +663,7 @@ ex.contentTypeName ==='video'?
  
    <div className="flex py-2 text-sm"> 
       <p>All tags:</p>{ex.tags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>  
 
 )}
@@ -627,18 +692,18 @@ ex.contentTypeName ==='video'?
  height={675}
  alt={ex.featuredImage.node.altText}
  />
-  {ex.contentTypeName !=='post' && ex.contentTypeName ==='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+   <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
  </div> 
   
     <div className="mx-2 " >
      <div className="flex justify-between gap-5">
-      <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline max-w-96">{ex.title }</h3></Link> 
+      <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline max-w-96">{ex.title }</h3></Link> 
 <button> 
       <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-300 text-2xl cursor-pointer"><FontAwesomeIcon icon={faPlay}/></span></Link>  
           </button> </div> 
    <div className="flex py-2 text-sm"> 
       <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>
 
 )}
@@ -663,15 +728,14 @@ className="max-w-28 sm:max-w-32 md:max-w-44"
  height={675}
  alt={ex.featuredImage.node.altText}
  />
- {ex.contentTypeName !=='post' && ex.contentTypeName ==='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
- </div> 
-  
-    <div className="mx-2 " >
+ {ex.contentTypeName !=='post' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize"></p>}
+ </div>  
+    <div className="mx-2" >
     <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline">{ex.title }</h3></Link> 
  
    <div className="flex py-2 text-sm "> 
       <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50  ">#{ex.name }  
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50  ">#{ex.name }  
 </p>}</Link>  
 
 )}
@@ -698,10 +762,10 @@ className="max-w-28 sm:max-w-32 md:max-w-44"
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-    {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ? <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
+     <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
     <div className="flex justify-between py-5 mx-3 gap-1">
  
-    <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="  hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+    <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="  hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
     <button> 
     <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
   </button>
@@ -710,7 +774,7 @@ className="max-w-28 sm:max-w-32 md:max-w-44"
 </div>:
 
 <div className="max-w-max" key={index + Math.random()} > 
-   <div className="max-w-72 xl:max-w-60 m-auto my-3 shadow h-96">
+   <div className="max-w-72 xl:max-w-60 m-auto my-3 shadow h-9">
   <Image
    className="max-h-40 md:max-h-36 xl:max-h-36 lg:max-h-40"
    src={ex.featuredImage.node.sourceUrl}
@@ -718,27 +782,50 @@ className="max-w-28 sm:max-w-32 md:max-w-44"
    height={675}
    alt={ex.featuredImage.node.altText}
    />
-      {ex.contentTypeName !=='post' && ex.contentTypeName !=='video' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9"></p>}
-   <div className="py-5 mx-3">
- 
-   <Link href={`/news/video/${ex.slug }`} ><h3 className='underline mx-1 text-2xl my-2'>{ex.title}</h3></Link>
-
-   </div>
+      {ex.contentTypeName !=='post' ?<Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> : <p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize"></p>} 
 
   </div>
-</div>)}
-</div>
+  <div className="mx-2" >
+    <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-tight underline">{ex.title }</h3></Link> 
  
+   <div className="flex py-2 text-sm "> 
+      <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
+<Link href={`/topic/${ex.slug}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50  ">#{ex.name }  
+</p>}</Link>  
+
+)}
+</div> 
+</div>
+</div>)}
+</div> 
   
 <div className="sm:flex max-w-max m-auto lg:m-0"> 
-{tagged_reses.slice(51,53).map((ex,index)=>
-  <div className="shadow p-5 my-1 max-w-md sm:w-96  m-auto lg:m-0"  key={ex.id + Math.random()}> 
-   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName.charAt(0).toUpperCase() + ex.contentTypeName.slice(1)}</p>
+{tagged_reses.slice(51,53).map((ex,index)=>ex.contentTypeName ==='video'?
+<div key={index + Math.random()} className="max-w-72 xl:max-w-60 m-auto my-3 shadow">   
+  <Image
+  className="max-h-40 md:max-h-36 lg:max-h-40 xl:max-h-36"
+   src={ex.featuredImage.node.sourceUrl}
+   width={1200}
+   height={675}
+   alt={ex.featuredImage.node.altText}
+   />
+     <Link href={`/news/video/${ex.slug }`}><p className="bg-black py-1 bg-opacity-80 text-gray-100 text-lg font-bold text-center h-9 capitalize">{ex.contentTypeName }</p></Link> 
+    <div className="flex justify-between py-5 mx-3 gap-1">
+ 
+    <Link href={`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="  hover:opacity-50 text-2xl font-bold cursor-pointer font-medium leading-9 underline">{ex.title }</h3></Link>
+    <button> 
+    <Link href={`/news/video/${ex.slug}`}><span className="rounded-full border py-2 px-4   hover:text-gray-50 text-2xl"><FontAwesomeIcon icon={faPlay}/></span></Link>  
+  </button>
+   </div> 
+ 
+</div>:
+  <div className="shadow p-5 my-1 max-w-md sm:w-96 m-auto lg:m-0" key={ex.id + Math.random()}> 
+   <p className="text-gray-100 p-3 bg-red-600 text-xl max-w-max my-1">{ex.contentTypeName }</p>
        <Link href={ex.contentTypeName ==='post'?`/news/topic/${ex.slug }`:`/news/${ex.contentTypeName }/${ex.slug }`}><h3 className="search-title hover:opacity-50 lg:text-xl font-bold cursor-pointer font-medium leading-7 underline my-3">{ex.title }</h3></Link> 
   
    <div className="flex py-2 text-sm"> 
       <p>All tags:</p>{ex.contentTags?.nodes.slice(0,5)?.map((ex, i)=> 
-<Link href={`/topic/${ex.slug}/${ex.id}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
+<Link href={`/topic/${ex.slug}}`}key={i}>{ex.name&&<p className="cursor-pointer hover:opacity-50 mx-2">#{ex.name }  
 </p>}</Link>  
 
 )}

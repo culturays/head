@@ -56,7 +56,7 @@ defaultValue={searchParams.get('name')?.toString()}
 <div className='searchRes m-2 sm:grid sm:grid-cols-2 sm:gap-2 md:grid-cols-3'>  
 {name && 
 searchData?.slice(0,4).map((it, index)=> it?.contentTypeName ==='char' &&           
-<div key={it?.id} className="items_search min-h-32 w-11/12 m-0 m-auto py-4 min-[481px]:w-3/4 sm:w-full"> 
+<div key={it?.id + Math.random()} className="items_search min-h-32 w-11/12 m-0 m-auto py-4 min-[481px]:w-3/4 sm:w-full"> 
 <div className="m-6"> 
 <Link href={`/naija-wiki/character/${it?.slug }`}><p className="text-xl text-center">{it?.title}</p></Link> 
 
@@ -65,7 +65,7 @@ searchData?.slice(0,4).map((it, index)=> it?.contentTypeName ==='char' &&
 )   }
 {name && 
 searchData?.slice(0,4).map((it, index)=> it?.contentTypeName ==='post' &&           
-<div key={it?.id} className="items_search min-h-32 w-11/12 m-0 m-auto py-4 min-[481px]:w-3/4 sm:w-full"> 
+<div key={it?.id + Math.random()} className="items_search min-h-32 w-11/12 m-0 m-auto py-4 min-[481px]:w-3/4 sm:w-full"> 
 <div className="m-6"> 
 <Link href={`/news/article/${it?.slug }`}><p className="text-xl text-center">{it?.title}</p></Link> 
 
@@ -74,7 +74,7 @@ searchData?.slice(0,4).map((it, index)=> it?.contentTypeName ==='post' &&
 )   }
 {name && 
 searchData?.slice(0,4).map((it, index)=> it?.contentTypeName !=='char' && it.contentTypeName !=='netflix-naija' && it.contentTypeName !=='post' &&  it.contentTypeName !=='page' &&             
-<div key={it?.id} className="items_search min-h-32 w-11/12 m-0 m-auto py-4 min-[481px]:w-3/4 sm:w-full"> 
+<div key={it?.id + Math.random()} className="items_search min-h-32 w-11/12 m-0 m-auto py-4 min-[481px]:w-3/4 sm:w-full"> 
 <div className="m-6"> 
 <Link href={`/news/${it?.contentTypeName}/${it?.slug }`}><p className="text-xl text-center">{it?.title}</p></Link> 
 
@@ -83,7 +83,7 @@ searchData?.slice(0,4).map((it, index)=> it?.contentTypeName !=='char' && it.con
 )   }
 {name && 
 netflixContent?.filter((x1)=> x1?.contentTypeName ==='netflix-naija' ).map((xy)=> xy?.netflixCategories?.nodes.map((tx)=> tx?.netflixNaijaPosts.nodes)?.flat()?.map((it, index)=>
-<div key={it?.id} className="items_search min-h-32 w-11/12 m-0 m-auto py-4 min-[481px]:w-3/4 sm:w-full"> 
+<div key={it?.id + Math.random()} className="items_search min-h-32 w-11/12 m-0 m-auto py-4 min-[481px]:w-3/4 sm:w-full"> 
 <div className="m-6"> 
 <Link href={`/netflix-naija/news/${it?.slug }`}><p className="text-xl text-center">{it?.title}</p></Link> 
 

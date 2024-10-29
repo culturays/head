@@ -11,15 +11,12 @@ export const metadata = {
 }; 
 
 const BusinessPage =async ({searchParams}) => { 
-  const business_news = await businessBlog() 
-  const business_posts = business_news.map((xy)=>xy.posts.nodes).flat()
-   const category_title=business_news.map((xy)=>xy.slug)[0]
+  const business_news = await businessBlog()  
   
   return (
     <div >
   <Business
-business_news={business_posts }
-category_title={category_title }
+business_news={business_news } 
 />  
   </div>
   )

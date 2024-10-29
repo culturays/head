@@ -10,6 +10,11 @@ import SideBar from "../components/Side"
 import { getNaijaTrends1 } from "./api/trends/naija"
 import { getGoogleNewsTitles, getNaijaNews1 } from "./api/news/route"
 import { CronJob } from 'cron';  
+import newsFeed from "@/utils/newsfeed"
+import netflixNewsFeed from "@/utils/netflixNaijaFeed"
+import nollywoodFeed from "@/utils/nollywoodFeed"
+import articleFeed from "@/utils/articleFeed"
+import topicsFeed from "@/utils/topicsFeed"
 // (async () => { 
 //   //await getNaijaTrends1('NG')
 //  // await getNaijaNews1()
@@ -98,7 +103,7 @@ const evData = await events3Details(one.atitle)
  
  
  } 
-  return () => clearTimeout(fxnTimeout);
+ return () => clearTimeout(fxnTimeout);
 
    }
  
@@ -143,9 +148,9 @@ const evData = await events3Details(one.atitle)
      getCines()
 
     },1000)
- return () => clearTimeout(fxnTimeout);
+  return () => clearTimeout(fxnTimeout);
     }  
-    
+     
     const fxnTimeout = setTimeout(() => {
     CronJob.from({
     cronTime: '10 8 * * 1', 
@@ -159,11 +164,17 @@ const evData = await events3Details(one.atitle)
     onTick:dailyWiki(),
     start: true,
     timeZone: 'Africa/Lagos'
-    });
+    }); 
 
   },3000); 
-   
-
+  const liveFeeds =async()=>{
+    await newsFeed()
+     await netflixNewsFeed()
+     await nollywoodFeed()
+      await articleFeed()
+      await topicsFeed()
+  }
+await liveFeeds()
 return (
 <div> 
  <div className="md:flex md:justify-center px-11" style={{maxWidth:'1700px'}}> 

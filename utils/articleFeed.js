@@ -1,8 +1,8 @@
-
-import fs from 'fs';
+"use server"
+import * as fs from 'fs';
 import { Feed } from "feed"; 
 import { contentFeed } from '@/app/news/articlehandle';  
-export const revalidate= 3600
+ 
 async function articleFeed(){ 
     const contentData=await contentFeed()
     const articleData= contentData?.filter((xy)=> xy.contentTypeName === 'article')  

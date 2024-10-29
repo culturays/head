@@ -78,7 +78,7 @@ export async function getNaijaNews1() {
           const response = await fetch('https://content.culturays.com/wp-json/wp/v2/latest', { 
             method: "POST",  
             body:data,  
-            headers: {
+            headers: { 
               'Accept': 'application/json', 
             'Authorization': 'Basic ' + Buffer.from(`${ourUsername}:${ourPassword}`).toString('base64')
             },
@@ -224,6 +224,6 @@ const fxnTimeout = setTimeout(() => {
   });
 }, 4000); 
 
-  //if this function does not return anything and saved to variab and accidentaly passed to  client, it will throw an error - functions can not be passed dirctly to client
+  //if this function does not return anything and saved to variable and accidentally passed to client, it will throw an error - functions can not be passed directly to client
 return resultX;
 };

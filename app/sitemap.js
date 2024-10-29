@@ -11,6 +11,8 @@ export default async function sitemap() {
        const contentData=await contentFeed()
        const articleData= contentData.filter((xy)=> xy.contentTypeName === 'article')
        const nollywood_news = contentData.filter((xy)=> xy.contentTypeName === 'nollywood')
+       const awards_news = contentData.filter((xy)=> xy.contentTypeName === 'award')
+       const postsData= contentData?.filter((xy)=> xy.contentTypeName=== 'post')
 
       const postFeeds=await postsFeed()
       const feedData =postFeeds.map((xy)=>xy.posts.nodes).flat()
@@ -36,6 +38,20 @@ export default async function sitemap() {
          priority:0.7
 
       }) )
+          const awards_posts = awards_news.map((post)=>({ 
+         url:`https://culturays.com/news/award/${post.slug}`,
+         lastModified:new Date(post.date),
+         changeFrequency:'daily',
+         priority:0.7
+
+      }) )
+      const content_posts = postsData.map((post)=>({ 
+        url:`https://culturays.com/news/${post.contentTypeName}/${post.slug}`,
+        lastModified:new Date(post.date),
+        changeFrequency:'daily',
+        priority:0.7
+
+     }) )
          const post_posts = feedData.map((post)=>({ 
          url:`https://culturays.com/news/topic/${post.slug}`,
          lastModified:new Date(post.date),
@@ -65,6 +81,8 @@ export default async function sitemap() {
      ...netflix_posts,
      ...article_posts,
      ...nollywood_posts,
-    ...post_posts
+    ...post_posts,
+    ...content_posts,
+    ...awards_posts
     ]
   }

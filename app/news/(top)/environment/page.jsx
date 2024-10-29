@@ -10,15 +10,12 @@ export const metadata = {
    title:"Culturays | Environment",   
 }; 
 const EnvironmentPage =async () => {
-   const environment_news = await environmentBlog()
-   const environment_posts = environment_news.map((xy)=>xy.posts.nodes).flat()
-    const category_title=environment_news.map((xy)=>xy.slug)[0] 
+   const environment_news = await environmentBlog() 
   
   return ( 
    <div> 
  <Environment 
-environment_news={environment_posts}
-category_title={category_title }
+environment_news={environment_news} 
 />  
   </div> 
   )

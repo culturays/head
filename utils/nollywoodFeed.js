@@ -1,11 +1,12 @@
+"use server"
 import fs from 'fs';
 import { Feed } from "feed";
 import { contentFeed } from '@/app/news/articlehandle'; 
-export const revalidate= 3600
 
 async function nollywoodFeed(){
 const contentData=await contentFeed()
-const nollywood_news = contentData?.filter((xy)=> xy.contentTypeName === 'nollywood')  
+const nollywood_news = contentData?.filter((xy)=> xy.contentTypeName === 'nollywood')
+const award_news = contentData?.filter((xy)=> xy.contentTypeName === 'award')    
    const site_url='https://culturays.com';
     const pubDate= new Date()
     const author = 'Christina Ngene'  
@@ -26,8 +27,8 @@ const nollywood_news = contentData?.filter((xy)=> xy.contentTypeName === 'nollyw
         },
         author,
       });
-      nollywood_news?.map((post) => {
-      const url = `${site_url}/news/nollywood/${post.slug}`;     
+      nollywood_news.concat(award_news)?.map((post) => {
+      const url = `${site_url}/news/${post.contentTypeName}/${post.slug}`;     
       feed.addItem({
         title: post.title,
         id: url, 

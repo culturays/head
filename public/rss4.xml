@@ -1,4 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
-
+    <channel>
+        <title>Culturays | RSS Feed</title>
+        <link>https://culturays.com</link>
+        <description>Culturays is the news site for trends in business and domestic industries in Africa.</description>
+        <lastBuildDate>Tue, 29 Oct 2024 16:33:20 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>Feed for Culturays</generator>
+        <image>
+            <title>Culturays | RSS Feed</title>
+            <url>https://culturays.com/assets/icons/favicon.ico</url>
+            <link>https://culturays.com</link>
+        </image>
+        <copyright>All rights reserved 2024, Culturays</copyright>
+        <item>
+            <title><![CDATA[Nigeria Makes Deal With America for the Release of Binance Employee]]></title>
+            <link>https://culturays.com/news/business/nigeria-makes-deal-with-america-for-the-release-of-binance-employee</link>
+            <guid>https://culturays.com/news/business/nigeria-makes-deal-with-america-for-the-release-of-binance-employee</guid>
+            <pubDate>Tue, 29 Oct 2024 12:35:12 GMT</pubDate>
+            <enclosure url="https://i0.wp.com/content.culturays.com/wp-content/uploads/2024/10/binance-nigeria-02.jpg" length="0" type="image/jpg"/>
+        </item>
+    </channel>
 </rss>

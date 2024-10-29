@@ -10,14 +10,14 @@ import SlideFxn from "../SlideFxn"
 
 const Environment = ({environment_news }) => {
 
-  const [posts, setPosts]=useState([]) 
-  const [currPg, setCurrPg]=useState(1)
-  const [postPerPage, setPostPerP]=useState(10) 
-     const world_news = environment_news.map((ex)=>ex.environmentCategories?.nodes.filter((xy)=> xy?.name==="World")).flat().map((tx)=> tx?.environments.nodes).flat()
-     const africa_news = environment_news.map((ex)=>ex.environmentCategories?.nodes.filter((xy)=> xy?.name==="Africa")).flat().map((tx)=> tx?.environments.nodes).flat()     
-     const environment_items=environment_news.map((ex)=>ex.environmentCategories?.nodes.filter((xy)=> xy?.name!=="World")).flat().filter((xy)=> xy?.name!=="Africa").map((tx)=> tx?.environments.nodes).flat()
-  function decrement() {
-   setCurrPg(currPg - 1);
+const [posts, setPosts]=useState([]) 
+const [currPg, setCurrPg]=useState(1)
+const [postPerPage, setPostPerP]=useState(10) 
+const world_news = environment_news.map((ex)=>ex.environmentCategories?.nodes.filter((xy)=> xy?.name==="World")).flat().map((tx)=> tx?.environments.nodes).flat()
+const africa_news = environment_news.map((ex)=>ex.environmentCategories?.nodes.filter((xy)=> xy?.name==="Africa")).flat().map((tx)=> tx?.environments.nodes).flat()     
+const environment_items=environment_news.map((ex)=>ex.environmentCategories?.nodes.filter((xy)=> xy?.name!=="World")).flat().filter((xy)=> xy?.name!=="Africa").map((tx)=> tx?.environments.nodes).flat()
+function decrement() {
+setCurrPg(currPg - 1);
  }
  function increment() {
    setCurrPg(currPg + 1);

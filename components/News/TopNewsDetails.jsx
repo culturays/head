@@ -70,7 +70,7 @@ alt={news_detail.featuredImage.node.altText}
 /> 
 
 <div className='xs:flex'> 
-<div className='border-r xs:max-w-72'> 
+<div className='border-r xs:w-full'> 
 
 <div className='h-32 px-2'>  
   <div className='flex xs:block sm:flex py-4'> 

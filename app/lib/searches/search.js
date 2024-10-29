@@ -126,7 +126,8 @@ export const searchValues = async (name) => {
               nodes {
                  id
         title
-        slug   contentTags{
+        slug
+         contentTags{
         nodes{
         name
         slug
@@ -162,6 +163,86 @@ export const searchValues = async (name) => {
       }
       
       ... on Award {
+         id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+           ... on Business {
+         id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+           ... on Economy {
+         id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+           ... on Environment {
+         id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+           ... on Society {
+         id
+        title
+        slug   contentTags{
+        nodes{
+        name
+        slug
+        }
+        }
+        featuredImage{
+          node{
+            sourceUrl
+          }
+           
+        }
+      }
+           ... on Technology {
          id
         title
         slug   contentTags{

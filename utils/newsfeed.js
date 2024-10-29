@@ -1,12 +1,11 @@
-
-import fs from 'fs';
+"use server"
+import * as fs from 'fs';
 import { Feed } from "feed";
+import { contentFeed } from '@/app/news/articlehandle';  
  
-import { topCategoriesFeed } from '@/app/news/rootpostsHandle';
-export const revalidate= 3600 
 async function newsFeed(){ 
-  const contentData=await topCategoriesFeed() 
-  const feedData =contentData.map((xy)=>xy.posts.nodes)
+const contentData=await contentFeed()
+const postsData= contentData?.filter((xy)=> xy.contentTypeName === 'post') 
    const site_url='https://culturays.com';
     const pubDate= new Date()
     const author = 'Christina Ngene'  
@@ -21,13 +20,13 @@ async function newsFeed(){
         updated: pubDate,
         date:pubDate,
         generator: "Feed for Culturays",
-        feedLinks: { 
+        feedLinks: {
           rss2: `${site_url}/rss.xml`,
           json: `${site_url }/rss/feed.json`,
         },
         author,
       });
-      feedData?.map((post) => {
+      postsData?.map((post) => {
       const url = `${site_url}/news/topic/${post.slug}`;     
        feed.addItem({
          title: post.title,
@@ -35,18 +34,14 @@ async function newsFeed(){
          link: url,
          description: post.excerpt,
          content: post.excerpt,
-         author: post?.author?.node.name ,
-         contributor: [ post?.author?.node.name ],
+         author: post.author.node.name ,
+         contributor: [ post.author.node.name ],
          date: new Date(post.date),
-       image: post?.featuredImage?.node.sourceUrl.split('?')[0]
+       image: post.featuredImage.node.sourceUrl.split('?')[0]
        });
-       try {
-      fs?.writeFileSync("./public/rss.xml", feed.rss2(), { recursive: true} );
-      } catch (err) {
-        throw err;
-      }
-
+ fs.writeFileSync("./public/rss.xml", feed.rss2(), { recursive: true} );
     });
+
      
    }
    export default newsFeed 

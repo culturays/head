@@ -1,9 +1,8 @@
-
+"use server"
 import fs from 'fs';
 import { Feed } from "feed";
 import { contentFeed } from '@/app/news/articlehandle'; 
 import { netflixNews } from '@/app/netflix-naija/netflix-news';
-export const revalidate= 3600
 
 async function netflixNewsFeed(){
     const netflix__News = await netflixNews() 

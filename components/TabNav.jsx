@@ -161,7 +161,7 @@ height={675}
         <div>{status} 
      </div>:''
    }
-{console.log(formData)}
+
  <form className="flex flex-col bg-gray-900 text-gray-200 py-4" onSubmit={submitForm}>
          <div className="flex flex-col mx-1"> 
             <label className="font-bold p-2 m-1">Email :</label>

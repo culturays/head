@@ -467,8 +467,8 @@ const MainBottom = () => {
 </div> 
  
 <div className='flex flex-wrap justify-center py-6'>
-{ posts_all?.length>0&&posts_all[0]?.nodes.slice(5).concat(posts_all[9].nodes.slice(6)).map((ex,i)=>
-<div className='relative m-3' key={ex.title + ' ' + Math.random()} >
+{ posts_all?.length>0&&posts_all[0]?.nodes.slice(5).concat(posts_all[9]?.nodes.slice(6)).map((ex,i)=>
+<div className='relative m-3' key={ex?.title + ' ' + Math.random()} >
   <div className='max-w-sm m-auto'> 
   <Image
   className='h-56 block'
@@ -480,8 +480,8 @@ const MainBottom = () => {
   </div> 
  
   <div className="absolute top-0 left-0 bg-gray-900 bg-opacity-70 flex justify-center items-center z-50 h-full w-full">
-    <Link href={`/news/topic/${ex.slug}`}><div className="text-center">
-      <h2 className='text-2xl text-gray-50 hover:text-gray-400'>{ex.title} </h2> 
+    <Link href={`/news/topic/${ex?.slug}`}><div className="text-center">
+      <h2 className='text-2xl text-gray-50 hover:text-gray-400'>{ex?.title} </h2> 
     </div></Link>
  
 </div>

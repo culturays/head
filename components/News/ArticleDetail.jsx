@@ -1,4 +1,4 @@
-  
+ 
 import * as cheerio from 'cheerio';
 import moment from 'moment';
 import Image from "next/image";
@@ -70,7 +70,7 @@ alt={news_detail.featuredImage.node.altText}
 /> 
 
 <div className='xs:flex'> 
-<div className='border-r xs:max-w-72'> 
+<div className='border-r xs:w-full'> 
 
 <div className='h-32 px-2'>  
   <div className='flex xs:block sm:flex py-4'> 
@@ -101,14 +101,16 @@ alt={news_detail.featuredImage.node.altText}
   
 <div className='py-11 relative xs:my-0 xs:bottom-44 md:max-w-3xl lg:max-w-md xl:max-w-4xl'>
 <hr className='h-2 bg-gray-800'/> 
-<div className='xs:px-6 xs:py-8 bg-white 6'>
-{news_detail.tags.nodes.map((xy)=>
-<div key={xy.name + ' ' + Math.random()} className='my-3'>
- <Link href={`/topic/${xy.slug}`}><h4 className='hover:bg-gray-600 hover:text-gray-200 border border-gray-600 bg-gray-50 text-gray-600 p-3 text-xl w-32 text-center'>{xy.name} </h4></Link>
- <hr className='bg-black p-0.5 m-0.5'/>
-<hr className='bg-black p-0.5 m-0.5'/>
-</div>)}
+<div className='xs:px-6 xs:py-8 bg-white '>
+  <div className='flex'> 
+{news_detail.contentTags.nodes.map((xy)=>
+<div key={xy.name + ' ' + Math.random()} className='my-3 mx-1'>
+ <Link href={`/topic/${xy.slug}`}><h4 className='hover:bg-gray-600 hover:text-gray-200 border border-gray-600 bg-gray-50 text-gray-600 p-3 text-lg w-max text-center'>{xy.name} </h4></Link>
 
+</div>)}
+</div>
+<hr className='bg-black p-0.5 m-0.5'/>
+<hr className='bg-black p-0.5 m-0.5'/>
 {news_detail.content.split('\n').filter((xy)=> xy !=='').map((line, index) =>(
   <div key={index + ' ' + Math.random()}className='p-1 my-1'>
     <div dangerouslySetInnerHTML={{__html:line}} className="[&_h2]:text-3xl [&_h2]:py-3 [&_h2]:mt-4 [&_h2]:font-bold [&_h3]:text-3xl [&_h3]:py-3 [&_h2]:mt-4 [&_h3]:font-bold my-1 text-lg leading-9 [&_figure>figcaption]:italic [&_figure>figcaption]:py-2 [&_figure>figcaption]:text-sm [&_figure>figcaption]:text-center [&_img]:max-w-xs [&_img]:sm:max-w-sm [&_img]:md:max-w-2xl [&_img]:max-h-96 [&_img]:m-auto"/>
@@ -147,6 +149,5 @@ alt={news_detail.featuredImage.node.altText}
 }
 
 export default ArticleDetail
-
 
  

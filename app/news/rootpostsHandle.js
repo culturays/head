@@ -12,7 +12,7 @@ export async function newsByLatest(req, res){
         body: JSON.stringify({
           query:`
           query WPPOSTS { 
-         categories(where: {exclude:  ["dGVybTo1ODE=","dGVybTo1ODI=","dGVybTo1ODA=","dGVybTo1Nzk=","dGVybTo1Nzc=" ,"dGVybTo1Nzg=", "YXJyYXljb25uZWN0aW9uOjUwMQ=="], hideEmpty: true})  { 
+         categories(where: {exclude:  ["YXJyYXljb25uZWN0aW9uOjUwMQ=="], hideEmpty: true})  { 
             nodes {            
              posts(first: 1) {
                 pageInfo {
@@ -26,11 +26,17 @@ export async function newsByLatest(req, res){
                 title
                   slug
                   tags {
-                    nodes {
-                      name
-                      slug
-                    }
-                  }
+              nodes {
+                name
+                slug
+              }
+            }
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
                    categories {
                     nodes {
                       name
@@ -104,6 +110,13 @@ export async function newsByLatest(req, res){
                       slug
                     }
                   }
+                 
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
                    categories {
                     nodes {
                       name
@@ -196,6 +209,13 @@ export async function newsByLatest(req, res){
                   slug
                 }
               }
+              
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
               date
               excerpt
                slug
@@ -267,6 +287,13 @@ export async function newsByLatest(req, res){
                 slug
               }
             }
+            
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
             date
             excerpt
              slug
@@ -329,7 +356,13 @@ export async function newsByLatest(req, res){
                      slug
                    }
                  }
-                     tags {
+              
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }  tags {
                    nodes {  id
                      name
                      slug
@@ -391,6 +424,13 @@ export async function newsPosts(notIn){
              date
              content
              id
+             
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
              tags {
               nodes { 
                id
@@ -477,7 +517,7 @@ export async function newsPosts(notIn){
       body: JSON.stringify({
         query:`
         query WPPOSTS($notIn:[ID]) { 
-       categories(where:{exclude: ["dGVybTo1ODE=","dGVybTo1ODI=","dGVybTo1ODA=","dGVybTo1Nzk=","dGVybTo1Nzc=" ,"dGVybTo1Nzg="]}) {          
+       categories{          
        edges {
         cursor      
         node {
@@ -497,7 +537,13 @@ export async function newsPosts(notIn){
                 slug
               }
             }
-                tags {
+              
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }  tags {
               nodes {  id
                 name
                 slug
@@ -599,6 +645,12 @@ export async function newsPosts(notIn){
          date
          content
          id
+           postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
       tags {
           nodes {
             id
@@ -702,6 +754,13 @@ const wp_naija = await fetchWithRetry('https://content.culturays.com/graphql',{
            date
            content
            id
+             
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
         tags {
             nodes {
               id
@@ -910,6 +969,13 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
              id
               title
                 slug
+       
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
                 tags {
                   nodes {
                    id
@@ -982,6 +1048,12 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
              id
               title
                 slug
+              postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
                 tags {
                   nodes { 
                    id
@@ -1054,6 +1126,13 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
              id
               title
                 slug
+                     
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
                 tags {
                   nodes {
                    id
@@ -1115,11 +1194,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS {
-             categories(where: {name: "Business"}) {
-    nodes {
-      name
-      slug
-          posts(first:100){
+          businesses  {
           nodes {
              contentTypeName
             title
@@ -1140,11 +1215,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-          categories {
+           businessCategories {
               nodes {
                 name 
                 slug
-                 posts {
+                 businesses  {
           nodes {
             title
             slug
@@ -1178,22 +1253,20 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
           }
-        }  }
-  }
-        } 
+        }
+         }  
          `  
         })
         
-        }).then(response => response)    
+        }).then(response =>  response)  
          .then(data =>data) 
          .catch(error => console.error('Error:', error));
-         const response = wprest?.data.categories.nodes
+         const response = wprest?.data.businesses.nodes
          return response
     } catch (error) {
-     if(error)throw new Error('Error fetching data')
+      if(error)throw new Error('Error fetching data')
     
      }
-   
   }  
   
   
@@ -1210,12 +1283,9 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS {
-       categories(where: {name: "Technologies"}) {
-        nodes {
-         name
-          posts(first:100){
+          technologies {
           nodes {
-            contentTypeName
+             contentTypeName
             title
             slug
              date
@@ -1234,11 +1304,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-           categories {
+            techCategories {
               nodes {
                 name
                 slug
-                  posts {
+                  technologies {
           nodes {
             title
             slug
@@ -1271,27 +1341,29 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
           }
-       }
-         }  }
+        }
          }  
          `  
         })
         
-        }).then(response => response)    
-        .then(data =>data) 
-        .catch(error => console.error('Error:', error));
-        const response = wprest?.data.categories.nodes
-        return response
+        }).then(response => response) 
+         .then(data =>data) 
+         .catch(error => console.error('Error:', error));
+          const response = wprest?.data.technologies.nodes
+          
+         return response  
    
     } catch (error) {
       if(error)throw new Error('Error fetching data')
     
      }
    
+
   } 
   
   
   export async function economyBlog(req, res){
+
     try{
       const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         method: 'POST',
@@ -1303,10 +1375,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS {
-         categories(where: {name: "Economies"}) {
-    nodes {
-      name
-          posts(first:100){
+          economies {
           nodes {
              contentTypeName
             title
@@ -1327,11 +1396,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-          categories {
+          economyCategories {
               nodes {
                 name
                 slug
-                  posts {
+                  economies {
           nodes {
             title
             slug
@@ -1366,23 +1435,21 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
             }
           }
         }
-         }   }
          }  
          `  
         })
         
-        }).then(response => response)    
-        .then(data =>data) 
-        .catch(error => console.error('Error:', error));
-        const response = wprest?.data.categories.nodes
-        return response
+        }).then(response =>  response)  
+         .then(data =>data) 
+         .catch(error => console.error('Error:', error));
+         const response = wprest?.data.economies.nodes
+         return response
     } catch (error) {
       if(error)throw new Error('Error fetching data')
     
      }
    
   } 
-
   
   
   export async function healthBlog(req, res){
@@ -1397,10 +1464,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS {
-               categories(where: {name: "Healths"}) {
-    nodes {
-      name
-          posts(first:100){
+          healths {
           nodes {
              contentTypeName
             title
@@ -1421,11 +1485,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-           categories {
+            healthCategories {
               nodes {
                 name
                 slug
-                  posts {
+                  healths {
           nodes {
             title
             slug
@@ -1461,22 +1525,21 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
             }
           }
         }
-         }  }
-         } 
+         }  
          `  
         })
         
-        }).then(response => response)    
-        .then(data =>data) 
-        .catch(error => console.error('Error:', error));
-        const response = wprest?.data.categories.nodes
-        return response 
+        }).then(response => response) 
+         .then(data =>data) 
+         .catch(error => console.error('Error:', error));
+          const response = wprest?.data.healths.nodes
+          
+         return response  
    
     } catch (error) {
       if(error)throw new Error('Error fetching data')
     
      }
-   
   } 
   export async function environmentBlog(req, res){
     try{
@@ -1490,10 +1553,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS {
-             categories(where: {name: "Environments"}) {
-    nodes {
-      name
-          posts(first:100){
+          environments {
           nodes {
              contentTypeName
             title
@@ -1514,11 +1574,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-           categories {
+            environmentCategories {
               nodes {
             name
             slug
-              posts {
+              environments {
           nodes {
             title
             slug
@@ -1550,24 +1610,24 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
                 description
               }
             }
-          }}
-         } 
+          }
         }
          }  
          `  
         })
         
-        }).then(response => response)    
-        .then(data =>data) 
-        .catch(error => console.error('Error:', error));
-        const response = wprest?.data.categories.nodes
-        return response
+        }).then(response => response) 
+         .then(data =>data) 
+         .catch(error => console.error('Error:', error));
+          const response = wprest?.data.environments.nodes
+          
+         return response  
    
     } catch (error) {
       if(error)throw new Error('Error fetching data')
     
      }
-   
+
   } 
   export async function societyBlog(req, res){
     try{
@@ -1581,10 +1641,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS {
-    categories(where: {name: "Societies"}) {
-    nodes {
-      name
-          posts(first:100){
+          societies {
           nodes {
              contentTypeName
             title
@@ -1605,11 +1662,11 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
               }
             }
             excerpt
-            categories {
+            societyCategories {
               nodes {
                 name
                 slug
-                 posts {
+                 societies {
           nodes {
             title
             slug
@@ -1642,18 +1699,17 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
                 description
               }
             }
-          } }
-         }
+          }
         }
          }  
          `  
         })
         
-        }).then(response => response)    
-        .then(data =>data) 
-        .catch(error => console.error('Error:', error));
-        const response = wprest?.data.categories.nodes
-        return response 
+        }).then(response => response) 
+         .then(data =>data) 
+         .catch(error => console.error('Error:', error));
+          const response = wprest?.data.societies.nodes        
+         return response  
    
     } catch (error) {
       if(error)throw new Error('Error fetching data')
@@ -1661,6 +1717,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
      }
    
   } 
+  
   export async function top_news_details_all(slug){  
     try{
      const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
@@ -1804,6 +1861,18 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
             slug
           }
         }
+              tags {
+              nodes {
+                name
+                slug
+              }
+            }
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
           categories{
           nodes{
           slug
@@ -1846,7 +1915,7 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
         body: JSON.stringify({
           query:`
           query WPPOSTS { 
-         categories(where:{exclude: ["dGVybTo1ODE=","dGVybTo1ODI=","dGVybTo1ODA=","dGVybTo1Nzk=","dGVybTo1Nzc=" ,"dGVybTo1Nzg="]}) {
+         categories {
          nodes {
       name
       slug
@@ -1861,6 +1930,18 @@ const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
             slug
           }
         }
+              tags {
+              nodes {
+                name
+                slug
+              }
+            }
+                postsTags {
+              nodes {
+                name
+                slug
+              }
+            }
           categories{
           nodes{
           slug

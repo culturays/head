@@ -128,8 +128,7 @@ export async function nollywoodBlog(req, res){
    }
  
 } 
-export async function detail_news(uri){ 
- 
+export async function news_details_all(uri){  
   try{
    const wprest = await fetchWithRetry('https://content.culturays.com/graphql',{
 method: 'POST',
@@ -141,45 +140,55 @@ headers:{
 body: JSON.stringify({
 query:`
 query NODE($id: ID!, $idType: ContentNodeIdTypeEnum!) {
-contentNode(id: $id, idType: $idType) {
-   id
+contentNode(id: $id, idType: $idType) {  
+    id
     uri
-    contentTypeName
-  
-      ... on Award {
+    contentTypeName 
+      ... on Business {
       id
       title
       slug
       excerpt
       content
-        newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Award {
-                        id
-                        content
-                        title
-                        slug
-                        awardCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-                      }
-                    }
+      contentTags{
+                  nodes {
+                    name
+                    slug
                   }
+                }
+      newsGroup {
+        related {
+          edges {
+            node {
+              date
+              id
+              ... on Business {
+                id
+                content
+                title
+                slug
+                 contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                businessCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    altText
+                    caption
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
         }
       }
       featuredImage {
@@ -194,62 +203,541 @@ contentNode(id: $id, idType: $idType) {
         node {
           name
           slug
-        }
-      }
-  } 
-  ... on Nollywood {
-      id
-      title
-      slug
-      excerpt
-      content
-        newsGroup {
-        related {
-         edges {
-                    node {
-                      date
-                      id 
-                      ... on Nollywood {
-                        id
-                        content
-                        title
-                        slug
-                        nollywoodCategories{  
-                        nodes{
-                        name
-                        slug
-                        }
-                      
-                        }
-                           featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-                      }
-                    }
-                  }
-        }
-      }
-      featuredImage {
-        node {
-          altText
-          caption
-          sourceUrl
-        }
-      }
-      date
-      author {
-        node {
-          name
-          slug
+          avatar{
+          url
+          }
         }
       }
     }
- 
-     
+    ... on Award {
+      id
+      title
+      slug
+      excerpt
+      content
+         contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+      newsGroup {
+        related {
+          edges {
+            node {
+              date
+              id
+              ... on Award {
+                id
+                content
+                title
+                slug
+                   contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                awardCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    altText
+                    caption
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+            avatar{
+          url
+          }
+        }
+      }
+    }
+    ... on Nollywood {
+      id
+      title
+      slug
+      excerpt
+      content
+         contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+      newsGroup {
+        related {
+          edges {
+            node {
+              date
+              id
+              ... on Nollywood {
+                id
+                content
+                title
+                slug
+                   contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                nollywoodCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    altText
+                    caption
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+            avatar{
+          url
+          }
+        }
+      }
+    }
+
+    ... on Article {
+      id
+      title
+      slug
+      excerpt
+      content
+         contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+      newsGroup {
+        related {
+          edges {
+            node {
+              date
+              id
+              ... on Article {
+                id
+                content
+                title
+                slug
+                   contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                articlesCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    altText
+                    caption
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+            avatar{
+          url
+          }
+        }
+      }
+    }
+    ... on Economy {
+      id
+      title
+      slug
+      excerpt
+      content
+         contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+            avatar{
+          url
+          }
+        }
+      }
+      newsGroup {
+        related {
+          edges {
+            node {
+              date
+              id
+              ... on Economy {
+                id
+                content
+                title
+                slug
+                   contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                economyCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    altText
+                    caption
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    ... on Environment {
+      id
+      title
+      slug
+      excerpt
+      content
+         contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+            avatar{
+          url
+          }
+        }
+      }
+      newsGroup {
+        related {
+          edges {
+            node {
+              date
+              id
+              ... on Environment {
+                id
+                content
+                title
+                slug
+                   contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                environmentCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    altText
+                    caption
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    ... on Society {
+      id
+      title
+      slug
+      excerpt
+      content
+         contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+            avatar{
+          url
+          }
+        }
+      }
+      newsGroup {
+        related {
+          edges {
+            node {
+              date
+              id
+              ... on Society {
+                id
+                content
+                title
+                slug
+                   contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                societyCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    altText
+                    caption
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    ... on Health {
+      id
+      title
+      slug
+      excerpt
+      content
+         contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+            avatar{
+          url
+          }
+        }
+      }
+      newsGroup {
+        related {
+          edges {
+            node {
+              date
+              id
+              ... on Health {
+                id
+                content
+                title
+                slug
+                   contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                healthCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    altText
+                    caption
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    ... on Technology {
+      id
+      title
+      slug
+      excerpt
+      content
+         contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                     techCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+      featuredImage {
+        node {
+          altText
+          caption
+          sourceUrl
+        }
+      }
+      date
+      author {
+        node {
+          name
+          slug
+          avatar{
+          url
+          }
+        }
+      }
+      newsGroup {
+        related {
+          edges {
+            node {
+              date
+              id
+              ... on Technology {
+                id
+                content
+                title
+                slug
+                   contentTags{
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                      techCategories {
+                  nodes {
+                    name
+                    slug
+                  }
+                }
+                featuredImage {
+                  node {
+                    altText
+                    caption
+                    sourceUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
   }
 }   
 ` ,
@@ -260,7 +748,7 @@ idType: 'URI'
 
 })
 
-}).then(response =>  response)    
+}).then(response => response)    
        .then(data =>data) 
        .catch(error => console.error('Error:', error)); 
       const response = wprest?.data.contentNode
@@ -861,11 +1349,43 @@ export const vids = async()=>{
       },
       body: JSON.stringify({
         query: `query CONTENTFEED{
-          contentNodes(first:100) {
+      contentNodes(first:100) {
       nodes {
         date
         contentTypeName
-       ... on Video {
+        ... on Technology {
+           id
+          title
+          slug
+          author {
+          node {
+          name
+            slug
+          }
+        }
+              featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        }   ... on Video {
+           id
+          title
+          slug
+          author {
+          node {
+          name
+            slug
+          }
+        }
+              featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        }   ... on Post {
            id
           title
           slug
@@ -913,6 +1433,54 @@ export const vids = async()=>{
             sourceUrl
           }
         }
+        }    ... on Society {
+          id
+          title
+          slug   
+          author {
+          node {
+         name
+            slug
+          }
+        } 
+          featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        }  ... on Health {
+          id
+          title
+          slug 
+           author {
+          node {
+          name
+            slug
+          }
+        }
+              featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        }  ... on Economy {
+          id
+          title
+          slug 
+           author {
+          node {
+          name
+            slug
+          }
+        } 
+          featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
         }  ... on Trending {
           id
           title
@@ -929,13 +1497,45 @@ export const vids = async()=>{
             sourceUrl
           }
         }
+        }  ... on Environment {
+          id
+          title
+          slug 
+           author {
+          node {
+           name
+            slug
+          }
+        }
+              featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        }  ... on Business {
+          id
+          title
+          slug 
+           author {
+          node {
+            name
+            slug
+          }
+        }
+              featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
         }  
       }
     }
         
         }`})
       
-      }).then(response => response)   
+      }).then(response =>  response)   
       .then(data =>data) 
       .catch(error => console.error('Error:', error));
       const response = wprest?.data.contentNodes.nodes 
@@ -945,6 +1545,7 @@ export const vids = async()=>{
    //console.error('Error fetching data:', error);
    
     }
-    }
+  
+  }
 
  
