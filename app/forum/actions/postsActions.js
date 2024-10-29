@@ -5,7 +5,7 @@ export const getUserPosts = async (offset,limit, id) => {
 
   try{
     "use server"
-    const supabase = createClient();  
+    const supabase =await createClient();  
       const { data:posts , error } = await supabase 
       .from('posts')
       .select('*')

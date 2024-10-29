@@ -11,7 +11,7 @@ const location= params.slug
 //const transformed= location.replace(/%20/g, ' ').replace(/[^a-zA-Z0-9 ]/g, ' ')
  
 const eventView = async () => { 
-const supabase = createClient();
+const supabase =await createClient();
 const { data, error } = await supabase
 .from('events')
 .select('*')

@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 const EventPage = async({searchParams, params }) => { 
 const slug= params.slug
 const eventView = async () => { 
-const supabase = createClient();  
+const supabase =await createClient();  
 const { data, error} = await supabase
 .from('events')
 .select()

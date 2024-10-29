@@ -5,7 +5,7 @@ import { getTop10 } from '../naija-wiki/filmsdata'
 export const revalidate = 10
 const Events_Naija = async({searchParams}) => { 
 const forumEvents =async ()=>{
-const supabase = createClient() 
+const supabase =await createClient() 
 const { data:events , error } = await supabase 
 .from('events')
 .select('*')

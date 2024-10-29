@@ -8,7 +8,7 @@ export const revalidate=1
 export async function generateMetadata({ params, searchParams }, parent) {
   const id = params.slug.slice(-1) 
   const postView = async () => { 
-    const supabase = createClient();  
+    const supabase =await createClient();  
     const { data:commented, error} = await supabase
     .from('comments') 
     .select('*') 
@@ -33,14 +33,14 @@ export async function generateMetadata({ params, searchParams }, parent) {
 } 
  
 const CommentPage =async ({params, searchParams}) => {
-  const supabase = createClient()    
+  const supabase =await createClient()    
   const {
   data: { user }, 
   } = await supabase.auth.getUser(); 
   
   const id = params.slug.slice(-1) 
   const commentView = async () => { 
-    const supabase = createClient();  
+    const supabase =await createClient();  
     const { data:commented, error} = await supabase
     .from('comments') 
     .select('*') 

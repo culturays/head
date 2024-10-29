@@ -55,18 +55,18 @@ export async function getNaijaTrends1(location) {
   }
 
   const fxnTimeout = setTimeout(() => {
-    CronJob.from({
-    cronTime: '10 8 * * *', 
-    onTick: submitForm(),
-    start: true,
-    timeZone: 'Africa/Lagos'
-    });
+    // CronJob.from({
+    // cronTime: '10 8 * * *', 
+    // onTick: submitForm(),
+    // start: true,
+    // timeZone: 'Africa/Lagos'
+    // });
   }, 5000); 
    
-  const changeText = setInterval(() => {
-    submitForm()
-  }, 30000); 
+  // // const changeText = setInterval(() => {
+  // //   submitForm()
+  // // }, 30000); 
 
-  return () => clearInterval(changeText);
+  // // return () => clearInterval(changeText);
   return titleObj   
    }

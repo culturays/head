@@ -99,8 +99,7 @@ const evData = await events3Details(one.atitle)
     setTimeout(()=>{
      getEvs()
 
-    },1000)
- 
+    },3000) 
  
  } 
  return () => clearTimeout(fxnTimeout);
@@ -132,7 +131,7 @@ const evData = await events3Details(one.atitle)
     }  
   
    async function getCines(){
-    const supabase = createClient()
+    const supabase =await createClient()
     const { data, error } = await supabase
       .from('cinema_titles')
       .upsert(grouped)
@@ -146,7 +145,7 @@ const evData = await events3Details(one.atitle)
     setTimeout(()=>{
      getCines()
 
-    },1000)
+    },2000)
   return () => clearTimeout(fxnTimeout);
     }  
      

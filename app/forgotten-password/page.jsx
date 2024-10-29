@@ -8,7 +8,7 @@ const ForgottenPassword = ({searchParams}) => {
       const updatePass=async(e)=>{
         "use server"  
         const formData = new FormData(e.currentTarget)
-        const supabase = createClient();
+        const supabase =await createClient();
         const email = formData.get("email"); 
         
         const { data, error } = await supabase.auth.resetPasswordForEmail(email)

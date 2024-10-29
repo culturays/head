@@ -148,13 +148,11 @@ export default  function RootLayout({ children }) {
     });
     return inputStr;
 } 
-
+ 
  return (
-    <html lang="en" > 
-        <Script async type="text/javascript"strategy="afterInteractive" src="//clickiocmp.com/t/consent_234292.js"/>  
-    <GoogleAnalytics GA_ID={GA_ID}/> 
-
-   {consent === true && (
+    <html lang="en" ><Script async type="text/javascript"strategy="afterInteractive" src="//clickiocmp.com/t/consent_234292.js"/>
+    <GoogleAnalytics GA_ID={GA_ID}/>
+    {consent === true && (
 <Script
   strategy="afterInteractive"
   id='google_analytics_id'
@@ -178,11 +176,11 @@ export default  function RootLayout({ children }) {
 >  
 </Script> 
 
- )}  
-<body className={`${noko.className}` }> 
-<Header/>  
-<SocialNav/>
-<AuthButton/>  
+ )}
+ <body className={`${noko.className}` }>
+        <Header/>  
+      <SocialNav/>
+      <AuthButton/>  
 <Nav /> 
 <SearchItems />  
  <TabNav/> 
@@ -190,9 +188,10 @@ export default  function RootLayout({ children }) {
 {children}
 </Suspense> 
   <Latests/> 
-<Footer/>  
-</body> 
-<TagManager gtmId={'GTM-W7BMCC9'}/>  
-</html>
+<Footer/>
+        </body>
+        <TagManager gtmId={'GTM-W7BMCC9'}/>
+        </html>
 )
 }
+ 

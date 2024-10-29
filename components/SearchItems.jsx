@@ -37,7 +37,7 @@ return (
 <div className="">  
 <input  
 placeholder='search'
-className='absolute z-30 w-full p-2 border-2 focus:outline-none text-lg'
+className='absolute z-20 w-full p-2 border-2 focus:outline-none text-lg'
 type="text" 
 // name='name' 
 onChange={(e) => {
@@ -50,7 +50,7 @@ defaultValue={searchParams.get('name')?.toString()}
 <FontAwesomeIcon icon={faAngleDoubleRight} className="cursor-pointer opacity-70 text-xl hover:scale-150" onClick={()=>!name?router.push('/search-page')
 :router.push(`/search-page?name=${name}`)}/> 
  
-</div>
+</div> 
 </div>
   {!pathname.includes('search-page')&&
 <div className='searchRes m-2 sm:grid sm:grid-cols-2 sm:gap-2 md:grid-cols-3'>  

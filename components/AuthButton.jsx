@@ -9,11 +9,11 @@ import SignOutBtn from "./SignOutBtn";
  
 
 export default async function AuthButton() {
-const supabase = createClient();
+const supabase =await createClient();
 const {   
   data: { user },
 } = await supabase.auth.getUser()
-const headersList = headers();
+const headersList =await headers();
 const pathname = headersList.get('referer') || "" 
  const handleLogout=async()=>{ 
   "use server" 

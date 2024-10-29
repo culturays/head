@@ -334,7 +334,7 @@ export async function getPeople() {
       
   
 export const popPeople =async ()=>{ 
- //const supabase = createClient()
+ //const supabase =await createClient()
 //  const { data: bdays_1, error:bday_1err } = await supabase
 //  .from('bdays')
 //  .select('*') 

@@ -10,7 +10,7 @@ const INITIAL_NUMBER_OF_POSTS =1
 export async function generateMetadata({ params, searchParams }, parent) {
   const id = params.slug.slice(-1) 
   const postView = async () => { 
-    const supabase = createClient();  
+    const supabase =await createClient();  
     const { data:post, error} = await supabase
     .from('posts')
     .select('*') 

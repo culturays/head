@@ -8,7 +8,7 @@ export async function GET(request) {
         },5000)
        })
        const forumBdays =async ()=>{
-        const supabase = createClient()
+        const supabase =await createClient()
         const { data: bday, error } = await supabase
         .from('bday')
         .select('*')

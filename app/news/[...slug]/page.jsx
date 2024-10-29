@@ -5,9 +5,9 @@ import { news_details_all } from "../articlehandle"
 const CULTURAYS_CONTENT_WP = process.env.CULTURAYS_WP
 
 export async function generateMetadata({ params, searchParams }, parent) { 
-  const slug = params.slug[1]
-const slug_category = params.slug[0]
-  const news_details= await news_details_all(`${CULTURAYS_CONTENT_WP}/${slug_category}/${slug}/`)
+  const {slug} =await params 
+  const news_details= await news_details_all(`${CULTURAYS_CONTENT_WP}/${slug[0]}/${slug[1]}/`) 
+  
   const previousImages = (await parent).openGraph?.images || [] 
   return {
     title:`Culturays | News - ${news_details?.title}`,
@@ -18,9 +18,8 @@ const slug_category = params.slug[0]
 }   
 
 const ArticleDetailPage = async ({params}) => {
-const slug = params.slug[1]
- const slug_category = params.slug[0]
- const news_detail= await news_details_all(`${CULTURAYS_CONTENT_WP}/${slug_category}/${slug}/`) 
+const {slug} =await params 
+ const news_detail= await news_details_all(`${CULTURAYS_CONTENT_WP}/${slug[0]}/${slug[1]}/`) 
  
   return ( 
     <div className="bg-gray-50"> 

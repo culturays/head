@@ -4,7 +4,7 @@ import {createClient as deleteClient} from "@/utils/supabase/accountDelete"
 import { redirect } from "next/navigation";
 export async function getProfile(id){ 
     "use server" 
-    const supabase = createClient();  
+    const supabase =await createClient();  
     const {data:currentProfile, error, status}= 
     await supabase.from('profiles')
     .select(`full_name, website, avatar_url, password, address, email, education, about`)
@@ -18,8 +18,8 @@ export async function getProfile(id){
   }
   export async function deleteProfile(id){ 
     "use server" 
-    const supabase = deleteClient();
-    const auth_ = createClient()
+    const supabase =await deleteClient();
+    const auth_ =await createClient()
     const { error}= await auth_.auth.signOut()
     if (error) {
       throw error

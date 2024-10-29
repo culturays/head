@@ -5,7 +5,7 @@ import {faEyeSlash, faEye} from '@fortawesome/free-solid-svg-icons'
 import { SubmitButton } from "./submit-button";   
 import Link from "next/link";
  
-const LoginForm = ({ handleOauthLogin, signUp, signIn, searchParams}) => {
+const LoginForm = ({ handleOauthLogin, signUp, signIn, message}) => {
 const [passType, setPassType] = useState('password');
 const [icon, setIcon] = useState(faEyeSlash);
 const [errors, setErrors] = useState({});
@@ -46,16 +46,16 @@ if (data.name === 'password'&&!password_pattern.test(data.value.trim())) {
  
   const clearRef= useRef()
 
+  
   useEffect(() => {
-   if(searchParams?.message?.includes('Success!')){
-     clearRef.current?.reset(); 
-   }  
- 
+    if(message?.includes('Success!')){
+      clearRef.current?.reset(); 
+    }  
  }, [signUp]);
  
 return (  
 <> 
-<form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative" noValidate ref={clearRef} >
+<form className="login_form min-w-72 w-96 flex flex-col gap-2.5 bg-gray-800 p-5 rounded tracking-wider relative z-50" noValidate ref={clearRef} >
 <label className="text-md block text-white text-xl" htmlFor="full_name">
 Username
 </label>
@@ -140,14 +140,14 @@ pendingText="Signing Up..."
 Create Account
 </SubmitButton>:null}
 </div> 
-  {searchParams?.message &&!searchParams?.message.includes('Success!') && (
+  {message&&!message.includes('Success!') && (
 <p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
 Invalid Login
 </p>
 )} 
-  {searchParams?.message &&searchParams?.message.includes('Success!') && (
+  {message &&message.includes('Success!') && (
 <p className="text-white mt-4 bg-foreground/10 text-foreground text-center">
-{searchParams?.message}
+{message}
 </p>
 )} 
  <hr />

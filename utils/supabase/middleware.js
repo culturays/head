@@ -1,7 +1,6 @@
  "use server"
-import { createServerClient, CookieOptions } from "@supabase/ssr";
-import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { createServerClient} from "@supabase/ssr"; 
+import { NextResponse } from "next/server";
 
 const protectedPath= ['/forum','/profile']
 export const updateSession = async (request) => {  

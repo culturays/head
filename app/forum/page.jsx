@@ -7,7 +7,7 @@ import { searchValues } from "../lib/searches/search";
  const INITIAL_NUMBER_OF_POSTS = 2 
 
 const Forum = async({searchParams, params}) => {
-const supabase = createClient()    
+const supabase =await createClient()    
 const { 
 data: { user }, 
 } = await supabase.auth.getUser(); 
@@ -28,11 +28,9 @@ const postsItems =async()=>{
 const initialPosts = await getPosts(0, INITIAL_NUMBER_OF_POSTS)  
   return initialPosts  
 } 
-const query = searchParams?.name;
+const {name} =await searchParams;
 // // const rapidGTrends = await googleTr()
- const postSearch=await searchValues(query)
- const confirmParam= searchParams.confirm 
-
+ const postSearch=await searchValues(name) 
 const forumEvents =async ()=>{  
   const supabase = createClient() 
   const { data:events , error } = await supabase 

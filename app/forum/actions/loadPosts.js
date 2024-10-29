@@ -2,7 +2,7 @@
 import { createClient } from '@/utils/supabase/server'
 export const getPosts = async (offset , limit ) => {
     try{
-        const supabase = createClient() 
+        const supabase =await createClient() 
         const { data:posts , error } = await supabase 
         .from('posts')
         .select('*') 

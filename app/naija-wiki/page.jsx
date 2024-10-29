@@ -7,7 +7,7 @@ import { vids } from '../news/articlehandle'
  
 const NaijaWikiPage =async ({searchParams, params}) => {  
 const naija_wiki =async ()=>{  
-const supabase = createClient() 
+const supabase =await createClient() 
 const { data:cinema_titles , error } = await supabase 
 .from('cinema_titles')
 .select('*') 

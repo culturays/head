@@ -6,7 +6,7 @@ import { getProfile } from "../profileActions";
 const INITIAL_NUMBER_OF_POSTS = 2 
 export async function generateMetadata({ params, searchParams }, parent) {
 
-    const supabase = createClient();  
+    const supabase =await createClient();  
     const {
       data: { user }, 
       } = await supabase.auth.getUser(); 
@@ -21,8 +21,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
   }
 }
 const UserPage =async({searchParams, params}) => {
-  const id = params.id
-  const supabase = createClient()    
+  const {id} =await params 
+  const supabase =await createClient()    
   const {
   data: { user }, 
   } = await supabase.auth.getUser();  

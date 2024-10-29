@@ -7,13 +7,13 @@ export const metadata = {
   }; 
   
 const CharactersPage =async ({searchParams, params}) => {
+ const {slug}=await params
 const charsList = await newchars()
-const listChars= charsList?.filter((xx)=> xx.charactertitles.filmname.toLowerCase().replace(/ /g,'-') ===params.slug )
+const listChars= charsList?.filter((xx)=> xx.charactertitles.filmname.toLowerCase().replace(/ /g,'-') === slug )
   return (
     <div>  
  <Characters
  listChars={listChars}
-
  />  
 
     </div>

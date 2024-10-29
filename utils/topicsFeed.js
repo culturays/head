@@ -1,5 +1,5 @@
 "use server"
-import fs from 'fs';
+import * as fs from 'fs';
 import { Feed } from "feed";
 import { contentFeed } from '@/app/news/articlehandle';
 

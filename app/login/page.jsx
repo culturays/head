@@ -8,7 +8,7 @@ const Login =async ({searchParams} ) => {
   const getURL = () => {
     let url = 
       process?.env?.NEXT_PUBLIC_BASE_URL ??  
-      process?.env?.NEXT_PUBLIC_VERCEL_URL ?? 
+      process?.env?.NEXT_PUBLIC_BASE_URL ?? 
       'http://localhost:3000/'
     // Make sure to include `https://` when not localhost.
     url = url.startsWith('http') ? url : `https://${url}`
@@ -20,8 +20,8 @@ const signIn = async (formData) => {
   "use server"; 
 const email = formData.get("email");
 const password = formData.get("password")  
-const supabase = createClient();
-  const origin = headers().get("origin"); 
+const supabase =await createClient();
+  const origin = await headers().get("origin"); 
   const { error } = await supabase.auth.signInWithPassword({
     email,
     password ,
@@ -39,12 +39,12 @@ const supabase = createClient();
  
 const signUp = async (formData) => {
   "use server";
-  const origin = headers().get("origin");
+  const origin =await headers().get("origin");
   const email = formData.get("email");
   const password = formData.get("password") ;
   const full_name = formData.get("full_name") ;
  
-  const supabase = createClient();
+  const supabase =await createClient();
   const { error } = await supabase.auth.signUp({
     email,
     password, 
@@ -68,8 +68,8 @@ const signUp = async (formData) => {
  
 const handleOauthLogin = async () => {
   'use server';
-  const origin = headers().get("origin"); 
- const supabase = createClient(); 
+  const origin =await headers().get("origin"); 
+ const supabase =await createClient(); 
    const { data, error } = await supabase.auth.signInWithOAuth({
   provider: 'google',  
   options: { 
@@ -81,7 +81,7 @@ const handleOauthLogin = async () => {
  }
  return redirect(data.url);
 };
- 
+ const {message} = await searchParams
 return (
 <div className='m-0 p-0 bg-gray-900 h-screen flex flex-col items-center justify-center'> 
   <div> 
@@ -111,7 +111,7 @@ Back
 <LoginForm 
 signUp={signUp} 
 signIn={signIn} 
-searchParams={searchParams}
+message={message}
 handleOauthLogin={handleOauthLogin}
  />
 

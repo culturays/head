@@ -7,8 +7,8 @@ export const signIn = async (formData ) => {
     "use server"; 
   const email = formData.get("email");
   const password = formData.get("password") ; 
-  const supabase = createClient();
-  const origin = headers().get("origin");
+  const supabase =await createClient();
+  const origin =await headers().get("origin");
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -24,10 +24,10 @@ export const signIn = async (formData ) => {
    
   export const signUp = async (formData) => {
     "use server";
-    const origin = headers().get("origin");
+    const origin =await headers().get("origin");
     const email = formData.get("email");
     const password = formData.get("password") ;
-    const supabase = createClient();
+    const supabase =await createClient();
    
     const { error } = await supabase.auth.signUp({
       email,
@@ -49,8 +49,8 @@ export const signIn = async (formData ) => {
   
  export const handleOauthLogin = async () => {
     'use server';
-    const origin = headers().get("origin"); 
-   const supabase = createClient(); 
+    const origin =await headers().get("origin"); 
+   const supabase =await createClient(); 
      const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',  
     options: { 

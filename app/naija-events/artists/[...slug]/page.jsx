@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 const ArtistsPage = async({searchParams, params }) => {
 const artist= params.slug
 const eventView = async () => { 
-const supabase = createClient();
+const supabase =await createClient();
 const { data, error} = await supabase
 .from('events')
 .select('*')

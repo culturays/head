@@ -1,8 +1,8 @@
 import { headers } from 'next/headers';
 import React from 'react'
 
-const SignOut = () => {
-const headersList = headers();
+const SignOut = async() => {
+const headersList = await headers();
 const confirm= headersList.get('referer') || "" 
   return (
     <div>

@@ -2,7 +2,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { agent, fetchWithRetry } from "@/utils/fetchwithretry"; 
 export const searchValues = async (name) => {   
-    const supabase = createClient()
+    const supabase =await createClient()
     const { data:posts, error } = await supabase
     .from('posts') 
     .select("*") 

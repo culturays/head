@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/server'
 export const getComments = async (offset , limit, post) => {
 
     try{
-        const supabase = createClient() 
+        const supabase =await createClient() 
         const { data:comments , error } = await supabase 
         .from('comments')
         .select('*')
@@ -20,7 +20,7 @@ export const getComments = async (offset , limit, post) => {
   export const getChildComments = async (comment ) => {
    
     try{
-        const supabase = createClient() 
+        const supabase =await createClient() 
         const { data:comments , error } = await supabase 
         .from('comments')
         .select('*')

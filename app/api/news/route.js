@@ -105,7 +105,7 @@ export async function getNaijaNews1() {
     start: true,
     timeZone: 'Africa/Lagos'
     });
-  }, 4000); 
+  }, 3000); 
    return resultX
  
    }
@@ -222,7 +222,7 @@ const fxnTimeout = setTimeout(() => {
   start: true,
   timeZone: 'Africa/Lagos'
   });
-}, 4000); 
+}, 3000); 
 
   //if this function does not return anything and saved to variable and accidentally passed to client, it will throw an error - functions can not be passed directly to client
 return resultX;

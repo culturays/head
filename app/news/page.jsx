@@ -6,7 +6,6 @@ import newsFeed from '@/utils/newsfeed'
 const NewsPage = async() => {
   const newsData= await news__Articles()
  
- 
  return (  
    <div>
     <News 
