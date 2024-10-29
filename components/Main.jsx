@@ -18,7 +18,14 @@ const replaceHTMLTags=(string)=>{
   return newString
    }  
 
-   
+   const liveFeeds =async()=>{ 
+    await newsFeed()
+     await netflixNewsFeed()
+     await nollywoodFeed()
+      await articleFeed()
+      await topicsFeed()
+  }
+
 const Main = () => { 
 const [activeSet, setActiveSet]=useState(true)
 const [actIdx ,setActIdx]=useState(-1)
@@ -32,6 +39,9 @@ const [top_SidebarItems, setSidebarItems]=useState([])
 const [top_PostsData, setPostsData]=useState([])
 const [top_Posts_notIn_newsPosts, setPosts_notIn_newsPosts]=useState([]) 
 // const [top_Last_categories, setLast_categories]=useState([]) 
+useEffect(()=>{
+  liveFeeds()
+},[])
  const topLatest=async()=>{
 const latestPosts=await newsByLatest()
 const newsViewCursors = await newsViews()

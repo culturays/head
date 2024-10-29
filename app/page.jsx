@@ -167,14 +167,7 @@ const evData = await events3Details(one.atitle)
     }); 
 
   },3000); 
-  const liveFeeds =async()=>{
-    await newsFeed()
-     await netflixNewsFeed()
-     await nollywoodFeed()
-      await articleFeed()
-      await topicsFeed()
-  }
-await liveFeeds()
+
 return (
 <div> 
  <div className="md:flex md:justify-center px-11" style={{maxWidth:'1700px'}}> 
