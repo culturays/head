@@ -120,8 +120,7 @@ const evData = await events3Details(one.atitle)
    const grouped = [];
    
    for (let i = 0; i < minLength; i++) { 
-    
-    const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' );
+  const imgMime=await processSbImages( silverB_imgs[i], 'cinema_imgs' );
     grouped.push({ 
      title: silverB_titles[i], 
      url: silverB_urls[i],
@@ -131,7 +130,7 @@ const evData = await events3Details(one.atitle)
        dur: silverB_dur[i]
      });
     }  
-    console.log('it ran ')
+  
    async function getCines(){
     const supabase = createClient()
     const { data, error } = await supabase
